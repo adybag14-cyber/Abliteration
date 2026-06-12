@@ -26,4 +26,4 @@ python scripts/train_dpo.py \
   --output_dir output/security-agent-v1
 ```
 
-Deploy with [../../../scripts/hardware-tool-gate.py](../../../scripts/hardware-tool-gate.py) — see [../../../instructions/agentic-security-stack.md](../../../instructions/agentic-security-stack.md).
+Deploy with [../../../../scripts/hardware-tool-gate.py](../../../../scripts/hardware-tool-gate.py) — see [../../../../instructions/agentic-security-stack.md](../../../../instructions/agentic-security-stack.md).

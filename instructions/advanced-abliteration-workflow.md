@@ -19,8 +19,8 @@ Research-grade and production-hardening paths beyond default `heretic <model>`.
 | Step | Action |
 |------|--------|
 | 1 | Backup base safetensors |
-| 2 | Create `config.toml` from Heretic defaults |
-| 3 | Set `orthogonalize_direction = true`, `row_normalization = full` |
+| 2 | Copy `sources/heretic-tools/config.production.toml` → `config.toml` |
+| 3 | Confirm `orthogonalize_direction = true`, `row_normalization = full` (already in production profile) |
 | 4 | Add **factory false-refusal** prompts to `[bad_prompts]` / `[good_prompts]` |
 | 5 | VRAM ≤12 GB → `quantization = bnb_4bit`, `offload_outputs_to_cpu = true` |
 | 6 | `heretic <model>` |
@@ -35,11 +35,17 @@ full_normalization_lora_rank = 8
 winsorization_quantile = 0.95
 kl_divergence_target = 0.01
 
+# Optional: point bad/good sets at HF datasets (Heretic default) or export lines from
+# data/eval/hardware-factory-prompts.jsonl into plain-text files for custom measurement.
 [bad_prompts]
-dataset = "data/eval/factory-refusal-prompts.txt"
+dataset = "mlabonne/harmful_behaviors"
+split = "train[:400]"
+column = "text"
 
 [good_prompts]
-dataset = "data/eval/factory-compliance-prompts.txt"
+dataset = "mlabonne/harmless_alpaca"
+split = "train[:400]"
+column = "text"
 ```
 
 ---

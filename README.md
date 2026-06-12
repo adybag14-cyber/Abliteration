@@ -32,9 +32,8 @@ abliteration/
 ├── data/
 │   ├── heretic-models-registry.jsonl   # open-weight HF models attempted
 │   └── eval/
-├── data/eval/
-│   ├── hardware-factory-prompts.jsonl
-│   └── cyber-research-prompts.jsonl
+│       ├── hardware-factory-prompts.jsonl
+│       └── cyber-research-prompts.jsonl
 ├── sources/
 │   ├── heretic-tools/           # immutable Heretic config pins (refresh via npm)
 │   ├── jarvis-pack/             # extracted v7 zip (curated)

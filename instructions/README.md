@@ -45,6 +45,7 @@ Step-by-step workflows. **Start here if you are improving a local model for the 
 | [agentic-security-stack.md](agentic-security-stack.md) | ~2–4 hr | ★★★☆☆ |
 | Tool catalogs | [../docs/tools/README.md](../docs/tools/README.md) | reference |
 | Abliteration tooling | [../docs/tools/abliteration-tooling.md](../docs/tools/abliteration-tooling.md) | reference |
+| Heretic pins + HF models | [../docs/tools/heretic-tools-reference.md](../docs/tools/heretic-tools-reference.md) | reference |
 | [llm-abliteration-workflow.md](llm-abliteration-workflow.md) | ~2–4 hr | ★★★☆☆ |
 | [manual-full-pipeline.md](manual-full-pipeline.md) | ~4–8 hr | ★★★★☆ |
 | [inference-only-prototype.md](inference-only-prototype.md) | ~1 hr | ★★☆☆☆ |
