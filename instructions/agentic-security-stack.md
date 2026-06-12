@@ -2,6 +2,10 @@
 
 End-to-end pipeline for **pentest lab**, **CyberGym**, and **factory firmware QA** agents.
 
+> **New to abliteration?** Do this first: [beginner-local-model-guide.md](beginner-local-model-guide.md) → [run-locally-ollama-lmstudio.md](run-locally-ollama-lmstudio.md). Return here when you have a working abliterated base model.
+
+---
+
 ## Phase 1 — Abliterate base model
 
 ```bash

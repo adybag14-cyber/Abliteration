@@ -1,6 +1,31 @@
 # Low VRAM & low RAM abliteration
 
-Run abliteration on **8–12 GB GPUs**, **16 GB system RAM laptops**, or **Apple Silicon** without a full FP16 model load. Pick a path by hardware.
+Run abliteration on **8–12 GB GPUs**, **16 GB system RAM laptops**, or **Apple Silicon** without a full FP16 model load.
+
+> **First time?** Complete [setup-environment.md](setup-environment.md) then [beginner-local-model-guide.md](beginner-local-model-guide.md) Track A — this page adds detail.
+
+---
+
+## Beginner steps (8 GB GPU, copy-paste order)
+
+| # | Action | Command / file |
+|---|--------|----------------|
+| 1 | Activate venv | `.\.venv\Scripts\Activate.ps1` or `source .venv/bin/activate` |
+| 2 | Install deps | `pip install -U heretic-llm bitsandbytes accelerate` |
+| 3 | Download small model | `huggingface-cli download Qwen/Qwen2.5-1.5B-Instruct --local-dir ./models/qwen-1.5b` |
+| 4 | Backup original | Copy folder to `qwen-1.5b-ORIGINAL` |
+| 5 | Fetch config | `curl -L -o config.toml https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml` |
+| 6 | Edit config | Set `quantization = "bnb_4bit"`, `offload_outputs_to_cpu = true`, `orthogonalize_direction = true` |
+| 7 | Run Heretic | `heretic ./models/qwen-1.5b` (from folder with `config.toml`) |
+| 8 | Save output | `./models/qwen-1.5b-abliterated` when prompted |
+| 9 | Test chat | Accept Heretic chat prompt — compare WMI-style question |
+| 10 | Ollama | [run-locally-ollama-lmstudio.md](run-locally-ollama-lmstudio.md) |
+
+**Success at step 9:** Same prompt that base refused now gets a technical answer (quality may vary).
+
+---
+
+## Pick a path by hardware
 
 | Your hardware | Recommended path |
 |---------------|------------------|

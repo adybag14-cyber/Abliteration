@@ -2,6 +2,12 @@
 
 Research-grade and production-hardening paths beyond default `heretic <model>`.
 
+> **Not ready yet?** Complete these first in order:  
+> 1. [setup-environment.md](setup-environment.md)  
+> 2. [beginner-local-model-guide.md](beginner-local-model-guide.md)  
+> 3. [run-locally-ollama-lmstudio.md](run-locally-ollama-lmstudio.md)  
+> Return here when your abliterated model runs in Ollama and you want **better quality** or **agent deployment**.
+
 **Read first:** [../docs/research-landscape.md](../docs/research-landscape.md) · [../docs/advanced-techniques-catalog.md](../docs/advanced-techniques-catalog.md)
 
 ---

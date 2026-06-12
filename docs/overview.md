@@ -81,6 +81,12 @@ Stack: Heretic abliteration → optional [Jarvis v7](../sources/jarvis-pack/IMPO
 
 Full index: [research-landscape.md](research-landscape.md) · [advanced-techniques-catalog.md](advanced-techniques-catalog.md)
 
+## Beginners improving local models
+
+1. [../instructions/setup-environment.md](../instructions/setup-environment.md)
+2. [../instructions/beginner-local-model-guide.md](../instructions/beginner-local-model-guide.md)
+3. [../instructions/run-locally-ollama-lmstudio.md](../instructions/run-locally-ollama-lmstudio.md)
+
 ## Next steps
 
 - Theory: [theory.md](theory.md)

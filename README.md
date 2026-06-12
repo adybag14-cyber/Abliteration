@@ -44,11 +44,22 @@ abliteration/
 └── references.md
 ```
 
+## Improve your local model (beginners)
+
+**Start here** if you use Ollama / LM Studio and want fewer refusals:
+
+1. [instructions/setup-environment.md](instructions/setup-environment.md) — install Python + GPU check  
+2. [instructions/beginner-local-model-guide.md](instructions/beginner-local-model-guide.md) — Heretic step by step  
+3. [instructions/run-locally-ollama-lmstudio.md](instructions/run-locally-ollama-lmstudio.md) — GGUF + Ollama import  
+
+Optional: [instructions/quickstart.md](instructions/quickstart.md) — test with hooks before permanent edit.
+
 ## Quick start paths
 
 | Goal | Start here |
 |------|------------|
-| Abliterate a model | [instructions/heretic-workflow.md](instructions/heretic-workflow.md) |
+| **First local model improvement** | [instructions/beginner-local-model-guide.md](instructions/beginner-local-model-guide.md) |
+| Abliterate a model (reference) | [instructions/heretic-workflow.md](instructions/heretic-workflow.md) |
 | **8 GB GPU / low RAM** | [instructions/low-vram-abliteration.md](instructions/low-vram-abliteration.md) |
 | **LoRA / QLoRA techniques** | [techniques/lora-qlora-abliteration.md](techniques/lora-qlora-abliteration.md) |
 | **Advanced methods (projected, MoE, RDO)** | [instructions/advanced-abliteration-workflow.md](instructions/advanced-abliteration-workflow.md) |
