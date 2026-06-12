@@ -56,6 +56,22 @@
     "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\openhands-readme.txt"
   },
   {
+    "id": "hashcat-readme",
+    "url": "https://raw.githubusercontent.com/hashcat/hashcat/master/README.md",
+    "kind": "raw",
+    "ok": true,
+    "bytes": 4368,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\hashcat-readme.txt"
+  },
+  {
+    "id": "kali-metapackages",
+    "url": "https://www.kali.org/docs/general-use/metapackages/",
+    "kind": "page",
+    "ok": true,
+    "bytes": 5633,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\kali-metapackages.txt"
+  },
+  {
     "id": "heretic-github",
     "url": "https://github.com/p-e-w/heretic",
     "kind": "page",

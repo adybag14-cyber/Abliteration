@@ -15,6 +15,7 @@ Living handbook for **LLM abliteration** — weight-level refusal removal — pl
 | Factory new-hardware acceptance | [docs/use-cases/factory-firmware-qa.md](docs/use-cases/factory-firmware-qa.md) |
 | Pentest / DFIR / firmware analysis (authorized) | [docs/use-cases/pentest-cyber-analysis.md](docs/use-cases/pentest-cyber-analysis.md) |
 | CyberGym agent benchmarking | [docs/use-cases/cybergym-benchmark.md](docs/use-cases/cybergym-benchmark.md) |
+| OSINT / Kali / hashcat tool library | [docs/tools/README.md](docs/tools/README.md) |
 | Full agent stack (Heretic + Jarvis v7) | [instructions/agentic-security-stack.md](instructions/agentic-security-stack.md) |
 
 ## Repo layout
@@ -33,6 +34,7 @@ abliteration/
 │   ├── jarvis-pack/             # extracted v7 zip (curated)
 │   └── fetched/                 # GitHub/doc snapshots
 ├── docs/
+│   ├── tools/                   # OSINT, Kali, hashcat, playbooks
 │   ├── hardware-command-catalog.md
 │   ├── use-cases/
 │   ├── context7.md
@@ -48,6 +50,7 @@ abliteration/
 | Abliterate a model | [instructions/heretic-workflow.md](instructions/heretic-workflow.md) |
 | Factory QA agent | [instructions/agentic-security-stack.md](instructions/agentic-security-stack.md) |
 | Hardware commands | [docs/hardware-command-catalog.md](docs/hardware-command-catalog.md) |
+| Security tool catalogs | [docs/tools/README.md](docs/tools/README.md) |
 | Evaluate | [docs/evaluation.md](docs/evaluation.md) |
 
 ## Refresh upstream docs

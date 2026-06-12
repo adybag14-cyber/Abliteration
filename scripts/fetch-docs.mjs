@@ -51,6 +51,16 @@ const TARGETS = [
     kind: 'raw',
   },
   {
+    id: 'hashcat-readme',
+    url: 'https://raw.githubusercontent.com/hashcat/hashcat/master/README.md',
+    kind: 'raw',
+  },
+  {
+    id: 'kali-metapackages',
+    url: 'https://www.kali.org/docs/general-use/metapackages/',
+    kind: 'page',
+  },
+  {
     id: 'heretic-github',
     url: 'https://github.com/p-e-w/heretic',
     kind: 'page',

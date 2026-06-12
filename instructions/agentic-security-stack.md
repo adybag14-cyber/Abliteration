@@ -58,7 +58,10 @@ Extend `SAFE_EXACT_COMMANDS` in the script for your factory SKU manifests.
 |--------|------|
 | Factory / firmware | `data/eval/hardware-factory-prompts.jsonl` |
 | Cyber research | `data/eval/cyber-research-prompts.jsonl` |
+| OSINT / Kali / hashcat | `data/eval/osint-pentest-prompts.jsonl` |
 | Jarvis full eval | `sources/jarvis-pack/.../eval_prompts.jsonl` (filter categories) |
+
+Tool playbooks: [../docs/tools/agent-playbooks.md](../docs/tools/agent-playbooks.md) · Catalog: [../docs/tools/README.md](../docs/tools/README.md)
 
 CyberGym full benchmark: [../docs/use-cases/cybergym-benchmark.md](../docs/use-cases/cybergym-benchmark.md)
 

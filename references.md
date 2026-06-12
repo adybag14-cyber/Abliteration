@@ -34,6 +34,8 @@ Heretic also mirrors to [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/
 | Heretic README (fetched) | [sources/fetched/heretic-readme.txt](sources/fetched/heretic-readme.txt) |
 | CyberGym paper (fetched) | [sources/fetched/cybergym-arxiv.txt](sources/fetched/cybergym-arxiv.txt) |
 | OpenHands README (fetched) | [sources/fetched/openhands-readme.txt](sources/fetched/openhands-readme.txt) |
+| hashcat README (fetched) | [sources/fetched/hashcat-readme.txt](sources/fetched/hashcat-readme.txt) |
+| Kali metapackages (fetched) | [sources/fetched/kali-metapackages.txt](sources/fetched/kali-metapackages.txt) |
 
 ## Install commands (from upstream, Jun 2026)
 
@@ -65,6 +67,22 @@ python measure.py -m <model_path> -o directions.pt
 Use-case guides: [factory-firmware-qa.md](docs/use-cases/factory-firmware-qa.md) · [pentest-cyber-analysis.md](docs/use-cases/pentest-cyber-analysis.md) · [cybergym-benchmark.md](docs/use-cases/cybergym-benchmark.md)
 
 Full stack workflow: [instructions/agentic-security-stack.md](instructions/agentic-security-stack.md)
+
+## Security tool catalogs (OSINT / Kali / hashcat)
+
+| Resource | URL |
+|----------|-----|
+| **Handbook hub** | [docs/tools/README.md](docs/tools/README.md) |
+| Kali tools (official) | [kali.org/tools](https://www.kali.org/tools/) |
+| Kali metapackages | [kali.org/docs/general-use/metapackages](https://www.kali.org/docs/general-use/metapackages/) |
+| **hashcat** | [hashcat.net](https://hashcat.net/hashcat/) · [GitHub](https://github.com/hashcat/hashcat) |
+| hashcat wiki | [hashcat.net/wiki](https://hashcat.net/wiki/) |
+| OSINT Framework | [osintframework.com](https://osintframework.com/) |
+| Exploit-DB / searchsploit | [exploit-db.com](https://www.exploit-db.com/) |
+| SecLists wordlists | [github.com/danielmiessler/SecLists](https://github.com/danielmiessler/SecLists) |
+| Impacket | [github.com/fortra/impacket](https://github.com/fortra/impacket) |
+| BloodHound | [github.com/SpecterOps/BloodHound](https://github.com/SpecterOps/BloodHound) |
+| Nuclei | [github.com/projectdiscovery/nuclei](https://github.com/projectdiscovery/nuclei) |
 
 ## Related concepts
 

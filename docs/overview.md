@@ -47,6 +47,7 @@
 | [Factory firmware QA](use-cases/factory-firmware-qa.md) | Bench PCs need USB/disk/BIOS enumeration without chat refusals |
 | [Pentest / cyber analysis](use-cases/pentest-cyber-analysis.md) | Lab recon, binary analysis, CVE repro in authorized scope |
 | [CyberGym](use-cases/cybergym-benchmark.md) | Agents must act autonomously on 1,507 real vuln tasks |
+| [OSINT / Kali / hashcat](tools/README.md) | 600+ tool catalog for recon, cracking, web, AD, forensics |
 
 Stack: Heretic abliteration → optional [Jarvis v7](../sources/jarvis-pack/IMPORT.md) tool-repair → `hardware-tool-gate.py` at runtime.
 

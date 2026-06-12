@@ -7,6 +7,7 @@ Step-by-step workflows. Read [../docs/overview.md](../docs/overview.md) first.
 | [quickstart.md](quickstart.md) | ~30 min | ★★☆☆☆ |
 | [heretic-workflow.md](heretic-workflow.md) | ~1–2 hr | ★★☆☆☆ |
 | [agentic-security-stack.md](agentic-security-stack.md) | ~2–4 hr | ★★★☆☆ |
+| Tool catalogs (OSINT/Kali/hashcat) | [../docs/tools/README.md](../docs/tools/README.md) | reference |
 | [llm-abliteration-workflow.md](llm-abliteration-workflow.md) | ~2–4 hr | ★★★☆☆ |
 | [manual-full-pipeline.md](manual-full-pipeline.md) | ~4–8 hr | ★★★★☆ |
 | [inference-only-prototype.md](inference-only-prototype.md) | ~1 hr | ★★☆☆☆ |
