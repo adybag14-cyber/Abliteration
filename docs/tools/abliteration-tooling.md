@@ -9,6 +9,7 @@ Tools for **weight surgery**, **4-bit measure**, **LoRA export**, **quantized in
 | Tool | URL | Role | VRAM notes |
 |------|-----|------|------------|
 | **Heretic** | [p-e-w/heretic](https://github.com/p-e-w/heretic) | Automatic abliteration + Optuna | `bnb_4bit`, CPU offload |
+| **Heretic pins (this repo)** | [heretic-tools-reference.md](heretic-tools-reference.md) | Immutable `config.default.toml`, lockfiles, HF model registry | Offline copy-paste |
 | **llm-abliteration** | [jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) | measure → analyze → sharded ablate | `--quant 4bit` |
 | **refusal_direction** | [andyrdt/refusal_direction](https://github.com/andyrdt/refusal_direction) | Paper reproduction | Research GPU |
 | **TransformerLens** | [TransformerLensOrg/TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) | Hooks, direction probes | 1–3B on 8 GB |

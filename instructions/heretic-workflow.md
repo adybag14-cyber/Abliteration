@@ -39,11 +39,20 @@ heretic --help
 
 ### Step 4 — Config file (recommended)
 
-Run Heretic from a folder containing `config.toml`:
+Run Heretic from a folder containing `config.toml`. Use **pinned configs from this handbook** (offline-safe) or refresh from upstream:
 
 ```bash
+# From abliteration repo — low VRAM (8–12 GB)
+cp sources/heretic-tools/config.low-vram.toml config.toml
+
+# Or upstream defaults (immutable pin in repo)
+cp sources/heretic-tools/config.default.toml config.toml
+
+# Or live GitHub (needs network)
 curl -L -o config.toml https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml
 ```
+
+See [../docs/tools/heretic-tools-reference.md](../docs/tools/heretic-tools-reference.md) · [../sources/heretic-tools/IMPORT.md](../sources/heretic-tools/IMPORT.md)
 
 **Beginner / quality defaults:**
 

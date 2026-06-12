@@ -14,8 +14,8 @@ Run abliteration on **8–12 GB GPUs**, **16 GB system RAM laptops**, or **Apple
 | 2 | Install deps | `pip install -U heretic-llm bitsandbytes accelerate` |
 | 3 | Download small model | `huggingface-cli download Qwen/Qwen2.5-1.5B-Instruct --local-dir ./models/qwen-1.5b` |
 | 4 | Backup original | Copy folder to `qwen-1.5b-ORIGINAL` |
-| 5 | Fetch config | `curl -L -o config.toml https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml` |
-| 6 | Edit config | Set `quantization = "bnb_4bit"`, `offload_outputs_to_cpu = true`, `orthogonalize_direction = true` |
+| 5 | Copy config | `cp sources/heretic-tools/config.low-vram.toml config.toml` (from abliteration repo) |
+| 6 | (optional) Edit | Profile already sets `bnb_4bit` — tweak `n_trials` if you have time |
 | 7 | Run Heretic | `heretic ./models/qwen-1.5b` (from folder with `config.toml`) |
 | 8 | Save output | `./models/qwen-1.5b-abliterated` when prompted |
 | 9 | Test chat | Accept Heretic chat prompt — compare WMI-style question |
@@ -58,11 +58,16 @@ Best for **one-command** abliteration when VRAM is the bottleneck.
 
 ### 1. Config
 
-Copy upstream defaults and edit:
+Use the handbook low-VRAM pin (recommended):
 
 ```bash
-curl -L -o config.toml \
-  https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml
+cp sources/heretic-tools/config.low-vram.toml config.toml
+```
+
+Or copy upstream defaults from the repo pin and edit:
+
+```bash
+cp sources/heretic-tools/config.default.toml config.toml
 ```
 
 ```toml

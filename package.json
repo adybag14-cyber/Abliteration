@@ -1,0 +1,18 @@
+{
+  "name": "abliteration-handbook",
+  "private": true,
+  "type": "module",
+  "description": "Fetch scripts for upstream docs, Heretic pins, and HF model registry",
+  "scripts": {
+    "fetch:docs": "node scripts/fetch-docs.mjs",
+    "fetch:docs:firefox": "node scripts/fetch-docs.mjs --firefox",
+    "fetch:heretic": "node scripts/fetch-heretic-tools.mjs",
+    "fetch:hf-models": "node scripts/fetch-hf-heretic-models.mjs",
+    "fetch:hf-models:firefox": "node scripts/fetch-hf-heretic-models.mjs --firefox",
+    "fetch:all": "node scripts/fetch-heretic-tools.mjs && node scripts/fetch-docs.mjs && node scripts/fetch-hf-heretic-models.mjs --firefox && node scripts/build-heretic-models-doc.mjs",
+    "build:heretic-models-doc": "node scripts/build-heretic-models-doc.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}

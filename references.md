@@ -1,6 +1,6 @@
 # References
 
-> **Source policy:** GitHub repos and arXiv first. Hugging Face is listed only where upstream projects still host weights or legacy blog posts. Refresh with `node scripts/fetch-docs.mjs`.
+> **Source policy:** GitHub repos and arXiv first. Hugging Face is listed for weights and the heretic/abliterated model registry. Refresh with `npm run fetch:all` (or `fetch:heretic` / `fetch:docs` / `fetch:hf-models:firefox`).
 
 ## Primary papers
 
@@ -33,6 +33,17 @@
 | **GraySwan circuit-breakers** | [github.com/GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) | Defensive alignment (contrast) |
 
 Heretic also mirrors to [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/heretic).
+
+**Pinned in this repo:** [sources/heretic-tools/](sources/heretic-tools/) · [docs/tools/heretic-tools-reference.md](docs/tools/heretic-tools-reference.md)
+
+## Heretic / abliterated models (Hugging Face)
+
+| Resource | URL |
+|----------|-----|
+| Live browse | [huggingface.co/models?other=heretic](https://huggingface.co/models?other=heretic) |
+| Registry (JSONL) | [data/heretic-models-registry.jsonl](data/heretic-models-registry.jsonl) |
+| Human table | [docs/tools/heretic-models-registry.md](docs/tools/heretic-models-registry.md) |
+| Handbook seeds | [data/heretic-models-registry.seed.jsonl](data/heretic-models-registry.seed.jsonl) |
 
 ## Live documentation
 

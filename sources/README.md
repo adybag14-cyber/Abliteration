@@ -2,15 +2,30 @@
 
 This repo prefers **GitHub** and **live doc fetches** over stale Hugging Face blog links.
 
-## Refresh fetched docs (headless browser)
+## Heretic tool pins (immutable)
+
+Pinned configs and lockfiles: [`heretic-tools/`](heretic-tools/) — see [heretic-tools/IMPORT.md](heretic-tools/IMPORT.md).
+
+```bash
+npm run fetch:heretic    # sync config.default.toml, pyproject, uv.lock from GitHub
+```
+
+## Refresh fetched docs + HF model registry (headless browser)
 
 ```bash
 cd abliteration
-node scripts/fetch-docs.mjs          # Chromium (default)
-node scripts/fetch-docs.mjs --firefox # requires: npx playwright install firefox
+npm install
+npx playwright install chromium firefox   # once
+
+npm run fetch:all                         # pins + docs + HF registry + markdown table
+# or:
+node scripts/fetch-docs.mjs               # Chromium
+node scripts/fetch-docs.mjs --firefox
+node scripts/fetch-hf-heretic-models.mjs --firefox   # HF API via in-page fetch
 ```
 
-Outputs land in `sources/fetched/` with a `manifest.json` timestamp.
+- Doc snapshots → `sources/fetched/` + `manifest.json`
+- Heretic/abliterated HF models → `data/heretic-models-registry.jsonl` + [../docs/tools/heretic-models-registry.md](../docs/tools/heretic-models-registry.md)
 
 ## Context7 (optional MCP)
 

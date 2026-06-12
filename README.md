@@ -25,12 +25,18 @@ abliteration/
 ├── README.md
 ├── scripts/
 │   ├── fetch-docs.mjs           # headless Chromium/Firefox upstream fetch
+│   ├── fetch-heretic-tools.mjs  # sync pinned Heretic configs from GitHub
+│   ├── fetch-hf-heretic-models.mjs  # HF heretic/abliterated registry (Playwright)
 │   ├── hardware-tool-gate.py    # from JARVIS v7 — runtime command gate
 │   └── validate-dataset.py
+├── data/
+│   ├── heretic-models-registry.jsonl   # open-weight HF models attempted
+│   └── eval/
 ├── data/eval/
 │   ├── hardware-factory-prompts.jsonl
 │   └── cyber-research-prompts.jsonl
 ├── sources/
+│   ├── heretic-tools/           # immutable Heretic config pins (refresh via npm)
 │   ├── jarvis-pack/             # extracted v7 zip (curated)
 │   └── fetched/                 # GitHub/doc snapshots
 ├── docs/
@@ -65,17 +71,26 @@ Optional: [instructions/quickstart.md](instructions/quickstart.md) — test with
 | **Advanced methods (projected, MoE, RDO)** | [instructions/advanced-abliteration-workflow.md](instructions/advanced-abliteration-workflow.md) |
 | Research landscape & papers | [docs/research-landscape.md](docs/research-landscape.md) |
 | Abliteration tools (PEFT, GGUF, SAE, …) | [docs/tools/abliteration-tooling.md](docs/tools/abliteration-tooling.md) |
+| **Heretic pins + HF model registry** | [docs/tools/heretic-tools-reference.md](docs/tools/heretic-tools-reference.md) |
 | Factory QA agent | [instructions/agentic-security-stack.md](instructions/agentic-security-stack.md) |
 | Hardware commands | [docs/hardware-command-catalog.md](docs/hardware-command-catalog.md) |
 | Security tool catalogs | [docs/tools/README.md](docs/tools/README.md) |
 | Evaluate | [docs/evaluation.md](docs/evaluation.md) |
 
-## Refresh upstream docs
+## Refresh upstream docs & Heretic pins
 
 ```bash
-node scripts/fetch-docs.mjs          # Chromium
-node scripts/fetch-docs.mjs --firefox  # npx playwright install firefox
+npm install
+npx playwright install chromium firefox   # once
+
+npm run fetch:all                         # Heretic pins + docs + HF registry
+# or:
+npm run fetch:heretic
+npm run fetch:docs
+npm run fetch:hf-models:firefox           # HF blocks bare curl on some networks
 ```
+
+Pinned Heretic files: [sources/heretic-tools/IMPORT.md](sources/heretic-tools/IMPORT.md) · Model list: [docs/tools/heretic-models-registry.md](docs/tools/heretic-models-registry.md)
 
 GitHub-first references: [references.md](references.md) · Context7: [docs/context7.md](docs/context7.md)
 

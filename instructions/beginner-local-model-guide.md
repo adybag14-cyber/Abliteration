@@ -156,22 +156,22 @@ huggingface-cli download Qwen/Qwen2.5-1.5B-Instruct --local-dir ./models/Qwen2.5
 
 ### Step A1 — Create low-VRAM config (5 min)
 
+Clone or copy from the [Abliteration handbook](https://github.com/adybag14-cyber/Abliteration) — pinned profile, no manual edits required:
+
+```bash
+cp /path/to/abliteration/sources/heretic-tools/config.low-vram.toml config.toml
+```
+
+Or fetch live upstream defaults and edit manually:
+
 ```bash
 curl -L -o config.toml https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml
+# then set quantization = "bnb_4bit", offload_outputs_to_cpu = true, etc.
 ```
 
-Edit `config.toml` in Notepad — change **only** these lines:
+See [../docs/tools/heretic-tools-reference.md](../docs/tools/heretic-tools-reference.md) · pre-abliterated HF models: [../docs/tools/heretic-models-registry.md](../docs/tools/heretic-models-registry.md)
 
-```toml
-quantization = "bnb_4bit"
-offload_outputs_to_cpu = true
-orthogonalize_direction = true
-row_normalization = "full"
-n_trials = 80
-max_batch_size = 16
-```
-
-Save in the **same folder** where you will run `heretic` (your `local-ai-abliterate` directory).
+Save `config.toml` in the **same folder** where you will run `heretic` (your `local-ai-abliterate` directory).
 
 ### Step A2 — Run Heretic (30–90 min)
 
@@ -221,17 +221,16 @@ Write a short PowerShell one-liner to list disk drive models with WMI.
 ### Step B1 — Optional config (recommended)
 
 ```bash
-curl -L -o config.toml https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml
+cp /path/to/abliteration/sources/heretic-tools/config.production.toml config.toml
 ```
 
-Set:
+Or upstream defaults:
 
-```toml
-orthogonalize_direction = true
-row_normalization = "full"
+```bash
+cp /path/to/abliteration/sources/heretic-tools/config.default.toml config.toml
 ```
 
-Leave `quantization = "none"` if you have 16 GB+ VRAM.
+Leave `quantization = "none"` if you have 16 GB+ VRAM (production profile already sets projected + norm-preserving options).
 
 ### Step B2 — Run
 

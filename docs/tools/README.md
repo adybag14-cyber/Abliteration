@@ -34,6 +34,8 @@ Full index: [kali-metapackages.md](kali-metapackages.md) · Official: [kali.org/
 | [zig-canonical-syntax.md](zig-canonical-syntax.md) | **0.17 syntax** — [adybag14-cyber/zig](https://github.com/adybag14-cyber/zig) `master` |
 | [zig-advanced-techniques.md](zig-advanced-techniques.md) | **RE/exploit patterns** from canonical `test/behavior/*` |
 | [abliteration-tooling.md](abliteration-tooling.md) | **Heretic, PEFT, SAE, RepE, GGUF, vLLM** — full ML stack |
+| [heretic-tools-reference.md](heretic-tools-reference.md) | **Pinned Heretic configs** + refresh scripts |
+| [heretic-models-registry.md](heretic-models-registry.md) | **Open-weight HF** models tagged heretic/abliterated |
 
 ## Generated example corpora
 

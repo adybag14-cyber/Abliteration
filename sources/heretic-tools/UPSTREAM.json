@@ -1,0 +1,40 @@
+{
+  "project": "heretic",
+  "primary_repo": "https://github.com/p-e-w/heretic",
+  "mirror_repo": "https://codeberg.org/p-e-w/heretic",
+  "pypi_package": "heretic-llm",
+  "default_branch": "master",
+  "synced_at": "2026-06-12T23:39:58.008Z",
+  "synced_by": "scripts/fetch-heretic-tools.mjs",
+  "pinned_files": {
+    "config.default.toml": {
+      "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml",
+      "local": "sources/heretic-tools/config.default.toml",
+      "sha256": "23498cbe624627f3a31892f12e6fe07d1734f81399aa5eed83c57b20a573f2bc",
+      "bytes": 7057,
+      "synced_at": "2026-06-12T23:39:58.008Z"
+    },
+    "pyproject.toml.reference": {
+      "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/pyproject.toml",
+      "local": "sources/heretic-tools/pyproject.toml.reference",
+      "sha256": "a27b94683b850791b6656461119123d0104c9b00e94fb39576922f2137593d89",
+      "bytes": 1981,
+      "synced_at": "2026-06-12T23:39:58.008Z"
+    },
+    "uv.lock.reference": {
+      "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/uv.lock",
+      "local": "sources/heretic-tools/uv.lock.reference",
+      "sha256": "de9de8005ca55a17111e3e7f136e6ba00db1f7bc899d6696fd66fd613fd455e9",
+      "bytes": 893328,
+      "synced_at": "2026-06-12T23:39:58.008Z"
+    }
+  },
+  "handbook_profiles": {
+    "config.low-vram.toml": "Maintained in-repo — 8–12 GB GPU, bnb_4bit",
+    "config.production.toml": "Maintained in-repo — 12–24 GB, projected + norm-preserving"
+  },
+  "install": {
+    "pip": "pip install -U heretic-llm bitsandbytes accelerate",
+    "uv": "git clone https://github.com/p-e-w/heretic.git && cd heretic && uv run heretic --help"
+  }
+}
