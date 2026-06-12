@@ -32,6 +32,8 @@ Heretic also mirrors to [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/
 | abliteration.ai docs | [docs.abliteration.ai](https://docs.abliteration.ai/what-is-abliteration) |
 | Agent doc index | [docs.abliteration.ai/llms.txt](https://docs.abliteration.ai/llms.txt) |
 | Heretic README (fetched) | [sources/fetched/heretic-readme.txt](sources/fetched/heretic-readme.txt) |
+| CyberGym paper (fetched) | [sources/fetched/cybergym-arxiv.txt](sources/fetched/cybergym-arxiv.txt) |
+| OpenHands README (fetched) | [sources/fetched/openhands-readme.txt](sources/fetched/openhands-readme.txt) |
 
 ## Install commands (from upstream, Jun 2026)
 
@@ -49,6 +51,20 @@ git clone https://github.com/jim-plus/llm-abliteration.git
 cd llm-abliteration && pip install -r requirements.txt
 python measure.py -m <model_path> -o directions.pt
 ```
+
+## Agentic security & evaluation
+
+| Project | URL | Role |
+|---------|-----|------|
+| **CyberGym** | [cybergym.io](https://cybergym.io) · [arXiv:2506.02548](https://arxiv.org/abs/2506.02548) | 1,507 real-world vuln tasks for agent scoring |
+| **OpenHands** | [github.com/OpenHands/OpenHands](https://github.com/OpenHands/OpenHands) | Bash-chaining agent (CyberGym top performer) |
+| **JARVIS Tool Repair v7** | [sources/jarvis-pack/IMPORT.md](sources/jarvis-pack/IMPORT.md) | SFT/DPO tool-use repair (48k rows, local) |
+| **hardware-tool-gate** | [scripts/hardware-tool-gate.py](scripts/hardware-tool-gate.py) | Runtime ALLOW / CONFIRM / BLOCK for terminal calls |
+| **Command catalog** | [docs/hardware-command-catalog.md](docs/hardware-command-catalog.md) | Factory / firmware / lab read-only diagnostics |
+
+Use-case guides: [factory-firmware-qa.md](docs/use-cases/factory-firmware-qa.md) · [pentest-cyber-analysis.md](docs/use-cases/pentest-cyber-analysis.md) · [cybergym-benchmark.md](docs/use-cases/cybergym-benchmark.md)
+
+Full stack workflow: [instructions/agentic-security-stack.md](instructions/agentic-security-stack.md)
 
 ## Related concepts
 

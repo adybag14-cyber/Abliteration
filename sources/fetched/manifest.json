@@ -40,6 +40,30 @@
     "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\abliteration-llms-txt.txt"
   },
   {
+    "id": "cybergym-arxiv",
+    "url": "https://arxiv.org/abs/2506.02548",
+    "kind": "page",
+    "ok": true,
+    "bytes": 3210,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\cybergym-arxiv.txt"
+  },
+  {
+    "id": "openhands-readme",
+    "url": "https://raw.githubusercontent.com/OpenHands/OpenHands/main/README.md",
+    "kind": "raw",
+    "ok": true,
+    "bytes": 8359,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\openhands-readme.txt"
+  },
+  {
+    "id": "heretic-github",
+    "url": "https://github.com/p-e-w/heretic",
+    "kind": "page",
+    "ok": true,
+    "bytes": 16436,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\heretic-github.txt"
+  },
+  {
     "id": "transformer-lens-readme",
     "url": "https://raw.githubusercontent.com/TransformerLensOrg/TransformerLens/main/README.md",
     "kind": "raw",

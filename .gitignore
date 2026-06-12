@@ -28,3 +28,6 @@ wandb/
 # Fetched upstream snapshots (regenerate with scripts/fetch-docs.mjs)
 sources/fetched/*.txt
 !sources/fetched/manifest.json
+
+# JARVIS full training JSONL (large — keep locally from zip)
+sources/jarvis-pack/jarvis-tool-repair-pack/data/*.jsonl

@@ -46,4 +46,5 @@ Same prompt, hook on vs off. Log outputs.
 ## Next
 
 - Permanent checkpoint → [heretic-workflow.md](heretic-workflow.md)
+- Factory / pentest / CyberGym agent → [agentic-security-stack.md](agentic-security-stack.md)
 - Full manual control → [manual-full-pipeline.md](manual-full-pipeline.md)

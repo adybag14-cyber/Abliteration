@@ -37,7 +37,18 @@
 
 - Model family already studied (Llama, Qwen, Mistral variants have public recipes)
 - Refusal is **concentrated** in a single direction per layer (often true for instruction-tuned models)
-- You want a **standalone uncensored checkpoint** without ongoing steering hooks
+- You want a **standalone checkpoint** for agentic security / factory QA without steering hooks
+- **False refusals** block `wmic`, `lspci`, firmware `strings`, CyberGym PoC builds, scoped `nmap`
+
+### Production use cases (this repo)
+
+| Domain | Why abliterate |
+|--------|----------------|
+| [Factory firmware QA](use-cases/factory-firmware-qa.md) | Bench PCs need USB/disk/BIOS enumeration without chat refusals |
+| [Pentest / cyber analysis](use-cases/pentest-cyber-analysis.md) | Lab recon, binary analysis, CVE repro in authorized scope |
+| [CyberGym](use-cases/cybergym-benchmark.md) | Agents must act autonomously on 1,507 real vuln tasks |
+
+Stack: Heretic abliteration → optional [Jarvis v7](../sources/jarvis-pack/IMPORT.md) tool-repair → `hardware-tool-gate.py` at runtime.
 
 ## When it struggles
 

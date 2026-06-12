@@ -41,6 +41,21 @@ const TARGETS = [
     kind: 'raw',
   },
   {
+    id: 'cybergym-arxiv',
+    url: 'https://arxiv.org/abs/2506.02548',
+    kind: 'page',
+  },
+  {
+    id: 'openhands-readme',
+    url: 'https://raw.githubusercontent.com/OpenHands/OpenHands/main/README.md',
+    kind: 'raw',
+  },
+  {
+    id: 'heretic-github',
+    url: 'https://github.com/p-e-w/heretic',
+    kind: 'page',
+  },
+  {
     id: 'transformer-lens-readme',
     url: 'https://raw.githubusercontent.com/TransformerLensOrg/TransformerLens/main/README.md',
     kind: 'raw',

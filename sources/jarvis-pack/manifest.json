@@ -1,0 +1,112 @@
+{
+  "version": "v7-web-researched-platform-expanded",
+  "sft_train_rows": 48557,
+  "dpo_train_rows": 47029,
+  "eval_prompts_rows": 2857,
+  "safe_tool_catalog_rows": 454,
+  "safety_note": "Environment dumping removed. Unsafe commands are censored with placeholders. Use external tool gate.",
+  "training_note": "Still start with SFT 1 epoch and DPO 0.5 to 1 epoch; the pack is bigger, but do not overtrain.",
+  "updated_utc": "2026-06-09T12:01:47.342444+00:00",
+  "counts": {
+    "sft": 48557,
+    "dpo": 47029,
+    "eval": 2857
+  },
+  "v4_addition": {
+    "sft": {
+      "old": 14424,
+      "added_candidates": 4718,
+      "new_total": 14424,
+      "actually_added": 0
+    },
+    "dpo": {
+      "old": 15974,
+      "added_candidates": 4714,
+      "new_total": 15974,
+      "actually_added": 0
+    },
+    "eval": {
+      "old": 938,
+      "added_candidates": 318,
+      "new_total": 938,
+      "actually_added": 0
+    }
+  },
+  "notes": "v5 adds a larger macOS, Windows PowerShell/cmd, and Termux safe read-only tool-use curriculum, including multi-tool read-only workflows. Unsafe examples remain censored placeholders only.",
+  "v4b_addition": {
+    "sft": {
+      "old": 14424,
+      "added_candidates": 10790,
+      "new_total": 25214,
+      "actually_added": 10790
+    },
+    "dpo": {
+      "old": 15974,
+      "added_candidates": 10790,
+      "new_total": 26764,
+      "actually_added": 10790
+    },
+    "eval": {
+      "old": 938,
+      "added_candidates": 161,
+      "new_total": 1099,
+      "actually_added": 161
+    }
+  },
+  "v5_addition": {
+    "safe_command_entries": 180,
+    "sft_added": 5880,
+    "dpo_added": 5880,
+    "eval_added": 372,
+    "platforms": [
+      "macOS",
+      "Windows",
+      "Termux"
+    ],
+    "new_counts": {
+      "sft": 31094,
+      "dpo": 32644,
+      "eval": 1471
+    }
+  },
+  "v6_addition": {
+    "sft_added": 1851,
+    "dpo_added": 943,
+    "eval_added": 227,
+    "safe_command_entries": 155,
+    "platforms": [
+      "Windows",
+      "Termux",
+      "macOS small storage addendum"
+    ],
+    "note": "Adds more Windows storage/DiskPart list-detail examples, USB inventory, Termux diagnostics. USB eject/dismount is confirmation-required, not auto-allow."
+  },
+  "v6b_prompt_variations": {
+    "sft_added": 4650,
+    "dpo_added": 2480,
+    "eval_added": 310,
+    "safe_command_entries_reused": 155,
+    "note": "Adds more paraphrases for Windows, Termux, DiskPart and USB inventory safe diagnostics."
+  },
+  "v7_web_researched_platform_expansion": {
+    "sft_added": 10962,
+    "dpo_added": 10962,
+    "eval_added": 849,
+    "safe_command_entries": 383,
+    "confirmation_action_entries": 18,
+    "platforms": [
+      "Windows PowerShell",
+      "Windows cmd",
+      "Windows DiskPart",
+      "Termux",
+      "macOS"
+    ],
+    "source_domains": [
+      "learn.microsoft.com",
+      "wiki.termux.com",
+      "ss64.com",
+      "manp.gs"
+    ],
+    "note": "Adds web-researched read-only diagnostics. DiskPart remains list/select/detail only. USB eject/unmount and Termux privacy/state-changing actions are confirmation-required, not auto-allowed."
+  }
+}

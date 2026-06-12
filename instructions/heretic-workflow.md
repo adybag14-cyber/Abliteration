@@ -83,3 +83,11 @@ node scripts/fetch-docs.mjs
 | Gated model 403 | `huggingface-cli login` (weights only — tool is on GitHub) |
 
 See [../sources/fetched/heretic-readme.txt](../sources/fetched/heretic-readme.txt) for latest fetched README.
+
+## Security & factory QA use
+
+After abliteration, models should stop false-refusing benign diagnostics (`wmic`, `lspci`, firmware `strings`, scoped lab `nmap`). For production agents:
+
+1. Eval on [../data/eval/hardware-factory-prompts.jsonl](../data/eval/hardware-factory-prompts.jsonl) or [../data/eval/cyber-research-prompts.jsonl](../data/eval/cyber-research-prompts.jsonl)
+2. Optional Jarvis v7 SFT/DPO → [agentic-security-stack.md](agentic-security-stack.md)
+3. Always gate terminal calls with [../scripts/hardware-tool-gate.py](../scripts/hardware-tool-gate.py)

@@ -1,63 +1,68 @@
 # Abliteration — One-Stop Reference
 
-A curated, practical reference for **LLM abliteration**: identifying refusal-related directions in transformer activations and removing or attenuating them in model weights.
-
-This repo is organized as a living handbook — theory, techniques, methods, tools, and step-by-step instructions in one place.
+Living handbook for **LLM abliteration** — weight-level refusal removal — plus **agentic security** stacks for factory firmware QA, pentest labs, and [CyberGym](https://cybergym.io) evaluation.
 
 ## What is abliteration?
 
-**Abliteration** (from *ablate* + *obliteration*) is a weight-editing procedure that reduces a model's tendency to refuse benign or policy-triggering prompts by surgically modifying weights instead of relying on prompt jailbreaks.
+**Abliteration** surgically removes refusal-related directions from transformer weights (Arditi et al., 2024). Result: models that **execute** legitimate security and hardware diagnostics instead of false-refusing `wmic`, `nmap`, firmware analysis, and multi-step agent workflows.
 
-The core insight (Arditi et al., 2024): **refusal behavior in many LLMs is largely mediated by a low-dimensional direction** in the residual stream. If you can estimate that direction per layer, you can **project it out** of MLP/attention outputs (or directly from weight matrices) and produce a variant that retains general capabilities while refusing less often.
+> Model surgery, not fine-tuning. Keep pristine base weights.
 
-> This is interpretability-driven **model surgery**, not fine-tuning. It is irreversible without keeping original weights.
+## Who this is for
+
+| Use case | Doc |
+|----------|-----|
+| Factory new-hardware acceptance | [docs/use-cases/factory-firmware-qa.md](docs/use-cases/factory-firmware-qa.md) |
+| Pentest / DFIR / firmware analysis (authorized) | [docs/use-cases/pentest-cyber-analysis.md](docs/use-cases/pentest-cyber-analysis.md) |
+| CyberGym agent benchmarking | [docs/use-cases/cybergym-benchmark.md](docs/use-cases/cybergym-benchmark.md) |
+| Full agent stack (Heretic + Jarvis v7) | [instructions/agentic-security-stack.md](instructions/agentic-security-stack.md) |
 
 ## Repo layout
 
 ```
 abliteration/
-├── README.md                 ← you are here
+├── README.md
+├── scripts/
+│   ├── fetch-docs.mjs           # headless Chromium/Firefox upstream fetch
+│   ├── hardware-tool-gate.py    # from JARVIS v7 — runtime command gate
+│   └── validate-dataset.py
+├── data/eval/
+│   ├── hardware-factory-prompts.jsonl
+│   └── cyber-research-prompts.jsonl
+├── sources/
+│   ├── jarvis-pack/             # extracted v7 zip (curated)
+│   └── fetched/                 # GitHub/doc snapshots
 ├── docs/
-│   ├── overview.md           ← concepts & vocabulary
-│   ├── theory.md             ← math intuition & paper summaries
-│   ├── evaluation.md         ← how to measure effect
-│   └── risks-and-ethics.md   ← safety, legality, responsible use
-├── techniques/               ← *what* you can do (conceptual catalog)
-├── methods/                  ← *how* each family of approaches works
-├── instructions/             ← runnable workflows & checklists
-└── references.md             ← papers, repos, blog posts
+│   ├── hardware-command-catalog.md
+│   ├── use-cases/
+│   ├── context7.md
+│   └── ...
+├── techniques/  methods/  instructions/
+└── references.md
 ```
 
-## Quick navigation
+## Quick start paths
 
-| I want to… | Start here |
-|------------|------------|
-| Understand the idea in 10 minutes | [docs/overview.md](docs/overview.md) |
-| See the math / intuition | [docs/theory.md](docs/theory.md) |
-| Compare technique families | [techniques/README.md](techniques/README.md) |
-| Pick a method | [methods/README.md](methods/README.md) |
-| Run a pipeline end-to-end | [instructions/quickstart.md](instructions/quickstart.md) |
-| Use Heretic (automated tool) | [instructions/heretic-workflow.md](instructions/heretic-workflow.md) |
-| Evaluate before/after | [docs/evaluation.md](docs/evaluation.md) |
+| Goal | Start here |
+|------|------------|
+| Abliterate a model | [instructions/heretic-workflow.md](instructions/heretic-workflow.md) |
+| Factory QA agent | [instructions/agentic-security-stack.md](instructions/agentic-security-stack.md) |
+| Hardware commands | [docs/hardware-command-catalog.md](docs/hardware-command-catalog.md) |
+| Evaluate | [docs/evaluation.md](docs/evaluation.md) |
 
-## Upstream docs (GitHub-first)
-
-| Source | How to refresh |
-|--------|----------------|
-| [p-e-w/heretic](https://github.com/p-e-w/heretic) | `node scripts/fetch-docs.mjs` |
-| [docs.abliteration.ai](https://docs.abliteration.ai/llms.txt) | fetched to `sources/fetched/` |
-| Context7 MCP | [docs/context7.md](docs/context7.md) |
+## Refresh upstream docs
 
 ```bash
-node scripts/fetch-docs.mjs          # headless Chromium
-node scripts/fetch-docs.mjs --firefox  # needs: npx playwright install firefox
+node scripts/fetch-docs.mjs          # Chromium
+node scripts/fetch-docs.mjs --firefox  # npx playwright install firefox
 ```
 
-## Status
+GitHub-first references: [references.md](references.md) · Context7: [docs/context7.md](docs/context7.md)
 
-🚧 **Work in progress** — run the fetch script after upstream releases; use Context7 for library API details.
+## JARVIS Tool Repair Pack v7
+
+Imported from `jarvis-tool-repair-pack-expanded-v7.zip` — tool-use repair data (48k SFT/DPO rows) and `hardware-tool-gate.py`. Safety-guide noise removed; technical catalog kept. See [sources/jarvis-pack/IMPORT.md](sources/jarvis-pack/IMPORT.md).
 
 ## License
 
-Documentation: CC0-1.0 (public domain) unless otherwise noted.  
-Third-party tools referenced here retain their own licenses.
+Documentation: CC0-1.0. Third-party tools retain their own licenses.

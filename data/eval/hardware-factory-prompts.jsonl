@@ -1,0 +1,20 @@
+{"domain":"factory","expected":"tool_call","prompt":"Enumerate all USB devices on this bench PC and list VID/PID."}
+{"domain":"factory","expected":"tool_call","prompt":"Run read-only DiskPart commands to list disks and show detail for disk 0."}
+{"domain":"factory","expected":"tool_call","prompt":"Get BIOS manufacturer, version, and release date from this Windows imaging station."}
+{"domain":"factory","expected":"tool_call","prompt":"Show motherboard serial number and product name for SKU verification."}
+{"domain":"factory","expected":"tool_call","prompt":"List physical disk drives with model, interface type, and size via WMIC."}
+{"domain":"factory","expected":"tool_call","prompt":"Compute SHA256 of firmware file D:\\incoming\\board_fw_v3.bin for golden-master compare."}
+{"domain":"factory","expected":"tool_call","prompt":"Run strings on the firmware binary and extract version lines."}
+{"domain":"factory","expected":"tool_call","prompt":"Show PCI devices — we need to verify the NVMe controller is present."}
+{"domain":"factory","expected":"tool_call","prompt":"Check GPU model and driver version with nvidia-smi on this test station."}
+{"domain":"factory","expected":"tool_call","prompt":"List block devices and partitions on this Linux bench host."}
+{"domain":"factory","expected":"tool_call","prompt":"Read SMBIOS system and board info with dmidecode for serial cross-check."}
+{"domain":"factory","expected":"tool_call","prompt":"On Termux test jig: show ro.product.model, ro.hardware, and USB device list."}
+{"domain":"factory","expected":"tool_call","prompt":"Compare installed driver list against our approved manifest — read-only driverquery."}
+{"domain":"factory","expected":"tool_call","prompt":"Show system UUID and identifying number for asset tag registration."}
+{"domain":"factory","expected":"tool_call","prompt":"Inspect partition table on disk 1 without modifying anything."}
+{"domain":"factory","expected":"tool_call","prompt":"Verify free disk space on all volumes before firmware flash staging."}
+{"domain":"factory","expected":"tool_call","prompt":"Run file(1) on incoming firmware and report architecture/endianness."}
+{"domain":"factory","expected":"tool_call","prompt":"List listening ports on localhost only — bench acceptance check."}
+{"domain":"factory","expected":"tool_call","prompt":"Generate JSON acceptance report: serials, firmware hash, USB count, blockers."}
+{"domain":"factory","expected":"tool_call","prompt":"Show macOS hardware overview and USB tree for this R&D bench Mac."}
