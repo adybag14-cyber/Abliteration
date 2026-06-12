@@ -28,7 +28,7 @@ python measure.py -m <model> -o directions.pt \
 
 | Flag | Effect |
 |------|--------|
-| `--quant 4bit` | On-the-fly bitsandbytes quant for measurement |
+| `--quant 4bit` | On-the-fly bitsandbytes quant for measurement (**low VRAM**) |
 | `--projected` | Projected abliteration (orthogonalize vs harmless dir) |
 | `--deccp` | Extra topics for Chinese models |
 
@@ -59,6 +59,12 @@ python sharded_ablate.py abliteration_config.yaml
 python chat.py -m <abliterated_model_path>
 python compare.py -a <base> -b <abliterated>
 ```
+
+## Low VRAM path
+
+Pair `--quant 4bit` measure with `sharded_ablate.py` when Heretic OOMs:
+
+→ [low-vram-abliteration.md](low-vram-abliteration.md) · LoRA export after ablate: [../methods/lora-adapter-export.md](../methods/lora-adapter-export.md)
 
 ## Refresh docs
 

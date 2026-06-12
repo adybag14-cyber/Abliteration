@@ -32,6 +32,9 @@
 | Activation steering | No | Medium VRAM | Instant (disable hook) |
 | LoRA fine-tune on uncensored data | Yes | High GPU hours | Swap adapter |
 | **Abliteration** | **Yes** | **Medium** (one-time analysis pass) | **Keep original weights** |
+| **Abliteration + 4-bit (QLoRA load)** | **Yes** | **Low** (8 GB for 4B) | Keep original + quant config |
+| **LoRA adapter export (ΔW)** | **Adapter** | **Low** infer VRAM | Detach adapter |
+| **QLoRA Jarvis repair** | **Adapter** | **Low–med** train | Detach adapter |
 
 ## When abliteration works well
 
@@ -57,8 +60,18 @@ Stack: Heretic abliteration → optional [Jarvis v7](../sources/jarvis-pack/IMPO
 - Aggressive abliteration **damages** MMLU, coding, or reasoning scores
 - Safety for *actually dangerous* requests collapses — see [risks-and-ethics.md](risks-and-ethics.md)
 
+## Low VRAM quick paths
+
+| Hardware | Start here |
+|----------|------------|
+| 8 GB GPU | [../instructions/low-vram-abliteration.md](../instructions/low-vram-abliteration.md) — Heretic `bnb_4bit` |
+| 12 GB GPU, 8B model | 4-bit measure + sharded ablate |
+| Inference-only 8 GB RAM | GGUF Q4 after cloud abliteration |
+| LoRA / QLoRA theory | [../techniques/lora-qlora-abliteration.md](../techniques/lora-qlora-abliteration.md) |
+
 ## Next steps
 
 - Theory: [theory.md](theory.md)
 - Technique catalog: [../techniques/README.md](../techniques/README.md)
+- Tool catalog: [tools/abliteration-tooling.md](tools/abliteration-tooling.md)
 - Run something: [../instructions/quickstart.md](../instructions/quickstart.md)

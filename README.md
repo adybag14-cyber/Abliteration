@@ -49,6 +49,9 @@ abliteration/
 | Goal | Start here |
 |------|------------|
 | Abliterate a model | [instructions/heretic-workflow.md](instructions/heretic-workflow.md) |
+| **8 GB GPU / low RAM** | [instructions/low-vram-abliteration.md](instructions/low-vram-abliteration.md) |
+| **LoRA / QLoRA techniques** | [techniques/lora-qlora-abliteration.md](techniques/lora-qlora-abliteration.md) |
+| Abliteration tools (PEFT, GGUF, …) | [docs/tools/abliteration-tooling.md](docs/tools/abliteration-tooling.md) |
 | Factory QA agent | [instructions/agentic-security-stack.md](instructions/agentic-security-stack.md) |
 | Hardware commands | [docs/hardware-command-catalog.md](docs/hardware-command-catalog.md) |
 | Security tool catalogs | [docs/tools/README.md](docs/tools/README.md) |

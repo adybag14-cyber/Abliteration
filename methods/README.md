@@ -10,6 +10,7 @@
 | Automated search (Heretic-style) | [automated-heretic-search.md](automated-heretic-search.md) |
 | Manual PyTorch / Transformers | [manual-transformers-pipeline.md](manual-transformers-pipeline.md) |
 | GGUF export & inference | [gguf-export-notes.md](gguf-export-notes.md) |
+| LoRA adapter from ΔW | [lora-adapter-export.md](lora-adapter-export.md) |
 
 ## Method selection guide
 
@@ -19,6 +20,11 @@ Start here
     ├─ Want reversible experiments? ──► residual-hook-ablation
     │
     ├─ Want fastest path to checkpoint? ──► automated-heretic-search
+    │
+    ├─ Low VRAM (8–12 GB)? ──► Heretic bnb_4bit OR llm-abliteration --quant 4bit
+    │                              └─► [../instructions/low-vram-abliteration.md](../instructions/low-vram-abliteration.md)
+    │
+    ├─ Want adapter-only deploy? ──► lora-adapter-export
     │
     ├─ Want full control / research? ──► manual-transformers-pipeline
     │                                      └─► mlp-down-proj-abliteration

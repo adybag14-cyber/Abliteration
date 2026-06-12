@@ -37,21 +37,40 @@ Heretic also mirrors to [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/
 | hashcat README (fetched) | [sources/fetched/hashcat-readme.txt](sources/fetched/hashcat-readme.txt) |
 | Kali metapackages (fetched) | [sources/fetched/kali-metapackages.txt](sources/fetched/kali-metapackages.txt) |
 
+## Low VRAM & LoRA tooling
+
+| Project | URL | Role |
+|---------|-----|------|
+| **bitsandbytes** | [bitsandbytes-foundation/bitsandbytes](https://github.com/bitsandbytes-foundation/bitsandbytes) | Heretic `bnb_4bit`, QLoRA load |
+| **PEFT** | [huggingface/peft](https://github.com/huggingface/peft) | LoRA adapter export & infer |
+| **Unsloth** | [unslothai/unsloth](https://github.com/unslothai/unsloth) | Fast QLoRA (Jarvis repair) |
+| **Accelerate** | [huggingface/accelerate](https://github.com/huggingface/accelerate) | `max_memory` CPU offload |
+| **llama.cpp** | [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp) | GGUF quant after abliteration |
+| **vLLM** | [vllm-project/vllm](https://github.com/vllm-project/vllm) | Agent API + LoRA slots |
+| **mlx-lm** | [ml-explore/mlx-examples](https://github.com/ml-explore/mlx-examples) | Apple Silicon inference |
+
+Guides: [instructions/low-vram-abliteration.md](instructions/low-vram-abliteration.md) · [techniques/lora-qlora-abliteration.md](techniques/lora-qlora-abliteration.md) · [docs/tools/abliteration-tooling.md](docs/tools/abliteration-tooling.md)
+
 ## Install commands (from upstream, Jun 2026)
 
 ```bash
 # Heretic — PyPI package built from GitHub
-pip install -U heretic-llm
+pip install -U heretic-llm bitsandbytes accelerate
 heretic Qwen/Qwen3-4B-Instruct-2507
+# Low VRAM: quantization = "bnb_4bit" in config.toml
 
 # Or clone for reproducible uv.lock
 git clone https://github.com/p-e-w/heretic.git
 cd heretic && uv run heretic <model>
 
-# Manual pipeline
+# Manual pipeline (4-bit measure)
 git clone https://github.com/jim-plus/llm-abliteration.git
 cd llm-abliteration && pip install -r requirements.txt
-python measure.py -m <model_path> -o directions.pt
+python measure.py -m <model_path> -o directions.pt --quant 4bit
+
+# LoRA adapter from abliterated checkpoint
+python scripts/export-abliteration-lora.py \
+  --base ./base --abliterated ./out --out ./adapter --rank 16
 ```
 
 ## Agentic security & evaluation

@@ -59,6 +59,30 @@ Low-rank update derived from activation statistics — alternative parameterizat
 
 → [w2sv-rank1-patch.md](w2sv-rank1-patch.md)
 
+## 9. QLoRA loading for abliteration (4-bit measure)
+
+Load base weights in NF4 so direction estimation and Heretic Optuna fit on **8–12 GB** GPUs. Not SGD training — compressed forward passes only.
+
+→ [lora-qlora-abliteration.md](lora-qlora-abliteration.md) · [../instructions/low-vram-abliteration.md](../instructions/low-vram-abliteration.md)
+
+## 10. Heretic norm-preserving LoRA (export)
+
+`row_normalization = "full"` embeds a rank-r LoRA correction when orthogonalizing `o_proj` / `down_proj`.
+
+→ [lora-qlora-abliteration.md](lora-qlora-abliteration.md)
+
+## 11. LoRA adapter export (ΔW factorization)
+
+Ship megabyte-scale PEFT adapter instead of full abliterated checkpoint; inference = 4-bit base + adapter.
+
+→ [lora-qlora-abliteration.md](lora-qlora-abliteration.md) · [../methods/lora-adapter-export.md](../methods/lora-adapter-export.md)
+
+## 12. QLoRA tool-repair (post-abliteration)
+
+Jarvis SFT/DPO on tool-call JSONL — fixes residual false refusals on `wmic` / `nmap`; uses standard QLoRA training.
+
+→ [../instructions/agentic-security-stack.md](../instructions/agentic-security-stack.md)
+
 ## Comparison matrix
 
 | Technique | Alters weights | Needs dataset | Typical difficulty |
@@ -67,3 +91,6 @@ Low-rank update derived from activation statistics — alternative parameterizat
 | Mean-diff + MLP edit | Yes | Medium | ★★★☆☆ |
 | Layer search (Heretic) | Yes | Medium | ★★☆☆☆ (tooling) |
 | Domain-specific | Yes | Large (filtered) | ★★★★☆ |
+| QLoRA 4-bit measure (Heretic/bnb) | Yes | Small | ★★☆☆☆ |
+| LoRA adapter export | Adapter only | After abliteration | ★★★☆☆ |
+| QLoRA Jarvis repair | Adapter | 48k tool rows | ★★★☆☆ |

@@ -33,6 +33,7 @@ Full index: [kali-metapackages.md](kali-metapackages.md) · Official: [kali.org/
 | [zig-tooling.md](zig-tooling.md) | Cross-compile & build matrix |
 | [zig-canonical-syntax.md](zig-canonical-syntax.md) | **0.17 syntax** — [adybag14-cyber/zig](https://github.com/adybag14-cyber/zig) `master` |
 | [zig-advanced-techniques.md](zig-advanced-techniques.md) | **RE/exploit patterns** from canonical `test/behavior/*` |
+| [abliteration-tooling.md](abliteration-tooling.md) | **Heretic, PEFT, bitsandbytes, GGUF, vLLM** — low VRAM stack |
 
 ## Generated example corpora
 

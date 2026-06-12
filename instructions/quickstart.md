@@ -43,8 +43,16 @@ Add hook from [../methods/residual-hook-ablation.md](../methods/residual-hook-ab
 
 Same prompt, hook on vs off. Log outputs.
 
+## Low VRAM?
+
+If smoke test OOMs, use **1.5B** only, or skip hooks and go straight to Heretic 4-bit:
+
+→ [low-vram-abliteration.md](low-vram-abliteration.md)
+
 ## Next
 
 - Permanent checkpoint → [heretic-workflow.md](heretic-workflow.md)
+- 8 GB GPU / laptop → [low-vram-abliteration.md](low-vram-abliteration.md)
+- LoRA adapter export → [../methods/lora-adapter-export.md](../methods/lora-adapter-export.md)
 - Factory / pentest / CyberGym agent → [agentic-security-stack.md](agentic-security-stack.md)
 - Full manual control → [manual-full-pipeline.md](manual-full-pipeline.md)

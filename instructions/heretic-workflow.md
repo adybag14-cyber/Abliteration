@@ -35,17 +35,28 @@ heretic ./models/Qwen3-4B-Instruct-2507
 
 Typical runtime: **20–30 min** on RTX 3090-class GPU for 4B (per upstream README).
 
-### Low VRAM
+### Low VRAM (8–12 GB GPUs)
 
-```bash
-# In config.default.toml or CLI equivalent:
-# quantization = "bnb_4bit"
+```toml
+# config.toml (copy from config.default.toml)
+quantization = "bnb_4bit"
+offload_outputs_to_cpu = true
+# max_memory = { "0" = "7GB", "cpu" = "32GB" }
 ```
+
+**Norm-preserving LoRA** (bundled in export, not QLoRA training):
+
+```toml
+row_normalization = "full"
+full_normalization_lora_rank = 3   # try 8–16 if KL drifts
+```
+
+Full guide: **[low-vram-abliteration.md](low-vram-abliteration.md)** · LoRA theory: [../techniques/lora-qlora-abliteration.md](../techniques/lora-qlora-abliteration.md)
 
 Clone `config.default.toml` from GitHub for all options:
 
 ```bash
-curl -L -o config.default.toml \
+curl -L -o config.toml \
   https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml
 ```
 

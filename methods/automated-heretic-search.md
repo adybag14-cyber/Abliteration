@@ -26,6 +26,12 @@ Refusal directions: **difference-of-means** between first-token residuals (harmf
 | `max_weight` / `min_weight` | Ablation kernel amplitude |
 | `max_weight_position` / `min_weight_distance` | Kernel shape over depth |
 | `quantization` | `bnb_4bit` for VRAM savings |
+| `offload_outputs_to_cpu` | Lower peak during residual/KL passes |
+| `max_memory` | Per-device cap; spill to CPU RAM |
+| `row_normalization` | `full` enables norm-preserving LoRA in export |
+| `full_normalization_lora_rank` | Rank of bundled LoRA correction (default 3) |
+
+Low VRAM guide: [../instructions/low-vram-abliteration.md](../instructions/low-vram-abliteration.md)
 
 ## Install & run
 

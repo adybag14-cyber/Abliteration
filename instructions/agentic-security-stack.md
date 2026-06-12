@@ -5,12 +5,23 @@ End-to-end pipeline for **pentest lab**, **CyberGym**, and **factory firmware QA
 ## Phase 1 — Abliterate base model
 
 ```bash
-pip install -U heretic-llm
+pip install -U heretic-llm bitsandbytes accelerate
 heretic Qwen/Qwen3-4B-Instruct-2507
 # or larger model for CyberGym: heretic meta-llama/Llama-3.1-8B-Instruct
 ```
 
+**Low VRAM (8–12 GB):** set `quantization = "bnb_4bit"` in `config.toml` before running.
+
+→ [low-vram-abliteration.md](low-vram-abliteration.md)
+
 Output: decensored checkpoint with low KL drift (see Heretic eval).
+
+**Optional:** export LoRA adapter instead of full weights for bench OTA updates:
+
+```bash
+python scripts/export-abliteration-lora.py \
+  --base ./base-model --abliterated ./heretic-out --out ./abliteration-lora --rank 16
+```
 
 ## Phase 2 — Optional tool-repair adapter (Jarvis v7)
 
