@@ -2,6 +2,8 @@
   "windows_commands": 915,
   "macos_commands": 607,
   "zig_commands": 970,
+  "zig_code_snippets": 64,
+  "zig_security_prompts": 79,
   "total_commands": 2492,
   "total_prompts": 16782,
   "output_dir": "data\\examples"

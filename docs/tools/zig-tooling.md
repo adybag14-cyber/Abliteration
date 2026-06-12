@@ -119,7 +119,7 @@ Typical `build.zig` options agents should know:
 | `-Doptimize=` | Debug / ReleaseSafe / ReleaseFast / ReleaseSmall |
 | `-Dcpu=` | `baseline`, `native`, or specific |
 | `-Dstrip=` | Strip debug symbols |
-| `-fsanitize=address` | ASAN for vuln repro |
+| `.sanitize_c = .full` | ASAN/UBSAN on module (see zig-advanced-techniques.md) |
 
 ---
 
@@ -135,12 +135,15 @@ zig build -Dtarget=aarch64-macos -Doptimize=ReleaseSmall
 
 ## Security research workflow
 
+**Advanced patterns:** [zig-advanced-techniques.md](zig-advanced-techniques.md) · snippets [../../data/examples/zig-code-snippets.jsonl](../../data/examples/zig-code-snippets.jsonl)
+
 ```text
 1. zig init / use existing PoC repo
-2. zig build -fsanitize=address -Doptimize=Debug
+2. build.zig: .sanitize_c = .full on root module, -Doptimize=Debug
 3. zig build test --test-filter crash
-4. zig build -Dtarget=x86_64-linux-gnu for CyberGym docker
-5. Ship ReleaseSafe artifact to factory bench
+4. zig build test --fuzz
+5. zig build -Dtarget=x86_64-linux-gnu for CyberGym docker
+6. Ship ReleaseSafe artifact to factory bench
 ```
 
 ---

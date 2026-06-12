@@ -19,8 +19,11 @@ python scripts/generate-platform-examples.py
 | `windows-prompts.jsonl` | 7,320 | 8 prompt templates × Windows commands |
 | `macos-prompts.jsonl` | 3,642 | 6 templates × macOS commands |
 | `zig-prompts.jsonl` | 6,594 | 6 templates × Zig commands |
+| `zig-code-snippets.jsonl` | 64 | Canonical-derived Zig code (ptrcast, fuzz, sanitize) |
 | `platform-prompts-all.jsonl` | 17,556 | Full prompt corpus for SFT/DPO |
 | `manifest.json` | — | Counts and metadata |
+
+Eval (security): [../eval/zig-security-prompts.jsonl](../eval/zig-security-prompts.jsonl) — see [../../docs/tools/zig-advanced-techniques.md](../../docs/tools/zig-advanced-techniques.md)
 
 ## JSONL schema
 

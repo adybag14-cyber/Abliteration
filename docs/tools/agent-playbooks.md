@@ -146,11 +146,28 @@ like CyberGym top agents (OpenHands style). Never target IPs outside LAB_SUBNET.
 
 ---
 
+## PB-11 — Zig security PoC (lab)
+
+| Step | Tool / pattern |
+|------|----------------|
+| 1 | `zig init` — 0.17 scaffold (`std.process.Init`) |
+| 2 | `build.zig` — `.sanitize_c = .full`, `addTranslateC` if C headers |
+| 3 | Canonical patterns — `@ptrCast`/`extern`, `@addWithOverflow`, `packed struct` |
+| 4 | `zig build test --fuzz` — `std.testing.fuzz` + Smith |
+| 5 | `zig build -Dtarget=x86_64-linux-gnu` — CyberGym docker target |
+
+Reference: [zig-advanced-techniques.md](zig-advanced-techniques.md) · `data/examples/zig-code-snippets.jsonl`
+
+Output: `zig_poc_result.json` — `built`, `asan_triggered`, `fuzz_runs`.
+
+---
+
 ## Evaluation
 
 | Corpus | Path |
 |--------|------|
 | General cyber | `data/eval/cyber-research-prompts.jsonl` |
+| Zig security / PoC | `data/eval/zig-security-prompts.jsonl` |
 | OSINT / Kali / hashcat | `data/eval/osint-pentest-prompts.jsonl` |
 | Factory | `data/eval/hardware-factory-prompts.jsonl` |
 | Jarvis tool repair | `sources/jarvis-pack/.../eval_prompts.jsonl` |

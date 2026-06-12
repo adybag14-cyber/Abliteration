@@ -243,6 +243,14 @@ CLI probe: `zig translate-c -target x86_64-windows-gnu foo.h`
 
 ---
 
+## Advanced security / RE patterns
+
+See **[zig-advanced-techniques.md](zig-advanced-techniques.md)** — `@ptrCast`, `extern struct`, packed bitfields, overflow builtins, inline asm, fuzz, sanitize modules. All patterns cite `sources/zig-canonical/test/behavior/*`.
+
+Generated snippets: [../../data/examples/zig-code-snippets.jsonl](../../data/examples/zig-code-snippets.jsonl)
+
+---
+
 ## Testing & fuzz (0.17 template)
 
 ```zig

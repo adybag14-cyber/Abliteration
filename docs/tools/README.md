@@ -30,15 +30,17 @@ Full index: [kali-metapackages.md](kali-metapackages.md) · Official: [kali.org/
 | [agent-playbooks.md](agent-playbooks.md) | Multi-step workflows for abliterated agents |
 | [windows-tooling.md](windows-tooling.md) | **915** WMIC/PowerShell/DiskPart examples |
 | [macos-tooling.md](macos-tooling.md) | **607** system_profiler/ioreg/security examples |
-| [zig-tooling.md](zig-tooling.md) | **1,099** cross-compile & build matrix |
+| [zig-tooling.md](zig-tooling.md) | Cross-compile & build matrix |
 | [zig-canonical-syntax.md](zig-canonical-syntax.md) | **0.17 syntax** — [adybag14-cyber/zig](https://github.com/adybag14-cyber/zig) `master` |
+| [zig-advanced-techniques.md](zig-advanced-techniques.md) | **RE/exploit patterns** from canonical `test/behavior/*` |
 
 ## Generated example corpora
 
 | File | Scale |
 |------|-------|
 | [../../data/examples/platform-commands-all.jsonl](../../data/examples/platform-commands-all.jsonl) | **2,621** commands |
-| [../../data/examples/platform-prompts-all.jsonl](../../data/examples/platform-prompts-all.jsonl) | **17,556** agent prompts |
+| [../../data/examples/platform-prompts-all.jsonl](../../data/examples/platform-prompts-all.jsonl) | Agent prompts (regen for count) |
+| [../../data/examples/zig-code-snippets.jsonl](../../data/examples/zig-code-snippets.jsonl) | **64** canonical Zig code snippets |
 | Regenerate | `python scripts/generate-platform-examples.py` |
 
 ## Hardware overlap
@@ -53,6 +55,7 @@ Factory bench commands (WMIC, DiskPart, USB, firmware hash): [../hardware-comman
 | [../../data/eval/osint-pentest-prompts.jsonl](../../data/eval/osint-pentest-prompts.jsonl) | OSINT, hashcat, Kali tooling |
 | [../../data/eval/hardware-factory-prompts.jsonl](../../data/eval/hardware-factory-prompts.jsonl) | Factory acceptance |
 | [../../data/eval/platform-eval-sample.jsonl](../../data/eval/platform-eval-sample.jsonl) | Windows/macOS/Zig sample (120) |
+| [../../data/eval/zig-security-prompts.jsonl](../../data/eval/zig-security-prompts.jsonl) | Zig 0.17 PoC / RE / fuzz (79) |
 
 ## Agent stack reminder
 
