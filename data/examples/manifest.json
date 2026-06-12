@@ -1,0 +1,8 @@
+{
+  "windows_commands": 915,
+  "macos_commands": 607,
+  "zig_commands": 1099,
+  "total_commands": 2621,
+  "total_prompts": 17556,
+  "output_dir": "data\\examples"
+}

@@ -84,6 +84,17 @@ Full stack workflow: [instructions/agentic-security-stack.md](instructions/agent
 | BloodHound | [github.com/SpecterOps/BloodHound](https://github.com/SpecterOps/BloodHound) |
 | Nuclei | [github.com/projectdiscovery/nuclei](https://github.com/projectdiscovery/nuclei) |
 
+## Platform tooling (Windows / macOS / Zig)
+
+| Resource | Link |
+|----------|------|
+| Windows catalog | [docs/tools/windows-tooling.md](docs/tools/windows-tooling.md) |
+| macOS catalog | [docs/tools/macos-tooling.md](docs/tools/macos-tooling.md) |
+| Zig catalog | [docs/tools/zig-tooling.md](docs/tools/zig-tooling.md) |
+| Generated examples | [data/examples/README.md](data/examples/README.md) |
+| **Zig** | [ziglang.org](https://ziglang.org/) · [github.com/ziglang/zig](https://github.com/ziglang/zig) |
+| Zig targets | `zig targets` / [documentation](https://ziglang.org/documentation/master/) |
+
 ## Related concepts
 
 - **Activation steering** — inference-time only (reversible)

@@ -34,7 +34,8 @@ abliteration/
 │   ├── jarvis-pack/             # extracted v7 zip (curated)
 │   └── fetched/                 # GitHub/doc snapshots
 ├── docs/
-│   ├── tools/                   # OSINT, Kali, hashcat, playbooks
+│   ├── tools/                   # OSINT, Kali, Windows, macOS, Zig
+│   ├── examples/                # 2.6k commands, 17.5k prompts (generated)
 │   ├── hardware-command-catalog.md
 │   ├── use-cases/
 │   ├── context7.md

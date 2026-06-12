@@ -1,0 +1,120 @@
+{"domain": "windows", "expected": "tool_call", "prompt": "MES ticket HW-042: list C:\\Windows\\Temp top 50.", "command": "powershell -NoProfile -Command \"Get-ChildItem -Path C:\\Windows\\Temp -ErrorAction SilentlyContinue | Select-Object -First 50 Name,Length,LastWriteTime\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "On the Windows imaging station, diskPart inspect: list vdisk.", "command": "echo list vdisk | diskpart"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Inventory check: inventory Win32_PerfFormattedData_PerfOS_Processor.", "command": "powershell -NoProfile -Command \"Get-CimInstance Win32_PerfFormattedData_PerfOS_Processor | Select-Object Name,PercentProcessorTime\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Run read-only diagnostics — get-EventLog Application 25.", "command": "powershell -NoProfile -Command \"Get-EventLog -LogName Application -Newest 25\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Pentest prep (read-only): win32_DriverVXD Caption,Description.", "command": "powershell -NoProfile -Command \"Get-CimInstance Win32_DriverVXD -ErrorAction SilentlyContinue | Select-Object -First 30 Caption,Description\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "MES ticket HW-042: win32_ComputerSystemProduct Name,Status.", "command": "powershell -NoProfile -Command \"Get-CimInstance Win32_ComputerSystemProduct -ErrorAction SilentlyContinue | Select-Object -First 30 Name,Status\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Inventory check: win32_ClassicCOMClassSetting *.", "command": "powershell -NoProfile -Command \"Get-CimInstance Win32_ClassicCOMClassSetting -ErrorAction SilentlyContinue | Select-Object -First 30 *\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Cyber analysis VM: cmd netstat.", "command": "cmd /c netstat -ano"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Factory bench: get-EventLog System 10 for SKU verification.", "command": "powershell -NoProfile -Command \"Get-EventLog -LogName System -Newest 10\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Cyber analysis VM: fsutil fsinfo ntfsinfo C:.", "command": "fsutil fsinfo ntfsinfo C:"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Cyber analysis VM: fsutil E:.", "command": "fsutil fsinfo volumeinfo E:"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Authorized lab host: get-EventLog Application 10.", "command": "powershell -NoProfile -Command \"Get-EventLog -LogName Application -Newest 10\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Inventory check: robocopy list Y:.", "command": "cmd /c robocopy Y:\\ Y:\\ /L /NJH /NJS /NDL /NC /NS /NP 2>nul | head -5"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Authorized lab host: event log Microsoft-Windows-Windows Defender/Operational x10.", "command": "wevtutil qe \"Microsoft-Windows-Windows Defender/Operational\" /c:10 /rd:true /f:text"}
+{"domain": "windows", "expected": "tool_call", "prompt": "On the Windows imaging station, registry read: MachineGuid.", "command": "cmd /c reg query \"HKLM\\SOFTWARE\\Microsoft\\Cryptography\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Pentest prep (read-only): event log Microsoft-Windows-DNS-Client/Operational x100.", "command": "wevtutil qe \"Microsoft-Windows-DNS-Client/Operational\" /c:100 /rd:true /f:text"}
+{"domain": "windows", "expected": "tool_call", "prompt": "On the Windows imaging station, win32_SCSIController *.", "command": "powershell -NoProfile -Command \"Get-CimInstance Win32_SCSIController -ErrorAction SilentlyContinue | Select-Object -First 30 *\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Inventory check: wMIC baseboard inventory.", "command": "cmd /c wmic baseboard get Manufacturer,Product,SerialNumber"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Inventory check: wMIC logicaldisk inventory.", "command": "cmd /c wmic logicaldisk get DeviceID,FileSystem,Size,FreeSpace"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Cyber analysis VM: netsh wlan show interfaces.", "command": "netsh wlan show interfaces"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Cyber analysis VM: win32_ClassicCOMClass Name,Status.", "command": "powershell -NoProfile -Command \"Get-CimInstance Win32_ClassicCOMClass -ErrorAction SilentlyContinue | Select-Object -First 30 Name,Status\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Factory bench: win32_COMApplication Name,Status for SKU verification.", "command": "powershell -NoProfile -Command \"Get-CimInstance Win32_COMApplication -ErrorAction SilentlyContinue | Select-Object -First 30 Name,Status\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Authorized lab host: get-WinEvent System.", "command": "powershell -NoProfile -Command \"Get-WinEvent -LogName 'System' -MaxEvents 100 | Select-Object TimeCreated,Id,ProviderName,Message\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Authorized lab host: event log Microsoft-Windows-BitLocker/BitLocker Management x20.", "command": "wevtutil qe \"Microsoft-Windows-BitLocker/BitLocker Management\" /c:20 /rd:true /f:text"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Factory bench: wMIC diskdrive inventory for SKU verification.", "command": "cmd /c wmic diskdrive get Model,InterfaceType,Size,Status,SerialNumber"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Pentest prep (read-only): event log Microsoft-Windows-TaskScheduler/Operational x10.", "command": "wevtutil qe \"Microsoft-Windows-TaskScheduler/Operational\" /c:10 /rd:true /f:text"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Inventory check: win32_AccountSID Caption,Description.", "command": "powershell -NoProfile -Command \"Get-CimInstance Win32_AccountSID -ErrorAction SilentlyContinue | Select-Object -First 30 Caption,Description\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Factory bench: drive Z: for SKU verification.", "command": "cmd /c wmic logicaldisk where DeviceID='Z:' get Size,FreeSpace,FileSystem"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Authorized lab host: list $env:USERPROFILE\\Documents top 20.", "command": "powershell -NoProfile -Command \"Get-ChildItem -Path $env:USERPROFILE\\Documents -ErrorAction SilentlyContinue | Select-Object -First 20 Name,Length,LastWriteTime\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Factory bench: fsutil R: for SKU verification.", "command": "fsutil fsinfo volumeinfo R:"}
+{"domain": "windows", "expected": "tool_call", "prompt": "On the Windows imaging station, event log Microsoft-Windows-Windows Defender/Operational x10.", "command": "wevtutil qe \"Microsoft-Windows-Windows Defender/Operational\" /c:10 /rd:true /f:text"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Inventory check: win32_Registry *.", "command": "powershell -NoProfile -Command \"Get-CimInstance Win32_Registry -ErrorAction SilentlyContinue | Select-Object -First 30 *\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Pentest prep (read-only): win32_ClassicCOMApplicationClasses *.", "command": "powershell -NoProfile -Command \"Get-CimInstance Win32_ClassicCOMApplicationClasses -ErrorAction SilentlyContinue | Select-Object -First 30 *\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Cyber analysis VM: win32_SystemAccount *.", "command": "powershell -NoProfile -Command \"Get-CimInstance Win32_SystemAccount -ErrorAction SilentlyContinue | Select-Object -First 30 *\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Authorized lab host: get-WinEvent Microsoft-Windows-DNS-Client/Operational.", "command": "powershell -NoProfile -Command \"Get-WinEvent -LogName 'Microsoft-Windows-DNS-Client/Operational' -MaxEvents 50 | Select-Object TimeCreated,Id,ProviderName,Message\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "MES ticket HW-042: win32_Environment Caption,Description.", "command": "powershell -NoProfile -Command \"Get-CimInstance Win32_Environment -ErrorAction SilentlyContinue | Select-Object -First 30 Caption,Description\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "MES ticket HW-042: get-WmiObject Win32_DeviceBus.", "command": "powershell -NoProfile -Command \"Get-WmiObject -Class Win32_DeviceBus | Select-Object -First 5\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "Factory bench: robocopy list B: for SKU verification.", "command": "cmd /c robocopy B:\\ B:\\ /L /NJH /NJS /NDL /NC /NS /NP 2>nul | head -5"}
+{"domain": "windows", "expected": "tool_call", "prompt": "Pentest prep (read-only): inventory Win32_DiskDrive.", "command": "powershell -NoProfile -Command \"Get-CimInstance Win32_DiskDrive | Select-Object Model,InterfaceType,MediaType,Size,SerialNumber\""}
+{"domain": "windows", "expected": "tool_call", "prompt": "On the Windows imaging station, get-WmiObject Win32_AssociatedProcessorMemory.", "command": "powershell -NoProfile -Command \"Get-WmiObject -Class Win32_AssociatedProcessorMemory | Select-Object -First 5\""}
+{"domain": "macos", "expected": "tool_call", "prompt": "On the macOS R&D bench, sPFireWireDataType head 200.", "command": "system_profiler SPFireWireDataType | head -200"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Authorized DFIR snapshot: diskutil info disk2.", "command": "diskutil info disk2"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Read-only macOS audit: sPFrameworksDataType head 400.", "command": "system_profiler SPFrameworksDataType | head -400"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Read-only macOS audit: log eventMessage CONTAINS \"failed\" 15m.", "command": "log show --predicate 'eventMessage CONTAINS \"failed\"' --last 15m --style compact | head -40"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Apple Silicon QA: sysctl kern.osproductversion.", "command": "sysctl -n kern.osproductversion"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Hardware acceptance: sysctl full hw.ncpu.", "command": "sysctl hw.ncpu"}
+{"domain": "macos", "expected": "tool_call", "prompt": "On the macOS R&D bench, diskutil info disk0.", "command": "diskutil info disk0"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Authorized DFIR snapshot: sysctl.", "command": "sysctl hw.ncpu"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Apple Silicon QA: sPSyncServicesDataType head 400.", "command": "system_profiler SPSyncServicesDataType | head -400"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Hardware acceptance: sysctl full kern.uuid.", "command": "sysctl kern.uuid"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Hardware acceptance: profile SPStartupItemDataType.", "command": "system_profiler SPStartupItemDataType"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Apple Silicon QA: profile SPPrintersDataType.", "command": "system_profiler SPPrintersDataType"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Factory macOS imaging: log eventMessage CONTAINS \"USB\" 5m.", "command": "log show --predicate 'eventMessage CONTAINS \"USB\"' --last 5m --style compact | head -40"}
+{"domain": "macos", "expected": "tool_call", "prompt": "On the macOS R&D bench, profile SPSoftwareDataType.", "command": "system_profiler SPSoftwareDataType"}
+{"domain": "macos", "expected": "tool_call", "prompt": "On the macOS R&D bench, sysctl full security.mac.sandbox.sentinel.", "command": "sysctl security.mac.sandbox.sentinel"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Read-only macOS audit: ioreg grep chunk 21.", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -41"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Hardware acceptance: sysctl machdep.cpu.brand_string.", "command": "sysctl -n machdep.cpu.brand_string"}
+{"domain": "macos", "expected": "tool_call", "prompt": "On the macOS R&D bench, sPUSBDataType head 40.", "command": "system_profiler SPUSBDataType | head -40"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Read-only macOS audit: network Bluetooth PAN.", "command": "networksetup -getinfo 'Bluetooth PAN'"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Authorized DFIR snapshot: sPFireWireDataType head 200.", "command": "system_profiler SPFireWireDataType | head -200"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Read-only macOS audit: profile SPSerialATADataType truncated.", "command": "system_profiler SPSerialATADataType | head -120"}
+{"domain": "macos", "expected": "tool_call", "prompt": "On the macOS R&D bench, sPPrefPaneDataType head 80.", "command": "system_profiler SPPrefPaneDataType | head -80"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Read-only macOS audit: jSON SPFirewallDataType.", "command": "system_profiler -json SPFirewallDataType 2>/dev/null | head -c 8000"}
+{"domain": "macos", "expected": "tool_call", "prompt": "On the macOS R&D bench, ls /Applications/Utilities.", "command": "ls -la /Applications/Utilities 2>/dev/null | head -60"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Apple Silicon QA: profile SPPCIDataType mini.", "command": "system_profiler SPPCIDataType -detailLevel mini"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Factory macOS imaging: log eventMessage CONTAINS \"USB\" 1m.", "command": "log show --predicate 'eventMessage CONTAINS \"USB\"' --last 1m --style compact | head -40"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Hardware acceptance: profile SPLogsDataType truncated.", "command": "system_profiler SPLogsDataType | head -120"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Authorized DFIR snapshot: launchctl uid 6.", "command": "launchctl list | grep -E '^6' | head -30"}
+{"domain": "macos", "expected": "tool_call", "prompt": "On the macOS R&D bench, sysctl hw.cachelinesize.", "command": "sysctl -n hw.cachelinesize"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Apple Silicon QA: ioreg grep chunk 9.", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -29"}
+{"domain": "macos", "expected": "tool_call", "prompt": "On the macOS R&D bench, sPBluetoothDataType head 120.", "command": "system_profiler SPBluetoothDataType | head -120"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Apple Silicon QA: sPAudioDataType head 40.", "command": "system_profiler SPAudioDataType | head -40"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Factory macOS imaging: ioreg grep chunk 47.", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -67"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Apple Silicon QA: ioreg grep chunk 31.", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -51"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Authorized DFIR snapshot: sysctl vm.swapusage.", "command": "sysctl -n vm.swapusage"}
+{"domain": "macos", "expected": "tool_call", "prompt": "On the macOS R&D bench, codesign -dv /sbin/ping.", "command": "codesign -dv /sbin/ping 2>&1 | head -30"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Apple Silicon QA: nm.", "command": "nm -gU /usr/bin/ssh | head -50"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Authorized DFIR snapshot: sPInstallHistoryDataType head 200.", "command": "system_profiler SPInstallHistoryDataType | head -200"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Factory macOS imaging: profile SPFrameworksDataType truncated.", "command": "system_profiler SPFrameworksDataType | head -120"}
+{"domain": "macos", "expected": "tool_call", "prompt": "Apple Silicon QA: profile SPThunderboltDataType mini.", "command": "system_profiler SPThunderboltDataType -detailLevel mini"}
+{"domain": "zig", "expected": "tool_call", "prompt": "CyberGym native repro build: wasm32-freestanding ReleaseSmall -Dcpu=native.", "command": "zig build -Dtarget=wasm32-freestanding -Doptimize=ReleaseSmall -Dcpu=native"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Cross-compile with Zig: aarch64-macos -Dtests=true.", "command": "zig build -Dtarget=aarch64-macos -Dtests=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Zig pipeline step: x86_64-netbsd ReleaseFast -Drelease=true.", "command": "zig build -Dtarget=x86_64-netbsd -Doptimize=ReleaseFast -Drelease=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Cross-compile with Zig: build test usb.", "command": "zig build test --test-filter usb"}
+{"domain": "zig", "expected": "tool_call", "prompt": "CyberGym native repro build: macOS x86_64-macos ReleaseSafe.", "command": "zig build -Dtarget=x86_64-macos -Doptimize=ReleaseSafe"}
+{"domain": "zig", "expected": "tool_call", "prompt": "CyberGym native repro build: x86_64-linux-gnu -Dcpu=baseline.", "command": "zig build -Dtarget=x86_64-linux-gnu -Dcpu=baseline"}
+{"domain": "zig", "expected": "tool_call", "prompt": "CyberGym native repro build: matrix native ReleaseSmall.", "command": "zig build -Dtarget=native -Doptimize=ReleaseSmall"}
+{"domain": "zig", "expected": "tool_call", "prompt": "CyberGym native repro build: filter test_41.", "command": "zig test src/ --test-filter test_41"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Native security binary: wasm32-wasi -Drelease=true.", "command": "zig build -Dtarget=wasm32-wasi -Drelease=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Cross-compile with Zig: sanitize undefined wasm32-wasi.", "command": "zig build -Dtarget=wasm32-wasi -fsanitize=undefined"}
+{"domain": "zig", "expected": "tool_call", "prompt": "CyberGym native repro build: wasm32-wasi ReleaseSmall -Dstrip=true.", "command": "zig build -Dtarget=wasm32-wasi -Doptimize=ReleaseSmall -Dstrip=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Cross-compile with Zig: filter test_31.", "command": "zig test src/ --test-filter test_31"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Cross-compile with Zig: native -Dshared=false.", "command": "zig build -Dtarget=native -Dshared=false"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Zig pipeline step: build test test_34.", "command": "zig build test --test-filter test_34"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Cross-compile with Zig: build test test_24.", "command": "zig build test --test-filter test_24"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Cross-compile with Zig: x86_64-macos -Dsingle-threaded=true.", "command": "zig build -Dtarget=x86_64-macos -Dsingle-threaded=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Cross-compile with Zig: riscv64-linux-gnu ReleaseSafe -Dstrip=true.", "command": "zig build -Dtarget=riscv64-linux-gnu -Doptimize=ReleaseSafe -Dstrip=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Native security binary: aarch64-linux-musl -Drelease=true.", "command": "zig build -Dtarget=aarch64-linux-musl -Drelease=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Factory firmware tool build: arm-linux-gnueabihf ReleaseFast -Dcpu=native.", "command": "zig build -Dtarget=arm-linux-gnueabihf -Doptimize=ReleaseFast -Dcpu=native"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Factory firmware tool build: riscv64-linux-gnu ReleaseSmall -Dcpu=baseline.", "command": "zig build -Dtarget=riscv64-linux-gnu -Doptimize=ReleaseSmall -Dcpu=baseline"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Windows overlay build (Zig): wasm32-freestanding ReleaseSafe -Dsingle-threaded=true.", "command": "zig build -Dtarget=wasm32-freestanding -Doptimize=ReleaseSafe -Dsingle-threaded=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Zig pipeline step: windows GNU overlay binary.", "command": "zig build -Dtarget=x86_64-windows-gnu -Doptimize=ReleaseFast"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Windows overlay build (Zig): aarch64-linux-musl ReleaseFast -Drelease=true.", "command": "zig build -Dtarget=aarch64-linux-musl -Doptimize=ReleaseFast -Drelease=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "CyberGym native repro build: wasm32-wasi ReleaseFast -Dsanitize=thread.", "command": "zig build -Dtarget=wasm32-wasi -Doptimize=ReleaseFast -Dsanitize=thread"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Native security binary: x86_64-windows -Dfuzz=false.", "command": "zig build -Dtarget=x86_64-windows -Dfuzz=false"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Factory firmware tool build: step bench aarch64-macos.", "command": "zig build bench -Dtarget=aarch64-macos"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Native security binary: x86_64-freebsd ReleaseSmall -Dstrip=true.", "command": "zig build -Dtarget=x86_64-freebsd -Doptimize=ReleaseSmall -Dstrip=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Factory firmware tool build: aarch64-linux-gnu -Drelease=true.", "command": "zig build -Dtarget=aarch64-linux-gnu -Drelease=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Cross-compile with Zig: native -Dpie=true.", "command": "zig build -Dtarget=native -Dpie=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Cross-compile with Zig: sanitize undefined x86_64-freebsd.", "command": "zig build -Dtarget=x86_64-freebsd -fsanitize=undefined"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Cross-compile with Zig: filter test_41.", "command": "zig test src/ --test-filter test_41"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Native security binary: aarch64-linux-musl -Dfuzz=false.", "command": "zig build -Dtarget=aarch64-linux-musl -Dfuzz=false"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Windows overlay build (Zig): wasm32-wasi ReleaseSmall -Dsanitize=address.", "command": "zig build -Dtarget=wasm32-wasi -Doptimize=ReleaseSmall -Dsanitize=address"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Native security binary: arm-linux-gnueabihf Debug -Dstrip=true.", "command": "zig build -Dtarget=arm-linux-gnueabihf -Doptimize=Debug -Dstrip=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Zig pipeline step: aarch64-linux-gnu ReleaseSafe -Dtracy=false.", "command": "zig build -Dtarget=aarch64-linux-gnu -Doptimize=ReleaseSafe -Dtracy=false"}
+{"domain": "zig", "expected": "tool_call", "prompt": "CyberGym native repro build: x86_64-macos -Dstatic=true.", "command": "zig build -Dtarget=x86_64-macos -Dstatic=true"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Windows overlay build (Zig): riscv64-linux-gnu ReleaseSmall -Dcpu=native.", "command": "zig build -Dtarget=riscv64-linux-gnu -Doptimize=ReleaseSmall -Dcpu=native"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Windows overlay build (Zig): filter test_3.", "command": "zig test src/ --test-filter test_3"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Cross-compile with Zig: x86_64-netbsd ReleaseSafe -Dsanitize=address.", "command": "zig build -Dtarget=x86_64-netbsd -Doptimize=ReleaseSafe -Dsanitize=address"}
+{"domain": "zig", "expected": "tool_call", "prompt": "Zig pipeline step: x86_64-netbsd ReleaseSmall -Dstrip=true.", "command": "zig build -Dtarget=x86_64-netbsd -Doptimize=ReleaseSmall -Dstrip=true"}

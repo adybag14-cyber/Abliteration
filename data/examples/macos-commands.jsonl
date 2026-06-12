@@ -1,0 +1,607 @@
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPHardwareDataType", "purpose": "Profile SPHardwareDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPHardwareDataType -detailLevel mini", "purpose": "Profile SPHardwareDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPHardwareDataType | head -120", "purpose": "Profile SPHardwareDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPMemoryDataType", "purpose": "Profile SPMemoryDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPMemoryDataType -detailLevel mini", "purpose": "Profile SPMemoryDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPMemoryDataType | head -120", "purpose": "Profile SPMemoryDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPNetworkDataType", "purpose": "Profile SPNetworkDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPNetworkDataType -detailLevel mini", "purpose": "Profile SPNetworkDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPNetworkDataType | head -120", "purpose": "Profile SPNetworkDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPUSBDataType", "purpose": "Profile SPUSBDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPUSBDataType -detailLevel mini", "purpose": "Profile SPUSBDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPUSBDataType | head -120", "purpose": "Profile SPUSBDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPDisplaysDataType", "purpose": "Profile SPDisplaysDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPDisplaysDataType -detailLevel mini", "purpose": "Profile SPDisplaysDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPDisplaysDataType | head -120", "purpose": "Profile SPDisplaysDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPAudioDataType", "purpose": "Profile SPAudioDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPAudioDataType -detailLevel mini", "purpose": "Profile SPAudioDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPAudioDataType | head -120", "purpose": "Profile SPAudioDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPBluetoothDataType", "purpose": "Profile SPBluetoothDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPBluetoothDataType -detailLevel mini", "purpose": "Profile SPBluetoothDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPBluetoothDataType | head -120", "purpose": "Profile SPBluetoothDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPStorageDataType", "purpose": "Profile SPStorageDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPStorageDataType -detailLevel mini", "purpose": "Profile SPStorageDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPStorageDataType | head -120", "purpose": "Profile SPStorageDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPNVMeDataType", "purpose": "Profile SPNVMeDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPNVMeDataType -detailLevel mini", "purpose": "Profile SPNVMeDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPNVMeDataType | head -120", "purpose": "Profile SPNVMeDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPSerialATADataType", "purpose": "Profile SPSerialATADataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPSerialATADataType -detailLevel mini", "purpose": "Profile SPSerialATADataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPSerialATADataType | head -120", "purpose": "Profile SPSerialATADataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPThunderboltDataType", "purpose": "Profile SPThunderboltDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPThunderboltDataType -detailLevel mini", "purpose": "Profile SPThunderboltDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPThunderboltDataType | head -120", "purpose": "Profile SPThunderboltDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPFirewallDataType", "purpose": "Profile SPFirewallDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPFirewallDataType -detailLevel mini", "purpose": "Profile SPFirewallDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPFirewallDataType | head -120", "purpose": "Profile SPFirewallDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPApplicationsDataType", "purpose": "Profile SPApplicationsDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPApplicationsDataType -detailLevel mini", "purpose": "Profile SPApplicationsDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPApplicationsDataType | head -120", "purpose": "Profile SPApplicationsDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPDeveloperToolsDataType", "purpose": "Profile SPDeveloperToolsDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPDeveloperToolsDataType -detailLevel mini", "purpose": "Profile SPDeveloperToolsDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPDeveloperToolsDataType | head -120", "purpose": "Profile SPDeveloperToolsDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPFontsDataType", "purpose": "Profile SPFontsDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPFontsDataType -detailLevel mini", "purpose": "Profile SPFontsDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPFontsDataType | head -120", "purpose": "Profile SPFontsDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPFrameworksDataType", "purpose": "Profile SPFrameworksDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPFrameworksDataType -detailLevel mini", "purpose": "Profile SPFrameworksDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPFrameworksDataType | head -120", "purpose": "Profile SPFrameworksDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPInstallHistoryDataType", "purpose": "Profile SPInstallHistoryDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPInstallHistoryDataType -detailLevel mini", "purpose": "Profile SPInstallHistoryDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPInstallHistoryDataType | head -120", "purpose": "Profile SPInstallHistoryDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPLogsDataType", "purpose": "Profile SPLogsDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPLogsDataType -detailLevel mini", "purpose": "Profile SPLogsDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPLogsDataType | head -120", "purpose": "Profile SPLogsDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPManagedClientDataType", "purpose": "Profile SPManagedClientDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPManagedClientDataType -detailLevel mini", "purpose": "Profile SPManagedClientDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPManagedClientDataType | head -120", "purpose": "Profile SPManagedClientDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPPowerDataType", "purpose": "Profile SPPowerDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPPowerDataType -detailLevel mini", "purpose": "Profile SPPowerDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPPowerDataType | head -120", "purpose": "Profile SPPowerDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPPrefPaneDataType", "purpose": "Profile SPPrefPaneDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPPrefPaneDataType -detailLevel mini", "purpose": "Profile SPPrefPaneDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPPrefPaneDataType | head -120", "purpose": "Profile SPPrefPaneDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPPrintersDataType", "purpose": "Profile SPPrintersDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPPrintersDataType -detailLevel mini", "purpose": "Profile SPPrintersDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPPrintersDataType | head -120", "purpose": "Profile SPPrintersDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPSoftwareDataType", "purpose": "Profile SPSoftwareDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPSoftwareDataType -detailLevel mini", "purpose": "Profile SPSoftwareDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPSoftwareDataType | head -120", "purpose": "Profile SPSoftwareDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPStartupItemDataType", "purpose": "Profile SPStartupItemDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPStartupItemDataType -detailLevel mini", "purpose": "Profile SPStartupItemDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPStartupItemDataType | head -120", "purpose": "Profile SPStartupItemDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPSyncServicesDataType", "purpose": "Profile SPSyncServicesDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPSyncServicesDataType -detailLevel mini", "purpose": "Profile SPSyncServicesDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPSyncServicesDataType | head -120", "purpose": "Profile SPSyncServicesDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPUniversalAccessDataType", "purpose": "Profile SPUniversalAccessDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPUniversalAccessDataType -detailLevel mini", "purpose": "Profile SPUniversalAccessDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPUniversalAccessDataType | head -120", "purpose": "Profile SPUniversalAccessDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPAirPortDataType", "purpose": "Profile SPAirPortDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPAirPortDataType -detailLevel mini", "purpose": "Profile SPAirPortDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPAirPortDataType | head -120", "purpose": "Profile SPAirPortDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPiBridgeDataType", "purpose": "Profile SPiBridgeDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPiBridgeDataType -detailLevel mini", "purpose": "Profile SPiBridgeDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPiBridgeDataType | head -120", "purpose": "Profile SPiBridgeDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPPCIDataType", "purpose": "Profile SPPCIDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPPCIDataType -detailLevel mini", "purpose": "Profile SPPCIDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPPCIDataType | head -120", "purpose": "Profile SPPCIDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPParallelSCSIDataType", "purpose": "Profile SPParallelSCSIDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPParallelSCSIDataType -detailLevel mini", "purpose": "Profile SPParallelSCSIDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPParallelSCSIDataType | head -120", "purpose": "Profile SPParallelSCSIDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPFireWireDataType", "purpose": "Profile SPFireWireDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPFireWireDataType -detailLevel mini", "purpose": "Profile SPFireWireDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPFireWireDataType | head -120", "purpose": "Profile SPFireWireDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPCardReaderDataType", "purpose": "Profile SPCardReaderDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPCardReaderDataType -detailLevel mini", "purpose": "Profile SPCardReaderDataType mini", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler", "command": "system_profiler SPCardReaderDataType | head -120", "purpose": "Profile SPCardReaderDataType truncated", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg", "command": "ioreg -p IOUSB -l -w 0 | head -160", "purpose": "IORegistry IOUSB", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg", "command": "ioreg -p IOPower -l -w 0 | head -160", "purpose": "IORegistry IOPower", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg", "command": "ioreg -p IOACPIPlane -l -w 0 | head -160", "purpose": "IORegistry IOACPIPlane", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg", "command": "ioreg -p IODeviceTree -l -w 0 | head -160", "purpose": "IORegistry IODeviceTree", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg", "command": "ioreg -p IOService -l -w 0 | head -160", "purpose": "IORegistry IOService", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg", "command": "ioreg -p IOResources -l -w 0 | head -160", "purpose": "IORegistry IOResources", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg", "command": "ioreg -p IOFireWire -l -w 0 | head -160", "purpose": "IORegistry IOFireWire", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg", "command": "ioreg -p IONetwork -l -w 0 | head -160", "purpose": "IORegistry IONetwork", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg", "command": "ioreg -p IOThunderbolt -l -w 0 | head -160", "purpose": "IORegistry IOThunderbolt", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil list", "purpose": "diskutil list", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil info disk0", "purpose": "diskutil info disk0", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil info disk1", "purpose": "diskutil info disk1", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil info disk2", "purpose": "diskutil info disk2", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil info disk3", "purpose": "diskutil info disk3", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil info disk4", "purpose": "diskutil info disk4", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil info disk5", "purpose": "diskutil info disk5", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil info disk6", "purpose": "diskutil info disk6", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil info disk7", "purpose": "diskutil info disk7", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil info disk8", "purpose": "diskutil info disk8", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil info disk9", "purpose": "diskutil info disk9", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil info disk10", "purpose": "diskutil info disk10", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil info disk11", "purpose": "diskutil info disk11", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil info startup-disk", "purpose": "diskutil info startup-disk", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil apfs list", "purpose": "diskutil apfs list", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil apfs listUsers", "purpose": "diskutil apfs listUsers", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil", "command": "diskutil cs list", "purpose": "diskutil cs list", "risk": "read_only"}
+{"platform": "macos", "category": "security", "command": "csrutil status", "purpose": "csrutil", "risk": "read_only"}
+{"platform": "macos", "category": "security", "command": "spctl --status", "purpose": "spctl", "risk": "read_only"}
+{"platform": "macos", "category": "security", "command": "codesign -dv --verbose=4 /usr/bin/python3", "purpose": "codesign", "risk": "read_only"}
+{"platform": "macos", "category": "security", "command": "codesign --verify --verbose /usr/bin/ssh", "purpose": "codesign", "risk": "read_only"}
+{"platform": "macos", "category": "security", "command": "security list-keychains", "purpose": "security", "risk": "read_only"}
+{"platform": "macos", "category": "security", "command": "security dump-trust-settings", "purpose": "security", "risk": "read_only"}
+{"platform": "macos", "category": "security", "command": "security find-certificate -a -p /Library/Keychains/System.keychain | openssl x509 -noout -subject -dates", "purpose": "security", "risk": "read_only"}
+{"platform": "macos", "category": "binary_analysis", "command": "otool -L /usr/bin/ssh", "purpose": "otool", "risk": "read_only"}
+{"platform": "macos", "category": "binary_analysis", "command": "otool -hv /usr/bin/ssh", "purpose": "otool", "risk": "read_only"}
+{"platform": "macos", "category": "binary_analysis", "command": "nm -gU /usr/bin/ssh | head -50", "purpose": "nm", "risk": "read_only"}
+{"platform": "macos", "category": "binary_analysis", "command": "file /usr/bin/ssh", "purpose": "file", "risk": "read_only"}
+{"platform": "macos", "category": "binary_analysis", "command": "strings /usr/bin/ssh | head -40", "purpose": "strings", "risk": "read_only"}
+{"platform": "macos", "category": "binary_analysis", "command": "lipo -info /usr/bin/ssh", "purpose": "lipo", "risk": "read_only"}
+{"platform": "macos", "category": "binary_analysis", "command": "vtool -show-build /usr/bin/ssh", "purpose": "vtool", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "sw_vers", "purpose": "sw_vers", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "uname -a", "purpose": "uname", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "hostname", "purpose": "hostname", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "whoami", "purpose": "whoami", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "id", "purpose": "id", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "pwd", "purpose": "pwd", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "date", "purpose": "date", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "uptime", "purpose": "uptime", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "sysctl -n machdep.cpu.brand_string", "purpose": "sysctl", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "sysctl hw.memsize", "purpose": "sysctl", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "sysctl hw.ncpu", "purpose": "sysctl", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "sysctl kern.boottime", "purpose": "sysctl", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "pmset -g batt", "purpose": "pmset", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "pmset -g therm", "purpose": "pmset", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "networksetup -listallhardwareports", "purpose": "networksetup", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "networksetup -getinfo Wi-Fi", "purpose": "networksetup", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "ifconfig -a", "purpose": "ifconfig", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "netstat -rn", "purpose": "netstat", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "netstat -an | head -80", "purpose": "netstat", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "lsof -i -P | head -50", "purpose": "lsof", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "launchctl list | head -60", "purpose": "launchctl", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "defaults read com.apple.finder", "purpose": "defaults", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "ls -la /Applications | head -40", "purpose": "ls", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "pkgutil --pkgs | head -80", "purpose": "pkgutil", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "pkgutil --pkg-info-plist com.apple.pkg.CLTools_Executables 2>/dev/null || true", "purpose": "pkgutil", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "xcode-select -p", "purpose": "xcode-select", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "xcrun --show-sdk-path", "purpose": "xcrun", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "csrutil status", "purpose": "csrutil", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "fdesetup status", "purpose": "fdesetup", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "systemextensionsctl list", "purpose": "systemextensionsctl", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "profiles list", "purpose": "profiles", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "scutil --dns", "purpose": "scutil", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "scutil --nc list", "purpose": "scutil", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "airport -I", "purpose": "airport", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "bioutil -r", "purpose": "bioutil", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "nvram -p | head -40", "purpose": "nvram", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "ioreg -l | grep board-id | head -5", "purpose": "ioreg", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "log show --predicate 'eventMessage contains \"error\"' --last 5m --style compact | head -30", "purpose": "log", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "mdfind 'kMDItemKind == Application' | head -30", "purpose": "mdfind", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "dscl . -list /Users", "purpose": "dscl", "risk": "read_only"}
+{"platform": "macos", "category": "shell", "command": "dscl . -read /Users/$(whoami)", "purpose": "dscl", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getinfo 'Wi-Fi'", "purpose": "Network Wi-Fi", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getinfo 'Ethernet'", "purpose": "Network Ethernet", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getinfo 'Thunderbolt Bridge'", "purpose": "Network Thunderbolt Bridge", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getinfo 'Bluetooth PAN'", "purpose": "Network Bluetooth PAN", "risk": "read_only"}
+{"platform": "macos", "category": "defaults", "command": "defaults read com.apple.finder", "purpose": "defaults com.apple.finder", "risk": "read_only"}
+{"platform": "macos", "category": "defaults", "command": "defaults read com.apple.dock", "purpose": "defaults com.apple.dock", "risk": "read_only"}
+{"platform": "macos", "category": "defaults", "command": "defaults read com.apple.screensaver", "purpose": "defaults com.apple.screensaver", "risk": "read_only"}
+{"platform": "macos", "category": "defaults", "command": "defaults read com.apple.loginwindow", "purpose": "defaults com.apple.loginwindow", "risk": "read_only"}
+{"platform": "macos", "category": "defaults", "command": "defaults read com.apple.SoftwareUpdate", "purpose": "defaults com.apple.SoftwareUpdate", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.memsize", "purpose": "sysctl hw.memsize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.memsize", "purpose": "sysctl full hw.memsize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.ncpu", "purpose": "sysctl hw.ncpu", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.ncpu", "purpose": "sysctl full hw.ncpu", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.physicalcpu", "purpose": "sysctl hw.physicalcpu", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.physicalcpu", "purpose": "sysctl full hw.physicalcpu", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.logicalcpu", "purpose": "sysctl hw.logicalcpu", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.logicalcpu", "purpose": "sysctl full hw.logicalcpu", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.model", "purpose": "sysctl hw.model", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.model", "purpose": "sysctl full hw.model", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.machine", "purpose": "sysctl hw.machine", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.machine", "purpose": "sysctl full hw.machine", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.pagesize", "purpose": "sysctl hw.pagesize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.pagesize", "purpose": "sysctl full hw.pagesize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.cachelinesize", "purpose": "sysctl hw.cachelinesize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.cachelinesize", "purpose": "sysctl full hw.cachelinesize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.l1icachesize", "purpose": "sysctl hw.l1icachesize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.l1icachesize", "purpose": "sysctl full hw.l1icachesize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.l1dcachesize", "purpose": "sysctl hw.l1dcachesize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.l1dcachesize", "purpose": "sysctl full hw.l1dcachesize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.l2cachesize", "purpose": "sysctl hw.l2cachesize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.l2cachesize", "purpose": "sysctl full hw.l2cachesize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.l3cachesize", "purpose": "sysctl hw.l3cachesize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.l3cachesize", "purpose": "sysctl full hw.l3cachesize", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.busfrequency", "purpose": "sysctl hw.busfrequency", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.busfrequency", "purpose": "sysctl full hw.busfrequency", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n hw.cpufrequency", "purpose": "sysctl hw.cpufrequency", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl hw.cpufrequency", "purpose": "sysctl full hw.cpufrequency", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n kern.hostname", "purpose": "sysctl kern.hostname", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl kern.hostname", "purpose": "sysctl full kern.hostname", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n kern.osversion", "purpose": "sysctl kern.osversion", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl kern.osversion", "purpose": "sysctl full kern.osversion", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n kern.osrelease", "purpose": "sysctl kern.osrelease", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl kern.osrelease", "purpose": "sysctl full kern.osrelease", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n kern.version", "purpose": "sysctl kern.version", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl kern.version", "purpose": "sysctl full kern.version", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n kern.boottime", "purpose": "sysctl kern.boottime", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl kern.boottime", "purpose": "sysctl full kern.boottime", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n kern.maxproc", "purpose": "sysctl kern.maxproc", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl kern.maxproc", "purpose": "sysctl full kern.maxproc", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n kern.maxfiles", "purpose": "sysctl kern.maxfiles", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl kern.maxfiles", "purpose": "sysctl full kern.maxfiles", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n kern.uuid", "purpose": "sysctl kern.uuid", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl kern.uuid", "purpose": "sysctl full kern.uuid", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n kern.ostype", "purpose": "sysctl kern.ostype", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl kern.ostype", "purpose": "sysctl full kern.ostype", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n kern.osproductversion", "purpose": "sysctl kern.osproductversion", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl kern.osproductversion", "purpose": "sysctl full kern.osproductversion", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n machdep.cpu.brand_string", "purpose": "sysctl machdep.cpu.brand_string", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl machdep.cpu.brand_string", "purpose": "sysctl full machdep.cpu.brand_string", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n machdep.cpu.core_count", "purpose": "sysctl machdep.cpu.core_count", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl machdep.cpu.core_count", "purpose": "sysctl full machdep.cpu.core_count", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n machdep.cpu.thread_count", "purpose": "sysctl machdep.cpu.thread_count", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl machdep.cpu.thread_count", "purpose": "sysctl full machdep.cpu.thread_count", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n net.inet.tcp.mssdflt", "purpose": "sysctl net.inet.tcp.mssdflt", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl net.inet.tcp.mssdflt", "purpose": "sysctl full net.inet.tcp.mssdflt", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n net.inet.udp.maxdgram", "purpose": "sysctl net.inet.udp.maxdgram", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl net.inet.udp.maxdgram", "purpose": "sysctl full net.inet.udp.maxdgram", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n security.mac.sandbox.sentinel", "purpose": "sysctl security.mac.sandbox.sentinel", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl security.mac.sandbox.sentinel", "purpose": "sysctl full security.mac.sandbox.sentinel", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n vm.swapusage", "purpose": "sysctl vm.swapusage", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl vm.swapusage", "purpose": "sysctl full vm.swapusage", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl -n vm.loadavg", "purpose": "sysctl vm.loadavg", "risk": "read_only"}
+{"platform": "macos", "category": "sysctl", "command": "sysctl vm.loadavg", "purpose": "sysctl full vm.loadavg", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'process == \"kernel\"' --last 1m --style compact | head -40", "purpose": "log process == \"kernel\" 1m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'process == \"kernel\"' --last 5m --style compact | head -40", "purpose": "log process == \"kernel\" 5m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'process == \"kernel\"' --last 15m --style compact | head -40", "purpose": "log process == \"kernel\" 15m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'process == \"kernel\"' --last 60m --style compact | head -40", "purpose": "log process == \"kernel\" 60m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"error\"' --last 1m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"error\" 1m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"error\"' --last 5m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"error\" 5m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"error\"' --last 15m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"error\" 15m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"error\"' --last 60m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"error\" 60m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"USB\"' --last 1m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"USB\" 1m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"USB\"' --last 5m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"USB\" 5m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"USB\"' --last 15m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"USB\" 15m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"USB\"' --last 60m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"USB\" 60m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"disk\"' --last 1m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"disk\" 1m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"disk\"' --last 5m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"disk\" 5m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"disk\"' --last 15m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"disk\" 15m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"disk\"' --last 60m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"disk\" 60m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"network\"' --last 1m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"network 1m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"network\"' --last 5m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"network 5m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"network\"' --last 15m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"network 15m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"network\"' --last 60m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"network 60m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"bluetooth\"' --last 1m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"bluetoo 1m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"bluetooth\"' --last 5m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"bluetoo 5m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"bluetooth\"' --last 15m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"bluetoo 15m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"bluetooth\"' --last 60m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"bluetoo 60m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"sleep\"' --last 1m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"sleep\" 1m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"sleep\"' --last 5m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"sleep\" 5m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"sleep\"' --last 15m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"sleep\" 15m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"sleep\"' --last 60m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"sleep\" 60m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"wake\"' --last 1m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"wake\" 1m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"wake\"' --last 5m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"wake\" 5m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"wake\"' --last 15m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"wake\" 15m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"wake\"' --last 60m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"wake\" 60m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"security\"' --last 1m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"securit 1m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"security\"' --last 5m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"securit 5m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"security\"' --last 15m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"securit 15m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"security\"' --last 60m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"securit 60m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"failed\"' --last 1m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"failed\" 1m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"failed\"' --last 5m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"failed\" 5m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"failed\"' --last 15m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"failed\" 15m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'eventMessage CONTAINS \"failed\"' --last 60m --style compact | head -40", "purpose": "log eventMessage CONTAINS \"failed\" 60m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'subsystem == \"com.apple.network\"' --last 1m --style compact | head -40", "purpose": "log subsystem == \"com.apple.networ 1m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'subsystem == \"com.apple.network\"' --last 5m --style compact | head -40", "purpose": "log subsystem == \"com.apple.networ 5m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'subsystem == \"com.apple.network\"' --last 15m --style compact | head -40", "purpose": "log subsystem == \"com.apple.networ 15m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'subsystem == \"com.apple.network\"' --last 60m --style compact | head -40", "purpose": "log subsystem == \"com.apple.networ 60m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'subsystem CONTAINS \"com.apple.driver\"' --last 1m --style compact | head -40", "purpose": "log subsystem CONTAINS \"com.apple. 1m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'subsystem CONTAINS \"com.apple.driver\"' --last 5m --style compact | head -40", "purpose": "log subsystem CONTAINS \"com.apple. 5m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'subsystem CONTAINS \"com.apple.driver\"' --last 15m --style compact | head -40", "purpose": "log subsystem CONTAINS \"com.apple. 15m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'subsystem CONTAINS \"com.apple.driver\"' --last 60m --style compact | head -40", "purpose": "log subsystem CONTAINS \"com.apple. 60m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'category CONTAINS \"firewall\"' --last 1m --style compact | head -40", "purpose": "log category CONTAINS \"firewall\" 1m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'category CONTAINS \"firewall\"' --last 5m --style compact | head -40", "purpose": "log category CONTAINS \"firewall\" 5m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'category CONTAINS \"firewall\"' --last 15m --style compact | head -40", "purpose": "log category CONTAINS \"firewall\" 15m", "risk": "read_only"}
+{"platform": "macos", "category": "log_show", "command": "log show --predicate 'category CONTAINS \"firewall\"' --last 60m --style compact | head -40", "purpose": "log category CONTAINS \"firewall\" 60m", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPHardwareDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPHardwareDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPMemoryDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPMemoryDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPNetworkDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPNetworkDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPUSBDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPUSBDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPDisplaysDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPDisplaysDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPAudioDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPAudioDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPBluetoothDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPBluetoothDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPStorageDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPStorageDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPNVMeDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPNVMeDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPSerialATADataType 2>/dev/null | head -c 8000", "purpose": "JSON SPSerialATADataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPThunderboltDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPThunderboltDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPFirewallDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPFirewallDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPApplicationsDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPApplicationsDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPDeveloperToolsDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPDeveloperToolsDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPFontsDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPFontsDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPFrameworksDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPFrameworksDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPInstallHistoryDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPInstallHistoryDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPLogsDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPLogsDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPManagedClientDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPManagedClientDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPPowerDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPPowerDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPPrefPaneDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPPrefPaneDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPPrintersDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPPrintersDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPSoftwareDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPSoftwareDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPStartupItemDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPStartupItemDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPSyncServicesDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPSyncServicesDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPUniversalAccessDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPUniversalAccessDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPAirPortDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPAirPortDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPiBridgeDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPiBridgeDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPPCIDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPPCIDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPParallelSCSIDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPParallelSCSIDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPFireWireDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPFireWireDataType", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_json", "command": "system_profiler -json SPCardReaderDataType 2>/dev/null | head -c 8000", "purpose": "JSON SPCardReaderDataType", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk0|container' | head -20", "purpose": "diskutil disk0 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk1|container' | head -20", "purpose": "diskutil disk1 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk2|container' | head -20", "purpose": "diskutil disk2 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk3|container' | head -20", "purpose": "diskutil disk3 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk4|container' | head -20", "purpose": "diskutil disk4 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk5|container' | head -20", "purpose": "diskutil disk5 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk6|container' | head -20", "purpose": "diskutil disk6 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk7|container' | head -20", "purpose": "diskutil disk7 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk8|container' | head -20", "purpose": "diskutil disk8 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk9|container' | head -20", "purpose": "diskutil disk9 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk10|container' | head -20", "purpose": "diskutil disk10 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk11|container' | head -20", "purpose": "diskutil disk11 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk12|container' | head -20", "purpose": "diskutil disk12 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk13|container' | head -20", "purpose": "diskutil disk13 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk14|container' | head -20", "purpose": "diskutil disk14 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk15|container' | head -20", "purpose": "diskutil disk15 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk16|container' | head -20", "purpose": "diskutil disk16 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk17|container' | head -20", "purpose": "diskutil disk17 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk18|container' | head -20", "purpose": "diskutil disk18 grep", "risk": "read_only"}
+{"platform": "macos", "category": "diskutil_grep", "command": "diskutil list | grep -E 'disk19|container' | head -20", "purpose": "diskutil disk19 grep", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getinfo 'Wi-Fi'", "purpose": "net -getinfo Wi-Fi", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getmedia 'Wi-Fi'", "purpose": "net -getmedia Wi-Fi", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getinfo 'Ethernet'", "purpose": "net -getinfo Ethernet", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getmedia 'Ethernet'", "purpose": "net -getmedia Ethernet", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getinfo 'Thunderbolt Bridge'", "purpose": "net -getinfo Thunderbolt Bridge", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getmedia 'Thunderbolt Bridge'", "purpose": "net -getmedia Thunderbolt Bridge", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getinfo 'Bluetooth PAN'", "purpose": "net -getinfo Bluetooth PAN", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getmedia 'Bluetooth PAN'", "purpose": "net -getmedia Bluetooth PAN", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getinfo 'iPhone USB'", "purpose": "net -getinfo iPhone USB", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getmedia 'iPhone USB'", "purpose": "net -getmedia iPhone USB", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getinfo 'USB'", "purpose": "net -getinfo USB", "risk": "read_only"}
+{"platform": "macos", "category": "networksetup", "command": "networksetup -getmedia 'USB'", "purpose": "net -getmedia USB", "risk": "read_only"}
+{"platform": "macos", "category": "filesystem", "command": "ls -la /Applications/Utilities 2>/dev/null | head -60", "purpose": "ls /Applications/Utilities", "risk": "read_only"}
+{"platform": "macos", "category": "filesystem", "command": "ls -la /Applications 2>/dev/null | head -60", "purpose": "ls /Applications", "risk": "read_only"}
+{"platform": "macos", "category": "filesystem", "command": "ls -la /System/Applications 2>/dev/null | head -60", "purpose": "ls /System/Applications", "risk": "read_only"}
+{"platform": "macos", "category": "filesystem", "command": "ls -la /usr/bin 2>/dev/null | head -60", "purpose": "ls /usr/bin", "risk": "read_only"}
+{"platform": "macos", "category": "launchctl", "command": "launchctl list | grep -E '^0' | head -30", "purpose": "launchctl uid 0", "risk": "read_only"}
+{"platform": "macos", "category": "launchctl", "command": "launchctl list | grep -E '^1' | head -30", "purpose": "launchctl uid 1", "risk": "read_only"}
+{"platform": "macos", "category": "launchctl", "command": "launchctl list | grep -E '^2' | head -30", "purpose": "launchctl uid 2", "risk": "read_only"}
+{"platform": "macos", "category": "launchctl", "command": "launchctl list | grep -E '^3' | head -30", "purpose": "launchctl uid 3", "risk": "read_only"}
+{"platform": "macos", "category": "launchctl", "command": "launchctl list | grep -E '^4' | head -30", "purpose": "launchctl uid 4", "risk": "read_only"}
+{"platform": "macos", "category": "launchctl", "command": "launchctl list | grep -E '^5' | head -30", "purpose": "launchctl uid 5", "risk": "read_only"}
+{"platform": "macos", "category": "launchctl", "command": "launchctl list | grep -E '^6' | head -30", "purpose": "launchctl uid 6", "risk": "read_only"}
+{"platform": "macos", "category": "launchctl", "command": "launchctl list | grep -E '^7' | head -30", "purpose": "launchctl uid 7", "risk": "read_only"}
+{"platform": "macos", "category": "pkgutil", "command": "pkgutil --pkg-info com.apple.pkg.CLTools_Executables 2>/dev/null", "purpose": "pkg com.apple.pkg.CLTools_Executables", "risk": "read_only"}
+{"platform": "macos", "category": "pkgutil", "command": "pkgutil --pkg-info com.apple.pkg.Xcode 2>/dev/null", "purpose": "pkg com.apple.pkg.Xcode", "risk": "read_only"}
+{"platform": "macos", "category": "pkgutil", "command": "pkgutil --pkg-info com.apple.pkg.Rosetta 2>/dev/null", "purpose": "pkg com.apple.pkg.Rosetta", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "otool -L /usr/bin/ssh 2>&1 | head -30", "purpose": "otool -L /usr/bin/ssh", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "codesign -dv /usr/bin/ssh 2>&1 | head -30", "purpose": "codesign -dv /usr/bin/ssh", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "file /usr/bin/ssh 2>&1 | head -30", "purpose": "file /usr/bin/ssh", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "stat /usr/bin/ssh 2>&1 | head -30", "purpose": "stat /usr/bin/ssh", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "otool -L /usr/bin/curl 2>&1 | head -30", "purpose": "otool -L /usr/bin/curl", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "codesign -dv /usr/bin/curl 2>&1 | head -30", "purpose": "codesign -dv /usr/bin/curl", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "file /usr/bin/curl 2>&1 | head -30", "purpose": "file /usr/bin/curl", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "stat /usr/bin/curl 2>&1 | head -30", "purpose": "stat /usr/bin/curl", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "otool -L /usr/bin/python3 2>&1 | head -30", "purpose": "otool -L /usr/bin/python3", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "codesign -dv /usr/bin/python3 2>&1 | head -30", "purpose": "codesign -dv /usr/bin/python3", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "file /usr/bin/python3 2>&1 | head -30", "purpose": "file /usr/bin/python3", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "stat /usr/bin/python3 2>&1 | head -30", "purpose": "stat /usr/bin/python3", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "otool -L /sbin/ping 2>&1 | head -30", "purpose": "otool -L /sbin/ping", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "codesign -dv /sbin/ping 2>&1 | head -30", "purpose": "codesign -dv /sbin/ping", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "file /sbin/ping 2>&1 | head -30", "purpose": "file /sbin/ping", "risk": "read_only"}
+{"platform": "macos", "category": "binary_triage", "command": "stat /sbin/ping 2>&1 | head -30", "purpose": "stat /sbin/ping", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPHardwareDataType | head -40", "purpose": "SPHardwareDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPHardwareDataType | head -80", "purpose": "SPHardwareDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPHardwareDataType | head -120", "purpose": "SPHardwareDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPHardwareDataType | head -200", "purpose": "SPHardwareDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPHardwareDataType | head -400", "purpose": "SPHardwareDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPMemoryDataType | head -40", "purpose": "SPMemoryDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPMemoryDataType | head -80", "purpose": "SPMemoryDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPMemoryDataType | head -120", "purpose": "SPMemoryDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPMemoryDataType | head -200", "purpose": "SPMemoryDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPMemoryDataType | head -400", "purpose": "SPMemoryDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPNetworkDataType | head -40", "purpose": "SPNetworkDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPNetworkDataType | head -80", "purpose": "SPNetworkDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPNetworkDataType | head -120", "purpose": "SPNetworkDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPNetworkDataType | head -200", "purpose": "SPNetworkDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPNetworkDataType | head -400", "purpose": "SPNetworkDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPUSBDataType | head -40", "purpose": "SPUSBDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPUSBDataType | head -80", "purpose": "SPUSBDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPUSBDataType | head -120", "purpose": "SPUSBDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPUSBDataType | head -200", "purpose": "SPUSBDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPUSBDataType | head -400", "purpose": "SPUSBDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPDisplaysDataType | head -40", "purpose": "SPDisplaysDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPDisplaysDataType | head -80", "purpose": "SPDisplaysDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPDisplaysDataType | head -120", "purpose": "SPDisplaysDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPDisplaysDataType | head -200", "purpose": "SPDisplaysDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPDisplaysDataType | head -400", "purpose": "SPDisplaysDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPAudioDataType | head -40", "purpose": "SPAudioDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPAudioDataType | head -80", "purpose": "SPAudioDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPAudioDataType | head -120", "purpose": "SPAudioDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPAudioDataType | head -200", "purpose": "SPAudioDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPAudioDataType | head -400", "purpose": "SPAudioDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPBluetoothDataType | head -40", "purpose": "SPBluetoothDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPBluetoothDataType | head -80", "purpose": "SPBluetoothDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPBluetoothDataType | head -120", "purpose": "SPBluetoothDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPBluetoothDataType | head -200", "purpose": "SPBluetoothDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPBluetoothDataType | head -400", "purpose": "SPBluetoothDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPStorageDataType | head -40", "purpose": "SPStorageDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPStorageDataType | head -80", "purpose": "SPStorageDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPStorageDataType | head -120", "purpose": "SPStorageDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPStorageDataType | head -200", "purpose": "SPStorageDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPStorageDataType | head -400", "purpose": "SPStorageDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPNVMeDataType | head -40", "purpose": "SPNVMeDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPNVMeDataType | head -80", "purpose": "SPNVMeDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPNVMeDataType | head -120", "purpose": "SPNVMeDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPNVMeDataType | head -200", "purpose": "SPNVMeDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPNVMeDataType | head -400", "purpose": "SPNVMeDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSerialATADataType | head -40", "purpose": "SPSerialATADataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSerialATADataType | head -80", "purpose": "SPSerialATADataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSerialATADataType | head -120", "purpose": "SPSerialATADataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSerialATADataType | head -200", "purpose": "SPSerialATADataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSerialATADataType | head -400", "purpose": "SPSerialATADataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPThunderboltDataType | head -40", "purpose": "SPThunderboltDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPThunderboltDataType | head -80", "purpose": "SPThunderboltDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPThunderboltDataType | head -120", "purpose": "SPThunderboltDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPThunderboltDataType | head -200", "purpose": "SPThunderboltDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPThunderboltDataType | head -400", "purpose": "SPThunderboltDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFirewallDataType | head -40", "purpose": "SPFirewallDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFirewallDataType | head -80", "purpose": "SPFirewallDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFirewallDataType | head -120", "purpose": "SPFirewallDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFirewallDataType | head -200", "purpose": "SPFirewallDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFirewallDataType | head -400", "purpose": "SPFirewallDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPApplicationsDataType | head -40", "purpose": "SPApplicationsDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPApplicationsDataType | head -80", "purpose": "SPApplicationsDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPApplicationsDataType | head -120", "purpose": "SPApplicationsDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPApplicationsDataType | head -200", "purpose": "SPApplicationsDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPApplicationsDataType | head -400", "purpose": "SPApplicationsDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPDeveloperToolsDataType | head -40", "purpose": "SPDeveloperToolsDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPDeveloperToolsDataType | head -80", "purpose": "SPDeveloperToolsDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPDeveloperToolsDataType | head -120", "purpose": "SPDeveloperToolsDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPDeveloperToolsDataType | head -200", "purpose": "SPDeveloperToolsDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPDeveloperToolsDataType | head -400", "purpose": "SPDeveloperToolsDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFontsDataType | head -40", "purpose": "SPFontsDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFontsDataType | head -80", "purpose": "SPFontsDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFontsDataType | head -120", "purpose": "SPFontsDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFontsDataType | head -200", "purpose": "SPFontsDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFontsDataType | head -400", "purpose": "SPFontsDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFrameworksDataType | head -40", "purpose": "SPFrameworksDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFrameworksDataType | head -80", "purpose": "SPFrameworksDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFrameworksDataType | head -120", "purpose": "SPFrameworksDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFrameworksDataType | head -200", "purpose": "SPFrameworksDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFrameworksDataType | head -400", "purpose": "SPFrameworksDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPInstallHistoryDataType | head -40", "purpose": "SPInstallHistoryDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPInstallHistoryDataType | head -80", "purpose": "SPInstallHistoryDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPInstallHistoryDataType | head -120", "purpose": "SPInstallHistoryDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPInstallHistoryDataType | head -200", "purpose": "SPInstallHistoryDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPInstallHistoryDataType | head -400", "purpose": "SPInstallHistoryDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPLogsDataType | head -40", "purpose": "SPLogsDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPLogsDataType | head -80", "purpose": "SPLogsDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPLogsDataType | head -120", "purpose": "SPLogsDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPLogsDataType | head -200", "purpose": "SPLogsDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPLogsDataType | head -400", "purpose": "SPLogsDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPManagedClientDataType | head -40", "purpose": "SPManagedClientDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPManagedClientDataType | head -80", "purpose": "SPManagedClientDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPManagedClientDataType | head -120", "purpose": "SPManagedClientDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPManagedClientDataType | head -200", "purpose": "SPManagedClientDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPManagedClientDataType | head -400", "purpose": "SPManagedClientDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPowerDataType | head -40", "purpose": "SPPowerDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPowerDataType | head -80", "purpose": "SPPowerDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPowerDataType | head -120", "purpose": "SPPowerDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPowerDataType | head -200", "purpose": "SPPowerDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPowerDataType | head -400", "purpose": "SPPowerDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPrefPaneDataType | head -40", "purpose": "SPPrefPaneDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPrefPaneDataType | head -80", "purpose": "SPPrefPaneDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPrefPaneDataType | head -120", "purpose": "SPPrefPaneDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPrefPaneDataType | head -200", "purpose": "SPPrefPaneDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPrefPaneDataType | head -400", "purpose": "SPPrefPaneDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPrintersDataType | head -40", "purpose": "SPPrintersDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPrintersDataType | head -80", "purpose": "SPPrintersDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPrintersDataType | head -120", "purpose": "SPPrintersDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPrintersDataType | head -200", "purpose": "SPPrintersDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPrintersDataType | head -400", "purpose": "SPPrintersDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSoftwareDataType | head -40", "purpose": "SPSoftwareDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSoftwareDataType | head -80", "purpose": "SPSoftwareDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSoftwareDataType | head -120", "purpose": "SPSoftwareDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSoftwareDataType | head -200", "purpose": "SPSoftwareDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSoftwareDataType | head -400", "purpose": "SPSoftwareDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPStartupItemDataType | head -40", "purpose": "SPStartupItemDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPStartupItemDataType | head -80", "purpose": "SPStartupItemDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPStartupItemDataType | head -120", "purpose": "SPStartupItemDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPStartupItemDataType | head -200", "purpose": "SPStartupItemDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPStartupItemDataType | head -400", "purpose": "SPStartupItemDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSyncServicesDataType | head -40", "purpose": "SPSyncServicesDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSyncServicesDataType | head -80", "purpose": "SPSyncServicesDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSyncServicesDataType | head -120", "purpose": "SPSyncServicesDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSyncServicesDataType | head -200", "purpose": "SPSyncServicesDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPSyncServicesDataType | head -400", "purpose": "SPSyncServicesDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPUniversalAccessDataType | head -40", "purpose": "SPUniversalAccessDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPUniversalAccessDataType | head -80", "purpose": "SPUniversalAccessDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPUniversalAccessDataType | head -120", "purpose": "SPUniversalAccessDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPUniversalAccessDataType | head -200", "purpose": "SPUniversalAccessDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPUniversalAccessDataType | head -400", "purpose": "SPUniversalAccessDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPAirPortDataType | head -40", "purpose": "SPAirPortDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPAirPortDataType | head -80", "purpose": "SPAirPortDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPAirPortDataType | head -120", "purpose": "SPAirPortDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPAirPortDataType | head -200", "purpose": "SPAirPortDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPAirPortDataType | head -400", "purpose": "SPAirPortDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPiBridgeDataType | head -40", "purpose": "SPiBridgeDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPiBridgeDataType | head -80", "purpose": "SPiBridgeDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPiBridgeDataType | head -120", "purpose": "SPiBridgeDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPiBridgeDataType | head -200", "purpose": "SPiBridgeDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPiBridgeDataType | head -400", "purpose": "SPiBridgeDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPCIDataType | head -40", "purpose": "SPPCIDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPCIDataType | head -80", "purpose": "SPPCIDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPCIDataType | head -120", "purpose": "SPPCIDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPCIDataType | head -200", "purpose": "SPPCIDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPPCIDataType | head -400", "purpose": "SPPCIDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPParallelSCSIDataType | head -40", "purpose": "SPParallelSCSIDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPParallelSCSIDataType | head -80", "purpose": "SPParallelSCSIDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPParallelSCSIDataType | head -120", "purpose": "SPParallelSCSIDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPParallelSCSIDataType | head -200", "purpose": "SPParallelSCSIDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPParallelSCSIDataType | head -400", "purpose": "SPParallelSCSIDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFireWireDataType | head -40", "purpose": "SPFireWireDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFireWireDataType | head -80", "purpose": "SPFireWireDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFireWireDataType | head -120", "purpose": "SPFireWireDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFireWireDataType | head -200", "purpose": "SPFireWireDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPFireWireDataType | head -400", "purpose": "SPFireWireDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPCardReaderDataType | head -40", "purpose": "SPCardReaderDataType head 40", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPCardReaderDataType | head -80", "purpose": "SPCardReaderDataType head 80", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPCardReaderDataType | head -120", "purpose": "SPCardReaderDataType head 120", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPCardReaderDataType | head -200", "purpose": "SPCardReaderDataType head 200", "risk": "read_only"}
+{"platform": "macos", "category": "system_profiler_head", "command": "system_profiler SPCardReaderDataType | head -400", "purpose": "SPCardReaderDataType head 400", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -20", "purpose": "ioreg grep chunk 0", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -21", "purpose": "ioreg grep chunk 1", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -22", "purpose": "ioreg grep chunk 2", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -23", "purpose": "ioreg grep chunk 3", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -24", "purpose": "ioreg grep chunk 4", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -25", "purpose": "ioreg grep chunk 5", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -26", "purpose": "ioreg grep chunk 6", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -27", "purpose": "ioreg grep chunk 7", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -28", "purpose": "ioreg grep chunk 8", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -29", "purpose": "ioreg grep chunk 9", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -30", "purpose": "ioreg grep chunk 10", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -31", "purpose": "ioreg grep chunk 11", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -32", "purpose": "ioreg grep chunk 12", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -33", "purpose": "ioreg grep chunk 13", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -34", "purpose": "ioreg grep chunk 14", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -35", "purpose": "ioreg grep chunk 15", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -36", "purpose": "ioreg grep chunk 16", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -37", "purpose": "ioreg grep chunk 17", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -38", "purpose": "ioreg grep chunk 18", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -39", "purpose": "ioreg grep chunk 19", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -40", "purpose": "ioreg grep chunk 20", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -41", "purpose": "ioreg grep chunk 21", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -42", "purpose": "ioreg grep chunk 22", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -43", "purpose": "ioreg grep chunk 23", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -44", "purpose": "ioreg grep chunk 24", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -45", "purpose": "ioreg grep chunk 25", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -46", "purpose": "ioreg grep chunk 26", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -47", "purpose": "ioreg grep chunk 27", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -48", "purpose": "ioreg grep chunk 28", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -49", "purpose": "ioreg grep chunk 29", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -50", "purpose": "ioreg grep chunk 30", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -51", "purpose": "ioreg grep chunk 31", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -52", "purpose": "ioreg grep chunk 32", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -53", "purpose": "ioreg grep chunk 33", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -54", "purpose": "ioreg grep chunk 34", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -55", "purpose": "ioreg grep chunk 35", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -56", "purpose": "ioreg grep chunk 36", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -57", "purpose": "ioreg grep chunk 37", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -58", "purpose": "ioreg grep chunk 38", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -59", "purpose": "ioreg grep chunk 39", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -60", "purpose": "ioreg grep chunk 40", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -61", "purpose": "ioreg grep chunk 41", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -62", "purpose": "ioreg grep chunk 42", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -63", "purpose": "ioreg grep chunk 43", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -64", "purpose": "ioreg grep chunk 44", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -65", "purpose": "ioreg grep chunk 45", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -66", "purpose": "ioreg grep chunk 46", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -67", "purpose": "ioreg grep chunk 47", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -68", "purpose": "ioreg grep chunk 48", "risk": "read_only"}
+{"platform": "macos", "category": "ioreg_grep", "command": "ioreg -l | grep -i 'usb|product|vendor' | head -69", "purpose": "ioreg grep chunk 49", "risk": "read_only"}

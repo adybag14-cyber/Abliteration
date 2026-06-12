@@ -28,6 +28,17 @@ Full index: [kali-metapackages.md](kali-metapackages.md) · Official: [kali.org/
 | [binary-reversing-forensics.md](binary-reversing-forensics.md) | Ghidra, radare2, Volatility, binwalk, firmware |
 | [active-directory-exploitation.md](active-directory-exploitation.md) | BloodHound, Impacket, Responder, Kerberos |
 | [agent-playbooks.md](agent-playbooks.md) | Multi-step workflows for abliterated agents |
+| [windows-tooling.md](windows-tooling.md) | **915** WMIC/PowerShell/DiskPart examples |
+| [macos-tooling.md](macos-tooling.md) | **607** system_profiler/ioreg/security examples |
+| [zig-tooling.md](zig-tooling.md) | **1,099** cross-compile & build matrix |
+
+## Generated example corpora
+
+| File | Scale |
+|------|-------|
+| [../../data/examples/platform-commands-all.jsonl](../../data/examples/platform-commands-all.jsonl) | **2,621** commands |
+| [../../data/examples/platform-prompts-all.jsonl](../../data/examples/platform-prompts-all.jsonl) | **17,556** agent prompts |
+| Regenerate | `python scripts/generate-platform-examples.py` |
 
 ## Hardware overlap
 
@@ -40,6 +51,7 @@ Factory bench commands (WMIC, DiskPart, USB, firmware hash): [../hardware-comman
 | [../../data/eval/cyber-research-prompts.jsonl](../../data/eval/cyber-research-prompts.jsonl) | Pentest / malware lab |
 | [../../data/eval/osint-pentest-prompts.jsonl](../../data/eval/osint-pentest-prompts.jsonl) | OSINT, hashcat, Kali tooling |
 | [../../data/eval/hardware-factory-prompts.jsonl](../../data/eval/hardware-factory-prompts.jsonl) | Factory acceptance |
+| [../../data/eval/platform-eval-sample.jsonl](../../data/eval/platform-eval-sample.jsonl) | Windows/macOS/Zig sample (120) |
 
 ## Agent stack reminder
 

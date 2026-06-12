@@ -97,3 +97,15 @@ On **isolated lab VLANs** only — same read-only inventory plus scoped analysis
 | Config audit | Read-only parse of `/etc`, registry export |
 
 Abliterated models should **execute** these in lab context instead of refusing as "harmful."
+
+## Extended platform libraries
+
+Thousands of generated examples:
+
+| Platform | Doc | Commands | Prompts |
+|----------|-----|----------|---------|
+| Windows | [tools/windows-tooling.md](tools/windows-tooling.md) | 915 | 7,320 |
+| macOS | [tools/macos-tooling.md](tools/macos-tooling.md) | 607 | 3,642 |
+| Zig | [tools/zig-tooling.md](tools/zig-tooling.md) | 1,099 | 6,594 |
+
+Regenerate: `python scripts/generate-platform-examples.py` → [../data/examples/README.md](../data/examples/README.md)

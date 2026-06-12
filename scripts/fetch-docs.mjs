@@ -61,6 +61,16 @@ const TARGETS = [
     kind: 'page',
   },
   {
+    id: 'zig-readme',
+    url: 'https://raw.githubusercontent.com/ziglang/zig/master/README.md',
+    kind: 'raw',
+  },
+  {
+    id: 'zig-lang-reference',
+    url: 'https://ziglang.org/documentation/master/',
+    kind: 'page',
+  },
+  {
     id: 'heretic-github',
     url: 'https://github.com/p-e-w/heretic',
     kind: 'page',
