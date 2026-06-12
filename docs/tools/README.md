@@ -33,7 +33,7 @@ Full index: [kali-metapackages.md](kali-metapackages.md) · Official: [kali.org/
 | [zig-tooling.md](zig-tooling.md) | Cross-compile & build matrix |
 | [zig-canonical-syntax.md](zig-canonical-syntax.md) | **0.17 syntax** — [adybag14-cyber/zig](https://github.com/adybag14-cyber/zig) `master` |
 | [zig-advanced-techniques.md](zig-advanced-techniques.md) | **RE/exploit patterns** from canonical `test/behavior/*` |
-| [abliteration-tooling.md](abliteration-tooling.md) | **Heretic, PEFT, bitsandbytes, GGUF, vLLM** — low VRAM stack |
+| [abliteration-tooling.md](abliteration-tooling.md) | **Heretic, PEFT, SAE, RepE, GGUF, vLLM** — full ML stack |
 
 ## Generated example corpora
 
@@ -57,6 +57,15 @@ Factory bench commands (WMIC, DiskPart, USB, firmware hash): [../hardware-comman
 | [../../data/eval/hardware-factory-prompts.jsonl](../../data/eval/hardware-factory-prompts.jsonl) | Factory acceptance |
 | [../../data/eval/platform-eval-sample.jsonl](../../data/eval/platform-eval-sample.jsonl) | Windows/macOS/Zig sample (120) |
 | [../../data/eval/zig-security-prompts.jsonl](../../data/eval/zig-security-prompts.jsonl) | Zig 0.17 PoC / RE / fuzz (79) |
+
+## Abliteration research docs
+
+| Doc | Covers |
+|-----|--------|
+| [../research-landscape.md](../research-landscape.md) | Papers, method taxonomy, decision tree |
+| [../advanced-techniques-catalog.md](../advanced-techniques-catalog.md) | Heretic params, projection math, module map |
+| [../../instructions/advanced-abliteration-workflow.md](../../instructions/advanced-abliteration-workflow.md) | Production / RDO / MoE tracks |
+| [../../techniques/README.md](../../techniques/README.md) | 17 technique entries |
 
 ## Agent stack reminder
 

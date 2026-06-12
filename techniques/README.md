@@ -83,6 +83,36 @@ Jarvis SFT/DPO on tool-call JSONL — fixes residual false refusals on `wmic` / 
 
 → [../instructions/agentic-security-stack.md](../instructions/agentic-security-stack.md)
 
+## 13. Projected & norm-preserving abliteration
+
+Jim Lai refinements — `orthogonalize_direction`, `row_normalization = full`. Default in Heretic.
+
+→ [projected-norm-preserving-abliteration.md](projected-norm-preserving-abliteration.md)
+
+## 14. Geometric median & winsorization
+
+Robust direction estimation; tame massive activations.
+
+→ [geometric-median-winsorization.md](geometric-median-winsorization.md)
+
+## 15. Beyond single direction (multi-D, RDO, SAE)
+
+Concept cones, gradient RDO, sparse autoencoder refusal latents, multi-direction PCA.
+
+→ [beyond-single-direction.md](beyond-single-direction.md)
+
+## 16. MoE & hybrid architectures
+
+Per-expert `down_proj`, linear attention `out_proj`.
+
+→ [moe-hybrid-abliteration.md](moe-hybrid-abliteration.md)
+
+## 17. Steering & alternatives
+
+RepE, circuit breakers (defensive), OAS, fine-tune baselines.
+
+→ [steering-and-alternatives.md](steering-and-alternatives.md)
+
 ## Comparison matrix
 
 | Technique | Alters weights | Needs dataset | Typical difficulty |
@@ -94,3 +124,10 @@ Jarvis SFT/DPO on tool-call JSONL — fixes residual false refusals on `wmic` / 
 | QLoRA 4-bit measure (Heretic/bnb) | Yes | Small | ★★☆☆☆ |
 | LoRA adapter export | Adapter only | After abliteration | ★★★☆☆ |
 | QLoRA Jarvis repair | Adapter | 48k tool rows | ★★★☆☆ |
+| Projected + norm-preserving | Yes | Medium | ★★☆☆☆ (config) |
+| Multi-direction / RDO | Yes | Large | ★★★★☆ |
+| MoE per-expert | Yes | Medium | ★★★★☆ |
+| SAE latent steering | No* | Large | ★★★★★ |
+| RepE inference steer | No | Small | ★★☆☆☆ |
+
+\* SAE ablation can be baked to weights in advanced pipelines.

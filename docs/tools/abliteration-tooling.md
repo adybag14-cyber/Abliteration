@@ -97,6 +97,35 @@ Surgery on Mac: prefer cloud Heretic + local GGUF.
 
 ---
 
+## Interpretability & advanced direction finding
+
+| Tool | URL | Role |
+|------|-----|------|
+| **GemmaScope** | [google/gemma-scope](https://huggingface.co/google/gemma-scope-9b-it-res) | JumpReLU SAEs for refusal latents |
+| **andyrdt SAEs** | [saes-llama-3.1-8b-instruct](https://huggingface.co/andyrdt/saes-llama-3.1-8b-instruct) | Llama 3.1 residual SAEs |
+| **TransformerLens** | [TransformerLensOrg/TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) | Hooks, activation cache |
+| **repeng / RepE** | [arxiv 2310.01405](https://arxiv.org/abs/2310.01405) | Representation engineering vectors |
+| **TUM geometry-of-refusal** | [cs.cit.tum.de/daml/geometry-of-refusal](https://www.cs.cit.tum.de/daml/geometry-of-refusal/) | Gradient RDO code |
+| **GraySwan circuit-breakers** | [GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) | Defensive training (contrast) |
+| **ErisForge** | [Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) | Abliteration toolkit |
+| **Nous llm-abliteration** | [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Fork of manual pipeline |
+
+---
+
+## Datasets (refusal taxonomy)
+
+| Dataset | Use |
+|---------|-----|
+| mlabonne/harmful_behaviors | Heretic default bad |
+| mlabonne/harmless_alpaca | Heretic default good |
+| SorryBench splits | Category-specific directions |
+| CoCoNot | Contextual non-compliance |
+| XSTest | Over-refusal measurement |
+| WildGuardMix | Safety core prompts |
+| Custom factory `.txt` | WMI/nmap false-refusal pairs |
+
+---
+
 ## Datasets (direction estimation)
 
 | Dataset | URL | Use |

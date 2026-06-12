@@ -67,6 +67,48 @@ Refusal directions sometimes **overlap** with useful features (helpfulness, caut
 
 **Mitigation:** ablate fewer layers, use partial strength `α ∈ (0,1)`, or domain-specific directions.
 
+## Projected & norm-preserving edits
+
+**Projected abliteration** (Lai 2025): compute refusal direction with harmless component removed:
+
+```
+g = normalize(mean(H_harmless))
+r_raw = mean(H_harmful) - mean(H_harmless)
+r = normalize(r_raw - (r_raw · g) g)
+```
+
+Only the component of refusal **orthogonal to helpful behavior** is suppressed — lowers KL vs raw Arditi.
+
+**Norm-preserving:** rescale rows of `W'` to match `‖W[i,:]‖` before and after ablation (biprojected). Heretic `row_normalization = full` approximates via rank-r LoRA.
+
+→ [../techniques/projected-norm-preserving-abliteration.md](../techniques/projected-norm-preserving-abliteration.md)
+
+## Beyond a single direction
+
+Recent work ([QCRI 2026](https://arxiv.org/html/2602.02132v1), [TUM concept cones](https://arxiv.org/html/2502.17420v2)) shows:
+
+- Multiple **geometrically distinct** refusal directions exist (safety, over-refusal, incomplete requests, …).
+- Linear ablation along any one direction still acts as a **shared refusal knob** for rate trade-offs.
+- Refusal may occupy **multi-dimensional cones** — gradient RDO and multi-direction subspace ablation are refinements when DIM fails.
+
+For agent deployments, **domain-specific** harmful/harmless pairs (factory WMI vs cyber lab) often matter more than multi-direction math.
+
+→ [../techniques/beyond-single-direction.md](../techniques/beyond-single-direction.md) · [research-landscape.md](research-landscape.md)
+
+## Robust estimation
+
+- **Geometric median** centroids (`r*` vs `r`) reduce outlier prompt influence.
+- **Winsorization** clamps massive activation spikes before mean (Gemma-class models).
+
+→ [../techniques/geometric-median-winsorization.md](../techniques/geometric-median-winsorization.md)
+
+## MoE & hybrid blocks
+
+Refusal writes propagate through **each expert's** `down_proj` independently. Abliteration must touch all experts on MoE layers, and `linear_attn.out_proj` on hybrid layers.
+
+→ [../techniques/moe-hybrid-abliteration.md](../techniques/moe-hybrid-abliteration.md)
+
 ## Further reading
 
-See [../references.md](../references.md) for papers and implementations.
+See [../references.md](../references.md) for papers and implementations.  
+Advanced catalog: [advanced-techniques-catalog.md](advanced-techniques-catalog.md)

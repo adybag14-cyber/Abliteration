@@ -69,9 +69,22 @@ Stack: Heretic abliteration → optional [Jarvis v7](../sources/jarvis-pack/IMPO
 | Inference-only 8 GB RAM | GGUF Q4 after cloud abliteration |
 | LoRA / QLoRA theory | [../techniques/lora-qlora-abliteration.md](../techniques/lora-qlora-abliteration.md) |
 
+## Advanced methods (2025–2026)
+
+| Method | Doc |
+|--------|-----|
+| Projected + norm-preserving | [../techniques/projected-norm-preserving-abliteration.md](../techniques/projected-norm-preserving-abliteration.md) |
+| Multi-direction / concept cones | [../techniques/beyond-single-direction.md](../techniques/beyond-single-direction.md) |
+| MoE per-expert | [../techniques/moe-hybrid-abliteration.md](../techniques/moe-hybrid-abliteration.md) |
+| Geometric median + winsorization | [../techniques/geometric-median-winsorization.md](../techniques/geometric-median-winsorization.md) |
+| Steering & alternatives | [../techniques/steering-and-alternatives.md](../techniques/steering-and-alternatives.md) |
+
+Full index: [research-landscape.md](research-landscape.md) · [advanced-techniques-catalog.md](advanced-techniques-catalog.md)
+
 ## Next steps
 
 - Theory: [theory.md](theory.md)
 - Technique catalog: [../techniques/README.md](../techniques/README.md)
+- Advanced workflow: [../instructions/advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md)
 - Tool catalog: [tools/abliteration-tooling.md](tools/abliteration-tooling.md)
 - Run something: [../instructions/quickstart.md](../instructions/quickstart.md)

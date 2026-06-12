@@ -7,12 +7,21 @@ Step-by-step workflows. Read [../docs/overview.md](../docs/overview.md) first.
 | [quickstart.md](quickstart.md) | ~30 min | ★★☆☆☆ |
 | [heretic-workflow.md](heretic-workflow.md) | ~1–2 hr | ★★☆☆☆ |
 | **[low-vram-abliteration.md](low-vram-abliteration.md)** | ~1–3 hr | ★★★☆☆ |
+| **[advanced-abliteration-workflow.md](advanced-abliteration-workflow.md)** | ~2–8 hr | ★★★★☆ |
 | [agentic-security-stack.md](agentic-security-stack.md) | ~2–4 hr | ★★★☆☆ |
 | Tool catalogs (OSINT/Kali/hashcat) | [../docs/tools/README.md](../docs/tools/README.md) | reference |
 | Abliteration tooling (PEFT, GGUF, …) | [../docs/tools/abliteration-tooling.md](../docs/tools/abliteration-tooling.md) | reference |
 | [llm-abliteration-workflow.md](llm-abliteration-workflow.md) | ~2–4 hr | ★★★☆☆ |
 | [manual-full-pipeline.md](manual-full-pipeline.md) | ~4–8 hr | ★★★★☆ |
 | [inference-only-prototype.md](inference-only-prototype.md) | ~1 hr | ★★☆☆☆ |
+
+## Research & advanced methods
+
+| Doc | Topic |
+|-----|-------|
+| [../docs/research-landscape.md](../docs/research-landscape.md) | Papers, taxonomy, decision tree |
+| [../docs/advanced-techniques-catalog.md](../docs/advanced-techniques-catalog.md) | Heretic params, math, module map |
+| [advanced-abliteration-workflow.md](advanced-abliteration-workflow.md) | Tracks A–G (production → RDO → MoE) |
 
 ## LoRA / QLoRA techniques
 

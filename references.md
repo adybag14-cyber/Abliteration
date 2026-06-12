@@ -8,6 +8,13 @@
 |-------|------|---------------------|
 | Refusal in LLMs is mediated by a single direction | [arXiv:2406.11717](https://arxiv.org/abs/2406.11717) | [andyrdt/refusal_direction](https://github.com/andyrdt/refusal_direction) |
 | Accessible summary | [LessWrong](https://www.lesswrong.com/posts/jGuXSZgv6qfdhMCuJ/refusal-in-llms-is-mediated-by-a-single-direction) | — |
+| The Geometry of Refusal — concept cones | [arXiv:2502.17420](https://arxiv.org/html/2502.17420v2) | [TUM geometry-of-refusal](https://www.cs.cit.tum.de/daml/geometry-of-refusal/) |
+| More to refusal than a single direction (QCRI) | [arXiv:2602.02132](https://arxiv.org/html/2602.02132v1) | — |
+| Representation Engineering | [arXiv:2310.01405](https://arxiv.org/abs/2310.01405) | RepE ecosystem |
+| Circuit Breakers (defensive) | [arXiv:2406.04313](https://arxiv.org/html/2406.04313v3) | [GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) |
+| Projected abliteration (blog) | [grimjim/projected](https://huggingface.co/blog/grimjim/projected-abliteration) | llm-abliteration `--projected` |
+| Norm-preserving biprojected (blog) | [grimjim/norm-preserving](https://huggingface.co/blog/grimjim/norm-preserving-biprojected-abliteration) | `--normpreserve` |
+| Heretic concepts (live) | [mintlify Heretic](https://p-e-w-heretic.mintlify.app/concepts/abliteration) | [p-e-w/heretic](https://github.com/p-e-w/heretic) |
 
 ## Tools (GitHub — preferred)
 
@@ -21,7 +28,9 @@
 | **remove-refusals-with-transformers** | [github.com/Sumandora/remove-refusals-with-transformers](https://github.com/Sumandora/remove-refusals-with-transformers) | Pure Transformers, no TransformerLens |
 | **wassname/abliterator** | [github.com/wassname/abliterator](https://github.com/wassname/abliterator) | Community implementation |
 | **ErisForge** | [github.com/Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) | Toolkit |
+| **NousResearch/llm-abliteration** | [github.com/NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Community fork |
 | **deccp** | [github.com/AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) | Dataset / deccp topics for measurement |
+| **GraySwan circuit-breakers** | [github.com/GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) | Defensive alignment (contrast) |
 
 Heretic also mirrors to [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/heretic).
 
@@ -117,9 +126,28 @@ Full stack workflow: [instructions/agentic-security-stack.md](instructions/agent
 | Zig 0.16 release notes | [ziglang.org/download/0.16.0/release-notes.html](https://ziglang.org/download/0.16.0/release-notes.html) |
 | Zig targets | `zig targets` / [documentation/master](https://ziglang.org/documentation/master/) |
 
+## Interpretability & SAE
+
+| Resource | URL |
+|----------|-----|
+| GemmaScope SAEs | [huggingface.co/google/gemma-scope-9b-it-res](https://huggingface.co/google/gemma-scope-9b-it-res) |
+| Llama 3.1 SAEs | [andyrdt/saes-llama-3.1-8b-instruct](https://huggingface.co/andyrdt/saes-llama-3.1-8b-instruct) |
+| PaCMAP (Heretic plots) | [YingfanWang/PaCMAP](https://github.com/YingfanWang/PaCMAP) |
+
+## Advanced handbook sections
+
+| Doc | Topic |
+|-----|-------|
+| [docs/research-landscape.md](docs/research-landscape.md) | Method taxonomy & decision tree |
+| [docs/advanced-techniques-catalog.md](docs/advanced-techniques-catalog.md) | Parameters & math |
+| [instructions/advanced-abliteration-workflow.md](instructions/advanced-abliteration-workflow.md) | Multi-track workflows |
+| [docs/tools/abliteration-tooling.md](docs/tools/abliteration-tooling.md) | Full tool stack |
+
 ## Related concepts
 
 - **Activation steering** — inference-time only (reversible)
 - **Directional ablation** — subtract refusal component from activations or weights
 - **Norm-preserving biprojected abliteration** — Jim Lai / llm-abliteration `--normpreserve --projected`
+- **Gradient RDO** — optimized refusal direction (TUM 2025)
+- **Multi-direction subspace** — PCA / category-specific directions
 - **Context7** — up-to-date dependency docs → [docs/context7.md](docs/context7.md)
