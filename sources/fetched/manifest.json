@@ -72,6 +72,30 @@
     "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\kali-metapackages.txt"
   },
   {
+    "id": "zig-readme",
+    "url": "https://raw.githubusercontent.com/ziglang/zig/master/README.md",
+    "kind": "raw",
+    "ok": true,
+    "bytes": 119,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\zig-readme.txt"
+  },
+  {
+    "id": "zig-canonical-readme",
+    "url": "https://raw.githubusercontent.com/adybag14-cyber/zig/master/README.md",
+    "kind": "raw",
+    "ok": true,
+    "bytes": 31114,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\zig-canonical-readme.txt"
+  },
+  {
+    "id": "zig-lang-reference",
+    "url": "https://ziglang.org/documentation/master/",
+    "kind": "page",
+    "ok": true,
+    "bytes": 424919,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\zig-lang-reference.txt"
+  },
+  {
     "id": "heretic-github",
     "url": "https://github.com/p-e-w/heretic",
     "kind": "page",
