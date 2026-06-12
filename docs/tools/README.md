@@ -31,6 +31,7 @@ Full index: [kali-metapackages.md](kali-metapackages.md) · Official: [kali.org/
 | [windows-tooling.md](windows-tooling.md) | **915** WMIC/PowerShell/DiskPart examples |
 | [macos-tooling.md](macos-tooling.md) | **607** system_profiler/ioreg/security examples |
 | [zig-tooling.md](zig-tooling.md) | **1,099** cross-compile & build matrix |
+| [zig-canonical-syntax.md](zig-canonical-syntax.md) | **0.17 syntax** — [adybag14-cyber/zig](https://github.com/adybag14-cyber/zig) `master` |
 
 ## Generated example corpora
 

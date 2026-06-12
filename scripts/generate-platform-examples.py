@@ -334,9 +334,7 @@ SCHTASK_PATHS = [
 
 ZIG_BUILD_FLAGS = [
     "-Dstrip=true", "-Dsingle-threaded=true", "-Dcpu=baseline", "-Dcpu=native",
-    "-Drelease=true", "-Dtracy=false", "-Dsanitize=address", "-Dsanitize=thread",
-    "-Dfuzz=false", "-Ddocs=false", "-Dexamples=true", "-Dtests=true",
-    "-Dshared=false", "-Dpie=true", "-Dstatic=true",
+    "-Doptimize=Debug", "-Doptimize=ReleaseSafe", "-Doptimize=ReleaseFast", "-Doptimize=ReleaseSmall",
 ]
 
 ZIG_TEST_FILTERS = [
@@ -702,9 +700,11 @@ def gen_zig_commands() -> list:
         ("zig run src/main.zig", "Compile and run"),
         ("zig run src/main.zig -OReleaseSafe", "Run optimized safe"),
         ("zig fetch --save git+https://github.com/ziglang/zig#master", "Fetch dep (example)"),
-        ("zig init", "Scaffold new project"),
-        ("zig init-exe", "Scaffold executable"),
-        ("zig init-lib", "Scaffold library"),
+        ("zig init", "Scaffold 0.17 project (exe+lib template)"),
+        ("zig build --fetch", "Fetch build.zig.zon dependencies"),
+        ("zig build run -- --help", "Run with passthru args"),
+        ("zig build test --fuzz", "Run fuzz tests"),
+        ("zig build test --summary all", "Test summary"),
         ("zig translate-c --help", "C translation help"),
         ("zig cc --version", "Zig as C compiler driver"),
         ("zig c++ --version", "Zig as C++ driver"),
@@ -758,8 +758,8 @@ def gen_zig_commands() -> list:
         ("zig build run -Dtarget=x86_64-windows", "Run Windows target build"),
         ("zig test src/ -Dtarget=x86_64-windows -Doptimize=ReleaseSafe", "Windows unit tests"),
         ("zig build -Dstrip=true -Dtarget=x86_64-windows-gnu", "Stripped Windows release"),
-        ("zig build -fsanitize=address -Dtarget=x86_64-linux-gnu", "ASAN Linux security build"),
-        ("zig build -fsanitize=thread -Doptimize=Debug", "TSAN debug build"),
+        ("zig build -Doptimize=ReleaseSafe -Dtarget=x86_64-linux-gnu", "ReleaseSafe Linux security build"),
+        ("zig build test -Doptimize=Debug -Dtarget=native", "Native debug tests"),
         ("zig build -Dsingle-threaded=true", "Single-threaded firmware tool"),
         ("zig build -Dcpu=baseline", "Baseline CPU for factory PCs"),
         ("zig build -Dcpu=native", "Native CPU optimizations"),
@@ -816,13 +816,12 @@ def _gen_zig_expansion() -> list:
         rows.append(row("zig", "ast_check", f"zig ast-check {f}", f"ast-check {f}"))
         rows.append(row("zig", "fmt_check", f"zig fmt --check {f}", f"fmt check {f}"))
 
-    for target in ZIG_TARGETS:
-        for san in ("address", "thread", "undefined"):
-            rows.append(row(
-                "zig", "sanitize",
-                f"zig build -Dtarget={target} -fsanitize={san}",
-                f"sanitize {san} {target}",
-            ))
+    for target in ZIG_TARGETS[:10]:
+        rows.append(row(
+            "zig", "sanitize_note",
+            f"zig build -Dtarget={target} -Doptimize=ReleaseSafe",
+            f"Set .sanitize_c=.full on module in build.zig for {target}",
+        ))
 
     for n in range(1, 51):
         rows.append(row(

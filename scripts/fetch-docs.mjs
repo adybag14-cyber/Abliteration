@@ -66,6 +66,11 @@ const TARGETS = [
     kind: 'raw',
   },
   {
+    id: 'zig-canonical-readme',
+    url: 'https://raw.githubusercontent.com/adybag14-cyber/zig/master/README.md',
+    kind: 'raw',
+  },
+  {
     id: 'zig-lang-reference',
     url: 'https://ziglang.org/documentation/master/',
     kind: 'page',

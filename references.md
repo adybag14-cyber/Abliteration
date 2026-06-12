@@ -92,8 +92,11 @@ Full stack workflow: [instructions/agentic-security-stack.md](instructions/agent
 | macOS catalog | [docs/tools/macos-tooling.md](docs/tools/macos-tooling.md) |
 | Zig catalog | [docs/tools/zig-tooling.md](docs/tools/zig-tooling.md) |
 | Generated examples | [data/examples/README.md](data/examples/README.md) |
-| **Zig** | [ziglang.org](https://ziglang.org/) · [github.com/ziglang/zig](https://github.com/ziglang/zig) |
-| Zig targets | `zig targets` / [documentation](https://ziglang.org/documentation/master/) |
+| **Zig (canonical)** | [github.com/adybag14-cyber/zig](https://github.com/adybag14-cyber/zig) `master` |
+| Zig 0.17 syntax doc | [docs/tools/zig-canonical-syntax.md](docs/tools/zig-canonical-syntax.md) |
+| **Zig upstream** | [ziglang.org](https://ziglang.org/) · [codeberg.org/ziglang/zig](https://codeberg.org/ziglang/zig) |
+| Zig 0.16 release notes | [ziglang.org/download/0.16.0/release-notes.html](https://ziglang.org/download/0.16.0/release-notes.html) |
+| Zig targets | `zig targets` / [documentation/master](https://ziglang.org/documentation/master/) |
 
 ## Related concepts
 

@@ -31,3 +31,6 @@ sources/fetched/*.txt
 
 # JARVIS full training JSONL (large — keep locally from zip)
 sources/jarvis-pack/jarvis-tool-repair-pack/data/*.jsonl
+
+# Canonical Zig compiler clone (see sources/zig-canonical-IMPORT.md)
+sources/zig-canonical/

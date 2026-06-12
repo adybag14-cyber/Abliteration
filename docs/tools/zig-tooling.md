@@ -2,7 +2,10 @@
 
 Systems programming for **Windows overlays**, **cross-platform factory tools**, **firmware test harnesses**, and **CyberGym native PoCs**. **1,099 generated commands** → [../../data/examples/zig-commands.jsonl](../../data/examples/zig-commands.jsonl)
 
-Official: [ziglang.org](https://ziglang.org/) · [GitHub ziglang/zig](https://github.com/ziglang/zig)
+**Canonical 0.17 syntax (manual analysis):** [zig-canonical-syntax.md](zig-canonical-syntax.md)  
+**Compiler source:** [github.com/adybag14-cyber/zig/tree/master](https://github.com/adybag14-cyber/zig/tree/master) · [sources/zig-canonical-IMPORT.md](../../sources/zig-canonical-IMPORT.md)
+
+Official: [ziglang.org](https://ziglang.org/) · stable **0.16.0** · dev **0.17** on your `master`
 
 ---
 
@@ -11,12 +14,13 @@ Official: [ziglang.org](https://ziglang.org/) · [GitHub ziglang/zig](https://gi
 ```bash
 zig version
 zig env
-zig targets                    # all -Dtarget= values
-zig libc                       # bundled libc targets
+zig targets
+zig libc
+zig init                       # 0.17 scaffold — see zig-canonical-syntax.md
 zig build --help
+zig build --fetch
 zig ast-check build.zig
 zig fmt --check src/
-zig fmt src/
 ```
 
 ---
@@ -25,17 +29,16 @@ zig fmt src/
 
 ```bash
 zig build
+zig build -Dtarget=x86_64-windows-gnu -Doptimize=ReleaseFast
+zig build run -- arg1
 zig build test --summary all
-zig build run
+zig build test --fuzz
 zig build install
-zig build -Doptimize=ReleaseSafe
-zig build -Doptimize=ReleaseFast
-zig build -Doptimize=ReleaseSmall
-zig build -Doptimize=Debug
 zig test src/main.zig
 zig test src/ --test-filter hardware
-zig run src/main.zig -OReleaseSafe
 ```
+
+Entry point is **`pub fn main(init: std.process.Init) !void`** on 0.17 — not bare `main()`.
 
 **70+ test filters** in corpus: `hardware`, `firmware`, `usb`, `overlay`, `factory`, etc.
 
@@ -73,11 +76,15 @@ zig build test -Dtarget=x86_64-linux-gnu -Doptimize=Debug
 ```bash
 zig build -Dstrip=true
 zig build -Dsingle-threaded=true
-zig build -Dcpu=baseline          # generic factory PCs
-zig build -Dcpu=native            # dev workstation
-zig build -fsanitize=address      # CyberGym / fuzz repro
-zig build -fsanitize=thread
-zig build -fsanitize=undefined
+zig build -Dcpu=baseline
+zig build -Dcpu=native
+```
+
+Sanitizers (0.17): set on **module** in `build.zig`, not legacy `-fsanitize=` CLI:
+
+```zig
+.sanitize_c = .full,      // .off / .trap / .full
+.sanitize_thread = true,
 ```
 
 ---
