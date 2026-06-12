@@ -1,15 +1,16 @@
 # GGUF export notes
 
-For **llama.cpp**, **Ollama**, **LM Studio** inference after HF abliteration.
+For **llama.cpp**, **Ollama**, **LM Studio** inference after abliteration.
 
 ## Path
 
-1. Save abliterated model in HF format (safetensors)
-2. Convert:
+1. Save abliterated model as safetensors (Transformers layout)
+2. Clone llama.cpp from GitHub and convert:
 
 ```bash
-# llama.cpp convert script (names change — use your checkout's README)
-python convert_hf_to_gguf.py ./out/abliterated --outfile ./out/model-f16.gguf
+git clone https://github.com/ggml-org/llama.cpp.git tools/llama.cpp
+cd tools/llama.cpp
+python convert_hf_to_gguf.py ../../out/abliterated --outfile ../../out/model-f16.gguf
 ```
 
 3. Quantize (optional):

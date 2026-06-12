@@ -24,3 +24,7 @@ Thumbs.db
 # Logs
 *.log
 wandb/
+
+# Fetched upstream snapshots (regenerate with scripts/fetch-docs.mjs)
+sources/fetched/*.txt
+!sources/fetched/manifest.json

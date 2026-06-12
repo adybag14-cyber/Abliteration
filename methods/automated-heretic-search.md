@@ -1,40 +1,45 @@
-# Automated Heretic-style search
+# Automated Heretic search
 
-**Heretic** (community tool) automates:
+Source of truth: **[github.com/p-e-w/heretic](https://github.com/p-e-w/heretic)** (fetch with `node scripts/fetch-docs.mjs`).
 
-1. Direction estimation
-2. Layer / strength search
-3. Weight application
-4. Checkpoint export
+## What Heretic optimizes
 
-## Typical workflow
+Per upstream README, Heretic co-minimizes:
+
+1. **Refusal rate** on harmful prompt set
+2. **KL divergence** from original model on harmless prompts
+
+Optimizer: **Optuna TPE** over ablation kernel parameters.
+
+## Target modules
+
+- Attention **o_proj**
+- MLP **down_proj**
+
+Refusal directions: **difference-of-means** between first-token residuals (harmful vs harmless).
+
+## Key parameters (see `config.default.toml` on GitHub)
+
+| Parameter | Meaning |
+|-----------|---------|
+| `direction_index` | Layer index or `per layer` |
+| `max_weight` / `min_weight` | Ablation kernel amplitude |
+| `max_weight_position` / `min_weight_distance` | Kernel shape over depth |
+| `quantization` | `bnb_4bit` for VRAM savings |
+
+## Install & run
 
 ```bash
-# Example — exact CLI flags vary by fork; read tool README
-pip install heretic  # or clone GitHub repo
-
-heretic run \
-  --model meta-llama/Llama-3.1-8B-Instruct \
-  --output ./out/Llama-3.1-8B-abliterated \
-  --device cuda
+pip install -U heretic-llm
+heretic <model_name_or_path>
 ```
 
-## What it searches
+## Evaluate two checkpoints
 
-- Layer subset to modify
-- α strength per layer
-- Sometimes MLP vs attn toggles
+```bash
+heretic --model google/gemma-3-12b-it --evaluate-model p-e-w/gemma-3-12b-it-heretic
+```
 
-## Outputs
+## Prior art (all GitHub)
 
-- Modified `model.safetensors` + config
-- Log of refusal rate on internal eval set
-- Optional GGUF conversion script
-
-## Tips
-
-- Use GPU with ≥24 GB for 8B FP16
-- Pin `transformers` + `torch` versions to tool requirements
-- Keep original HF revision hash in your notes
-
-→ Full checklist: [../instructions/heretic-workflow.md](../instructions/heretic-workflow.md)
+Listed in Heretic README: FailSpy/abliterator, wassname/abliterator, ErisForge, Sumandora/remove-refusals-with-transformers, deccp — see [../references.md](../references.md).

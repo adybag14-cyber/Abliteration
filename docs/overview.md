@@ -14,7 +14,7 @@
 ## High-level pipeline
 
 ```
-1. Choose base model (HF format, decoder-only LLM)
+1. Choose base model (safetensors / PyTorch checkpoint — often cloned from GitHub releases or a local path; HF IDs still work as model paths in most tools)
 2. Build prompt datasets (harmful vs harmless — or refusal vs compliance)
 3. Forward passes → collect residual activations per layer
 4. Estimate refusal direction r_ℓ per layer (usually unit-normalized)

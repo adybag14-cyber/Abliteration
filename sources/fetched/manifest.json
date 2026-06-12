@@ -1,0 +1,66 @@
+[
+  {
+    "id": "heretic-readme",
+    "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/README.md",
+    "kind": "raw",
+    "ok": true,
+    "bytes": 18065,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\heretic-readme.txt"
+  },
+  {
+    "id": "llm-abliteration-readme",
+    "url": "https://raw.githubusercontent.com/jim-plus/llm-abliteration/main/README.md",
+    "kind": "raw",
+    "ok": true,
+    "bytes": 6982,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\llm-abliteration-readme.txt"
+  },
+  {
+    "id": "refusal-direction-readme",
+    "url": "https://raw.githubusercontent.com/andyrdt/refusal_direction/main/README.md",
+    "kind": "raw",
+    "ok": true,
+    "bytes": 4210,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\refusal-direction-readme.txt"
+  },
+  {
+    "id": "heretic-config",
+    "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml",
+    "kind": "raw",
+    "ok": true,
+    "bytes": 7057,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\heretic-config.txt"
+  },
+  {
+    "id": "abliteration-llms-txt",
+    "url": "https://docs.abliteration.ai/llms.txt",
+    "kind": "raw",
+    "ok": true,
+    "bytes": 11840,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\abliteration-llms-txt.txt"
+  },
+  {
+    "id": "transformer-lens-readme",
+    "url": "https://raw.githubusercontent.com/TransformerLensOrg/TransformerLens/main/README.md",
+    "kind": "raw",
+    "ok": true,
+    "bytes": 13106,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\transformer-lens-readme.txt"
+  },
+  {
+    "id": "abliteration-docs",
+    "url": "https://docs.abliteration.ai/what-is-abliteration",
+    "kind": "page",
+    "ok": true,
+    "bytes": 4916,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\abliteration-docs.txt"
+  },
+  {
+    "id": "arxiv-2406-11717",
+    "url": "https://arxiv.org/abs/2406.11717",
+    "kind": "page",
+    "ok": true,
+    "bytes": 3113,
+    "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\fetched\\arxiv-2406-11717.txt"
+  }
+]

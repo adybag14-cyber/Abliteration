@@ -1,65 +1,85 @@
 # Heretic workflow
 
-Automated abliteration — lowest friction for a **saved** abliterated checkpoint.
+Automated abliteration via [p-e-w/heretic](https://github.com/p-e-w/heretic) — **install from GitHub/PyPI, not Hugging Face docs.**
 
 ## Checklist
 
-- [ ] GPU ready, drivers updated
-- [ ] HF token: `huggingface-cli login`
-- [ ] Base model ID chosen & license accepted on HF
-- [ ] Disk space ≥ 2× model size
+- [ ] Python 3.10+, PyTorch 2.2+ (2.6+ for MXFP4 models like gpt-oss)
+- [ ] NVIDIA GPU with enough VRAM (16 GB+ for 4B at 4-bit)
+- [ ] Base model accessible locally or via HF path string (gated models need HF token)
+- [ ] Original weights backed up
 
-## Steps
-
-### 1. Install tool
+## Install (recommended)
 
 ```bash
-# Clone the Heretic fork you trust — verify README & commit hash
-git clone https://github.com/<org>/heretic.git tools/heretic
+pip install -U heretic-llm
+heretic --help
+```
+
+## Install (reproducible, from GitHub)
+
+```bash
+git clone https://github.com/p-e-w/heretic.git tools/heretic
 cd tools/heretic
-pip install -e .
+# uses uv.lock for pinned deps
+uv run heretic --help
 ```
 
-> This repo does not vendor Heretic — pin your own fork.
-
-### 2. Configure run
-
-Create `config.yaml` (example skeleton):
-
-```yaml
-model: meta-llama/Llama-3.1-8B-Instruct
-dtype: float16
-output_dir: ./outputs/llama31-8b-abliterated
-search:
-  layer_fraction: [0.4, 0.7]
-  alpha_grid: [0.5, 0.75, 1.0]
-eval:
-  benign_prompts: ./data/benign_eval.txt
-```
-
-### 3. Run
+## Run
 
 ```bash
-heretic run -c config.yaml
+heretic Qwen/Qwen3-4B-Instruct-2507
+# or local path:
+heretic ./models/Qwen3-4B-Instruct-2507
 ```
 
-Monitor logs for refusal rate vs capability proxy.
+Typical runtime: **20–30 min** on RTX 3090-class GPU for 4B (per upstream README).
 
-### 4. Validate output
+### Low VRAM
 
-- [ ] Load in Transformers — forward pass OK
-- [ ] Run [../docs/evaluation.md](../docs/evaluation.md) suite
-- [ ] Document commit hashes in `runs/MANIFEST.md`
+```bash
+# In config.default.toml or CLI equivalent:
+# quantization = "bnb_4bit"
+```
 
-### 5. Optional GGUF
+Clone `config.default.toml` from GitHub for all options:
 
-→ [../methods/gguf-export-notes.md](../methods/gguf-export-notes.md)
+```bash
+curl -L -o config.default.toml \
+  https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml
+```
+
+## After completion
+
+Heretic prompts you to:
+
+- Save checkpoint (safetensors)
+- Upload (optional — skip if self-hosting)
+- Chat test
+- Built-in eval (`--evaluate-model`)
+
+## Research extras
+
+```bash
+pip install -U "heretic-llm[research]"
+heretic <model> --plot-residuals
+heretic <model> --print-residual-geometry
+```
+
+## Refresh upstream docs
+
+```bash
+node scripts/fetch-docs.mjs
+# or Context7: query-docs on heretic-llm
+```
 
 ## Troubleshooting
 
 | Symptom | Fix |
 |---------|-----|
-| CUDA OOM | Smaller model; `device_map`; 8-bit load |
-| All outputs degenerate | Lower α; fewer layers |
-| No refusal change | Wrong chat template; re-check directions |
-| HF 403 | Accept license; refresh token |
+| CUDA OOM | `quantization = bnb_4bit` in config |
+| Degenerate outputs | Lower `max_weight`; fewer layers in kernel |
+| No refusal change | Verify chat template matches model family |
+| Gated model 403 | `huggingface-cli login` (weights only — tool is on GitHub) |
+
+See [../sources/fetched/heretic-readme.txt](../sources/fetched/heretic-readme.txt) for latest fetched README.

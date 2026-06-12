@@ -1,57 +1,59 @@
 # Manual Transformers pipeline
 
-End-to-end without automated search — full control.
+Clone reference implementations from GitHub instead of copying snippets from blogs.
+
+## Recommended repos to study
+
+| Repo | Pattern |
+|------|---------|
+| [andyrdt/refusal_direction](https://github.com/andyrdt/refusal_direction) | Full paper pipeline |
+| [Sumandora/remove-refusals-with-transformers](https://github.com/Sumandora/remove-refusals-with-transformers) | Minimal Transformers-only |
+| [jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) | measure + sharded ablate |
 
 ## Dependencies
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install torch transformers accelerate datasets einops
-# optional: transformer_lens, safetensors
+git clone https://github.com/andyrdt/refusal_direction.git tools/refusal_direction
+cd tools/refusal_direction && source setup.sh
 ```
 
-## Steps
+Or standalone:
 
-### 1. Load model
+```bash
+pip install torch transformers accelerate einops
+pip install git+https://github.com/TransformerLensOrg/TransformerLens.git
+```
+
+## Load model
 
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
-model_id = "meta-llama/Llama-3.1-8B-Instruct"
+model_id = "./models/Meta-Llama-3-8B-Instruct"  # local clone preferred
 tok = AutoTokenizer.from_pretrained(model_id)
 model = AutoModelForCausalLM.from_pretrained(
     model_id, torch_dtype=torch.float16, device_map="auto"
 )
 ```
 
-### 2. Harvest activations
+## Paper reproduction one-liner
 
-Run harmful/harmless lists; register forward hooks on each layer's residual; stack activations → compute `r_ℓ`.
+From [refusal_direction README](https://github.com/andyrdt/refusal_direction):
 
-### 3. Edit weights
+```bash
+python3 -m pipeline.run_pipeline --model_path meta-llama/Meta-Llama-3-8B-Instruct
+```
 
-Loop layers; fetch `model.model.layers[L].mlp.down_proj.weight`; apply [mlp-down-proj-abliteration.md](mlp-down-proj-abliteration.md).
+Artifacts: `pipeline/runs/<alias>/direction.pt`
 
-### 4. Save
+## Save abliterated checkpoint
 
 ```python
 model.save_pretrained("./out/abliterated", safe_serialization=True)
 tok.save_pretrained("./out/abliterated")
 ```
 
-### 5. Evaluate
+## Context7
 
-See [../docs/evaluation.md](../docs/evaluation.md).
-
-## Directory convention
-
-```
-runs/
-  2026-06-12_llama31-8b/
-    directions.pt
-    config.json      # layers, alphas, hook point
-    eval_results.md
-    model/           # saved checkpoint
-```
+Query `transformer_lens` hook names before writing custom hooks — [../docs/context7.md](../docs/context7.md).

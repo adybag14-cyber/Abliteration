@@ -1,32 +1,58 @@
 # References
 
+> **Source policy:** GitHub repos and arXiv first. Hugging Face is listed only where upstream projects still host weights or legacy blog posts. Refresh with `node scripts/fetch-docs.mjs`.
+
 ## Primary papers
 
-| Title | Authors / Year | Link | Notes |
-|-------|----------------|------|-------|
-| Refusal in LLMs is mediated by a single direction | Arditi et al., 2024 | [arXiv:2406.11717](https://arxiv.org/abs/2406.11717) | Foundational refusal-direction work |
-| Abliteration: Ablating LLM Safety Mechanisms | (survey / follow-on) | [ACL Findings 2025](https://aclanthology.org/2025.findings-acl.1310/) | Broader framing of abliteration family |
-| LessWrong summary | — | [LW post](https://www.lesswrong.com/posts/jGuXSZgv6qfdhMCuJ/refusal-in-llms-is-mediated-by-a-single-direction) | Accessible intuition |
+| Title | Link | GitHub reproduction |
+|-------|------|---------------------|
+| Refusal in LLMs is mediated by a single direction | [arXiv:2406.11717](https://arxiv.org/abs/2406.11717) | [andyrdt/refusal_direction](https://github.com/andyrdt/refusal_direction) |
+| Accessible summary | [LessWrong](https://www.lesswrong.com/posts/jGuXSZgv6qfdhMCuJ/refusal-in-llms-is-mediated-by-a-single-direction) | — |
 
-## Tools & code
+## Tools (GitHub — preferred)
 
 | Project | URL | Role |
 |---------|-----|------|
-| **Heretic** | Search GitHub for `heretic` + abliteration | Automated refusal-direction discovery & weight edit |
-| **llm-abliteration** | Community repos on GitHub | Reference implementations |
-| **TransformerLens** | [github.com/TransformerLensOrg/TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) | Activation harvesting & interpretability |
-| **Hugging Face Transformers** | [huggingface.co/docs/transformers](https://huggingface.co/docs/transformers) | Load/save modified weights |
+| **Heretic** | [github.com/p-e-w/heretic](https://github.com/p-e-w/heretic) | Fully automatic abliteration + Optuna search |
+| **llm-abliteration** | [github.com/jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) | measure.py → analyze.py → sharded_ablate.py |
+| **refusal_direction** | [github.com/andyrdt/refusal_direction](https://github.com/andyrdt/refusal_direction) | Paper pipeline, `direction.pt` artifacts |
+| **TransformerLens** | [github.com/TransformerLensOrg/TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) | Hooks, residual analysis |
+| **FailSpy/abliterator** | [github.com/FailSpy/abliterator](https://github.com/FailSpy/abliterator) | Early public abliterator |
+| **remove-refusals-with-transformers** | [github.com/Sumandora/remove-refusals-with-transformers](https://github.com/Sumandora/remove-refusals-with-transformers) | Pure Transformers, no TransformerLens |
+| **wassname/abliterator** | [github.com/wassname/abliterator](https://github.com/wassname/abliterator) | Community implementation |
+| **ErisForge** | [github.com/Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) | Toolkit |
+| **deccp** | [github.com/AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) | Dataset / deccp topics for measurement |
 
-## Blog posts & guides
+Heretic also mirrors to [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/heretic).
 
-| Title | URL |
-|-------|-----|
-| mlabonne — Abliteration guide | [huggingface.co/blog/mlabonne/abliteration](https://huggingface.co/blog/mlabonne/abliteration) |
-| docs.abliteration.ai | [docs.abliteration.ai](https://docs.abliteration.ai/what-is-abliteration) |
+## Live documentation
+
+| Site | URL |
+|------|-----|
+| abliteration.ai docs | [docs.abliteration.ai](https://docs.abliteration.ai/what-is-abliteration) |
+| Agent doc index | [docs.abliteration.ai/llms.txt](https://docs.abliteration.ai/llms.txt) |
+| Heretic README (fetched) | [sources/fetched/heretic-readme.txt](sources/fetched/heretic-readme.txt) |
+
+## Install commands (from upstream, Jun 2026)
+
+```bash
+# Heretic — PyPI package built from GitHub
+pip install -U heretic-llm
+heretic Qwen/Qwen3-4B-Instruct-2507
+
+# Or clone for reproducible uv.lock
+git clone https://github.com/p-e-w/heretic.git
+cd heretic && uv run heretic <model>
+
+# Manual pipeline
+git clone https://github.com/jim-plus/llm-abliteration.git
+cd llm-abliteration && pip install -r requirements.txt
+python measure.py -m <model_path> -o directions.pt
+```
 
 ## Related concepts
 
-- **Activation steering** — intervene at inference time (no permanent weight change)
-- **Directional ablation** — remove a direction from activations during forward pass
-- **W2SV / rank-1 updates** — low-rank weight patches derived from activation statistics
-- **Domain-specific abliteration** — target refusal only in narrow topic subspaces
+- **Activation steering** — inference-time only (reversible)
+- **Directional ablation** — subtract refusal component from activations or weights
+- **Norm-preserving biprojected abliteration** — Jim Lai / llm-abliteration `--normpreserve --projected`
+- **Context7** — up-to-date dependency docs → [docs/context7.md](docs/context7.md)

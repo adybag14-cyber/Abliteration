@@ -8,7 +8,8 @@ Fastest path to **understanding** the pipeline — uses inference hooks (no perm
 cd ~/abliteration
 python -m venv .venv
 .venv\Scripts\activate        # Windows
-pip install torch transformer_lens
+pip install torch
+pip install git+https://github.com/TransformerLensOrg/TransformerLens.git
 ```
 
 ## 2. Load a small model (smoke test)

@@ -40,9 +40,22 @@ abliteration/
 | Use Heretic (automated tool) | [instructions/heretic-workflow.md](instructions/heretic-workflow.md) |
 | Evaluate before/after | [docs/evaluation.md](docs/evaluation.md) |
 
+## Upstream docs (GitHub-first)
+
+| Source | How to refresh |
+|--------|----------------|
+| [p-e-w/heretic](https://github.com/p-e-w/heretic) | `node scripts/fetch-docs.mjs` |
+| [docs.abliteration.ai](https://docs.abliteration.ai/llms.txt) | fetched to `sources/fetched/` |
+| Context7 MCP | [docs/context7.md](docs/context7.md) |
+
+```bash
+node scripts/fetch-docs.mjs          # headless Chromium
+node scripts/fetch-docs.mjs --firefox  # needs: npx playwright install firefox
+```
+
 ## Status
 
-🚧 **Work in progress** — sections are being expanded. PRs / local commits welcome.
+🚧 **Work in progress** — run the fetch script after upstream releases; use Context7 for library API details.
 
 ## License
 
