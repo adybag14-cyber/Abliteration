@@ -70,7 +70,9 @@ Step-by-step workflows. **Start here if you are improving a local model for the 
 |-----|-------|
 | [../docs/research-landscape.md](../docs/research-landscape.md) | Papers, taxonomy, decision tree |
 | [../docs/advanced-techniques-catalog.md](../docs/advanced-techniques-catalog.md) | Heretic params, math, module map |
-| [advanced-abliteration-workflow.md](advanced-abliteration-workflow.md) | Tracks A–G (production → RDO → MoE) |
+| [advanced-abliteration-workflow.md](advanced-abliteration-workflow.md) | Tracks A–K (production → MoE → Abliterix/ErisForge) |
+| [../docs/refusal-research-beginners-guide.md](../docs/refusal-research-beginners-guide.md) | 2024–2026 papers (PDFs in repo) |
+| [../docs/defenses-against-abliteration.md](../docs/defenses-against-abliteration.md) | What resists weight surgery |
 
 ## LoRA / QLoRA techniques
 

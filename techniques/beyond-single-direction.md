@@ -6,7 +6,7 @@
 
 ## 1. Multi-category directions (QCRI 2026)
 
-[There Is More to Refusal in LLMs than a Single Direction](https://arxiv.org/abs/2602.02132) (Joad et al., QCRI, Feb 2026) — beginner summary: [multi-category-refusal-beginners-guide.md](multi-category-refusal-beginners-guide.md) · PDF: [../sources/fetched/arxiv-2602-02132.pdf](../sources/fetched/arxiv-2602-02132.pdf)
+[There Is More to Refusal in LLMs than a Single Direction](https://arxiv.org/abs/2602.02132) (Joad et al., QCRI, Feb 2026) — beginner summary: [multi-category-refusal-beginners-guide.md](multi-category-refusal-beginners-guide.md) · PDF: [../sources/research/papers/arxiv-2602.02132.pdf](../sources/research/papers/arxiv-2602.02132.pdf)
 
 **Models studied:** `gemma-2-9b-it`, `Llama-3.1-8B-Instruct` · **Hook:** residual at chat-template index **−2** (decision token) · **SAEs:** GemmaScope layers 9/20/31, `andyrdt/saes-llama-3.1-8b-instruct`
 

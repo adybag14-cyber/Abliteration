@@ -4,6 +4,8 @@ Four community tools that complement the handbook default (**Heretic**). Use thi
 
 **Benchmark context:** [arXiv:2512.13655](https://arxiv.org/abs/2512.13655) (Young, Jan 2026) — handbook matrix in [../docs/comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md).
 
+**Research map:** [../docs/refusal-research-beginners-guide.md](../docs/refusal-research-beginners-guide.md) · **defenses that resist surgery:** [../docs/defenses-against-abliteration.md](../docs/defenses-against-abliteration.md)
+
 **Eval gates (mandatory):** [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) · [../docs/risks-and-ethics.md](../docs/risks-and-ethics.md)
 
 ---
@@ -119,6 +121,8 @@ Agent + tool-calling specifics → [../docs/tools/abliteration-tooling.md](../do
 
 ## Related
 
+- [../docs/refusal-research-beginners-guide.md](../docs/refusal-research-beginners-guide.md) — paper map + offline PDFs
+- [../docs/defenses-against-abliteration.md](../docs/defenses-against-abliteration.md) — when tools report low refusal drop
 - [../references.md](../references.md) — URLs and install snippets
 - [../docs/toolchain-safetensors-gguf-lora.md](../docs/toolchain-safetensors-gguf-lora.md) — post-abliteration quant chain
 - [steering-and-alternatives.md](steering-and-alternatives.md) — when not to edit weights

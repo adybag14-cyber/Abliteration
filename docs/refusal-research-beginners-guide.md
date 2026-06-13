@@ -197,5 +197,6 @@ Plain-language map of the papers and tools that matter for this handbook. Every 
 ## Related
 
 - [research-landscape.md](research-landscape.md) — taxonomy + decision tree
+- [../instructions/advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md) — Tracks A–K (production → toolkit backends)
 - [../references.md](../references.md) — full citation table
 - [../techniques/README.md](../techniques/README.md) — technique index

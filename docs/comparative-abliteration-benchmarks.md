@@ -75,6 +75,7 @@ Tool selection from this benchmark data **must** be paired with the handbook's r
 - **Agentic security stack (abliteration + repair + runtime gate):** [../instructions/agentic-security-stack.md](../instructions/agentic-security-stack.md)
 - **Measurement theory (eval-driven-abliteration):** [../techniques/eval-driven-abliteration.md](../techniques/eval-driven-abliteration.md)
 - **Advanced pipelines:** [../instructions/advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md)
+- **Training-time defenses (refusal barely drops):** [defenses-against-abliteration.md](defenses-against-abliteration.md) — extended-refusal, ART, Circuit Breakers
 
 **Rule:** Pick tool per [key findings](#key-findings-handbook-interpretation) for your architecture, then enforce the full risks-and-ethics + eval-driven pipeline + use-case-specific gates before any weights leave the lab.
 

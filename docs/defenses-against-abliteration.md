@@ -111,4 +111,6 @@ Always compare against **your** base checkpoint with the same eval prompts.
 
 - [refusal-research-beginners-guide.md](refusal-research-beginners-guide.md) — full paper map
 - [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md) — tool selection
+- [../techniques/extended-abliteration-toolkit.md](../techniques/extended-abliteration-toolkit.md) — Abliterix / ErisForge / DECCP when defenses limit single-pass
+- [../instructions/advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md) — Track D (multi-direction), Track I (eval) when surgery stalls
 - [../techniques/steering-and-alternatives.md](../techniques/steering-and-alternatives.md) — Circuit Breakers vs abliteration

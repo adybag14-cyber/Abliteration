@@ -92,7 +92,7 @@ Abliteration removes need for jailbreak prompts; **does not replace** runtime ga
 
 ---
 
-## 7. W2SV / rank-1 patches
+## 8. W2SV / rank-1 patches
 
 Low-rank `W + u vᵀ` from activation stats — alternative parameterization.
 
@@ -108,7 +108,7 @@ Low-rank `W + u vᵀ` from activation stats — alternative parameterization.
 | Permanent local model | Heretic projected + norm-preserving |
 | Smallest download | LoRA adapter export |
 | Interpret features | SAE latents + steering |
-| Harden alignment (defense) | Circuit breakers training |
+| Harden alignment (defense) | Circuit breakers · extended-refusal · ART — [defenses-against-abliteration.md](../docs/defenses-against-abliteration.md) |
 | Fix `wmic` false refusal post-abliteration | Jarvis QLoRA |
 | Reduce sycophantic filler (not uncensoring) | Heretic `config.noslop.toml` |
 | Better GSM8K preservation (single-pass) | **ErisForge** or **DECCP** — see [comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md) |
@@ -116,7 +116,7 @@ Low-rank `W + u vᵀ` from activation stats — alternative parameterization.
 
 ---
 
-## 8. Slop / style abliteration (community)
+## 9. Slop / style abliteration (community)
 
 Directional edits can reduce **purple prose and sycophantic filler** without full refusal removal — a different objective than safety guard abliteration.
 

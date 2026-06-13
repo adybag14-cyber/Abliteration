@@ -92,9 +92,13 @@ Full index: [research-landscape.md](research-landscape.md) · [advanced-techniqu
 
 ## Beginners improving local models
 
-1. [../instructions/setup-environment.md](../instructions/setup-environment.md)
-2. [../instructions/beginner-local-model-guide.md](../instructions/beginner-local-model-guide.md)
-3. [../instructions/run-locally-ollama-lmstudio.md](../instructions/run-locally-ollama-lmstudio.md)
+1. [../techniques/safety-guardrail-abliteration-methodology.md](../techniques/safety-guardrail-abliteration-methodology.md) — theory
+2. [../instructions/beginner-reproduction-methodology.md](../instructions/beginner-reproduction-methodology.md) — reproducible first run
+3. [../instructions/setup-environment.md](../instructions/setup-environment.md)
+4. [../instructions/beginner-local-model-guide.md](../instructions/beginner-local-model-guide.md)
+5. [../instructions/run-locally-ollama-lmstudio.md](../instructions/run-locally-ollama-lmstudio.md)
+
+**Research (after first run):** [refusal-research-beginners-guide.md](refusal-research-beginners-guide.md) · [../sources/research/README.md](../sources/research/README.md)
 
 ## Next steps
 

@@ -4,13 +4,15 @@
  *   npm run fetch:research-papers
  */
 import { writeFileSync, mkdirSync, readFileSync, existsSync } from 'fs';
-import { dirname, join } from 'path';
+import { dirname, join, relative } from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 
 const __dir = dirname(fileURLToPath(import.meta.url));
-const paperDir = join(__dir, '..', 'sources', 'research', 'papers');
-const readmeDir = join(__dir, '..', 'sources', 'research', 'readmes');
+const repoRoot = join(__dir, '..');
+const rel = (p) => relative(repoRoot, p).replace(/\\/g, '/');
+const paperDir = join(repoRoot, 'sources', 'research', 'papers');
+const readmeDir = join(repoRoot, 'sources', 'research', 'readmes');
 mkdirSync(paperDir, { recursive: true });
 mkdirSync(readmeDir, { recursive: true });
 
@@ -65,7 +67,14 @@ async function fetchPdf(id) {
     const header = `# fetched: ${stamp}\n# arxiv: ${id}\n# url: ${url}\n\n`;
     writeFileSync(txtPath, header + text, 'utf8');
   }
-  manifest.papers.push({ id, url, pdf: pdfPath, txt: txtPath, pdf_bytes: buf.length, txt_chars: text.length });
+  manifest.papers.push({
+    id,
+    url,
+    pdf: rel(pdfPath),
+    txt: rel(txtPath),
+    pdf_bytes: buf.length,
+    txt_chars: text.length,
+  });
   console.log(`OK  arxiv:${id} (${buf.length} bytes, ${text.length} chars)`);
 }
 
@@ -77,7 +86,7 @@ async function fetchReadme({ id, url }) {
   // Upstream READMEs may use site-relative /pipeline/ paths — not valid in handbook link check
   body = body.replace(/\]\(\/pipeline\/runs\/([^)]+)\)/g, '](https://github.com/andyrdt/refusal_direction/tree/main/pipeline/runs/$1)');
   writeFileSync(out, `# fetched: ${stamp}\n# url: ${url}\n\n${body}`, 'utf8');
-  manifest.readmes.push({ id, url, out, bytes: body.length });
+  manifest.readmes.push({ id, url, out: rel(out), bytes: body.length });
   console.log(`OK  ${id} (${body.length} bytes)`);
 }
 
@@ -98,7 +107,7 @@ async function main() {
       manifest.readmes.push({ ...r, ok: false, error: String(e) });
     }
   }
-  writeFileSync(join(__dir, '..', 'sources', 'research', 'manifest.json'), JSON.stringify(manifest, null, 2));
+  writeFileSync(join(repoRoot, 'sources', 'research', 'manifest.json'), JSON.stringify(manifest, null, 2));
   console.log(`\nWrote manifest → sources/research/manifest.json`);
 }
 

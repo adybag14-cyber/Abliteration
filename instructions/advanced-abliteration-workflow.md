@@ -10,7 +10,11 @@ Research-grade and production-hardening paths beyond default `heretic <model>`.
 
 The beginner guide's Step 7 appendix now also points here for advanced tuning + the three primary use-case docs ([factory-firmware-qa](../docs/use-cases/factory-firmware-qa.md), [pentest-cyber-analysis](../docs/use-cases/pentest-cyber-analysis.md), [cybergym-benchmark](../docs/use-cases/cybergym-benchmark.md)) and the Ralph handbook dev commands (`npm run ralph:next` / `npm run ralph` / turn-end).
 
-**Read first:** [../docs/research-landscape.md](../docs/research-landscape.md) · [../docs/advanced-techniques-catalog.md](../docs/advanced-techniques-catalog.md)
+**Read first:** [../docs/research-landscape.md](../docs/research-landscape.md) · [../docs/advanced-techniques-catalog.md](../docs/advanced-techniques-catalog.md) · [../docs/refusal-research-beginners-guide.md](../docs/refusal-research-beginners-guide.md)
+
+**Track index:** A production · B diagnostics · C manual llm-abliteration · D multi-direction · E MoE · F adapter · G hooks prototype · H thinking · I factory eval · J Abliterix · K ErisForge
+
+> **Note:** Track C here = manual **llm-abliteration** / DECCP (advanced). Beginner [Track C (no GPU)](beginner-local-model-guide.md#track-c--no-gpu-download--quantize-only) is download/quantize only — different path.
 
 ---
 
@@ -228,7 +232,7 @@ Full catalog: [../docs/tools/abliteration-tooling.md](../docs/tools/abliteration
 | Symptom | Diagnosis | Fix |
 |---------|-----------|-----|
 | High KL, gibberish | Over-ablation | ↓ `max_weight`, enable projected+full norm |
-| Harmful still refused | Wrong direction / layer | Custom bad prompts; multi-direction |
+| Harmful still refused | Wrong direction / layer / **training defense** | Custom bad prompts; multi-direction; see [defenses-against-abliteration.md](../docs/defenses-against-abliteration.md) |
 | Benign over-refusal ↑ | Too aggressive kernel | Narrow layer band; ↓ α |
 | Factory still refuses | Generic harmful dataset | Factory-specific `[bad_prompts]` |
 | MoE quality drop | Missed experts | Per-expert ablation |

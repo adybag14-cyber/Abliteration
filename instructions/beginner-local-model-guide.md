@@ -254,6 +254,8 @@ When Heretic offers evaluation, accept — note **refusal count** and **KL diver
 
 ## Track C — No GPU (download + quantize only)
 
+> **Not** [Advanced Track C](advanced-abliteration-workflow.md#track-c--manual-projected--norm-preserving) (manual llm-abliteration / DECCP). This section is for CPU-only download and quantize workflows.
+
 You **cannot** run Heretic surgery on CPU in reasonable time. Options:
 
 ### Option C1 — Download community abliterated model (fastest)

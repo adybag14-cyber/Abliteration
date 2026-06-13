@@ -4,6 +4,8 @@ Pinned PDFs, text extracts, and GitHub README snapshots for handbook citations.
 
 **Refresh:** `npm run fetch:research-papers`
 
+**Naming:** PDFs here use dot IDs (`arxiv-2602.02132.pdf`). `sources/fetched/` page snapshots from `fetch:docs` may use hyphen IDs (`arxiv-2602-02132.txt`) — cite **`papers/`** for offline PDFs.
+
 **Beginner guide:** [../../docs/refusal-research-beginners-guide.md](../../docs/refusal-research-beginners-guide.md)
 
 ---

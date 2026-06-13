@@ -25,6 +25,7 @@ abliteration/
 ├── README.md
 ├── scripts/
 │   ├── fetch-docs.mjs              # 30+ GitHub/arXiv/HF static targets
+│   ├── fetch-research-papers.mjs   # 10 arXiv PDFs + README snapshots
 │   ├── fetch-web-research.mjs      # DuckDuckGo lite + supplemental pages
 │   ├── fetch-heretic-tools.mjs     # sync pinned Heretic configs from GitHub
 │   ├── fetch-hf-heretic-models.mjs # HF heretic/abliterated registry (Playwright)
@@ -56,19 +57,15 @@ abliteration/
 │   ├── ralph-backlog.json          # agent development task queue
 │   ├── ralph-agent-handoff.md      # next-task prompt for agents
 │   ├── heretic-models-registry.jsonl
-│   └── eval/                       # deploy eval corpora (see docs/evaluation.md)
-│       ├── hardware-factory-prompts.jsonl
-│       ├── cybergym-subset-sample.jsonl
-│       ├── jarvis-safe-eval.jsonl
-│       ├── platform-eval-sample.jsonl
-│       └── … (11 files — counts via npm run eval:stats)
+│   ├── eval/                       # deploy eval corpora (11 files — npm run eval:stats)
+│   └── examples/                   # 2,492 commands, 16,782 prompts (generated)
 ├── sources/
 │   ├── heretic-tools/           # immutable Heretic config pins (refresh via npm)
 │   ├── jarvis-pack/             # extracted v7 zip (curated)
-│   └── fetched/                 # GitHub/doc snapshots
+│   ├── research/                # pinned arXiv PDFs + text (see research/README.md)
+│   └── fetched/                 # GitHub/doc snapshots (regenerated)
 ├── docs/
 │   ├── tools/                   # OSINT, Kali, Windows, macOS, Zig
-│   ├── examples/                # 2,492 commands, 16,782 prompts (generated)
 │   ├── hardware-command-catalog.md
 │   ├── use-cases/
 │   ├── context7.md
@@ -121,7 +118,8 @@ Optional: [instructions/quickstart.md](instructions/quickstart.md) — test with
 npm install
 npx playwright install chromium firefox   # once
 
-npm run fetch:all                         # Heretic pins + docs + web research + HF registry
+npm run fetch:all                         # Heretic pins + docs + research PDFs + web research + HF registry
+npm run fetch:research-papers             # 10 arXiv PDFs + GitHub READMEs → sources/research/
 npm run fetch:web-research              # curated search snapshots (abliteration toolkits)
 # or:
 npm run fetch:heretic
