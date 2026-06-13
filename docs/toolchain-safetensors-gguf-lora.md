@@ -186,7 +186,7 @@ python convert_lora_to_gguf.py \
 
 ## Path 5 — GGUF-native measure (low VRAM, experimental)
 
-**Tool:** [kabachuha/abliterate.cpp](https://github.com/kabachuha/abliterate.cpp) — **WIP** (~20% comply rate in author tests)
+**Tool:** [kabachuha/abliterate.cpp](https://github.com/kabachuha/abliterate.cpp) — **WIP** (~20% comply rate in author tests). Not a production agent path; prefer Heretic on safetensors. Details: [../methods/gguf-export-notes.md](../methods/gguf-export-notes.md#gguf--measure--safetensors-experimental).
 
 1. Replace llama.cpp `tools/cvector-generator` with abliterate.cpp fork
 2. Run `llama-cvector-generator` on **GGUF** with harmful/harmless `.txt` prompts

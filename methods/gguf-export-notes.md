@@ -181,7 +181,17 @@ Always A/B **same prompt** on F16 vs Q4 after export.
 
 ## GGUF → measure → safetensors (experimental)
 
-[kabachuha/abliterate.cpp](https://github.com/kabachuha/abliterate.cpp) collects refusal directions from **GGUF** via patched `llama-cvector-generator`, exports `measurements.pt` for llm-abliteration. WIP — not agent production path.
+| Field | Value |
+|-------|-------|
+| **Tool** | [kabachuha/abliterate.cpp](https://github.com/kabachuha/abliterate.cpp) |
+| **Status** | **WIP** — author reports ~20% comply rate in tests |
+| **Input** | GGUF + harmful/harmless `.txt` prompt lists |
+| **Output** | `measurements.pt` → llm-abliteration `sharded_ablate.py` on HF safetensors |
+| **Production?** | No — use Heretic on safetensors first; abliterate.cpp when you only have GGUF |
+
+Flow: patch llama.cpp `cvector-generator` → run on GGUF → `convert-into-measurements.py` → ablate HF shards → re-export GGUF.
+
+→ Full toolchain table: [../docs/toolchain-safetensors-gguf-lora.md](../docs/toolchain-safetensors-gguf-lora.md#gguf--measure--safetensors-experimental)
 
 ---
 

@@ -116,16 +116,16 @@ function printLoopCommand() {
 
 function spawnHeadless() {
   const grok = grokBin();
-  const prompt = readFileSync(promptPath, 'utf8').trim();
-
   const grokArgs = [
-    '-p',
-    prompt,
+    '--prompt-file',
+    promptPath,
     '--cwd',
     root,
     '--max-turns',
     String(maxTurns),
     '--yolo',
+    '--permission-mode',
+    'bypassPermissions',
     '--output-format',
     'plain',
   ];

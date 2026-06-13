@@ -87,3 +87,20 @@ Match the **same** template the HF model uses. If Ollama strips thinking by defa
 | gpt-oss channel mismatch | Use default gpt-oss pair in thinking config |
 
 More: [troubleshooting-encyclopedia.md](troubleshooting-encyclopedia.md)
+
+---
+
+## Eval gates (deploy checklist)
+
+After abliteration, run the handbook eval workflow — thinking models need **final-channel** scoring, not CoT text:
+
+| Gate | Command / doc |
+|------|----------------|
+| Heretic built-in refusal + KL | `config.thinking-model.toml` → `--evaluate-model` |
+| Factory / tool-call corpus | [eval-driven-workflow.md](eval-driven-workflow.md) |
+| XSTest over-refusal sample | `data/eval/xstest-overrefusal-sample.jsonl` (≤ 5% refusal) |
+| Corpus sizes | `npm run eval:stats` |
+
+Config pin: `sources/heretic-tools/config.thinking-model.toml` (CoT skips, longer `max_response_length`).
+
+→ [eval-driven-workflow.md](eval-driven-workflow.md) · [../techniques/eval-driven-abliteration.md](../techniques/eval-driven-abliteration.md)

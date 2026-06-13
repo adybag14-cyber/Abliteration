@@ -147,6 +147,7 @@ function validatePythonScripts() {
     'scripts/validate-dataset.py',
     'scripts/check_env.py',
     'scripts/filter-jarvis-eval.py',
+    'scripts/cybergym-eval-stub.py',
   ];
   for (const rel of scripts) {
     const p = join(root, rel);

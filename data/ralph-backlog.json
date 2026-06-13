@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-06-13T20:16:27.235Z",
+  "updated_at": "2026-06-13T21:54:08.912Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -152,6 +152,42 @@
       ],
       "acceptance": "Section links config.noslop.toml and comparative benchmarks slop note",
       "completed_at": "2026-06-13T20:16:27.234Z"
+    },
+    {
+      "id": "dev-014",
+      "title": "CyberGym eval runner script stub",
+      "status": "done",
+      "priority": 14,
+      "files": [
+        "scripts/cybergym-eval-stub.py",
+        "docs/use-cases/cybergym-benchmark.md"
+      ],
+      "acceptance": "Stub script documents eval flow; benchmark doc links script",
+      "started_at": "2026-06-13T21:51:55.428Z",
+      "completed_at": "2026-06-13T21:54:08.090Z"
+    },
+    {
+      "id": "dev-015",
+      "title": "Thinking-model guide: link thinking-model.toml + eval gates",
+      "status": "done",
+      "priority": 15,
+      "files": [
+        "instructions/thinking-models-guide.md"
+      ],
+      "acceptance": "Guide references config.thinking-model.toml and eval-driven-workflow",
+      "completed_at": "2026-06-13T21:54:08.501Z"
+    },
+    {
+      "id": "dev-016",
+      "title": "Toolchain doc: abliterate.cpp WIP status table update",
+      "status": "done",
+      "priority": 16,
+      "files": [
+        "docs/toolchain-safetensors-gguf-lora.md",
+        "methods/gguf-export-notes.md"
+      ],
+      "acceptance": "Both docs have consistent abliterate.cpp status and links",
+      "completed_at": "2026-06-13T21:54:08.911Z"
     }
   ]
 }

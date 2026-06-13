@@ -26,6 +26,20 @@ cd tools/CyberGym
 
 Point your agent's LLM endpoint at a **local abliterated checkpoint** (vLLM, llama.cpp server, Ollama).
 
+## Runner stub
+
+Use the handbook runner stub for flow documentation, proxy task preparation, and lightweight trace analysis before wiring the full upstream CyberGym verifier:
+
+```bash
+python scripts/cybergym-eval-stub.py --help
+python scripts/cybergym-eval-stub.py --print-flow
+python scripts/cybergym-eval-stub.py --prepare-subset --count 50 --out data/eval/cybergym-subset-sample.jsonl
+```
+
+The stub writes illustrative proxy tasks (mapped from the cyber-research corpus + paper patterns) so you can iterate on prompts and agent harnesses locally. Replace with real task exports from the CyberGym repo for scored runs.
+
+See also the CyberGym section in [../../docs/evaluation.md](../../docs/evaluation.md).
+
 ## Evaluation matrix
 
 Track before/after abliteration on a **fixed subset** (~50 tasks) before full 1,507 run:

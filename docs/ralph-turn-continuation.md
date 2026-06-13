@@ -46,6 +46,24 @@ npm run ralph:continue:off
 
 Override turn count: `RALPH_CONTINUE_MAX_TURNS=20 npm run ralph:continue:on`
 
+**Auto-restart** when headless exits early but backlog remains:
+
+```bash
+npm run ralph:continue:watch
+```
+
+---
+
+## Troubleshooting headless runs
+
+If `data/ralph-continue.log` shows `read_file` errors or `max turns reached` with unfinished backlog:
+
+1. Check `npm run ralph:continue:status`
+2. Use `npm run ralph:continue:watch` (re-spawns until backlog clear)
+3. Or continue manually in this chat: `ralph continue — read data/ralph-agent-handoff.md`
+
+Headless uses `--prompt-file` + `--permission-mode bypassPermissions` + `--cwd` set to the repo.
+
 ---
 
 ## Interactive TUI alternative (`/loop`)
