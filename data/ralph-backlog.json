@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-06-13T22:16:14.833Z",
+  "updated_at": "2026-06-13T22:19:15.156Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -287,7 +287,7 @@
       ],
       "acceptance": "Pentest use-case links osint eval and tools/README",
       "started_at": "2026-06-13T22:13:03.640Z",
-      "completed_at": "2026-06-13T22:16:13.597Z"
+      "completed_at": "2026-06-13T22:16:46.593Z"
     },
     {
       "id": "dev-025",
@@ -324,8 +324,56 @@
       ],
       "acceptance": "references.md has install/run pointers for alternative tools",
       "completed_at": "2026-06-13T22:16:14.832Z"
+    },
+    {
+      "id": "dev-028",
+      "title": "troubleshooting-encyclopedia: thinking-model + low-vram symptom rows",
+      "status": "done",
+      "priority": 28,
+      "files": [
+        "instructions/troubleshooting-encyclopedia.md"
+      ],
+      "acceptance": "New rows for CoT skip misconfig and 8GB OOM",
+      "started_at": "2026-06-13T22:17:23.720Z",
+      "completed_at": "2026-06-13T22:19:13.751Z"
+    },
+    {
+      "id": "dev-029",
+      "title": "hardware-command-catalog: link platform-eval-sample.jsonl",
+      "status": "done",
+      "priority": 29,
+      "files": [
+        "docs/hardware-command-catalog.md",
+        "data/eval/platform-eval-sample.jsonl"
+      ],
+      "acceptance": "Catalog references platform eval sample for agent testing",
+      "started_at": "2026-06-13T22:18:05.074Z",
+      "completed_at": "2026-06-13T22:19:14.212Z"
+    },
+    {
+      "id": "dev-030",
+      "title": "context7.md: refresh abliteration + Heretic library IDs if stale",
+      "status": "done",
+      "priority": 30,
+      "files": [
+        "docs/context7.md"
+      ],
+      "acceptance": "Context7 section lists heretic-llm and llm-abliteration lookup hints",
+      "completed_at": "2026-06-13T22:19:14.696Z"
+    },
+    {
+      "id": "dev-031",
+      "title": "ralph-loop.md: link ralph-turn-continuation + ralph:seed + ralph:monitor",
+      "status": "done",
+      "priority": 31,
+      "files": [
+        "docs/ralph-loop.md",
+        "package.json"
+      ],
+      "acceptance": "Docs list seed and monitor npm scripts",
+      "completed_at": "2026-06-13T22:19:15.155Z"
     }
   ],
-  "wave_index": 2,
-  "last_seeded_at": "2026-06-13T22:12:42.705Z"
+  "wave_index": 3,
+  "last_seeded_at": "2026-06-13T22:16:20.541Z"
 }

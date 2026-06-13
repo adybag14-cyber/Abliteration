@@ -28,7 +28,15 @@ npm run ralph:turn-end -- --message "fixed broken links"
 # Background daemon (validate loop every 2 min by default)
 npm run ralph:autostart
 npm run ralph:autostart:stop
+
+# Turn continuations + unattended monitor
+npm run ralph:continue:watch
+npm run ralph:monitor -- --loop
+npm run ralph:seed
+npm run ralph:regress              # pre-commit regression gate
 ```
+
+→ [ralph-turn-continuation.md](ralph-turn-continuation.md) · [agent-development-loop.md](agent-development-loop.md)
 
 Status logs:
 

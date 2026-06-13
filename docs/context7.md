@@ -24,6 +24,8 @@ Restart the IDE after saving.
 | Library | Context7 search term | Use for |
 |---------|---------------------|---------|
 | Heretic | `heretic-llm` or GitHub `p-e-w/heretic` | CLI flags, `config.default.toml`, install |
+| llm-abliteration | `NousResearch/llm-abliteration` | `sharded_ablate.py`, YAML layer configs |
+| PEFT / LoRA | `huggingface/peft` | Adapter load, merge, 4-bit inference |
 | TransformerLens | `transformer_lens` | Hook names, `HookedTransformer` |
 | Optuna | `optuna` | Heretic's TPE optimizer internals |
 | PyTorch | `pytorch` | `torch_dtype`, quantization |

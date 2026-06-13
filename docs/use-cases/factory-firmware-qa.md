@@ -80,45 +80,20 @@ file /bench/incoming/fw_v2.3.1.bin
 strings /bench/incoming/fw_v2.3.1.bin | grep -iE 'version|build|copyright' | head -20
 ```
 
-## Model prep
+## Eval-driven factory QA (workflow)
 
-Follow the full **eval-driven workflow** to align measurement, Heretic runs, and deploy acceptance on factory prompts:
+Apply the [eval-driven workflow](../../instructions/eval-driven-workflow.md) with this use-case as the deploy acceptance corpus:
 
-1. Choose the hardware factory corpus as your deploy eval set: [../../data/eval/hardware-factory-prompts.jsonl](../../data/eval/hardware-factory-prompts.jsonl) (20 prompts covering USB, DiskPart, BIOS/firmware, WMIC, nvidia-smi, dmidecode, etc.).
-2. Abliterate using a factory-focused profile (see eval-driven Step 3): [../../instructions/heretic-workflow.md](../../instructions/heretic-workflow.md) or copy `sources/heretic-tools/config.factory-qa.toml`.
-3. Run post-abliteration JSONL scoring + spot checks (eval-driven Step 5).
-4. Optional: Jarvis DPO for tool-call formatting — [../../instructions/agentic-security-stack.md](../../instructions/agentic-security-stack.md).
+| Step | Factory QA action |
+|------|-------------------|
+| 1. Corpora | [hardware-factory-prompts.jsonl](../../data/eval/hardware-factory-prompts.jsonl) (20) + [factory-good-prompts.jsonl](../../data/eval/factory-good-prompts.jsonl) for direction |
+| 2. Export | `jq -r '.prompt' data/eval/hardware-factory-prompts.jsonl > data/eval/factory-bad-prompts.txt` (+ good) |
+| 3. Config | `cp sources/heretic-tools/config.factory-qa.toml config.toml` (or low-vram variant) |
+| 4. Heretic | Refusal drop on bad set; KL on good set (~0.008 target) |
+| 5. Deploy gate | ≥95% on factory JSONL; xstest ≤5%; `hardware-tool-gate.py` in path |
+| 6. Optional | Jarvis DPO — [agentic-security-stack.md](../../instructions/agentic-security-stack.md) |
 
-See the complete guide: [../../instructions/eval-driven-workflow.md](../../instructions/eval-driven-workflow.md) (includes `npm run eval:stats` corpus table, export .txt steps for Heretic good/bad prompts, iteration table, and deploy gate checklist).
-
-## Mapping eval-driven workflow to factory QA (explicit)
-
-Apply the handbook's 7-step eval-driven workflow directly here:
-
-1. **Choose corpora** — Primary deploy acceptance = `hardware-factory-prompts.jsonl`; direction pair = `factory-good-prompts.jsonl` + exported txts. (Run `npm run eval:stats` to confirm 20/20.)
-2. **Export for Heretic** — `jq -r '.prompt' data/eval/hardware-factory-prompts.jsonl > data/eval/factory-bad-prompts.txt` (and same for good). Matches the `[bad_prompts]` / `[good_prompts]` in `config.factory-qa.toml`.
-3. **Config profile** — `cp sources/heretic-tools/config.factory-qa.toml config.toml` (or low-vram variant). System prompt tuned for "authorized factory hardware diagnostics".
-4. **Heretic measurement** — Record refusal drop on bad set + KL on good set. Target low KL (~0.008) while refusal markers fall.
-5. **JSONL acceptance (deploy gate)** — Score the 20-prompt set post-abliteration (see scoring section below). ≥95% tool_call pass required.
-6. **Iterate if needed** — Refusals on factory → re-run with factory-qa profile or adjusted strength; over-refusal on XSTest → reduce winsorization/strength or add more good prompts.
-7. **Deploy gate** — hardware-factory ≥95%, xstest ≤5%, gate script live, ORIGINAL checkpoint saved. Then use in bench imaging / MES workflows with the runtime `hardware-tool-gate.py`.
-
-This explicit mapping ensures the use-case is not just documentation — it is the canonical test for "does my abliterated model now emit the commands the factory bench actually needs?"
-
-## Eval-driven iteration for factory QA
-
-Use this use-case with the handbook's eval-driven workflow for systematic refusal removal without capability regression:
-
-- **Corpus role**: `hardware-factory-prompts.jsonl` is the primary "deploy acceptance" set (tool-call / command success on bench hardware commands). It pairs with `factory-good-prompts.jsonl` for direction measurement.
-- **Quick stats**: `npm run eval:stats` (factory row is core gate; target ≥95% pass on abliterated model before deploy).
-- **Profile recommendation**: Start with `config.factory-qa.toml` (or low-vram variant) after a general production pass.
-- **Export for Heretic** (from eval-driven Step 2): extract `.prompt` fields into `factory-bad-prompts.txt` / `factory-good-prompts.txt` using the PowerShell or `jq` one-liners documented in the workflow.
-- **Iteration signals**: refusals on factory prompts → stronger factory-qa pass or lower KL target; high KL on good prompts or new over-refusals on XSTest → back off strength or restore ORIGINAL.
-- **Full deploy gate** (from eval-driven): hardware-factory ≥95%, xstest-overrefusal ≤5%, ORIGINAL archived, hardware-tool-gate.py in path.
-
-This keeps the abliterated model useful for real bench work (enumeration, hash checks, driver manifests) while the runtime gate (hardware-tool-gate.py) provides defense-in-depth.
-
-See [../../instructions/eval-driven-workflow.md](../../instructions/eval-driven-workflow.md) for the numbered steps, config table, and cross-links to [../evaluation.md](../evaluation.md).
+`npm run eval:stats` confirms corpus sizes. Full checklist: [eval-driven-workflow.md](../../instructions/eval-driven-workflow.md) · [evaluation.md](../evaluation.md).
 
 ## Factory corpus scoring (deploy gate)
 

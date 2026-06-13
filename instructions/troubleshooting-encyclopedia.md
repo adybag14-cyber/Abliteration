@@ -30,6 +30,18 @@ offload_outputs_to_cpu = true
 max_batch_size = 16
 ```
 
+### 8 GB OOM symptoms (low-vram profile)
+
+| Symptom | Fix |
+|---------|-----|
+| `CUDA out of memory` on model load (8 GB) | `cp sources/heretic-tools/config.low-vram.toml config.toml`; start with Qwen 1.5B–3B; ensure no other GPU apps; see [low-vram-abliteration.md](low-vram-abliteration.md) |
+| OOM during Optuna trials (mid-run, 8 GB) | Lower `max_batch_size = 8`; add `max_memory = { "0" = "6.5GB", "cpu" = "32GB" }`; enable `offload_outputs_to_cpu = true`; reduce `n_trials` to 50–80 |
+| OOM only on thinking/CoT models (8 GB) | Use `config.thinking-model.toml` + low-vram tweaks; set `max_response_length = 128`; prefer 1.5B–4B thinking variants |
+| 4-bit load succeeds but eval/forward OOMs | `batch_size = 1`; close browsers; try Path B (llm-abliteration sharded_ablate) for surgery then GGUF locally |
+| Persistent 8 GB swap thrashing | Do not rely on OS swap for >4B; use cloud for abliteration or `llm-abliteration` measure+sharded path; see beginner guide Track A limits |
+
+Cross-ref: [low-vram-abliteration.md](low-vram-abliteration.md) · [thinking-models-guide.md](thinking-models-guide.md) · [beginner-local-model-guide.md](beginner-local-model-guide.md)
+
 ---
 
 ## Heretic run issues
@@ -38,6 +50,8 @@ max_batch_size = 16
 |---------|-----------|-----|
 | Optuna flat / no improvement | Wrong refusal markers | [../techniques/refusal-marker-tuning.md](../techniques/refusal-marker-tuning.md) |
 | 100% refusal after run | Thinking model CoT scored | [thinking-models-guide.md](thinking-models-guide.md) |
+| Optuna refusal never drops (thinking/CoT model) | `chain_of_thought_skips` misconfigured or missing model-specific tags | Copy `config.thinking-model.toml`; set `print_responses = true` temporarily; extract exact `<open>`/`<close>` delimiters from output and append as `["<open>", "<close>"]` pair (first match wins) |
+| Refusal markers detected inside thinking block only | CoT skip tags do not match chat template | Verify tags in `chain_of_thought_skips` (e.g. Qwen analysis/final channel, `<think>`/ `</think>`); re-run 1 trial with print; see [thinking-models-guide.md](thinking-models-guide.md) Step 3 |
 | Degenerate / gibberish output | Over-ablation | `row_normalization = full`; ↓ kernel strength; restore ORIGINAL |
 | KL very high | Too aggressive | Re-run fewer trials; `kl_divergence_target = 0.005` |
 | Trials hang / slow | Large model + long responses | ↓ `max_response_length`; 4-bit |

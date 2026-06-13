@@ -76,6 +76,12 @@ npm run ralph:continue:off
 
 Monitor log: `data/ralph-monitor.log` — checks every 90s, seeds wave when empty, starts watch if idle.
 
+**Before every commit** from watch output:
+
+```bash
+npm run ralph:regress   # validate + ralph:ci + eval scripts + py_compile
+```
+
 → [ralph-turn-continuation.md](ralph-turn-continuation.md)
 
 ---

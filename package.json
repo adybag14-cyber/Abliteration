@@ -26,7 +26,8 @@
     "ralph:continue:status": "node scripts/ralph-continue-status.mjs",
     "ralph:continue:watch": "node scripts/ralph-continue-watch.mjs",
     "ralph:seed": "node scripts/ralph-seed-backlog.mjs",
-    "ralph:monitor": "node scripts/ralph-monitor.mjs"
+    "ralph:monitor": "node scripts/ralph-monitor.mjs",
+    "ralph:regress": "node scripts/ralph-regress.mjs"
   },
   "devDependencies": {
     "playwright": "^1.49.0"

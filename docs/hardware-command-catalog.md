@@ -4,6 +4,8 @@ Curated from JARVIS Tool Repair Pack v7 — **read-only / inventory commands** f
 
 Use with [../scripts/hardware-tool-gate.py](../scripts/hardware-tool-gate.py) at runtime.
 
+**Agent eval:** [../data/eval/platform-eval-sample.jsonl](../data/eval/platform-eval-sample.jsonl) (120 stratified prompts) — score post-abliteration models on correct platform commands. Full corpus: `npm run eval:stats`.
+
 ## Linux / factory bench
 
 | Command | Use |
