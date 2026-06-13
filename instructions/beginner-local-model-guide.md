@@ -1,5 +1,7 @@
 # Beginner guide — improve your local AI model (step by step)
 
+**Methodology:** [beginner-reproduction-methodology.md](beginner-reproduction-methodology.md) (reproducible checkpoints) · [../techniques/safety-guardrail-abliteration-methodology.md](../techniques/safety-guardrail-abliteration-methodology.md) (theory)
+
 **Goal:** Take a model you already run in **Ollama / LM Studio / text-generation-webui**, remove excessive refusals, and load the improved version back locally.
 
 **Time:** ~2–4 hours first time (mostly download + Heretic run).  

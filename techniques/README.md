@@ -201,4 +201,6 @@ Cross-architecture benchmark (Heretic vs DECCP vs ErisForge vs FailSpy, GSM8K se
 
 Extended toolkit (Abliterix, ErisForge, Nous/DECCP, FailSpy — placement + commands): [extended-abliteration-toolkit.md](extended-abliteration-toolkit.md)
 
+Safety guardrail removal methodology (weight-level refusal direction): [safety-guardrail-abliteration-methodology.md](safety-guardrail-abliteration-methodology.md) · [../instructions/beginner-reproduction-methodology.md](../instructions/beginner-reproduction-methodology.md)
+
 Eval gates and corpora: [eval-driven-abliteration.md](eval-driven-abliteration.md) · `npm run eval:stats`

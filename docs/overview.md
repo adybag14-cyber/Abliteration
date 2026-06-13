@@ -11,6 +11,8 @@
 | **Activation steering** | Adding/subtracting a direction at inference time — reversible, no checkpoint edit |
 | **Harmful / harmless sets** | Curated prompt pairs used to estimate the mean activation difference that defines the refusal direction |
 
+**Full methodology:** [../techniques/safety-guardrail-abliteration-methodology.md](../techniques/safety-guardrail-abliteration-methodology.md) · hands-on: [../instructions/beginner-reproduction-methodology.md](../instructions/beginner-reproduction-methodology.md)
+
 ## High-level pipeline
 
 ```

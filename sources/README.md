@@ -17,14 +17,17 @@ cd abliteration
 npm install
 npx playwright install chromium firefox   # once
 
-npm run fetch:all                         # pins + docs + HF registry + markdown table
+npm run fetch:all                         # pins + docs + web research + HF registry + markdown table
 # or:
-node scripts/fetch-docs.mjs               # Chromium
+node scripts/fetch-docs.mjs               # Chromium — 30+ static GitHub/arXiv/HF targets
 node scripts/fetch-docs.mjs --firefox
+npm run fetch:web-research                # DuckDuckGo lite + supplemental arXiv/HF pages
+npm run fetch:web-research:firefox
 node scripts/fetch-hf-heretic-models.mjs --firefox   # HF API via in-page fetch
 ```
 
-- Doc snapshots → `sources/fetched/` + `manifest.json`
+- Doc snapshots → `sources/fetched/` + `manifest.json` + `web-research-manifest.json`
+- Search snapshots → `sources/fetched/search-*.txt` (curated abliteration queries)
 - Heretic/abliterated HF models → `data/heretic-models-registry.jsonl` + [../docs/tools/heretic-models-registry.md](../docs/tools/heretic-models-registry.md)
 
 ## Context7 (optional MCP)

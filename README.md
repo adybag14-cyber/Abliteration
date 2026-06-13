@@ -24,7 +24,8 @@ Living handbook for **LLM abliteration** — weight-level refusal removal — pl
 abliteration/
 ├── README.md
 ├── scripts/
-│   ├── fetch-docs.mjs              # headless Chromium/Firefox upstream fetch
+│   ├── fetch-docs.mjs              # 30+ GitHub/arXiv/HF static targets
+│   ├── fetch-web-research.mjs      # DuckDuckGo lite + supplemental pages
 │   ├── fetch-heretic-tools.mjs     # sync pinned Heretic configs from GitHub
 │   ├── fetch-hf-heretic-models.mjs # HF heretic/abliterated registry (Playwright)
 │   ├── build-heretic-models-doc.mjs
@@ -80,9 +81,11 @@ abliteration/
 
 **Start here** if you use Ollama / LM Studio and want fewer refusals:
 
-1. [instructions/setup-environment.md](instructions/setup-environment.md) — install Python + GPU check  
-2. [instructions/beginner-local-model-guide.md](instructions/beginner-local-model-guide.md) — Heretic step by step  
-3. [instructions/run-locally-ollama-lmstudio.md](instructions/run-locally-ollama-lmstudio.md) — GGUF + Ollama import  
+1. [techniques/safety-guardrail-abliteration-methodology.md](techniques/safety-guardrail-abliteration-methodology.md) — what guardrail removal is (and is not)
+2. [instructions/beginner-reproduction-methodology.md](instructions/beginner-reproduction-methodology.md) — reproducible procedure + rollback
+3. [instructions/setup-environment.md](instructions/setup-environment.md) — install Python + GPU check
+4. [instructions/beginner-local-model-guide.md](instructions/beginner-local-model-guide.md) — operational Heretic walkthrough (tracks A/B/C)
+5. [instructions/run-locally-ollama-lmstudio.md](instructions/run-locally-ollama-lmstudio.md) — GGUF + Ollama import
 
 Optional: [instructions/quickstart.md](instructions/quickstart.md) — test with hooks before permanent edit.
 
@@ -114,7 +117,8 @@ Optional: [instructions/quickstart.md](instructions/quickstart.md) — test with
 npm install
 npx playwright install chromium firefox   # once
 
-npm run fetch:all                         # Heretic pins + docs + HF registry
+npm run fetch:all                         # Heretic pins + docs + web research + HF registry
+npm run fetch:web-research              # curated search snapshots (abliteration toolkits)
 # or:
 npm run fetch:heretic
 npm run fetch:docs

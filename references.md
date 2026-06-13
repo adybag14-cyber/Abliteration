@@ -1,6 +1,6 @@
 # References
 
-> **Source policy:** GitHub repos and arXiv first. Hugging Face is listed for weights and the heretic/abliterated model registry. Refresh with `npm run fetch:all` (or `fetch:heretic` / `fetch:docs` / `fetch:hf-models:firefox`).
+> **Source policy:** GitHub repos and arXiv first. Hugging Face is listed for weights and the heretic/abliterated model registry. Refresh with `npm run fetch:all` (or `fetch:heretic` / `fetch:docs` / `fetch:web-research` / `fetch:hf-models:firefox`).
 
 ## Primary papers
 

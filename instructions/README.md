@@ -8,11 +8,13 @@ Step-by-step workflows. **Start here if you are improving a local model for the 
 
 | Step | Doc | What you do |
 |------|-----|-------------|
-| 1 | [setup-environment.md](setup-environment.md) | Install Python, CUDA, venv, smoke test |
-| 2 | [beginner-local-model-guide.md](beginner-local-model-guide.md) | Download model → Heretic → save abliterated weights |
-| 3 | [run-locally-ollama-lmstudio.md](run-locally-ollama-lmstudio.md) | Convert to GGUF → Ollama / LM Studio |
-| 4 | [heretic-workflow.md](heretic-workflow.md) | Reference + troubleshooting for Heretic |
-| 5 | [../docs/evaluation.md](../docs/evaluation.md) | Check quality before daily use |
+| 0 | [../techniques/safety-guardrail-abliteration-methodology.md](../techniques/safety-guardrail-abliteration-methodology.md) | Safety guardrail removal theory + eval gates |
+| 1 | [beginner-reproduction-methodology.md](beginner-reproduction-methodology.md) | Reproducible procedure, backup, rollback |
+| 2 | [setup-environment.md](setup-environment.md) | Install Python, CUDA, venv, smoke test |
+| 3 | [beginner-local-model-guide.md](beginner-local-model-guide.md) | Download model → Heretic → save abliterated weights |
+| 4 | [run-locally-ollama-lmstudio.md](run-locally-ollama-lmstudio.md) | Convert to GGUF → Ollama / LM Studio |
+| 5 | [heretic-workflow.md](heretic-workflow.md) | Reference + troubleshooting for Heretic |
+| 6 | [../docs/evaluation.md](../docs/evaluation.md) | Check quality before daily use |
 
 **Optional experiment first (no permanent edit):** [quickstart.md](quickstart.md)
 

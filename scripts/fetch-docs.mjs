@@ -95,6 +95,84 @@ const TARGETS = [
     url: 'https://arxiv.org/abs/2406.11717',
     kind: 'page',
   },
+  // —— Extended toolkit & community forks ——
+  {
+    id: 'abliterix-readme',
+    url: 'https://raw.githubusercontent.com/wuwangzhang1216/abliterix/main/README.md',
+    kind: 'raw',
+  },
+  {
+    id: 'erisforge-readme',
+    url: 'https://raw.githubusercontent.com/Tsadoq/ErisForge/main/README.md',
+    kind: 'raw',
+  },
+  {
+    id: 'nous-llm-abliteration-readme',
+    url: 'https://raw.githubusercontent.com/NousResearch/llm-abliteration/main/README.md',
+    kind: 'raw',
+  },
+  {
+    id: 'deccp-readme',
+    url: 'https://raw.githubusercontent.com/AUGMXNT/deccp/main/README.md',
+    kind: 'raw',
+  },
+  {
+    id: 'failspy-abliterator-readme',
+    url: 'https://raw.githubusercontent.com/FailSpy/abliterator/main/README.md',
+    kind: 'raw',
+  },
+  {
+    id: 'remove-refusals-readme',
+    url: 'https://raw.githubusercontent.com/Sumandora/remove-refusals-with-transformers/main/README.md',
+    kind: 'raw',
+  },
+  {
+    id: 'circuit-breakers-readme',
+    url: 'https://raw.githubusercontent.com/GraySwanAI/circuit-breakers/main/README.md',
+    kind: 'raw',
+  },
+  {
+    id: 'obliteratus-readme',
+    url: 'https://raw.githubusercontent.com/elder-plinius/OBLITERATUS/main/README.md',
+    kind: 'raw',
+  },
+  // —— Key papers (abstract pages) ——
+  {
+    id: 'arxiv-2512-13655',
+    url: 'https://arxiv.org/abs/2512.13655',
+    kind: 'page',
+  },
+  {
+    id: 'arxiv-2602-02132',
+    url: 'https://arxiv.org/abs/2602.02132',
+    kind: 'page',
+  },
+  {
+    id: 'arxiv-2502-17420',
+    url: 'https://arxiv.org/abs/2502.17420',
+    kind: 'page',
+  },
+  // —— Live docs & blogs ——
+  {
+    id: 'heretic-mintlify-abliteration',
+    url: 'https://p-e-w-heretic.mintlify.app/concepts/abliteration',
+    kind: 'page',
+  },
+  {
+    id: 'grimjim-projected-blog',
+    url: 'https://huggingface.co/blog/grimjim/projected-abliteration',
+    kind: 'page',
+  },
+  {
+    id: 'grimjim-normpreserve-blog',
+    url: 'https://huggingface.co/blog/grimjim/norm-preserving-biprojected-abliteration',
+    kind: 'page',
+  },
+  {
+    id: 'abliteration-ai-index',
+    url: 'https://docs.abliteration.ai/',
+    kind: 'page',
+  },
 ];
 
 async function fetchRaw(url) {
