@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-06-13T22:26:51.941Z",
+  "updated_at": "2026-06-13T23:20:48.184Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -474,47 +474,109 @@
     {
       "id": "dev-040",
       "title": "README: add ralph:regress + ralph:monitor to quick commands",
-      "status": "pending",
+      "status": "done",
       "priority": 40,
       "files": [
         "README.md",
         "package.json"
       ],
-      "acceptance": "README lists regress and monitor npm scripts with one-line descriptions"
+      "acceptance": "README lists regress and monitor npm scripts with one-line descriptions",
+      "started_at": "2026-06-13T22:27:04.877Z",
+      "completed_at": "2026-06-13T22:28:53.284Z"
     },
     {
       "id": "dev-041",
       "title": "ralph-loop.md: document ralph:regress gate and when to run it",
-      "status": "pending",
+      "status": "done",
       "priority": 41,
       "files": [
         "docs/ralph-loop.md"
       ],
-      "acceptance": "ralph-loop.md has regress section matching agent-development-loop pre-commit rule"
+      "acceptance": "ralph-loop.md has regress section matching agent-development-loop pre-commit rule",
+      "started_at": "2026-06-13T22:29:00.685Z",
+      "completed_at": "2026-06-13T22:29:58.717Z"
     },
     {
       "id": "dev-042",
       "title": "risks-and-ethics: link eval-driven-workflow + capability sanity gates",
-      "status": "pending",
+      "status": "done",
       "priority": 42,
       "files": [
         "docs/risks-and-ethics.md",
         "instructions/eval-driven-workflow.md"
       ],
-      "acceptance": "Ethics doc references eval workflow and post-abliteration capability checks"
+      "acceptance": "Ethics doc references eval workflow and post-abliteration capability checks",
+      "started_at": "2026-06-13T22:30:01.469Z",
+      "completed_at": "2026-06-13T22:31:37.262Z"
     },
     {
       "id": "dev-043",
       "title": "advanced-techniques-catalog: cross-link projected + MoE hybrid techniques",
-      "status": "pending",
+      "status": "done",
       "priority": 43,
       "files": [
         "docs/advanced-techniques-catalog.md",
         "techniques/moe-hybrid-abliteration.md"
       ],
-      "acceptance": "Catalog table rows link projected-norm-preserving and moe-hybrid docs"
+      "acceptance": "Catalog table rows link projected-norm-preserving and moe-hybrid docs",
+      "started_at": "2026-06-13T22:32:36.542Z",
+      "completed_at": "2026-06-13T22:35:59.027Z"
+    },
+    {
+      "id": "dev-044",
+      "title": "overview + techniques catalog: add explicit T03/T08 + eval-driven cross links",
+      "status": "done",
+      "priority": 44,
+      "files": [
+        "docs/overview.md",
+        "techniques/README.md",
+        "docs/advanced-techniques-catalog.md"
+      ],
+      "acceptance": "overview technique list and techniques/README entries for projected/MoE link to advanced-catalog and eval-driven-workflow; catalog mentions overview",
+      "started_at": "2026-06-13T22:36:59.472Z",
+      "completed_at": "2026-06-13T22:43:47.930Z"
+    },
+    {
+      "id": "dev-045",
+      "title": "beginner guide: cross-link advanced workflow, use-case evals (factory/pentest/cybergym), and ralph:next/ralph",
+      "status": "done",
+      "priority": 45,
+      "files": [
+        "instructions/beginner-local-model-guide.md",
+        "instructions/advanced-abliteration-workflow.md"
+      ],
+      "acceptance": "Beginner guide step or appendix references advanced-abliteration-workflow.md, cybergym/factory/pentest use-cases, and ralph dev commands",
+      "started_at": "2026-06-13T22:43:51.996Z",
+      "completed_at": "2026-06-13T22:45:12.725Z"
+    },
+    {
+      "id": "dev-046",
+      "title": "risks-and-ethics + references: cross-link to comparative benchmarks, eval-driven, and agentic use cases",
+      "status": "done",
+      "priority": 46,
+      "files": [
+        "docs/risks-and-ethics.md",
+        "references.md",
+        "docs/comparative-abliteration-benchmarks.md"
+      ],
+      "acceptance": "Risks doc and references point to benchmarks + use-case evals; benchmarks links back to risks/eval workflow",
+      "started_at": "2026-06-13T22:45:18.350Z",
+      "completed_at": "2026-06-13T22:48:16.314Z"
+    },
+    {
+      "id": "dev-047",
+      "title": "ralph-loop.md + agent-development-loop.md: document full multi-turn ralph loop + turn-end + backlog seeding",
+      "status": "done",
+      "priority": 47,
+      "files": [
+        "docs/ralph-loop.md",
+        "docs/agent-development-loop.md"
+      ],
+      "acceptance": "Both docs describe the autonomous ralph:next → implement → ralph → complete loop, turn-end rules, and how to seed when backlog empties",
+      "started_at": "2026-06-13T22:48:23.951Z",
+      "completed_at": "2026-06-13T22:57:36.638Z"
     }
   ],
-  "wave_index": 25,
-  "last_seeded_at": "2026-06-13T22:26:51.941Z"
+  "wave_index": 186,
+  "last_seeded_at": "2026-06-13T22:37:10.000Z"
 }

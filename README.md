@@ -39,6 +39,9 @@ abliteration/
 │   ├── ralph-continue-off.mjs
 │   ├── ralph-continue-status.mjs
 │   ├── ralph-continue-watch.mjs    # auto-restart watchdog for continuations
+│   ├── ralph-regress.mjs           # pre-commit regression gate for watch/headless/monitor changes
+│   ├── ralph-monitor.mjs           # seed backlog if empty + auto-start watch if idle (supports --loop)
+│   ├── ralph-seed-backlog.mjs      # append next wave of dev-* tasks (dedupes by title)
 │   ├── count-eval-prompts.mjs      # eval corpus line counts
 │   ├── hardware-tool-gate.py       # from JARVIS v7 — runtime command gate
 │   └── validate-dataset.py
@@ -119,6 +122,8 @@ npm run validate          # links, jsonl, pins, python syntax
 npm run ralph             # validate → refresh → re-validate
 npm run eval:stats        # eval corpus line counts
 npm run ralph:turn-end    # log turn + background daemon (blocks if backlog unfinished)
+npm run ralph:regress     # pre-commit gate for watch/headless/monitor output (validate + ralph-ci + evals + py_compile)
+npm run ralph:monitor     # one-shot: print status, seed if empty, auto-start watch; add -- --loop for continuous
 ```
 
 **Turn continuations (autonomous multi-turn agent):**
@@ -130,6 +135,7 @@ npm run ralph:continue:status       # show enabled/mode + pending tasks + pid
 npm run ralph:continue:off          # stop + disable
 npm run ralph:monitor -- --loop     # auto-seed backlog + restart watch (unattended)
 npm run ralph:seed                  # seed next improvement wave manually
+npm run ralph:regress               # pre-commit gate (mandatory before commit after automated dev turns)
 ```
 
 See [docs/ralph-turn-continuation.md](docs/ralph-turn-continuation.md) for setup (trusted hooks, /loop TUI alt).

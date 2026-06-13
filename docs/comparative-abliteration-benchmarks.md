@@ -30,6 +30,8 @@ Evidence-based tool selection from cross-architecture evaluation research.
 
 **This handbook default:** Heretic for automatic deploy + mandatory eval gates ([eval-driven-workflow.md](../instructions/eval-driven-workflow.md)). Use llm-abliteration / ErisForge when Heretic KL is poor on a specific architecture.
 
+Capability preservation is not optional — different tools carry different regression profiles on reasoning and tool-calling. All selections must be gated by the mandatory sanity checks, labeling, and authorized-scope rules in [../docs/risks-and-ethics.md](../docs/risks-and-ethics.md). For agentic security, factory, and research deployments, align prompt sets and pass/fail criteria to the specific use-case corpora and workflows.
+
 ---
 
 ## Recommended eval after any tool
@@ -51,6 +53,23 @@ Separate from refusal removal — [Reddit: abliteration reducing slop](https://w
 Heretic ships optional configs: `sources/heretic-tools/config.noslop.toml`, `config.nohumor.toml` — sync via `npm run fetch:heretic`.
 
 ---
+
+## Responsible selection & cross-references
+
+Tool selection from this benchmark data **must** be paired with the handbook's risk framework and eval gates. Different tools show different capability regressions on reasoning/tool-calling; there is no universal winner.
+
+- **Risks, scope, labeling, capability sanity gates, authorized use:** [../docs/risks-and-ethics.md](../docs/risks-and-ethics.md) — read before choosing any backend for agentic workloads.
+- **Eval-driven workflow, corpora choice, JSONL gates, deploy checklist:** [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) (mandatory post-abliteration checks).
+- **Agentic use-case evals & prompt corpora (gate your chosen tool against these):**
+  - Factory firmware QA (hardware commands, tool compliance): [../docs/use-cases/factory-firmware-qa.md](../docs/use-cases/factory-firmware-qa.md)
+  - Pentest / cyber analysis (OSINT, recon, scoped offensive): [../docs/use-cases/pentest-cyber-analysis.md](../docs/use-cases/pentest-cyber-analysis.md)
+  - CyberGym benchmark proxy (real vuln execution tasks): [../docs/use-cases/cybergym-benchmark.md](../docs/use-cases/cybergym-benchmark.md)
+- **Full corpora, capability thresholds, xstest/jarvis/platform slices:** [../docs/evaluation.md](../docs/evaluation.md)
+- **Agentic security stack (abliteration + repair + runtime gate):** [../instructions/agentic-security-stack.md](../instructions/agentic-security-stack.md)
+- **Measurement theory (eval-driven-abliteration):** [../techniques/eval-driven-abliteration.md](../techniques/eval-driven-abliteration.md)
+- **Advanced pipelines:** [../instructions/advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md)
+
+**Rule:** Pick tool per [key findings](#key-findings-handbook-interpretation) for your architecture, then enforce the full risks-and-ethics + eval-driven pipeline + use-case-specific gates before any weights leave the lab.
 
 ## Related
 

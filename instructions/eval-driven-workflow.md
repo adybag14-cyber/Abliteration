@@ -133,4 +133,4 @@ For each row in hardware-factory-prompts.jsonl:
 [ ] hardware-tool-gate.py enabled for agents
 ```
 
-→ [../docs/evaluation.md](../docs/evaluation.md) · [agentic-security-stack.md](agentic-security-stack.md)
+→ [../docs/evaluation.md](../docs/evaluation.md) · [agentic-security-stack.md](agentic-security-stack.md) · [../docs/risks-and-ethics.md](../docs/risks-and-ethics.md) (capability sanity + authorized scope)

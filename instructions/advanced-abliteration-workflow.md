@@ -8,6 +8,8 @@ Research-grade and production-hardening paths beyond default `heretic <model>`.
 > 3. [run-locally-ollama-lmstudio.md](run-locally-ollama-lmstudio.md)  
 > Return here when your abliterated model runs in Ollama and you want **better quality** or **agent deployment**.
 
+The beginner guide's Step 7 appendix now also points here for advanced tuning + the three primary use-case docs ([factory-firmware-qa](../docs/use-cases/factory-firmware-qa.md), [pentest-cyber-analysis](../docs/use-cases/pentest-cyber-analysis.md), [cybergym-benchmark](../docs/use-cases/cybergym-benchmark.md)) and the Ralph handbook dev commands (`npm run ralph:next` / `npm run ralph` / turn-end).
+
 **Read first:** [../docs/research-landscape.md](../docs/research-landscape.md) · [../docs/advanced-techniques-catalog.md](../docs/advanced-techniques-catalog.md)
 
 ---

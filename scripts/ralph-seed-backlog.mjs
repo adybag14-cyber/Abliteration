@@ -124,6 +124,28 @@ const WAVES = [
       acceptance: 'Catalog table rows link projected-norm-preserving and moe-hybrid docs',
     },
   ],
+  [
+    {
+      title: 'research-landscape: link comparative benchmarks + MoE hybrid technique',
+      files: ['docs/research-landscape.md', 'docs/comparative-abliteration-benchmarks.md'],
+      acceptance: 'Research landscape references benchmark matrix and moe-hybrid-abliteration.md',
+    },
+    {
+      title: 'theory.md: cross-link projected norm-preserving + eval-driven workflow',
+      files: ['docs/theory.md', 'techniques/projected-norm-preserving-abliteration.md'],
+      acceptance: 'Theory doc links projected technique and eval-driven acceptance gates',
+    },
+    {
+      title: 'steering-and-alternatives: DECCP/ErisForge rows + comparative benchmarks',
+      files: ['techniques/steering-and-alternatives.md', 'references.md'],
+      acceptance: 'Alternatives section cites comparative-abliteration-benchmarks install pointers',
+    },
+    {
+      title: 'tools/README: eval scripts table (stats, jarvis-safe, cybergym, regress)',
+      files: ['docs/tools/README.md', 'package.json'],
+      acceptance: 'Tools index lists npm eval:* and ralph:regress with script paths',
+    },
+  ],
 ];
 
 function stamp() {

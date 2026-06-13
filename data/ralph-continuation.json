@@ -2,7 +2,7 @@
   "enabled": true,
   "mode": "headless",
   "max_turns": 12,
-  "started_at": "2026-06-13T22:25:45.866Z",
+  "started_at": "2026-06-13T22:56:34.427Z",
   "grok_bin": "C:\\Users\\adyba\\.grok\\bin\\grok.exe",
   "cwd": "C:\\Users\\adyba\\Desktop\\abliteration"
 }

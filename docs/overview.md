@@ -71,13 +71,20 @@ Stack: Heretic abliteration → optional [Jarvis v7](../sources/jarvis-pack/IMPO
 
 ## Advanced methods (2025–2026)
 
-| Method | Doc |
-|--------|-----|
-| Projected + norm-preserving | [../techniques/projected-norm-preserving-abliteration.md](../techniques/projected-norm-preserving-abliteration.md) |
-| Multi-direction / concept cones | [../techniques/beyond-single-direction.md](../techniques/beyond-single-direction.md) |
-| MoE per-expert | [../techniques/moe-hybrid-abliteration.md](../techniques/moe-hybrid-abliteration.md) |
-| Geometric median + winsorization | [../techniques/geometric-median-winsorization.md](../techniques/geometric-median-winsorization.md) |
-| Steering & alternatives | [../techniques/steering-and-alternatives.md](../techniques/steering-and-alternatives.md) |
+| Method (T ID) | Doc |
+|---------------|-----|
+| T03: Projected + norm-preserving | [../techniques/projected-norm-preserving-abliteration.md](../techniques/projected-norm-preserving-abliteration.md) |
+| T08: MoE per-expert & hybrid | [../techniques/moe-hybrid-abliteration.md](../techniques/moe-hybrid-abliteration.md) (builds on T03) |
+| T05/T06/T07: Multi-direction / RDO / SAE | [../techniques/beyond-single-direction.md](../techniques/beyond-single-direction.md) |
+| T04: Geometric median + winsorization | [../techniques/geometric-median-winsorization.md](../techniques/geometric-median-winsorization.md) |
+| T12: Steering & alternatives | [../techniques/steering-and-alternatives.md](../techniques/steering-and-alternatives.md) |
+| T17: Eval-driven prompts & gates | [../techniques/eval-driven-abliteration.md](../techniques/eval-driven-abliteration.md) · [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) |
+
+**See full numbered T-catalog** (T01–T20 table, T03+T08 cross-guidance, Heretic params, module targets) in [advanced-techniques-catalog.md](advanced-techniques-catalog.md) — this overview is referenced from the catalog for high-level pipeline context. 
+
+**Production default stack (T03 + T08 + T17):** For agentic use cases (factory firmware QA, pentest/cyber analysis, CyberGym, OSINT tooling), use Projected + norm-preserving (T03) as foundation for dense models; MoE per-expert & hybrid (T08) builds directly on T03 with per-expert orthogonalize + row_normalization. Always pair either with eval-driven-abliteration (T17) + [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) to align [bad_prompts]/[good_prompts] to your exact deploy corpora (see hardware-factory-prompts, osint-pentest-prompts, cybergym-subset-sample, jarvis-safe-eval, xstest-overrefusal in evaluation.md). Recommended Heretic defaults: `orthogonalize_direction = true`, `row_normalization = "full"`.
+
+Explicit T03/T08 guidance: always review [../techniques/projected-norm-preserving-abliteration.md](../techniques/projected-norm-preserving-abliteration.md) before MoE work; the catalog's T03+T08 section + recommended Heretic config (orthogonalize_direction + row_normalization) are the production default for both dense and routed-expert models. Pair T03/T08 stacks with [../techniques/eval-driven-abliteration.md](../techniques/eval-driven-abliteration.md) and [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) (T17) to align bad/good prompts to your deploy corpora (factory firmware QA, pentest OSINT, CyberGym subsets, XSTest over-refusal).
 
 Full index: [research-landscape.md](research-landscape.md) · [advanced-techniques-catalog.md](advanced-techniques-catalog.md)
 

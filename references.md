@@ -49,6 +49,15 @@ git clone https://github.com/AUGMXNT/deccp.git && cd deccp && pip install -r req
 
 → [docs/comparative-abliteration-benchmarks.md](docs/comparative-abliteration-benchmarks.md)
 
+**Tool selection for responsible use:** GSM8K capability deltas and architecture-specific findings in the comparative benchmarks directly inform risk mitigation. Pair any tool decision with the capability sanity gates, post-edit labeling, and authorized scope rules in [docs/risks-and-ethics.md](docs/risks-and-ethics.md). 
+
+For agentic workloads, also cross-reference:
+- Full eval-driven workflow + gate checklist: [instructions/eval-driven-workflow.md](instructions/eval-driven-workflow.md)
+- Use-case evals: [docs/use-cases/factory-firmware-qa.md](docs/use-cases/factory-firmware-qa.md) · [docs/use-cases/pentest-cyber-analysis.md](docs/use-cases/pentest-cyber-analysis.md) · [docs/use-cases/cybergym-benchmark.md](docs/use-cases/cybergym-benchmark.md)
+- Detailed agentic security stack: [instructions/agentic-security-stack.md](instructions/agentic-security-stack.md)
+
+See the dedicated "Tool selection via comparative benchmarks" section + "Agentic use-case evals & benchmarks" list in [docs/risks-and-ethics.md](docs/risks-and-ethics.md) and the bidirectional links + responsible selection guidance in [docs/comparative-abliteration-benchmarks.md](docs/comparative-abliteration-benchmarks.md).
+
 **Pinned in this repo:** [sources/heretic-tools/](sources/heretic-tools/) · [docs/tools/heretic-tools-reference.md](docs/tools/heretic-tools-reference.md)
 
 ## Heretic / abliterated models (Hugging Face)
@@ -138,7 +147,9 @@ npm run ralph       # validate → refresh pins → re-validate (max 3)
 
 Use-case guides: [factory-firmware-qa.md](docs/use-cases/factory-firmware-qa.md) · [pentest-cyber-analysis.md](docs/use-cases/pentest-cyber-analysis.md) · [cybergym-benchmark.md](docs/use-cases/cybergym-benchmark.md)
 
-Full stack workflow: [instructions/agentic-security-stack.md](instructions/agentic-security-stack.md)
+**Benchmarks & ethics for agentic selection:** Choose abliteration backends using evidence from [docs/comparative-abliteration-benchmarks.md](docs/comparative-abliteration-benchmarks.md) (GSM8K sensitivity by tool/architecture, Heretic vs single-pass tradeoffs) and always enforce the gates + provenance in [docs/risks-and-ethics.md](docs/risks-and-ethics.md). See the new "Tool selection via comparative benchmarks" section there for use-case-specific gating steps (factory/pentest/CyberGym corpora via eval-driven-workflow).
+
+Full pipeline including eval corpora and runtime gate: [instructions/agentic-security-stack.md](instructions/agentic-security-stack.md). Use-case guides: [docs/use-cases/factory-firmware-qa.md](docs/use-cases/factory-firmware-qa.md) · [docs/use-cases/pentest-cyber-analysis.md](docs/use-cases/pentest-cyber-analysis.md) · [docs/use-cases/cybergym-benchmark.md](docs/use-cases/cybergym-benchmark.md).
 
 ## Security tool catalogs (OSINT / Kali / hashcat)
 

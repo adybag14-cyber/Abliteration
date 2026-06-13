@@ -2,6 +2,8 @@
 
 Technical parameters and methods beyond basic mean-diff + MLP ablation. For workflows see [instructions/advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md).
 
+High-level pipeline context, technique selection (including explicit T03/T08 production stack + T17 eval-driven alignment for factory/pentest/CyberGym), and when-to-use guidance live in [overview.md](overview.md). This catalog is cross-referenced from the overview's advanced methods table and from the projected/MoE entries in [techniques/README.md](../techniques/README.md).
+
 ---
 
 ## Heretic config parameters (nuanced)
@@ -77,12 +79,12 @@ W' = W - α · projection(W),   α ∈ (0, 1]
 |----|-----------|-----|
 | T01 | Mean-difference DIM | [../techniques/mean-difference-direction.md](../techniques/mean-difference-direction.md) |
 | T02 | Inference directional ablation | [../techniques/inference-directional-ablation.md](../techniques/inference-directional-ablation.md) |
-| T03 | Projected + norm-preserving | [../techniques/projected-norm-preserving-abliteration.md](../techniques/projected-norm-preserving-abliteration.md) |
+| T03 | Projected + norm-preserving | [projected-norm-preserving-abliteration.md](../techniques/projected-norm-preserving-abliteration.md) (T03) · [moe-hybrid-abliteration.md](../techniques/moe-hybrid-abliteration.md) (T08 MoE/hybrid) |
 | T04 | Geometric median + winsorization | [../techniques/geometric-median-winsorization.md](../techniques/geometric-median-winsorization.md) |
 | T05 | Multi-direction / concept cones | [../techniques/beyond-single-direction.md](../techniques/beyond-single-direction.md) |
 | T06 | Gradient RDO | [../techniques/beyond-single-direction.md](../techniques/beyond-single-direction.md) |
 | T07 | SAE refusal latents | [../techniques/beyond-single-direction.md](../techniques/beyond-single-direction.md) |
-| T08 | MoE / hybrid architectures | [../techniques/moe-hybrid-abliteration.md](../techniques/moe-hybrid-abliteration.md) |
+| T08 | MoE / hybrid architectures | [moe-hybrid-abliteration.md](../techniques/moe-hybrid-abliteration.md) (T08) · builds on [projected-norm-preserving-abliteration.md](../techniques/projected-norm-preserving-abliteration.md) (T03) |
 | T09 | Layer-selective + Heretic kernel | [../techniques/layer-selective-abliteration.md](../techniques/layer-selective-abliteration.md) |
 | T10 | Domain-specific direction | [../techniques/domain-specific-abliteration.md](../techniques/domain-specific-abliteration.md) |
 | T11 | LoRA / QLoRA paths | [../techniques/lora-qlora-abliteration.md](../techniques/lora-qlora-abliteration.md) |
@@ -95,6 +97,23 @@ W' = W - α · projection(W),   α ∈ (0, 1]
 | T18 | Refusal marker tuning | [../techniques/refusal-marker-tuning.md](../techniques/refusal-marker-tuning.md) |
 | T19 | Model family playbook | [../techniques/model-family-playbook.md](../techniques/model-family-playbook.md) |
 | T20 | Vision / multimodal | [../techniques/vision-multimodal-abliteration.md](../techniques/vision-multimodal-abliteration.md) |
+
+**Cross-technique guidance (T03 + T08):** Projected + norm-preserving (T03) is the recommended foundation when working with MoE and hybrid models (T08). The orthogonalize step (`orthogonalize_direction = true`) protects harmless directions inside each routed expert independently; pair it with `row_normalization = "full"` (default LoRA rank 3) to keep per-expert capability intact on Qwen3-MoE, Phi-MoE, Granite hybrids, etc. See overview.md for high-level "When abliteration works well", production use-cases table, and the explicit T03/T08 production stack recommendation that cross-links back here + to eval-driven-workflow.md.
+
+High-level pipeline context, technique selection guidance, and the T03/T08 entries in the advanced methods list (plus T17 eval-driven) live in [overview.md](overview.md) (this catalog is explicitly referenced from the overview's technique list; see also techniques/README.md entries for projected/MoE which link here + to eval-driven-workflow). The overview's "Advanced methods (2025–2026)" table + next-steps also point readers here for the numbered T-catalog and back to eval-driven-workflow.md for T17 alignment with factory/CyberGym/pentest corpora. See the new "Production default stack (T03 + T08 + T17)" callout in overview.md for agentic use-case guidance (factory, pentest, CyberGym) that ties these techniques together with eval-driven-workflow.
+
+Eval-driven (T17) measurement applies to both T03 and T08: use it to choose prompts that match your target deployment (see [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) and the corpora table in [../docs/evaluation.md](../docs/evaluation.md)).
+
+**Recommended MoE config (Heretic):**
+```toml
+orthogonalize_direction = true
+row_normalization = "full"
+full_normalization_lora_rank = 3   # raise to 8 for large MoE if KL high
+# per-expert targets discovered automatically; see T08 module map
+```
+See the full projected math, modes, and Heretic flags in the [T03 doc](../techniques/projected-norm-preserving-abliteration.md); per-expert module map, manual surgery examples, VRAM notes, and eval for routing shift in the [T08 doc](../techniques/moe-hybrid-abliteration.md). 
+
+Table rows in this catalog (T03 / T08) and the dedicated "Foundation" section in the MoE doc explicitly cross-link the pair for quick navigation. Always start MoE work by reviewing the projected + norm-preserving technique first; the same production stack (orthogonalize + full norm) is the default for both dense and routed-expert models in the low-VRAM and production Heretic profiles.
 
 ### Handbook config profiles
 

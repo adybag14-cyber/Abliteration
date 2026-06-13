@@ -21,6 +21,22 @@ Mixture-of-Experts and **linear-attention hybrid** models require **per-expert**
 
 ---
 
+## Foundation: Projected + norm-preserving (cross-link to T03)
+
+All MoE / hybrid abliteration **builds on** the projected + norm-preserving technique (T03). See:
+
+- [projected-norm-preserving-abliteration.md](projected-norm-preserving-abliteration.md) — math, `orthogonalize_direction`, `row_normalization` modes, recommended production stack, low-VRAM profile.
+- [../docs/advanced-techniques-catalog.md](../docs/advanced-techniques-catalog.md) — T03 + T08 table rows (explicitly cross-linked in catalog + dedicated cross-technique guidance), config parameters, recommended MoE config snippet, and "always start MoE by reviewing T03 first" navigation note.
+
+**Why pair them?**
+- `orthogonalize_direction = true` removes only the refusal component orthogonal to the harmless centroid *per expert* (protects "helpful" features inside each routed expert).
+- `row_normalization = "full"` + small LoRA rank prevents row-norm drift that would otherwise distort expert routing weights and amplify capability loss on hybrid models.
+- Use the same flags for dense models; they become *mandatory* for stable MoE results (see catalog T03/T08 guidance and low-vram profile).
+
+Heretic applies these per-expert automatically when the targets include `experts[*].down_proj` etc.
+
+---
+
 ## Why experts matter
 
 Each expert's `down_proj` can carry refusal writes independently. Abliterating only the shared router or one expert leaves refusal paths in inactive experts.
@@ -87,3 +103,5 @@ MoE expert `down_proj` / `w2` / `output_linear` tensors live in the same HF `*.s
 - [../methods/moe-expert-abliteration.md](../methods/moe-expert-abliteration.md)
 - [../methods/safetensor-abliteration-pipeline.md](../methods/safetensor-abliteration-pipeline.md)
 - [../instructions/low-vram-abliteration.md](../instructions/low-vram-abliteration.md)
+- [projected-norm-preserving-abliteration.md](projected-norm-preserving-abliteration.md) (T03 foundation for per-expert projected + norm-preserve work; use with all MoE targets)
+- [../docs/advanced-techniques-catalog.md](../docs/advanced-techniques-catalog.md) (T03 + T08 explicitly cross-linked table rows + cross-technique guidance + recommended MoE config + module targets)

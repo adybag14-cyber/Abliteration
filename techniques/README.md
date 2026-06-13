@@ -83,11 +83,15 @@ Jarvis SFT/DPO on tool-call JSONL — fixes residual false refusals on `wmic` / 
 
 → [../instructions/agentic-security-stack.md](../instructions/agentic-security-stack.md)
 
-## 13. Projected & norm-preserving abliteration
+## 13. Projected & norm-preserving abliteration (T03)
 
 Jim Lai refinements — `orthogonalize_direction`, `row_normalization = full`. Default in Heretic.
 
 → [projected-norm-preserving-abliteration.md](projected-norm-preserving-abliteration.md)
+
+**T03 foundation note + catalog cross-link:** See T03/T08 table rows, cross-technique guidance (orthogonalize + row_normalization for MoE), and "always start MoE by reviewing T03 first" in [../docs/advanced-techniques-catalog.md](../docs/advanced-techniques-catalog.md) (which references this overview for high-level context) and [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) (T17 eval alignment used with these stacks). High-level selection + production use cases (factory/pentest/CyberGym) live in [../docs/overview.md](../docs/overview.md) "Advanced methods" and "Production use cases" sections (this README is the practical techniques entry point).
+
+**Eval-driven usage (T17):** When applying projected/norm-preserving (T03) to production agents, align `[bad_prompts]` / `[good_prompts]` via the eval-driven workflow (factory, cybergym-subset, platform-eval, jarvis-safe) and run `npm run eval:stats` + post-abliteration gates before export. See overview advanced methods table + [../docs/advanced-techniques-catalog.md](../docs/advanced-techniques-catalog.md). Pair with T08 for hybrid models.
 
 ## 14. Geometric median & winsorization
 
@@ -101,11 +105,15 @@ Concept cones, gradient RDO, sparse autoencoder refusal latents, multi-direction
 
 → [beyond-single-direction.md](beyond-single-direction.md)
 
-## 16. MoE & hybrid architectures
+## 16. MoE & hybrid architectures (T08)
 
 Per-expert `down_proj`, linear attention `out_proj`.
 
 → [moe-hybrid-abliteration.md](moe-hybrid-abliteration.md)
+
+**T08 + T03 cross-link:** Builds on projected + norm-preserving (T03). See T03/T08 rows (explicit cross-links, dedicated guidance section, recommended MoE config, module targets) in [../docs/advanced-techniques-catalog.md](../docs/advanced-techniques-catalog.md) (catalog mentions overview for pipeline). Pair with [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) for MoE eval alignment. See [../docs/overview.md](../docs/overview.md) for the "Production default stack (T03 + T08 + T17)" guidance and use-case tie-ins.
+
+**Eval-driven usage (T17) for MoE/hybrid:** Per-expert changes can shift routing and capability; always gate MoE ablations with deploy-specific corpora (factory-firmware, osint-pentest, cybergym) + XSTest over-refusal before/after. Full details in catalog T08 section and [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md). See also [../docs/overview.md](../docs/overview.md) advanced methods for T03/T08 selection guidance.
 
 ## 17. Steering & alternatives
 
