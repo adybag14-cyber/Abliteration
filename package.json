@@ -19,7 +19,10 @@
     "ralph:autostart": "node scripts/ralph-autostart.mjs",
     "ralph:autostart:stop": "node scripts/ralph-autostart-stop.mjs",
     "eval:stats": "node scripts/count-eval-prompts.mjs",
-    "eval:jarvis-safe": "python scripts/filter-jarvis-eval.py"
+    "eval:jarvis-safe": "python scripts/filter-jarvis-eval.py",
+    "ralph:continue:on": "node scripts/ralph-continue-on.mjs",
+    "ralph:continue:off": "node scripts/ralph-continue-off.mjs",
+    "ralph:continue:status": "node scripts/ralph-continue-status.mjs"
   },
   "devDependencies": {
     "playwright": "^1.49.0"

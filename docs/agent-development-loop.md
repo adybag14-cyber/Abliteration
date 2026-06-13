@@ -64,8 +64,21 @@ npm run ralph:autostart:stop     # stop background instance
 
 ---
 
+## Turn continuations (multi-turn without typing)
+
+```bash
+npm run ralph:continue:on       # headless grok --max-turns
+npm run ralph:continue:status
+npm run ralph:continue:off
+```
+
+→ [ralph-turn-continuation.md](ralph-turn-continuation.md)
+
+---
+
 ## Related
 
 - [ralph-loop.md](ralph-loop.md) — validation commands
+- [ralph-turn-continuation.md](ralph-turn-continuation.md) — how to turn on agent turns
 - [evaluation.md](evaluation.md) — eval corpora (`npm run eval:stats`)
 - [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md) — tool selection evidence

@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ../../scripts/ralph-on-stop.mjs",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ../../scripts/ralph-on-session-start.mjs",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

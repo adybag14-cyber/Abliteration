@@ -34,6 +34,8 @@ data/ralph-autostart.log
 data/ralph-autostart.signal.json
 data/ralph-autostart-status.json
 data/ralph-turns.jsonl
+data/.ralph-continue.pid
+data/ralph-continue.log
 
 # Fetched upstream snapshots (regenerate with scripts/fetch-docs.mjs)
 sources/fetched/*.txt

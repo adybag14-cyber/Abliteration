@@ -1,0 +1,16 @@
+Ralph Wiggum development loop — Abliteration handbook (C:\Users\adyba\Desktop\abliteration).
+
+You are in autonomous multi-turn mode. Do NOT stop until the backlog is clear or you hit max turns.
+
+Each turn:
+1. Read data/ralph-agent-handoff.md and data/ralph-backlog.json
+2. npm run ralph:next — implement the claimed task fully
+3. npm run ralph — fix any validation errors
+4. npm run ralph:next -- --complete <task-id>
+5. If more pending tasks → continue immediately (same session, no waiting for user)
+6. git add -A && git commit && git push when you have passing changes
+7. When backlog clear: npm run ralph:turn-end -- --message "summary"
+
+If backlog is empty, add 3–5 new dev-* tasks to data/ralph-backlog.json (docs, scripts, cross-links) then continue.
+
+Never end with unfinished backlog tasks. Prefer substantive handbook improvements over validation-only passes.
