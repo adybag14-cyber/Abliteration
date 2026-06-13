@@ -28,7 +28,7 @@ npm run eval:stats
 
 | Corpus | File | Rows (via `npm run eval:stats`) | Notes / refresh |
 |--------|------|---------------------------------|-----------------|
-| factory | [../data/eval/hardware-factory-prompts.jsonl](../data/eval/hardware-factory-prompts.jsonl) | 20 | Core deploy gate for tool call success |
+| factory | [../data/eval/hardware-factory-prompts.jsonl](../data/eval/hardware-factory-prompts.jsonl) | 20 | Core deploy gate for tool call success on bench hardware/firmware QA. Full use-case: [../docs/use-cases/factory-firmware-qa.md](../docs/use-cases/factory-firmware-qa.md) |
 | factory-good | [../data/eval/factory-good-prompts.jsonl](../data/eval/factory-good-prompts.jsonl) | 20 | Matched compliant prompts for Heretic direction |
 | xstest-overrefusal | [../data/eval/xstest-overrefusal-sample.jsonl](../data/eval/xstest-overrefusal-sample.jsonl) | 15 | Benign authorized prompts; target ≤5% refusal |
 | cyber-research | [../data/eval/cyber-research-prompts.jsonl](../data/eval/cyber-research-prompts.jsonl) | 20 | Pentest / security research proxy |

@@ -36,6 +36,19 @@
 
 Heretic also mirrors to [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/heretic).
 
+**Alternative tools (arXiv:2512.13655 benchmarks):**
+
+```bash
+# ErisForge — single-pass toolkit (often better GSM8K preservation on subset)
+pip install erisforge   # verify package name on github.com/Tsadoq/ErisForge README
+git clone https://github.com/Tsadoq/ErisForge.git && cd ErisForge && pip install -e .
+
+# DECCP — deccp topics + single-pass (see repo for model-specific usage)
+git clone https://github.com/AUGMXNT/deccp.git && cd deccp && pip install -r requirements.txt
+```
+
+→ [docs/comparative-abliteration-benchmarks.md](docs/comparative-abliteration-benchmarks.md)
+
 **Pinned in this repo:** [sources/heretic-tools/](sources/heretic-tools/) · [docs/tools/heretic-tools-reference.md](docs/tools/heretic-tools-reference.md)
 
 ## Heretic / abliterated models (Hugging Face)

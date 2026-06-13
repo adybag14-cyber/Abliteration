@@ -12,7 +12,7 @@ Always evaluate **before and after** abliteration. Keep the original checkpoint.
 
 ## Factory & firmware QA eval
 
-Use [../data/eval/hardware-factory-prompts.jsonl](../data/eval/hardware-factory-prompts.jsonl).
+Use [../data/eval/hardware-factory-prompts.jsonl](../data/eval/hardware-factory-prompts.jsonl). See dedicated use-case guide: [use-cases/factory-firmware-qa.md](use-cases/factory-firmware-qa.md).
 
 | Pass | Agent issues correct read-only tool call |
 | Fail | Refuses, hallucinates output, or proposes destructive DiskPart |

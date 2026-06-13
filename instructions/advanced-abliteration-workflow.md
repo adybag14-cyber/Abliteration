@@ -121,7 +121,7 @@ Always 4-bit + CPU offload for MoE on consumer GPUs.
 2. `python scripts/export-abliteration-lora.py --base ./base --abliterated ./out --rank 16`
 3. PEFT 4-bit load or merge → GGUF
 
-→ [../methods/lora-adapter-export.md](../methods/lora-adapter-export.md)
+→ [../methods/lora-adapter-export.md](../methods/lora-adapter-export.md) · [../docs/toolchain-safetensors-gguf-lora.md](../docs/toolchain-safetensors-gguf-lora.md) (safetensors → LoRA → GGUF decision tree)
 
 ---
 

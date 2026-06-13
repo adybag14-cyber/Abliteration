@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-06-13T22:12:24.052Z",
+  "updated_at": "2026-06-13T22:16:14.833Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -274,9 +274,58 @@
       ],
       "acceptance": "Links eval-driven-workflow and hardware-factory-prompts.jsonl",
       "started_at": "2026-06-13T22:09:18.080Z",
-      "completed_at": "2026-06-13T22:12:24.051Z"
+      "completed_at": "2026-06-13T22:12:57.677Z"
+    },
+    {
+      "id": "dev-024",
+      "title": "pentest-cyber-analysis: OSINT eval corpus + osint-pentest-prompts.jsonl",
+      "status": "done",
+      "priority": 24,
+      "files": [
+        "docs/use-cases/pentest-cyber-analysis.md",
+        "docs/evaluation.md"
+      ],
+      "acceptance": "Pentest use-case links osint eval and tools/README",
+      "started_at": "2026-06-13T22:13:03.640Z",
+      "completed_at": "2026-06-13T22:16:13.597Z"
+    },
+    {
+      "id": "dev-025",
+      "title": "model-family-guide: Heretic config profiles table",
+      "status": "done",
+      "priority": 25,
+      "files": [
+        "instructions/model-family-guide.md",
+        "docs/tools/heretic-tools-reference.md"
+      ],
+      "acceptance": "Guide table maps Qwen/Gemma/Llama to config profiles",
+      "completed_at": "2026-06-13T22:16:14.011Z"
+    },
+    {
+      "id": "dev-026",
+      "title": "advanced-abliteration-workflow: LoRA export + toolchain cross-links",
+      "status": "done",
+      "priority": 26,
+      "files": [
+        "instructions/advanced-abliteration-workflow.md",
+        "docs/toolchain-safetensors-gguf-lora.md"
+      ],
+      "acceptance": "Workflow links export-abliteration-lora.py and toolchain doc",
+      "completed_at": "2026-06-13T22:16:14.427Z"
+    },
+    {
+      "id": "dev-027",
+      "title": "comparative benchmarks: DECCP/ErisForge install one-liners in references.md",
+      "status": "done",
+      "priority": 27,
+      "files": [
+        "docs/comparative-abliteration-benchmarks.md",
+        "references.md"
+      ],
+      "acceptance": "references.md has install/run pointers for alternative tools",
+      "completed_at": "2026-06-13T22:16:14.832Z"
     }
   ],
-  "wave_index": 1,
-  "last_seeded_at": "2026-06-13T22:04:03.922Z"
+  "wave_index": 2,
+  "last_seeded_at": "2026-06-13T22:12:42.705Z"
 }

@@ -67,6 +67,21 @@ heretic ./models/qwen3-pass1
 
 ---
 
+## Heretic config profiles (handbook)
+
+| Profile | File | Use |
+|---------|------|-----|
+| Upstream default | `config.default.toml` | Baseline pins |
+| 8–12 GB GPU | `config.low-vram.toml` | `bnb_4bit`, small batch |
+| Production agent | `config.production.toml` | Projected + norm-preserving |
+| Thinking / CoT | `config.thinking-model.toml` | `chain_of_thought_skips` |
+| Factory QA | `config.factory-qa.toml` | Factory good/bad `.txt` |
+| Slop reduction | `config.noslop.toml` | Style/filler (not uncensoring) |
+
+→ [../docs/tools/heretic-tools-reference.md](../docs/tools/heretic-tools-reference.md)
+
+---
+
 ## After abliteration
 
 | Step | Doc |
