@@ -23,7 +23,8 @@ Technical parameters and methods beyond basic mean-diff + MLP ablation. For work
 | `refusal_markers` | string list | Tune for your model's refusal phrasing |
 | `[good_prompts]` / `[bad_prompts]` | HF datasets | **Custom .txt** for factory false-refusal pairs |
 
-Source: `sources/fetched/heretic-config.txt` · [Heretic concepts](https://p-e-w-heretic.mintlify.app/concepts/abliteration)
+Source: `sources/heretic-tools/config.default.toml` · [Heretic concepts](https://p-e-w-heretic.mintlify.app/concepts/abliteration)  
+Deploy toolchain: [toolchain-safetensors-gguf-lora.md](toolchain-safetensors-gguf-lora.md)
 
 ---
 

@@ -29,81 +29,23 @@ For each target module (match Heretic: `o_proj`, `down_proj` per layer):
 
 Use **truncated SVD** on ΔW (float32 on CPU for numerical stability). Store as LoRA `(lora_A, lora_B)` with scaling `α/r`.
 
-## Reference script (sketch)
+## Export script (in repo)
 
-Save as `scripts/export-abliteration-lora.py` or run inline:
-
-```python
-#!/usr/bin/env python3
-"""Factorize abliteration delta into PEFT LoRA per layer. Authorized research use."""
-import argparse
-from pathlib import Path
-
-import torch
-from peft import LoraConfig, get_peft_model
-from safetensors.torch import load_file, save_file
-from transformers import AutoModelForCausalLM
-
-
-TARGET_SUFFIXES = ("o_proj", "down_proj")
-
-
-def delta_lowrank(delta: torch.Tensor, rank: int) -> tuple[torch.Tensor, torch.Tensor]:
-    """Return (lora_B, lora_A) so delta ≈ lora_B @ lora_A."""
-    u, s, vh = torch.linalg.svd(delta.float(), full_matrices=False)
-    r = min(rank, s.shape[0])
-    u, s, vh = u[:, :r], s[:r], vh[:r, :]
-    # B = U @ diag(sqrt(s)), A = diag(sqrt(s)) @ Vh
-    scale = torch.sqrt(s)
-    lora_b = u * scale.unsqueeze(0)
-    lora_a = scale.unsqueeze(1) * vh
-    return lora_b.cpu(), lora_a.cpu()
-
-
-def collect_deltas(base_path: Path, ablit_path: Path) -> dict[str, torch.Tensor]:
-    base_shards = sorted(base_path.glob("*.safetensors"))
-    ablit_shards = sorted(ablit_path.glob("*.safetensors"))
-    base_sd, ablit_sd = {}, {}
-    for p in base_shards:
-        base_sd.update(load_file(p))
-    for p in ablit_shards:
-        ablit_sd.update(load_file(p))
-    deltas = {}
-    for key, w_base in base_sd.items():
-        if not any(key.endswith(s) for s in TARGET_SUFFIXES):
-            continue
-        if key not in ablit_sd:
-            continue
-        deltas[key] = (ablit_sd[key].float() - w_base.float()).cpu()
-    return deltas
-
-
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--base", required=True, help="Original model directory")
-    ap.add_argument("--abliterated", required=True, help="Abliterated model directory")
-    ap.add_argument("--out", required=True, help="Output adapter directory")
-    ap.add_argument("--rank", type=int, default=16)
-    args = ap.parse_args()
-
-    deltas = collect_deltas(Path(args.base), Path(args.abliterated))
-    adapter_sd = {}
-    for key, delta in deltas.items():
-        lb, la = delta_lowrank(delta, args.rank)
-        adapter_sd[f"{key}.lora_B"] = lb.to(torch.bfloat16)
-        adapter_sd[f"{key}.lora_A"] = la.to(torch.bfloat16)
-
-    out = Path(args.out)
-    out.mkdir(parents=True, exist_ok=True)
-    save_file(adapter_sd, out / "adapter_model.safetensors")
-    print(f"Wrote {len(deltas)} module deltas, rank={args.rank} -> {out}")
-
-
-if __name__ == "__main__":
-    main()
+```bash
+python scripts/export-abliteration-lora.py \
+  --base ./models/Qwen3-4B-ORIGINAL \
+  --abliterated ./models/Qwen3-4B-abliterated \
+  --out ./adapters/abliteration-r16 \
+  --rank 16
 ```
 
-> **Note:** Production adapters should use PEFT's `save_pretrained` with `LoraConfig` targeting `q_proj`/`v_proj` only if you ablated attention MLP paths differently. Align `target_modules` with your abliteration recipe.
+Writes `adapter_model.safetensors` with `{module}.lora_A` / `{module}.lora_B` keys for each `o_proj` / `down_proj` delta.
+
+**GGUF sidecar:** `convert_lora_to_gguf.py` → [gguf-export-notes.md](gguf-export-notes.md)
+
+**Alternative:** community abliteration LoRA checkpoints (train/export refusal removal as adapter): [grimjim/Llama-3-Instruct-abliteration-LoRA-8B](https://huggingface.co/grimjim/Llama-3-Instruct-abliteration-LoRA-8B)
+
+> Align `target_modules` with your abliteration recipe if wrapping in full PEFT `LoraConfig`.
 
 ## Load at inference (4-bit + adapter)
 

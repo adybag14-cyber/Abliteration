@@ -144,12 +144,38 @@ Use when refusal is **distributed** (multi-direction). Prefer abliteration + Jar
 
 | Deployment | Command / stack |
 |------------|-----------------|
-| Ollama single GGUF | Merge adapter into weights before `convert_hf_to_gguf.py` |
+| Ollama single GGUF | Merge adapter → `convert_hf_to_gguf.py` (Ollama has no GGUF LoRA sidecar) |
 | vLLM | `--enable-lora` with base + adapter paths |
-| llama.cpp | Merge for simplicity; native LoRA support varies by build |
+| llama.cpp | `convert_lora_to_gguf.py` + `--lora` / `--lora-scaled` on `llama-cli` or `llama-server` |
 | PEFT dynamic | `PeftModel.from_pretrained(base, adapter)` |
+| GGUF-my-LoRA | [spaces/ggml-org/gguf-my-lora](https://huggingface.co/spaces/ggml-org/gguf-my-lora) — browser convert |
+
+**Export script (this repo):**
+
+```bash
+python scripts/export-abliteration-lora.py \
+  --base ./models/ORIGINAL \
+  --abliterated ./models/abliterated \
+  --out ./adapters/abliteration-r16 \
+  --rank 16
+```
+
+**GGUF LoRA inference (keep aligned base on disk):**
+
+```bash
+python llama.cpp/convert_lora_to_gguf.py \
+  --outfile abliteration-lora-f16.gguf \
+  --base-model-id Qwen/Qwen3-4B-Instruct-2507 \
+  --lora-path ./adapters/abliteration-r16
+
+./llama-cli -m base-q4_k_m.gguf --lora-scaled abliteration-lora-f16.gguf 0.9
+```
+
+Community abliteration LoRAs: [grimjim/Llama-3-Instruct-abliteration-LoRA-8B](https://huggingface.co/grimjim/Llama-3-Instruct-abliteration-LoRA-8B) · [ggml-org GGUF LoRA collection](https://huggingface.co/collections/ggml-org/gguf-lora-adapters)
 
 **Low RAM inference:** Q4_K_M GGUF of **merged** abliterated weights often beats 4-bit HF + adapter on CPU-only hosts.
+
+→ [../docs/toolchain-safetensors-gguf-lora.md](../docs/toolchain-safetensors-gguf-lora.md) · [../methods/gguf-export-notes.md](../methods/gguf-export-notes.md)
 
 ---
 

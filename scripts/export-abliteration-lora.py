@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Factorize abliteration weight delta into low-rank LoRA tensors (PEFT-compatible keys)."""
-
+"""Factorize abliteration weight delta into low-rank safetensors (PEFT-compatible keys)."""
 import argparse
 from pathlib import Path
 
@@ -20,57 +19,61 @@ def delta_lowrank(delta: torch.Tensor, rank: int) -> tuple[torch.Tensor, torch.T
     return lora_b.cpu(), lora_a.cpu()
 
 
-def load_sharded(model_dir: Path) -> dict[str, torch.Tensor]:
+def load_sharded_dict(model_dir: Path) -> dict[str, torch.Tensor]:
     sd: dict[str, torch.Tensor] = {}
-    for path in sorted(model_dir.glob("*.safetensors")):
+    shards = sorted(model_dir.glob("*.safetensors"))
+    if not shards:
+        raise FileNotFoundError(f"No safetensors in {model_dir}")
+    for path in shards:
         sd.update(load_file(path))
-    if not sd:
-        raise FileNotFoundError(f"No .safetensors in {model_dir}")
     return sd
 
 
-def collect_deltas(base_dir: Path, ablit_dir: Path) -> dict[str, torch.Tensor]:
-    base_sd = load_sharded(base_dir)
-    ablit_sd = load_sharded(ablit_dir)
-    deltas: dict[str, torch.Tensor] = {}
+def collect_deltas(base_path: Path, ablit_path: Path) -> dict[str, torch.Tensor]:
+    base_sd = load_sharded_dict(base_path)
+    ablit_sd = load_sharded_dict(ablit_path)
+    deltas = {}
     for key, w_base in base_sd.items():
-        if not any(key.endswith(suffix) for suffix in TARGET_SUFFIXES):
+        if not any(key.endswith(s) for s in TARGET_SUFFIXES):
             continue
         if key not in ablit_sd:
             continue
         deltas[key] = (ablit_sd[key].float() - w_base.float()).cpu()
-    if not deltas:
-        raise RuntimeError("No o_proj/down_proj deltas found — check paths and abliteration targets")
     return deltas
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--base", required=True, help="Original model directory (safetensors)")
-    ap.add_argument("--abliterated", required=True, help="Abliterated model directory")
-    ap.add_argument("--out", required=True, help="Output directory for adapter_model.safetensors")
-    ap.add_argument("--rank", type=int, default=16, help="LoRA rank (default 16)")
-    ap.add_argument("--dtype", choices=("bf16", "fp16", "fp32"), default="bf16")
+    ap = argparse.ArgumentParser(description="Export abliteration delta as LoRA safetensors")
+    ap.add_argument("--base", required=True, help="Original HF model directory")
+    ap.add_argument("--abliterated", required=True, help="Abliterated HF model directory")
+    ap.add_argument("--out", required=True, help="Output adapter directory")
+    ap.add_argument("--rank", type=int, default=16)
     args = ap.parse_args()
 
-    dtype_map = {
-        "bf16": torch.bfloat16,
-        "fp16": torch.float16,
-        "fp32": torch.float32,
-    }
-    out_dtype = dtype_map[args.dtype]
-
     deltas = collect_deltas(Path(args.base), Path(args.abliterated))
+    if not deltas:
+        raise SystemExit("No o_proj/down_proj deltas found — check paths and module names")
+
     adapter_sd: dict[str, torch.Tensor] = {}
+    errors = []
     for key, delta in deltas.items():
-        lora_b, lora_a = delta_lowrank(delta, args.rank)
-        adapter_sd[f"base_model.model.{key}.lora_B.weight"] = lora_b.to(out_dtype)
-        adapter_sd[f"base_model.model.{key}.lora_A.weight"] = lora_a.to(out_dtype)
+        lb, la = delta_lowrank(delta, args.rank)
+        recon = lb @ la
+        rel_err = (delta - recon).norm() / delta.norm().clamp(min=1e-8)
+        if rel_err > 0.15:
+            errors.append((key, float(rel_err)))
+        adapter_sd[f"{key}.lora_B"] = lb.to(torch.bfloat16)
+        adapter_sd[f"{key}.lora_A"] = la.to(torch.bfloat16)
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     save_file(adapter_sd, out / "adapter_model.safetensors")
-    print(f"Exported {len(deltas)} modules at rank {args.rank} -> {out / 'adapter_model.safetensors'}")
+
+    print(f"Wrote {len(deltas)} module deltas, rank={args.rank} -> {out}")
+    if errors:
+        print(f"Warning: {len(errors)} modules with rel_err > 0.15 — try higher --rank")
+        for k, e in errors[:5]:
+            print(f"  {k}: {e:.3f}")
 
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@
 | Residual-stream hook ablation | [residual-hook-ablation.md](residual-hook-ablation.md) |
 | Automated search (Heretic-style) | [automated-heretic-search.md](automated-heretic-search.md) |
 | Manual PyTorch / Transformers | [manual-transformers-pipeline.md](manual-transformers-pipeline.md) |
+| Safetensor surgery pipeline | [safetensor-abliteration-pipeline.md](safetensor-abliteration-pipeline.md) |
 | GGUF export & inference | [gguf-export-notes.md](gguf-export-notes.md) |
 | LoRA adapter from ΔW | [lora-adapter-export.md](lora-adapter-export.md) |
 | Projected + norm-preserving (manual) | [projected-llm-abliteration.md](projected-llm-abliteration.md) |
@@ -39,5 +40,6 @@ Start here
     │
     ├─ MoE model? ──► moe-expert-abliteration (or Heretic)
     │
-    └─ Deploy in llama.cpp? ──► gguf-export-notes
+    └─ Deploy in llama.cpp? ──► safetensor surgery → gguf-export-notes
+         └─ LoRA sidecar? ──► lora-adapter-export → convert_lora_to_gguf
 ```

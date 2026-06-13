@@ -75,6 +75,7 @@ Optional: [instructions/quickstart.md](instructions/quickstart.md) — test with
 | **Thinking models (CoT)** | [instructions/thinking-models-guide.md](instructions/thinking-models-guide.md) |
 | **Eval-driven factory deploy** | [instructions/eval-driven-workflow.md](instructions/eval-driven-workflow.md) |
 | **Troubleshooting** | [instructions/troubleshooting-encyclopedia.md](instructions/troubleshooting-encyclopedia.md) |
+| **Safetensors → GGUF → LoRA toolchain** | [docs/toolchain-safetensors-gguf-lora.md](docs/toolchain-safetensors-gguf-lora.md) |
 | Factory QA agent | [instructions/agentic-security-stack.md](instructions/agentic-security-stack.md) |
 | Hardware commands | [docs/hardware-command-catalog.md](docs/hardware-command-catalog.md) |
 | Security tool catalogs | [docs/tools/README.md](docs/tools/README.md) |

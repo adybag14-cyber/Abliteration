@@ -1,6 +1,8 @@
 # Automated Heretic search
 
-Source of truth: **[github.com/p-e-w/heretic](https://github.com/p-e-w/heretic)** (fetch with `node scripts/fetch-docs.mjs`).
+Source of truth: **[github.com/p-e-w/heretic](https://github.com/p-e-w/heretic)** · PyPI `heretic-llm` · Live docs [mintlify](https://p-e-w-heretic.mintlify.app/).
+
+**Output:** Hugging Face safetensors layout — convert to GGUF separately ([gguf-export-notes.md](gguf-export-notes.md)).
 
 ## What Heretic optimizes
 

@@ -4,19 +4,23 @@ Tools for **weight surgery**, **4-bit measure**, **LoRA export**, **quantized in
 
 ---
 
-## Core abliteration
+## Core abliteration (safetensors surgery)
 
 | Tool | URL | Role | VRAM notes |
 |------|-----|------|------------|
-| **Heretic** | [p-e-w/heretic](https://github.com/p-e-w/heretic) | Automatic abliteration + Optuna | `bnb_4bit`, CPU offload |
-| **Heretic pins (this repo)** | [heretic-tools-reference.md](heretic-tools-reference.md) | Immutable `config.default.toml`, lockfiles, HF model registry | Offline copy-paste |
-| **llm-abliteration** | [jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) | measure → analyze → sharded ablate | `--quant 4bit` |
+| **Heretic** | [p-e-w/heretic](https://github.com/p-e-w/heretic) | **Primary** — automatic Optuna + projected + norm-preserving | `bnb_4bit`, CPU offload; PyPI `heretic-llm` |
+| **Heretic pins (this repo)** | [heretic-tools-reference.md](heretic-tools-reference.md) | Immutable configs, HF registry | Offline copy-paste |
+| **llm-abliteration** | [jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) | **v1.2** (Jan 2026) measure → analyze → sharded ablate | 4-bit measure; **full-weight ablate** |
 | **refusal_direction** | [andyrdt/refusal_direction](https://github.com/andyrdt/refusal_direction) | Paper reproduction | Research GPU |
-| **TransformerLens** | [TransformerLensOrg/TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) | Hooks, direction probes | 1–3B on 8 GB |
-| **remove-refusals-with-transformers** | [Sumandora/remove-refusals-with-transformers](https://github.com/Sumandora/remove-refusals-with-transformers) | Pure HF, no TL | Medium |
+| **remove-refusals-with-transformers** | [Sumandora/remove-refusals-with-transformers](https://github.com/Sumandora/remove-refusals-with-transformers) | Pure HF, no TransformerLens | Medium |
+| **abliterate.cpp** | [kabachuha/abliterate.cpp](https://github.com/kabachuha/abliterate.cpp) | GGUF-native direction measure → llm-abliteration | WIP experimental |
+| **abliterix** | [wuwangzhang1216/abliterix](https://github.com/wuwangzhang1216/abliterix) | Community CLI wrapper | Verify before production |
 | **ErisForge** | [Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) | Toolkit | Varies |
-| **wassname/abliterator** | [wassname/abliterator](https://github.com/wassname/abliterator) | Community | Varies |
+| **TransformerLens** | [TransformerLensOrg/TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) | Hooks, direction probes | 1–3B on 8 GB |
+| **wassname/abliterator** | [wassname/abliterator](https://github.com/wassname/abliterator) | Community | Legacy |
 | **FailSpy/abliterator** | [FailSpy/abliterator](https://github.com/FailSpy/abliterator) | Early tooling | Legacy |
+
+**Master toolchain doc:** [../toolchain-safetensors-gguf-lora.md](../toolchain-safetensors-gguf-lora.md) · Safetensors: [../../methods/safetensor-abliteration-pipeline.md](../../methods/safetensor-abliteration-pipeline.md)
 
 Workflows: [../../instructions/heretic-workflow.md](../../instructions/heretic-workflow.md) · [../../instructions/low-vram-abliteration.md](../../instructions/low-vram-abliteration.md)
 
@@ -34,10 +38,17 @@ Workflows: [../../instructions/heretic-workflow.md](../../instructions/heretic-w
 | **Ollama** | [ollama/ollama](https://github.com/ollama/ollama) | Local GGUF serving |
 | **LM Studio** | [lmstudio.ai](https://lmstudio.ai/) | GUI GGUF (desktop) |
 
-Typical post-abliteration chain:
+Typical post-abliteration chains:
 
 ```bash
+# Merged full weights → Ollama
 convert_hf_to_gguf.py → llama-quantize Q4_K_M → ollama create
+
+# LoRA sidecar → llama.cpp (keep base GGUF)
+export-abliteration-lora.py → convert_lora_to_gguf.py → llama-cli --lora
+
+# Browser LoRA convert
+# huggingface.co/spaces/ggml-org/gguf-my-lora
 ```
 
 → [../../methods/gguf-export-notes.md](../../methods/gguf-export-notes.md)
@@ -49,7 +60,11 @@ convert_hf_to_gguf.py → llama-quantize Q4_K_M → ollama create
 | Tool | URL | Role |
 |------|-----|------|
 | **PEFT** | [huggingface/peft](https://github.com/huggingface/peft) | LoRA adapters; merge for GGUF |
-| **Unsloth** | [unslothai/unsloth](https://github.com/unslothai/unsloth) | Fast 4-bit QLoRA training |
+| **export-abliteration-lora.py** | [../../scripts/export-abliteration-lora.py](../../scripts/export-abliteration-lora.py) | ΔW → adapter safetensors |
+| **convert_lora_to_gguf.py** | [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp) | PEFT LoRA → GGUF sidecar |
+| **GGUF-my-LoRA** | [spaces/ggml-org/gguf-my-lora](https://huggingface.co/spaces/ggml-org/gguf-my-lora) | Web convert PEFT → GGUF |
+| **grimjim abliteration LoRA** | [Llama-3-Instruct-abliteration-LoRA-8B](https://huggingface.co/grimjim/Llama-3-Instruct-abliteration-LoRA-8B) | Refusal removal as trained adapter |
+| **Unsloth** | [unslothai/unsloth](https://github.com/unslothai/unsloth) | Fast 4-bit QLoRA + `save_pretrained_gguf` |
 | **TRL** | [huggingface/trl](https://github.com/huggingface/trl) | DPO/SFT trainers (Jarvis repair) |
 | **Axolotl** | [axolotl-ai-cloud/axolotl](https://github.com/axolotl-ai-cloud/axolotl) | YAML-driven QLoRA fine-tunes |
 | **torchtune** | [pytorch/torchtune](https://github.com/pytorch/torchtune) | Meta fine-tuning recipes |
@@ -176,18 +191,26 @@ git clone https://github.com/ggml-org/llama.cpp.git tools/llama.cpp
 ## Tool selection by goal
 
 ```
-Need checkpoint fast, 8–16 GB VRAM?
-  └─ Heretic + bnb_4bit
+Remove refusal from safetensors (automatic)?
+  └─ Heretic (heretic-llm) → save HF checkpoint
 
-Need layer-wise control, OOM on Heretic?
-  └─ llm-abliteration --quant 4bit + sharded_ablate
+Remove refusal (manual layer YAML)?
+  └─ llm-abliteration v1.2: measure 4bit → sharded_ablate full weights
 
-Need MB adapter, not full weights?
-  └─ abliterate → lora-adapter-export → PEFT 4-bit infer
+Only have GGUF for measure?
+  └─ abliterate.cpp (WIP) → measurements.pt → llm-abliteration
 
-Need tool-call repair after abliteration?
-  └─ Jarvis QLoRA (Unsloth/TRL)
+Deploy Ollama single file?
+  └─ merge LoRA OR full abliterated safetensors → convert_hf_to_gguf Q4_K_M
 
-Need factory bench inference, 8 GB RAM?
-  └─ merge → GGUF Q4_K_M → Ollama
+Deploy llama.cpp with swappable policy?
+  └─ export-abliteration-lora.py → convert_lora_to_gguf → --lora-scaled
+
+Post-abliteration tool-call repair?
+  └─ Jarvis QLoRA (Unsloth/TRL) — SGD, not abliteration
+
+Skip surgery entirely?
+  └─ Download p-e-w/*-heretic or community GGUF
 ```
+
+**Do not:** edit GGUF tensors directly; quantize aligned models expecting uncensoring.

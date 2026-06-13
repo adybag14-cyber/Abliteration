@@ -36,6 +36,7 @@ Full index: [kali-metapackages.md](kali-metapackages.md) · Official: [kali.org/
 | [abliteration-tooling.md](abliteration-tooling.md) | **Heretic, PEFT, SAE, RepE, GGUF, vLLM** — full ML stack |
 | [heretic-tools-reference.md](heretic-tools-reference.md) | **Pinned Heretic configs** + refresh scripts |
 | [heretic-models-registry.md](heretic-models-registry.md) | **Open-weight HF** models tagged heretic/abliterated |
+| [../toolchain-safetensors-gguf-lora.md](../toolchain-safetensors-gguf-lora.md) | **Safetensors → GGUF → LoRA** master toolchain (Jun 2026) |
 
 ## Generated example corpora
 

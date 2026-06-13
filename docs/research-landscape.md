@@ -16,6 +16,25 @@ Taxonomy of **papers**, **open-source tools**, and **when each method applies**.
 | 2025 | [Wollschläger et al. — concept cones](https://arxiv.org/html/2502.17420v2) | Multi-D refusal cones; gradient RDO |
 | 2025 | [QCRI — more than single direction](https://arxiv.org/html/2602.02132v1) | 11 refusal categories; SAE latent structure |
 | 2025+ | [Heretic](https://github.com/p-e-w/heretic) | Auto Optuna + projected + norm-preserving + MoE |
+| 2025 | [GGUF-my-LoRA](https://huggingface.co/blog/ngxson/gguf-my-lora) | PEFT LoRA → GGUF sidecars for llama.cpp |
+| 2026 | [llm-abliteration v1.2](https://github.com/jim-plus/llm-abliteration/releases/tag/v1.2) | Sharded ablate, MoE, Metal |
+| 2026 | [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp) | HF org; `convert_lora_to_gguf`, multi-LoRA server |
+| 2026 | Community Heretic 1.2 | Reported ~70% VRAM reduction (keep pip current) |
+
+---
+
+## Production toolchain (Jun 2026)
+
+| Stage | Correct tool | Wrong approach |
+|-------|--------------|----------------|
+| Weight surgery | Heretic / llm-abliteration on **safetensors** | Edit GGUF in place |
+| 4-bit measure | Heretic `bnb_4bit`, `measure.py --quant 4bit` | Ablate 4-bit stored weights |
+| LoRA deliverable | `export-abliteration-lora.py` or grimjim LoRA | Uncensored SFT only |
+| GGUF merged | `convert_hf_to_gguf.py` | Re-download aligned GGUF |
+| GGUF LoRA | `convert_lora_to_gguf.py` + `--lora` | Ollama (merge required) |
+| QLoRA repair | Jarvis + Unsloth after abliteration | Replace abliteration |
+
+Full guide: [toolchain-safetensors-gguf-lora.md](toolchain-safetensors-gguf-lora.md)
 
 ---
 

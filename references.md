@@ -29,6 +29,8 @@
 | **wassname/abliterator** | [github.com/wassname/abliterator](https://github.com/wassname/abliterator) | Community implementation |
 | **ErisForge** | [github.com/Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) | Toolkit |
 | **NousResearch/llm-abliteration** | [github.com/NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Community fork |
+| **abliterate.cpp** | [github.com/kabachuha/abliterate.cpp](https://github.com/kabachuha/abliterate.cpp) | GGUF measure → llm-abliteration (WIP) |
+| **abliterix** | [github.com/wuwangzhang1216/abliterix](https://github.com/wuwangzhang1216/abliterix) | Community CLI (verify before use) |
 | **deccp** | [github.com/AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) | Dataset / deccp topics for measurement |
 | **GraySwan circuit-breakers** | [github.com/GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) | Defensive alignment (contrast) |
 
@@ -65,11 +67,14 @@ Heretic also mirrors to [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/
 | **PEFT** | [huggingface/peft](https://github.com/huggingface/peft) | LoRA adapter export & infer |
 | **Unsloth** | [unslothai/unsloth](https://github.com/unslothai/unsloth) | Fast QLoRA (Jarvis repair) |
 | **Accelerate** | [huggingface/accelerate](https://github.com/huggingface/accelerate) | `max_memory` CPU offload |
-| **llama.cpp** | [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp) | GGUF quant after abliteration |
+| **llama.cpp** | [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp) | `convert_hf_to_gguf.py`, `convert_lora_to_gguf.py` |
+| **GGUF-my-LoRA** | [spaces/ggml-org/gguf-my-lora](https://huggingface.co/spaces/ggml-org/gguf-my-lora) | Web PEFT → GGUF LoRA |
+| **grimjim abliteration LoRA** | [grimjim/Llama-3-Instruct-abliteration-LoRA-8B](https://huggingface.co/grimjim/Llama-3-Instruct-abliteration-LoRA-8B) | Refusal removal as adapter |
 | **vLLM** | [vllm-project/vllm](https://github.com/vllm-project/vllm) | Agent API + LoRA slots |
 | **mlx-lm** | [ml-explore/mlx-examples](https://github.com/ml-explore/mlx-examples) | Apple Silicon inference |
+| **export-abliteration-lora.py** | [scripts/export-abliteration-lora.py](scripts/export-abliteration-lora.py) | ΔW → adapter safetensors |
 
-Guides: [instructions/low-vram-abliteration.md](instructions/low-vram-abliteration.md) · [techniques/lora-qlora-abliteration.md](techniques/lora-qlora-abliteration.md) · [docs/tools/abliteration-tooling.md](docs/tools/abliteration-tooling.md)
+Guides: [docs/toolchain-safetensors-gguf-lora.md](docs/toolchain-safetensors-gguf-lora.md) · [methods/safetensor-abliteration-pipeline.md](methods/safetensor-abliteration-pipeline.md) · [methods/gguf-export-notes.md](methods/gguf-export-notes.md) · [techniques/lora-qlora-abliteration.md](techniques/lora-qlora-abliteration.md)
 
 ## Install commands (from upstream, Jun 2026)
 
@@ -86,12 +91,18 @@ cd heretic && uv run heretic <model>
 # Manual pipeline (4-bit measure)
 git clone https://github.com/jim-plus/llm-abliteration.git
 cd llm-abliteration && pip install -r requirements.txt
-python measure.py -m <model_path> -o directions.pt --quant 4bit
+python measure.py -m <model_path> -o directions.pt --quant 4bit --projected
+python sharded_ablate.py config.yml --projected --normpreserve
 
-# LoRA adapter from abliterated checkpoint
-python scripts/export-abliteration-lora.py \
-  --base ./base --abliterated ./out --out ./adapter --rank 16
+# GGUF merged deploy
+python llama.cpp/convert_hf_to_gguf.py ./abliterated --outfile model-q4_k_m.gguf --outtype q4_k_m
+
+# LoRA sidecar deploy
+python scripts/export-abliteration-lora.py --base ./base --abliterated ./out --out ./adapter --rank 16
+python llama.cpp/convert_lora_to_gguf.py --outfile lora.gguf --base-model-id <id> --lora-path ./adapter
 ```
+
+**Toolchain overview:** [docs/toolchain-safetensors-gguf-lora.md](docs/toolchain-safetensors-gguf-lora.md)
 
 ## Agentic security & evaluation
 
