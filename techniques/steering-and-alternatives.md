@@ -102,6 +102,25 @@ Low-rank `W + u vᵀ` from activation stats — alternative parameterization.
 | Interpret features | SAE latents + steering |
 | Harden alignment (defense) | Circuit breakers training |
 | Fix `wmic` false refusal post-abliteration | Jarvis QLoRA |
+| Reduce sycophantic filler (not uncensoring) | Heretic `config.noslop.toml` |
+
+---
+
+## 8. Slop / style abliteration (community)
+
+Directional edits can reduce **purple prose and sycophantic filler** without full refusal removal — a different objective than safety guard abliteration.
+
+| Resource | Role |
+|----------|------|
+| `sources/heretic-tools/config.noslop.toml` | Upstream slop-suppression prompt pairs + refusal markers |
+| [comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md) | Community reports + distinction from uncensoring |
+
+```bash
+cp sources/heretic-tools/config.noslop.toml config.toml
+heretic ./models/YourModel-Instruct
+```
+
+Always eval capability (GSM8K/MMLU sample) — style edits can still shift reasoning.
 
 ---
 

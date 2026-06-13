@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-06-13T20:16:00.946Z",
+  "updated_at": "2026-06-13T20:16:27.235Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -123,26 +123,35 @@
     {
       "id": "dev-011",
       "title": "Heretic tools reference: document noslop/nohumor profiles",
-      "status": "pending",
+      "status": "done",
       "priority": 11,
-      "files": ["docs/tools/heretic-tools-reference.md"],
-      "acceptance": "Reference table includes noslop and nohumor configs with use cases"
+      "files": [
+        "docs/tools/heretic-tools-reference.md"
+      ],
+      "acceptance": "Reference table includes noslop and nohumor configs with use cases",
+      "completed_at": "2026-06-13T20:16:26.382Z"
     },
     {
       "id": "dev-012",
       "title": "Expand beginner guide with eval:jarvis-safe and eval:stats commands",
-      "status": "pending",
+      "status": "done",
       "priority": 12,
-      "files": ["instructions/beginner-local-model-guide.md"],
-      "acceptance": "Step 7 or appendix mentions npm run eval:stats and eval:jarvis-safe"
+      "files": [
+        "instructions/beginner-local-model-guide.md"
+      ],
+      "acceptance": "Step 7 or appendix mentions npm run eval:stats and eval:jarvis-safe",
+      "completed_at": "2026-06-13T20:16:26.806Z"
     },
     {
       "id": "dev-013",
       "title": "Add slop-abliteration technique doc cross-linking noslop config",
-      "status": "pending",
+      "status": "done",
       "priority": 13,
-      "files": ["techniques/steering-and-alternatives.md"],
-      "acceptance": "Section links config.noslop.toml and comparative benchmarks slop note"
+      "files": [
+        "techniques/steering-and-alternatives.md"
+      ],
+      "acceptance": "Section links config.noslop.toml and comparative benchmarks slop note",
+      "completed_at": "2026-06-13T20:16:27.234Z"
     }
   ]
 }

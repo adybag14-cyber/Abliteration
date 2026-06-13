@@ -300,6 +300,10 @@ More: [heretic-workflow.md](heretic-workflow.md) · [low-vram-abliteration.md](l
 | Pick another model family | [model-family-guide.md](model-family-guide.md) |
 | Something broke | [troubleshooting-encyclopedia.md](troubleshooting-encyclopedia.md) |
 | Understand theory | [../docs/overview.md](../docs/overview.md) |
+| Measure eval corpus size | `npm run eval:stats` in repo root |
+| Export Jarvis safe tool eval | `npm run eval:jarvis-safe` → `data/eval/jarvis-safe-eval.jsonl` |
+
+After abliteration, run `npm run eval:stats` to see how many benchmark prompts this handbook ships (factory, OSINT, platform, Jarvis safe subset).
 
 ---
 

@@ -10,6 +10,8 @@ They are **immutable reference copies** — refresh from upstream, do not hand-e
 | 12–24 GB agent profile | `sources/heretic-tools/config.production.toml` |
 | Thinking / CoT models | `sources/heretic-tools/config.thinking-model.toml` |
 | Factory bench domain | `sources/heretic-tools/config.factory-qa.toml` |
+| Slop / filler reduction | `sources/heretic-tools/config.noslop.toml` |
+| Humor / tone reduction | `sources/heretic-tools/config.nohumor.toml` |
 | Dependency pins | `pyproject.toml.reference`, `uv.lock.reference` |
 | Sync manifest (sha256) | `UPSTREAM.json` |
 | Import / refresh guide | [`sources/heretic-tools/IMPORT.md`](../../sources/heretic-tools/IMPORT.md) |
@@ -30,6 +32,20 @@ They are **immutable reference copies** — refresh from upstream, do not hand-e
 That script pulls raw GitHub files and writes sha256 timestamps into `UPSTREAM.json`.
 
 Handbook-only profiles (`config.low-vram.toml`, `config.production.toml`) are **edited in this repo** — not overwritten by fetch.
+
+Upstream optional profiles (`config.noslop.toml`, `config.nohumor.toml`) are **pinned from GitHub** via `npm run fetch:heretic`.
+
+### Optional profiles (style, not refusal)
+
+| Profile | Use when | Notes |
+|---------|----------|-------|
+| `config.noslop.toml` | Model outputs purple prose / sycophantic filler | Uses slop-inducing vs clean prompt pairs; distinct from uncensoring — see [comparative-abliteration-benchmarks.md](../comparative-abliteration-benchmarks.md#slop--style-abliteration-community-2026) |
+| `config.nohumor.toml` | Tone is inappropriately jokey for agent tasks | Smaller prompt set; pair with eval on your deploy corpus |
+
+```bash
+cp sources/heretic-tools/config.noslop.toml config.toml
+heretic ./models/YourModel-Instruct
+```
 
 ---
 
