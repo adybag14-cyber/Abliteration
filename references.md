@@ -9,7 +9,7 @@
 | Refusal in LLMs is mediated by a single direction | [arXiv:2406.11717](https://arxiv.org/abs/2406.11717) | [andyrdt/refusal_direction](https://github.com/andyrdt/refusal_direction) |
 | Accessible summary | [LessWrong](https://www.lesswrong.com/posts/jGuXSZgv6qfdhMCuJ/refusal-in-llms-is-mediated-by-a-single-direction) | — |
 | The Geometry of Refusal — concept cones | [arXiv:2502.17420](https://arxiv.org/html/2502.17420v2) | [TUM geometry-of-refusal](https://www.cs.cit.tum.de/daml/geometry-of-refusal/) |
-| More to refusal than a single direction (QCRI) | [arXiv:2602.02132](https://arxiv.org/html/2602.02132v1) | — |
+| More to refusal than a single direction (QCRI) | [arXiv:2602.02132](https://arxiv.org/abs/2602.02132) · [PDF](https://arxiv.org/pdf/2602.02132) | Handbook: [techniques/multi-category-refusal-beginners-guide.md](techniques/multi-category-refusal-beginners-guide.md) |
 | Representation Engineering | [arXiv:2310.01405](https://arxiv.org/abs/2310.01405) | RepE ecosystem |
 | Circuit Breakers (defensive) | [arXiv:2406.04313](https://arxiv.org/html/2406.04313v3) | [GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) |
 | Projected abliteration (blog) | [grimjim/projected](https://huggingface.co/blog/grimjim/projected-abliteration) | llm-abliteration `--projected` |

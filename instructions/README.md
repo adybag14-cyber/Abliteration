@@ -16,6 +16,8 @@ Step-by-step workflows. **Start here if you are improving a local model for the 
 | 5 | [heretic-workflow.md](heretic-workflow.md) | Reference + troubleshooting for Heretic |
 | 6 | [../docs/evaluation.md](../docs/evaluation.md) | Check quality before daily use |
 
+**Optional — leading-edge theory (after first run):** [../techniques/multi-category-refusal-beginners-guide.md](../techniques/multi-category-refusal-beginners-guide.md) (QCRI 2026: eleven refusal types, one volume knob)
+
 **Optional experiment first (no permanent edit):** [quickstart.md](quickstart.md)
 
 ---

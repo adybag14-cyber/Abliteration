@@ -11,6 +11,8 @@ Weight-level **removal of the refusal / safety-response direction** from transfo
 
 In instruction-tuned LLMs, a large fraction of **refusal behavior** (policy text, “I cannot help”, over-cautious deflection) correlates with a **linear direction** in residual activations per layer ([arXiv:2406.11717](https://arxiv.org/abs/2406.11717)).
 
+**2026 nuance (QCRI):** Eleven refusal *types* (safety, over-refusal, incomplete requests, …) each have **distinct** directions — but linear abliteration/steering still acts like one **shared volume knob** on refusal *rate*. Style of refusal can differ; see [multi-category-refusal-beginners-guide.md](multi-category-refusal-beginners-guide.md).
+
 | Concept | Meaning |
 |---------|---------|
 | **Safety guardrail (weights)** | Encoded refusal direction baked into `down_proj` / `o_proj` (and MoE expert equivalents) |

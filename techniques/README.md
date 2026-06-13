@@ -203,4 +203,6 @@ Extended toolkit (Abliterix, ErisForge, Nous/DECCP, FailSpy — placement + comm
 
 Safety guardrail removal methodology (weight-level refusal direction): [safety-guardrail-abliteration-methodology.md](safety-guardrail-abliteration-methodology.md) · [../instructions/beginner-reproduction-methodology.md](../instructions/beginner-reproduction-methodology.md)
 
+QCRI 2026 multi-category refusal (beginner): [multi-category-refusal-beginners-guide.md](multi-category-refusal-beginners-guide.md) · [arXiv:2602.02132](https://arxiv.org/abs/2602.02132)
+
 Eval gates and corpora: [eval-driven-abliteration.md](eval-driven-abliteration.md) · `npm run eval:stats`

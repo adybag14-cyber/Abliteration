@@ -9,6 +9,8 @@ Reproducible **safety guardrail abliteration** — remove excessive refusal from
 
 **Scope:** Local authorized lab use. Use the repo's bundled eval files — do not invent new risky prompts for the first run.
 
+**Leading edge (optional read):** [../techniques/multi-category-refusal-beginners-guide.md](../techniques/multi-category-refusal-beginners-guide.md) — QCRI 2026 explains why single-direction Heretic still works and when factory-specific prompts matter.
+
 ---
 
 ## What a successful run looks like

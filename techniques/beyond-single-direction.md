@@ -6,11 +6,16 @@
 
 ## 1. Multi-category directions (QCRI 2026)
 
-[There Is More to Refusal in LLMs than a Single Direction](https://arxiv.org/html/2602.02132v1) (Joad et al., QCRI):
+[There Is More to Refusal in LLMs than a Single Direction](https://arxiv.org/abs/2602.02132) (Joad et al., QCRI, Feb 2026) — beginner summary: [multi-category-refusal-beginners-guide.md](multi-category-refusal-beginners-guide.md) · PDF: [../sources/fetched/arxiv-2602-02132.pdf](../sources/fetched/arxiv-2602-02132.pdf)
 
-- **11 refusal splits:** safety, hate speech, over-refusal (XSTest), incomplete/unsupported requests (CoCoNot), anthropomorphization, etc.
-- Directions are **geometrically distinct** (cosine similarity 0.4–0.6, some near-orthogonal).
-- **Linear steering** along any direction yields similar refusal/over-refusal trade-off — differences show in **refusal style** (policy text vs clarification vs soft deflection).
+**Models studied:** `gemma-2-9b-it`, `Llama-3.1-8B-Instruct` · **Hook:** residual at chat-template index **−2** (decision token) · **SAEs:** GemmaScope layers 9/20/31, `andyrdt/saes-llama-3.1-8b-instruct`
+
+- **11 refusal splits** from WildGuardMix, SorryBench (4), CoCoNot (5), XSTest — see beginners guide table
+- **SafetyCore–WGM** direction is closest to Arditi 2024 single safety DIM
+- Directions are **geometrically distinct** (cosine similarity 0.4–0.6; Incomplete vs OverRefusal near-orthogonal)
+- **Linear steering** along *any* direction yields nearly identical refusal/over-refusal **rate** curves — a shared **one-dimensional control knob**
+- What differs across directions is **refusal style** (policy text vs clarification vs soft deflection), not whether the knob exists
+- **SAE structure:** small shared refusal **core** (~2.5–4% of latents in all 11 splits) + long **tail** of style-specific latents; linear interventions collapse both
 
 **Practical implication for agents:**
 
@@ -132,6 +137,7 @@ Complements SAE latent work (§4) and multi-direction PCA (§3). VRAM path: [../
 
 ## Related
 
+- [multi-category-refusal-beginners-guide.md](multi-category-refusal-beginners-guide.md) — QCRI 2026 plain-language guide
 - [domain-specific-abliteration.md](domain-specific-abliteration.md)
 - [layer-selective-abliteration.md](layer-selective-abliteration.md)
 - [extended-abliteration-toolkit.md](extended-abliteration-toolkit.md)

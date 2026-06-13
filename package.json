@@ -6,6 +6,7 @@
   "scripts": {
     "fetch:docs": "node scripts/fetch-docs.mjs",
     "fetch:docs:firefox": "node scripts/fetch-docs.mjs --firefox",
+    "fetch:arxiv-qcri": "node scripts/fetch-arxiv-qcri.mjs",
     "fetch:web-research": "node scripts/fetch-web-research.mjs",
     "fetch:web-research:firefox": "node scripts/fetch-web-research.mjs --firefox",
     "fetch:heretic": "node scripts/fetch-heretic-tools.mjs",

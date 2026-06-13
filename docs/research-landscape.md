@@ -14,7 +14,7 @@ Taxonomy of **papers**, **open-source tools**, and **when each method applies**.
 | 2025 | [Jim Lai — projected abliteration](https://huggingface.co/blog/grimjim/projected-abliteration) | Subtract only refusal ⊥ harmless component |
 | 2025 | [Jim Lai — norm-preserving biprojected](https://huggingface.co/blog/grimjim/norm-preserving-biprojected-abliteration) | Preserve row norms of weight matrices |
 | 2025 | [Wollschläger et al. — concept cones](https://arxiv.org/html/2502.17420v2) | Multi-D refusal cones; gradient RDO |
-| 2025 | [QCRI — more than single direction](https://arxiv.org/html/2602.02132v1) | 11 refusal categories; SAE latent structure |
+| 2026 | [QCRI — more than single direction](https://arxiv.org/abs/2602.02132) | 11 refusal categories; distinct geometry but shared linear knob; SAE core+tail · [beginners guide](../techniques/multi-category-refusal-beginners-guide.md) |
 | 2025+ | [Heretic](https://github.com/p-e-w/heretic) | Auto Optuna + projected + norm-preserving + MoE |
 | 2025 | [GGUF-my-LoRA](https://huggingface.co/blog/ngxson/gguf-my-lora) | PEFT LoRA → GGUF sidecars for llama.cpp |
 | 2026 | [llm-abliteration v1.2](https://github.com/jim-plus/llm-abliteration/releases/tag/v1.2) | Sharded ablate, MoE, Metal |
@@ -23,6 +23,10 @@ Taxonomy of **papers**, **open-source tools**, and **when each method applies**.
 | 2026 | [Young — comparative abliteration](https://arxiv.org/abs/2512.13655) | Heretic vs DECCP vs ErisForge vs FailSpy; GSM8K sensitivity |
 
 ---
+
+## Comparative benchmarks matrix
+
+The empirical tool comparison (Heretic vs DECCP vs ErisForge vs FailSpy) lives in [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md). It supplies the GSM8K sensitivity matrix and KL ranges that inform capability-aware choices in the decision tree and production toolchain below. Always cross-reference the benchmark matrix when GSM8K/MMLU regression risk is a blocker for your architecture. The Young arXiv paper and handbook interpretation together guide per-architecture tool selection that is also reflected in the MoE/hybrid paths.
 
 ## Production toolchain (Jun 2026)
 
@@ -78,12 +82,12 @@ Start: need refusal reduction on aligned model
 │   └─ Jarvis QLoRA adapter (not more abliteration)
 │
 ├─ Model still refuses after single-direction abliteration?
-│   ├─ Try multi-direction PCA ablation (methods/multi-direction-ablation.md)
-│   ├─ Try gradient RDO direction (techniques/beyond-single-direction.md)
+│   ├─ Try multi-direction PCA ablation ([../methods/multi-direction-ablation.md](../methods/multi-direction-ablation.md))
+│   ├─ Try gradient RDO direction ([../techniques/beyond-single-direction.md](../techniques/beyond-single-direction.md))
 │   └─ Domain-specific direction (factory-only harmful/harmless pairs)
 │
 ├─ MoE model (Qwen-MoE, Phi-3.5-MoE, Granite hybrid)?
-│   └─ Per-expert down_proj (techniques/moe-hybrid-abliteration.md)
+│   └─ Per-expert down_proj ([../techniques/moe-hybrid-abliteration.md](../techniques/moe-hybrid-abliteration.md))
 │
 ├─ Capability collapse (KL/MMLU drop)?
 │   ├─ Lower Heretic max_weight / narrower kernel
@@ -130,7 +134,7 @@ Start: need refusal reduction on aligned model
 | [../techniques/README.md](../techniques/README.md) | Technique index (24 techniques) |
 | [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) | Factory / XSTest eval gates |
 | [../instructions/troubleshooting-encyclopedia.md](../instructions/troubleshooting-encyclopedia.md) | Symptom → fix |
-| [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md) | arXiv:2512.13655 tool comparison |
+| [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md) | Benchmark matrix (arXiv:2512.13655) — Heretic/DECCP/ErisForge GSM8K & KL |
 | [ralph-loop.md](ralph-loop.md) | Validate → refresh agent loop |
 | [agent-development-loop.md](agent-development-loop.md) | Backlog-driven multi-turn dev |
 | [../references.md](../references.md) | URLs & install commands |

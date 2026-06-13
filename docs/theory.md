@@ -87,7 +87,7 @@ Acceptance gates for projected / norm-preserving exports: score against deploy c
 
 ## Beyond a single direction
 
-Recent work ([QCRI 2026](https://arxiv.org/html/2602.02132v1), [TUM concept cones](https://arxiv.org/html/2502.17420v2)) shows:
+Recent work ([QCRI 2026](https://arxiv.org/abs/2602.02132) — [beginner guide](../techniques/multi-category-refusal-beginners-guide.md), [TUM concept cones](https://arxiv.org/html/2502.17420v2)) shows:
 
 - Multiple **geometrically distinct** refusal directions exist (safety, over-refusal, incomplete requests, …).
 - Linear ablation along any one direction still acts as a **shared refusal knob** for rate trade-offs.

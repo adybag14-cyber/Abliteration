@@ -89,6 +89,8 @@ abliteration/
 
 Optional: [instructions/quickstart.md](instructions/quickstart.md) — test with hooks before permanent edit.
 
+**Leading edge:** [techniques/multi-category-refusal-beginners-guide.md](techniques/multi-category-refusal-beginners-guide.md) — QCRI 2026 (eleven refusal types, one volume knob). Fetch paper: `npm run fetch:arxiv-qcri`
+
 ## Quick start paths
 
 | Goal | Start here |
