@@ -113,6 +113,39 @@ pip install -U heretic-llm bitsandbytes
 heretic Qwen/Qwen3-4B-Instruct-2507
 ```
 
+Low-VRAM users (8–12 GB) get these exact flags pre-enabled in the handbook profile. Copy it to start:
+
+```bash
+cp sources/heretic-tools/config.low-vram.toml config.toml
+```
+
+It also sets `quantization = "bnb_4bit"`, `offload_outputs_to_cpu = true`, and conservative trial counts.
+
+## Low-VRAM handbook profile
+
+The dedicated low-VRAM config (`sources/heretic-tools/config.low-vram.toml`) pre-wires the full projected + norm-preserving stack for consumer GPUs:
+
+```toml
+# excerpt from sources/heretic-tools/config.low-vram.toml
+orthogonalize_direction = true
+row_normalization = "full"
+full_normalization_lora_rank = 3
+quantization = "bnb_4bit"
+offload_outputs_to_cpu = true
+n_trials = 80
+kl_divergence_target = 0.01
+```
+
+**Why this pairing for tight hardware?** Projected orthogonalization (`orthogonalize_direction = true`) removes only the refusal component orthogonal to the harmless centroid, preserving more "helpful assistant" features. This yields lower KL out of the box — critical when you have budget for only 80 trials and 4-bit + CPU offload. Norm-preserving `full` + small LoRA rank (3) restores row norms without materializing a second full model copy, keeping peak VRAM low.
+
+See the complete low-VRAM guide for:
+
+- Copy-paste beginner steps for 8 GB GPUs
+- Hardware path table (Heretic 4-bit, sharded ablate, Apple Silicon, cloud fallback)
+- VRAM budget table and system RAM tips
+- Direct `cp` instructions and troubleshooting for OOM during Optuna
+
+[Low VRAM & low RAM abliteration](../instructions/low-vram-abliteration.md) · direct config: [sources/heretic-tools/config.low-vram.toml](../sources/heretic-tools/config.low-vram.toml)
 ---
 
 ## Eval checklist
@@ -124,4 +157,4 @@ heretic Qwen/Qwen3-4B-Instruct-2507
 | Factory tool prompts | Compliance ↑ without new harmful compliance |
 | MMLU / coding subset | ≤3 pt drop vs projected-only |
 
-→ [../methods/projected-llm-abliteration.md](../methods/projected-llm-abliteration.md) · [../instructions/advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md)
+→ [../methods/projected-llm-abliteration.md](../methods/projected-llm-abliteration.md) · [../instructions/low-vram-abliteration.md](../instructions/low-vram-abliteration.md) (low-VRAM profile using this stack) · [../instructions/advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md)

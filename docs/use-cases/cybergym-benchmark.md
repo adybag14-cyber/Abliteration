@@ -31,10 +31,12 @@ Point your agent's LLM endpoint at a **local abliterated checkpoint** (vLLM, lla
 Use the handbook runner stub for flow documentation, proxy task preparation, and lightweight trace analysis before wiring the full upstream CyberGym verifier:
 
 ```bash
-python scripts/cybergym-eval-stub.py --help
-python scripts/cybergym-eval-stub.py --print-flow
-python scripts/cybergym-eval-stub.py --prepare-subset --count 50 --out data/eval/cybergym-subset-sample.jsonl
+npm run eval:cybergym -- --help
+npm run eval:cybergym -- --print-flow
+npm run eval:cybergym -- --prepare-subset --count 50 --out data/eval/cybergym-subset-sample.jsonl
 ```
+
+(Direct: `python scripts/cybergym-eval-stub.py ...` also works.)
 
 The stub writes illustrative proxy tasks (mapped from the cyber-research corpus + paper patterns) so you can iterate on prompts and agent harnesses locally. Replace with real task exports from the CyberGym repo for scored runs.
 

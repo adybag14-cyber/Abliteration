@@ -128,6 +128,8 @@ npm run ralph:continue:on           # start headless grok --max-turns (chains tu
 npm run ralph:continue:watch        # watchdog: auto-restart headless until backlog clear
 npm run ralph:continue:status       # show enabled/mode + pending tasks + pid
 npm run ralph:continue:off          # stop + disable
+npm run ralph:monitor -- --loop     # auto-seed backlog + restart watch (unattended)
+npm run ralph:seed                  # seed next improvement wave manually
 ```
 
 See [docs/ralph-turn-continuation.md](docs/ralph-turn-continuation.md) for setup (trusted hooks, /loop TUI alt).

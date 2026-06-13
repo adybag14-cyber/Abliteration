@@ -105,6 +105,8 @@ function validateRequiredFiles() {
     'docs/agent-development-loop.md',
     'docs/ralph-turn-continuation.md',
     'scripts/ralph-continue-on.mjs',
+    'scripts/ralph-seed-backlog.mjs',
+    'scripts/ralph-monitor.mjs',
     'AGENTS.md',
     'scripts/export-abliteration-lora.py',
     'scripts/fetch-heretic-tools.mjs',

@@ -20,13 +20,31 @@ Align Heretic measurement with **deploy acceptance** — factory benches, pentes
 
 ## Step 1 — Choose eval corpora
 
-| Use case | File | Rows |
-|----------|------|------|
-| Factory QA | [../data/eval/hardware-factory-prompts.jsonl](../data/eval/hardware-factory-prompts.jsonl) | 20 |
-| Factory good pairs | [../data/eval/factory-good-prompts.jsonl](../data/eval/factory-good-prompts.jsonl) | 20 |
-| Over-refusal check | [../data/eval/xstest-overrefusal-sample.jsonl](../data/eval/xstest-overrefusal-sample.jsonl) | 15 |
-| Cyber lab | [../data/eval/cyber-research-prompts.jsonl](../data/eval/cyber-research-prompts.jsonl) | — |
-| OSINT / Kali | [../data/eval/osint-pentest-prompts.jsonl](../data/eval/osint-pentest-prompts.jsonl) | — |
+Run this first to get live line counts (and notable corpora notes):
+
+```bash
+npm run eval:stats
+```
+
+| Corpus | File | Rows (via `npm run eval:stats`) | Notes / refresh |
+|--------|------|---------------------------------|-----------------|
+| factory | [../data/eval/hardware-factory-prompts.jsonl](../data/eval/hardware-factory-prompts.jsonl) | 20 | Core deploy gate for tool call success |
+| factory-good | [../data/eval/factory-good-prompts.jsonl](../data/eval/factory-good-prompts.jsonl) | 20 | Matched compliant prompts for Heretic direction |
+| xstest-overrefusal | [../data/eval/xstest-overrefusal-sample.jsonl](../data/eval/xstest-overrefusal-sample.jsonl) | 15 | Benign authorized prompts; target ≤5% refusal |
+| cyber-research | [../data/eval/cyber-research-prompts.jsonl](../data/eval/cyber-research-prompts.jsonl) | 20 | Pentest / security research proxy |
+| osint-pentest | [../data/eval/osint-pentest-prompts.jsonl](../data/eval/osint-pentest-prompts.jsonl) | 30 | Tooling commands (amass, hashcat, etc.) |
+| cybergym-subset | [../data/eval/cybergym-subset-sample.jsonl](../data/eval/cybergym-subset-sample.jsonl) | 8 | Execution-based vuln PoC repro proxy for local iteration. Regenerate: `python scripts/cybergym-eval-stub.py --prepare-subset --count 50 --out data/eval/cybergym-subset-sample.jsonl` (see [../docs/use-cases/cybergym-benchmark.md](../docs/use-cases/cybergym-benchmark.md) and [agentic-security-stack.md](agentic-security-stack.md)) |
+| jarvis-safe | [../data/eval/jarvis-safe-eval.jsonl](../data/eval/jarvis-safe-eval.jsonl) | 2509 | Filtered `category=safe` prompts for post-repair / post-abliteration benign tool execution measurement. Generate/refresh: `npm run eval:jarvis-safe` (see [agentic-security-stack.md](agentic-security-stack.md) and [../docs/evaluation.md](../docs/evaluation.md)) |
+
+**Corpus refresh commands** (run after adding new data or to sync sizes in docs):
+
+```bash
+npm run eval:stats
+npm run eval:jarvis-safe
+python scripts/cybergym-eval-stub.py --prepare-subset --count 50 --out data/eval/cybergym-subset-sample.jsonl
+```
+
+See full matrices, pass/fail criteria, and CyberGym / Jarvis details in [../docs/evaluation.md](../docs/evaluation.md).
 
 ---
 

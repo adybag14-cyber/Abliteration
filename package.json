@@ -20,10 +20,13 @@
     "ralph:autostart:stop": "node scripts/ralph-autostart-stop.mjs",
     "eval:stats": "node scripts/count-eval-prompts.mjs",
     "eval:jarvis-safe": "python scripts/filter-jarvis-eval.py",
+    "eval:cybergym": "python scripts/cybergym-eval-stub.py",
     "ralph:continue:on": "node scripts/ralph-continue-on.mjs",
     "ralph:continue:off": "node scripts/ralph-continue-off.mjs",
     "ralph:continue:status": "node scripts/ralph-continue-status.mjs",
-    "ralph:continue:watch": "node scripts/ralph-continue-watch.mjs"
+    "ralph:continue:watch": "node scripts/ralph-continue-watch.mjs",
+    "ralph:seed": "node scripts/ralph-seed-backlog.mjs",
+    "ralph:monitor": "node scripts/ralph-monitor.mjs"
   },
   "devDependencies": {
     "playwright": "^1.49.0"

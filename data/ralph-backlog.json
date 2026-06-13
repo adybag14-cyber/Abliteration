@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-06-13T22:00:40.557Z",
+  "updated_at": "2026-06-13T22:12:24.052Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -225,6 +225,58 @@
       "acceptance": "README lists continue:on, continue:watch, continue:status",
       "started_at": "2026-06-13T21:59:18.748Z",
       "completed_at": "2026-06-13T22:00:40.556Z"
+    },
+    {
+      "id": "dev-020",
+      "title": "eval-driven-workflow: corpus table with eval:stats counts + npm scripts",
+      "status": "done",
+      "priority": 20,
+      "files": [
+        "instructions/eval-driven-workflow.md"
+      ],
+      "acceptance": "Table lists jarvis-safe, cybergym-subset, eval:stats command",
+      "started_at": "2026-06-13T22:04:20.298Z",
+      "completed_at": "2026-06-13T22:06:14.067Z"
+    },
+    {
+      "id": "dev-021",
+      "title": "package.json: eval:cybergym script for cybergym-eval-stub.py",
+      "status": "done",
+      "priority": 21,
+      "files": [
+        "package.json",
+        "docs/use-cases/cybergym-benchmark.md"
+      ],
+      "acceptance": "npm run eval:cybergym -- --print-flow works",
+      "started_at": "2026-06-13T22:06:17.612Z",
+      "completed_at": "2026-06-13T22:07:21.211Z"
+    },
+    {
+      "id": "dev-022",
+      "title": "low-vram guide: link config.low-vram.toml + projected abliteration technique",
+      "status": "done",
+      "priority": 22,
+      "files": [
+        "instructions/low-vram-abliteration.md",
+        "techniques/projected-norm-preserving-abliteration.md"
+      ],
+      "acceptance": "Cross-links between low-vram guide and projected technique doc",
+      "started_at": "2026-06-13T22:07:26.349Z",
+      "completed_at": "2026-06-13T22:09:12.408Z"
+    },
+    {
+      "id": "dev-023",
+      "title": "factory-firmware-qa use-case: eval-driven-workflow + hardware eval JSONL",
+      "status": "done",
+      "priority": 23,
+      "files": [
+        "docs/use-cases/factory-firmware-qa.md"
+      ],
+      "acceptance": "Links eval-driven-workflow and hardware-factory-prompts.jsonl",
+      "started_at": "2026-06-13T22:09:18.080Z",
+      "completed_at": "2026-06-13T22:12:24.051Z"
     }
-  ]
+  ],
+  "wave_index": 1,
+  "last_seeded_at": "2026-06-13T22:04:03.922Z"
 }

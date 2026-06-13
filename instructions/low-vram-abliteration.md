@@ -64,6 +64,12 @@ Use the handbook low-VRAM pin (recommended):
 cp sources/heretic-tools/config.low-vram.toml config.toml
 ```
 
+The low-VRAM profile ([sources/heretic-tools/config.low-vram.toml](../sources/heretic-tools/config.low-vram.toml)) bakes in the **projected + norm-preserving** production settings (`orthogonalize_direction = true` + `row_normalization = "full"`) so most 8–12 GB users get lower KL out of the box.
+
+**Why projected + norm-preserving helps on low VRAM:** Raw direction removal often damages harmless capabilities (higher KL, more trials wasted, worse MMLU after). Projected keeps the refusal vector's component parallel to the harmless centroid; norm-preserving `full` + tiny rank-3 LoRA restores activation scales without extra memory. Result: you hit quality targets with the conservative `n_trials=80` and `max_batch_size=16` baked into this profile. Full math, modes table, and Heretic/llm-abliteration flags:
+
+[Projected & norm-preserving abliteration](../techniques/projected-norm-preserving-abliteration.md) (recommended production stack + low-VRAM profile details).
+
 Or copy upstream defaults from the repo pin and edit:
 
 ```bash
@@ -110,7 +116,13 @@ row_normalization = "full"
 full_normalization_lora_rank = 3   # raise to 8–16 if export quality drops
 ```
 
-See [../techniques/lora-qlora-abliteration.md](../techniques/lora-qlora-abliteration.md).
+This is part of **projected + norm-preserving abliteration** (orthogonalize the refusal direction against the harmless centroid, then restore row norms via small LoRA). The low-vram config enables these flags by default.
+
+See:
+
+- [Projected & norm-preserving abliteration](../techniques/projected-norm-preserving-abliteration.md) — math, modes (`none`/`pre`/`full`), recommended toml, when to raise `full_normalization_lora_rank`
+- [LoRA / QLoRA abliteration](../techniques/lora-qlora-abliteration.md) — adapter theory and export after norm-preserving runs
+- Direct low-VRAM profile: [sources/heretic-tools/config.low-vram.toml](../sources/heretic-tools/config.low-vram.toml) (sets `orthogonalize_direction`, `row_normalization = "full"`, 4-bit + offload)
 
 ---
 
@@ -268,6 +280,7 @@ Same corpora as full-GPU runs — refusal removal should not depend on quant mod
 |-----|-------|
 | [heretic-workflow.md](heretic-workflow.md) | Default Heretic install & run |
 | [llm-abliteration-workflow.md](llm-abliteration-workflow.md) | Manual 4-bit measure + sharded ablate |
+| [../techniques/projected-norm-preserving-abliteration.md](../techniques/projected-norm-preserving-abliteration.md) | Projected + norm-preserving (math + low-VRAM profile; `orthogonalize_direction` + `row_normalization=full` baked into config.low-vram.toml) |
 | [../techniques/lora-qlora-abliteration.md](../techniques/lora-qlora-abliteration.md) | LoRA / QLoRA theory |
 | [../methods/lora-adapter-export.md](../methods/lora-adapter-export.md) | Export adapter from ΔW |
 | [../docs/tools/abliteration-tooling.md](../docs/tools/abliteration-tooling.md) | bitsandbytes, PEFT, Unsloth, llama.cpp, … |

@@ -67,10 +67,14 @@ npm run ralph:autostart:stop     # stop background instance
 ## Turn continuations (multi-turn without typing)
 
 ```bash
-npm run ralph:continue:on       # headless grok --max-turns
+npm run ralph:monitor -- --loop  # auto-seed + watch (recommended unattended)
+npm run ralph:seed               # seed next wave when backlog empty
+npm run ralph:continue:on        # headless grok --max-turns
 npm run ralph:continue:status
 npm run ralph:continue:off
 ```
+
+Monitor log: `data/ralph-monitor.log` — checks every 90s, seeds wave when empty, starts watch if idle.
 
 → [ralph-turn-continuation.md](ralph-turn-continuation.md)
 
