@@ -20,9 +20,51 @@ npm run ralph -- --skip-fetch
 
 # More iterations
 npm run ralph -- --max 5
+
+# Agent turn-end hook (spawns background daemon if needed)
+npm run ralph:turn-end
+npm run ralph:turn-end -- --message "fixed broken links"
+
+# Background daemon (validate loop every 2 min by default)
+npm run ralph:autostart
+npm run ralph:autostart:stop
 ```
 
-Status log: `data/ralph-status.json`
+Status logs:
+
+| File | Purpose |
+|------|---------|
+| `data/ralph-status.json` | Last `ralph-loop` result |
+| `data/ralph-turns.jsonl` | Agent turn-end events |
+| `data/ralph-autostart-status.json` | Daemon state |
+| `data/ralph-autostart.log` | Daemon stdout/stderr |
+| `data/.ralph-autostart.pid` | Single-instance lock |
+
+---
+
+## Autostart (agent turn-end)
+
+**Before ending any agent turn** that touched this repo, run:
+
+```bash
+npm run ralph:turn-end
+```
+
+This:
+
+1. Appends a line to `data/ralph-turns.jsonl`
+2. Writes `data/ralph-autostart.signal.json` (wakes the daemon)
+3. Spawns `ralph-autostart` in the background if not already running
+
+The daemon loops `npm run ralph` on an interval (default **120s**, override with `RALPH_AUTOSTART_INTERVAL_MS`). Set `RALPH_AUTOSTART_SKIP_FETCH=1` for validate-only cycles.
+
+```bash
+# Foreground (debug)
+npm run ralph:autostart
+
+# Stop background instance
+npm run ralph:autostart:stop
+```
 
 ---
 
@@ -50,9 +92,12 @@ Exit **0** = safe to commit. Exit **1** = fix before push.
 3. If PASS → git add -A && git commit && git push
 4. Optional: npm run fetch:all (full upstream + HF registry)
 5. npm run ralph again after fetch
+6. npm run ralph:turn-end   # always — autostarts background maintenance
 ```
 
 **Do not stop** on first validation failure — fix and re-run until `✓ Ralph validate PASSED`.
+
+**Always run `ralph:turn-end` before ending your turn** so the background daemon keeps the handbook validated between sessions.
 
 ---
 

@@ -13,7 +13,10 @@
     "build:heretic-models-doc": "node scripts/build-heretic-models-doc.mjs",
     "validate": "node scripts/ralph-validate.mjs",
     "ralph": "node scripts/ralph-loop.mjs",
-    "ralph:ci": "node scripts/ralph-loop.mjs --skip-fetch --max 1"
+    "ralph:ci": "node scripts/ralph-loop.mjs --skip-fetch --max 1",
+    "ralph:turn-end": "node scripts/ralph-turn-end.mjs",
+    "ralph:autostart": "node scripts/ralph-autostart.mjs",
+    "ralph:autostart:stop": "node scripts/ralph-autostart-stop.mjs"
   },
   "devDependencies": {
     "playwright": "^1.49.0"
