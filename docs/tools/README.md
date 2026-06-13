@@ -42,7 +42,7 @@ Full index: [kali-metapackages.md](kali-metapackages.md) · Official: [kali.org/
 
 | File | Scale |
 |------|-------|
-| [../../data/examples/platform-commands-all.jsonl](../../data/examples/platform-commands-all.jsonl) | **2,621** commands |
+| [../../data/examples/platform-commands-all.jsonl](../../data/examples/platform-commands-all.jsonl) | **2,492** commands |
 | [../../data/examples/platform-prompts-all.jsonl](../../data/examples/platform-prompts-all.jsonl) | Agent prompts (regen for count) |
 | [../../data/examples/zig-code-snippets.jsonl](../../data/examples/zig-code-snippets.jsonl) | **64** canonical Zig code snippets |
 | Regenerate | `python scripts/generate-platform-examples.py` |
@@ -50,6 +50,17 @@ Full index: [kali-metapackages.md](kali-metapackages.md) · Official: [kali.org/
 ## Hardware overlap
 
 Factory bench commands (WMIC, DiskPart, USB, firmware hash): [../hardware-command-catalog.md](../hardware-command-catalog.md)
+
+## Eval & Ralph npm scripts
+
+| Command | Script | Purpose |
+|---------|--------|---------|
+| `npm run eval:stats` | `scripts/count-eval-prompts.mjs` | Line counts for all `data/eval/*.jsonl` and `data/examples/*.jsonl` |
+| `npm run eval:jarvis-safe` | `scripts/filter-jarvis-eval.py` | Export / refresh `data/eval/jarvis-safe-eval.jsonl` |
+| `npm run eval:cybergym` | `scripts/cybergym-eval-stub.py` | CyberGym eval flow (`--print-flow`) and subset generator |
+| `npm run ralph:regress` | `scripts/ralph-regress.mjs` | Pre-commit gate: validate + ralph-ci + eval scripts + py_compile |
+
+Full eval matrices: [../evaluation.md](../evaluation.md) · Deploy workflow: [../../instructions/eval-driven-workflow.md](../../instructions/eval-driven-workflow.md)
 
 ## Eval corpora
 
@@ -62,6 +73,8 @@ Factory bench commands (WMIC, DiskPart, USB, firmware hash): [../hardware-comman
 | [../../data/eval/zig-security-prompts.jsonl](../../data/eval/zig-security-prompts.jsonl) | Zig 0.17 PoC / RE / fuzz (79) |
 | [../../data/eval/xstest-overrefusal-sample.jsonl](../../data/eval/xstest-overrefusal-sample.jsonl) | Over-refusal check (15) |
 | [../../data/eval/factory-good-prompts.jsonl](../../data/eval/factory-good-prompts.jsonl) | Factory good pairs (20) |
+| [../../data/eval/cybergym-subset-sample.jsonl](../../data/eval/cybergym-subset-sample.jsonl) | CyberGym local proxy (8) |
+| [../../data/eval/jarvis-safe-eval.jsonl](../../data/eval/jarvis-safe-eval.jsonl) | Jarvis safe tool prompts (2,509) |
 
 ## Abliteration research docs
 

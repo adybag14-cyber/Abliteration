@@ -1,6 +1,6 @@
 # Zig tooling — extensive reference
 
-Systems programming for **Windows overlays**, **cross-platform factory tools**, **firmware test harnesses**, and **CyberGym native PoCs**. **1,099 generated commands** → [../../data/examples/zig-commands.jsonl](../../data/examples/zig-commands.jsonl)
+Systems programming for **Windows overlays**, **cross-platform factory tools**, **firmware test harnesses**, and **CyberGym native PoCs**. **970 generated commands** → [../../data/examples/zig-commands.jsonl](../../data/examples/zig-commands.jsonl)
 
 **Canonical 0.17 syntax (manual analysis):** [zig-canonical-syntax.md](zig-canonical-syntax.md)  
 **Compiler source:** [github.com/adybag14-cyber/zig/tree/master](https://github.com/adybag14-cyber/zig/tree/master) · [sources/zig-canonical-IMPORT.md](../../sources/zig-canonical-IMPORT.md)
@@ -159,7 +159,7 @@ zig fetch --save git+https://github.com/ziglang/zig#master
 
 ## Agent eval
 
-- Prompts: [../../data/examples/zig-prompts.jsonl](../../data/examples/zig-prompts.jsonl) (6,594)
+- Prompts: [../../data/examples/zig-prompts.jsonl](../../data/examples/zig-prompts.jsonl) (5,820)
 - Cross-platform factory: combine with [windows-tooling.md](windows-tooling.md) deploy step
 
 Regenerate all platform examples:

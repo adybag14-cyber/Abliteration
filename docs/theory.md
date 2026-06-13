@@ -83,6 +83,8 @@ Only the component of refusal **orthogonal to helpful behavior** is suppressed â
 
 â†’ [../techniques/projected-norm-preserving-abliteration.md](../techniques/projected-norm-preserving-abliteration.md)
 
+Acceptance gates for projected / norm-preserving exports: score against deploy corpora in [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) (factory, XSTest over-refusal, platform-eval) before promoting to production agents.
+
 ## Beyond a single direction
 
 Recent work ([QCRI 2026](https://arxiv.org/html/2602.02132v1), [TUM concept cones](https://arxiv.org/html/2502.17420v2)) shows:

@@ -103,6 +103,8 @@ Low-rank `W + u vᵀ` from activation stats — alternative parameterization.
 | Harden alignment (defense) | Circuit breakers training |
 | Fix `wmic` false refusal post-abliteration | Jarvis QLoRA |
 | Reduce sycophantic filler (not uncensoring) | Heretic `config.noslop.toml` |
+| Better GSM8K preservation (single-pass) | **ErisForge** or **DECCP** — see [comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md) |
+| Toolkit comparison before agent deploy | [comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md) + [references.md](../references.md) install one-liners |
 
 ---
 

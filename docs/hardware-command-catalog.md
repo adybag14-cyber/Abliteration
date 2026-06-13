@@ -108,6 +108,6 @@ Thousands of generated examples:
 |----------|-----|----------|---------|
 | Windows | [tools/windows-tooling.md](tools/windows-tooling.md) | 915 | 7,320 |
 | macOS | [tools/macos-tooling.md](tools/macos-tooling.md) | 607 | 3,642 |
-| Zig | [tools/zig-tooling.md](tools/zig-tooling.md) | 1,099 | 6,594 |
+| Zig | [tools/zig-tooling.md](tools/zig-tooling.md) | 970 | 5,820 |
 
 Regenerate: `python scripts/generate-platform-examples.py` → [../data/examples/README.md](../data/examples/README.md)

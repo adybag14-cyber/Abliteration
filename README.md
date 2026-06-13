@@ -43,22 +43,31 @@ abliteration/
 │   ├── ralph-monitor.mjs           # seed backlog if empty + auto-start watch if idle (supports --loop)
 │   ├── ralph-seed-backlog.mjs      # append next wave of dev-* tasks (dedupes by title)
 │   ├── count-eval-prompts.mjs      # eval corpus line counts
+│   ├── filter-jarvis-eval.py       # export jarvis-safe-eval.jsonl subset
+│   ├── cybergym-eval-stub.py       # CyberGym eval flow + subset generator
+│   ├── generate-platform-examples.py  # regen platform command/prompt JSONL
 │   ├── hardware-tool-gate.py       # from JARVIS v7 — runtime command gate
+│   ├── check_env.py                # GPU / Python env sanity check
+│   ├── ralph-on-session-start.mjs  # Grok hook — refresh handoff
+│   ├── ralph-on-stop.mjs           # Grok hook — log stop + handoff
 │   └── validate-dataset.py
 ├── data/
 │   ├── ralph-backlog.json          # agent development task queue
 │   ├── ralph-agent-handoff.md      # next-task prompt for agents
 │   ├── heretic-models-registry.jsonl
-│   └── eval/
+│   └── eval/                       # deploy eval corpora (see docs/evaluation.md)
 │       ├── hardware-factory-prompts.jsonl
-│       └── cyber-research-prompts.jsonl
+│       ├── cybergym-subset-sample.jsonl
+│       ├── jarvis-safe-eval.jsonl
+│       ├── platform-eval-sample.jsonl
+│       └── … (11 files — counts via npm run eval:stats)
 ├── sources/
 │   ├── heretic-tools/           # immutable Heretic config pins (refresh via npm)
 │   ├── jarvis-pack/             # extracted v7 zip (curated)
 │   └── fetched/                 # GitHub/doc snapshots
 ├── docs/
 │   ├── tools/                   # OSINT, Kali, Windows, macOS, Zig
-│   ├── examples/                # 2.6k commands, 17.5k prompts (generated)
+│   ├── examples/                # 2,492 commands, 16,782 prompts (generated)
 │   ├── hardware-command-catalog.md
 │   ├── use-cases/
 │   ├── context7.md
@@ -121,6 +130,8 @@ npm run ralph:next        # pick next backlog task — implement before ending t
 npm run validate          # links, jsonl, pins, python syntax
 npm run ralph             # validate → refresh → re-validate
 npm run eval:stats        # eval corpus line counts
+npm run eval:jarvis-safe  # export jarvis-safe-eval.jsonl
+npm run eval:cybergym     # CyberGym eval stub (--print-flow)
 npm run ralph:turn-end    # log turn + background daemon (blocks if backlog unfinished)
 npm run ralph:regress     # pre-commit gate for watch/headless/monitor output (validate + ralph-ci + evals + py_compile)
 npm run ralph:monitor     # one-shot: print status, seed if empty, auto-start watch; add -- --loop for continuous

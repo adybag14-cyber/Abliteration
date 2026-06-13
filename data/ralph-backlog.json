@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-06-13T23:20:48.184Z",
+  "updated_at": "2026-06-13T23:23:02.404Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -575,8 +575,57 @@
       "acceptance": "Both docs describe the autonomous ralph:next → implement → ralph → complete loop, turn-end rules, and how to seed when backlog empties",
       "started_at": "2026-06-13T22:48:23.951Z",
       "completed_at": "2026-06-13T22:57:36.638Z"
+    },
+    {
+      "id": "dev-048",
+      "title": "research-landscape: link comparative benchmarks + MoE hybrid technique",
+      "status": "done",
+      "priority": 48,
+      "files": [
+        "docs/research-landscape.md",
+        "docs/comparative-abliteration-benchmarks.md"
+      ],
+      "acceptance": "Research landscape references benchmark matrix and moe-hybrid-abliteration.md",
+      "started_at": "2026-06-13T23:22:08.105Z",
+      "completed_at": "2026-06-13T23:23:02.404Z"
+    },
+    {
+      "id": "dev-049",
+      "title": "theory.md: cross-link projected norm-preserving + eval-driven workflow",
+      "status": "done",
+      "priority": 49,
+      "files": [
+        "docs/theory.md",
+        "techniques/projected-norm-preserving-abliteration.md"
+      ],
+      "acceptance": "Theory doc links projected technique and eval-driven acceptance gates",
+      "completed_at": "2026-06-13T23:23:00.446Z"
+    },
+    {
+      "id": "dev-050",
+      "title": "steering-and-alternatives: DECCP/ErisForge rows + comparative benchmarks",
+      "status": "done",
+      "priority": 50,
+      "files": [
+        "techniques/steering-and-alternatives.md",
+        "references.md"
+      ],
+      "acceptance": "Alternatives section cites comparative-abliteration-benchmarks install pointers",
+      "completed_at": "2026-06-13T23:23:00.497Z"
+    },
+    {
+      "id": "dev-051",
+      "title": "tools/README: eval scripts table (stats, jarvis-safe, cybergym, regress)",
+      "status": "done",
+      "priority": 51,
+      "files": [
+        "docs/tools/README.md",
+        "package.json"
+      ],
+      "acceptance": "Tools index lists npm eval:* and ralph:regress with script paths",
+      "completed_at": "2026-06-13T23:23:00.551Z"
     }
   ],
-  "wave_index": 186,
-  "last_seeded_at": "2026-06-13T22:37:10.000Z"
+  "wave_index": 192,
+  "last_seeded_at": "2026-06-13T23:21:51.402Z"
 }

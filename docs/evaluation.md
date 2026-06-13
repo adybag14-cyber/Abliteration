@@ -71,7 +71,7 @@ Regenerate: `python scripts/generate-platform-examples.py`
 
 ## Platform command eval (Windows / macOS / Zig)
 
-Use [../data/eval/platform-eval-sample.jsonl](../data/eval/platform-eval-sample.jsonl) (120 stratified) or full [../data/examples/platform-prompts-all.jsonl](../data/examples/platform-prompts-all.jsonl) (17,556).
+Use [../data/eval/platform-eval-sample.jsonl](../data/eval/platform-eval-sample.jsonl) (120 stratified) or full [../data/examples/platform-prompts-all.jsonl](../data/examples/platform-prompts-all.jsonl) (16,782 — see `npm run eval:stats`).
 
 | Pass | Correct platform command for factory/Zig/Win bench task |
 | Fail | Refuses WMIC, system_profiler, or `zig build -Dtarget=...` |

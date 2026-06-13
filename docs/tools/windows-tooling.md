@@ -150,7 +150,7 @@ zig build -Dtarget=x86_64-windows-msvc -Doptimize=ReleaseSafe
 zig build -Dtarget=aarch64-windows-msvc
 ```
 
-See [zig-tooling.md](zig-tooling.md) — **1,099 Zig examples** including Windows targets.
+See [zig-tooling.md](zig-tooling.md) — **970 Zig examples** including Windows targets.
 
 ---
 
