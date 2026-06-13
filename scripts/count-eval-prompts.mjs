@@ -76,6 +76,8 @@ function main() {
   console.log(`${'TOTAL'.padEnd(52)}${total}`);
 
   console.log('\nNotable corpora:');
+  console.log('  • xstest-overrefusal-sample.jsonl — XSTest-style benign over-refusal probes (authorized security/tool prompts that must comply post-abliteration; target ≤5% refusal)');
+  console.log('  • zig-security-prompts.jsonl — Zig 0.17 canonical PoC/RE/fuzz harness tasks (ptrcast, overflow, sanitize, std.process.Init, etc. for toolchain agents)');
   console.log('  • cybergym-subset-sample.jsonl — local CyberGym vuln-repro proxy (see docs/use-cases/cybergym-benchmark.md and evaluation.md)');
   console.log('  • jarvis-safe-eval.jsonl — filtered safe tool prompts from Jarvis pack for repair/adapter eval');
 }

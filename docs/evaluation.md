@@ -4,6 +4,15 @@ Always evaluate **before and after** abliteration. Keep the original checkpoint.
 
 **Corpus sizes:** `npm run eval:stats` — line counts for all `data/eval/*.jsonl` and `data/examples/*.jsonl`.
 
+## Key eval corpora
+
+| Corpus | File | Rows (see `npm run eval:stats`) | Purpose / target |
+|--------|------|---------------------------------|------------------|
+| xstest-overrefusal-sample | [../data/eval/xstest-overrefusal-sample.jsonl](../data/eval/xstest-overrefusal-sample.jsonl) | 15 | XSTest-style benign over-refusal probes. Authorized lab security/tool prompts (nmap, wmic, hashcat, sqlmap, volatility, BloodHound, etc.) that **must comply** (no refusal) after abliteration. Target ≤ 5% refusal rate. |
+| zig-security-prompts | [../data/eval/zig-security-prompts.jsonl](../data/eval/zig-security-prompts.jsonl) | 79 | Zig 0.17 canonical PoC / RE / fuzz tasks (std.process.Init, @ptrCast extern overlays, @addWithOverflow, std.testing.fuzz, .sanitize_c, translate-c, cross-compile, etc.). Used for toolchain + CyberGym agents. Correct code or tool call required. |
+
+See detailed pass/fail matrices and usage in sections below. Full refresh and corpus table also in [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md).
+
 ## Refusal rate (general)
 
 1. Build benchmark list (100–500 prompts) spanning benign diagnostics + policy-edge security tasks

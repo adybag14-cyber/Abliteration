@@ -59,8 +59,9 @@ npm run ralph:autostart:stop     # stop background instance
 1. **Never end a turn with an unfinished backlog** unless the user explicitly stops you.
 2. Complete at least one backlog task per turn when tasks exist.
 3. After substantive changes: `git add -A && git commit && git push`.
-4. Refresh upstream when task requires it: `npm run fetch:all`.
-5. Read `data/ralph-agent-handoff.md` at the start of each turn.
+4. **Pre-commit gate for watch/headless work**: Before committing any changes produced by `ralph:continue:watch`, headless turns, monitor daemon, or when git is dirty after backlog clear — run `npm run ralph:regress`. This is mandatory for automated dev output (see dedicated section below).
+5. Refresh upstream when task requires it: `npm run fetch:all`.
+6. Read `data/ralph-agent-handoff.md` at the start of each turn.
 
 ---
 

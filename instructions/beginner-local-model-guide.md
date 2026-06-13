@@ -17,7 +17,7 @@
 | Refuses `wmic`, scripting, security lab questions | Often complies on scoped prompts |
 | Same knowledge | Should be similar (watch for quality loss) |
 
-This is **not** training the model on new facts. It **removes a safety direction** baked into weights. You still need good prompts and (for agents) runtime safety gates.
+This is **not** training the model on new facts. It **removes a safety direction** baked into weights. You still need good prompts and (for agents) **runtime safety gates**. Pair any tool-calling usage with `scripts/hardware-tool-gate.py` (ALLOW/CONFIRM/BLOCK classifier for terminal commands) — see below and [agentic-security-stack.md](agentic-security-stack.md).
 
 ---
 
@@ -302,8 +302,10 @@ More: [heretic-workflow.md](heretic-workflow.md) · [low-vram-abliteration.md](l
 | Understand theory | [../docs/overview.md](../docs/overview.md) |
 | Measure eval corpus size | `npm run eval:stats` in repo root |
 | Export Jarvis safe tool eval | `npm run eval:jarvis-safe` → `data/eval/jarvis-safe-eval.jsonl` |
+| Test hardware / platform commands (post-abliteration) | Use [../data/eval/platform-eval-sample.jsonl](../data/eval/platform-eval-sample.jsonl) (120 stratified Windows/macOS/Zig prompts) or full corpus — see [../docs/hardware-command-catalog.md](../docs/hardware-command-catalog.md) and `npm run eval:stats` |
+| Runtime tool gate for agents / factory / pentest | Always wrap execution: `python scripts/hardware-tool-gate.py "your-command-here"` (outputs ALLOW / CONFIRM / BLOCK). Extend SAFE lists for your environment. Critical: model output alone is never a security boundary. |
 
-After abliteration, run `npm run eval:stats` to see how many benchmark prompts this handbook ships (factory, OSINT, platform, Jarvis safe subset).
+After abliteration, run `npm run eval:stats` to see how many benchmark prompts this handbook ships (factory, OSINT, platform, Jarvis safe subset, xstest-overrefusal, zig-security, cybergym-subset). Use `data/eval/platform-eval-sample.jsonl` to verify the model now issues correct read-only platform commands (wmic, system_profiler, diskutil, etc.) instead of refusing. For any agent or scripted tool use, **deploy the gate** (`scripts/hardware-tool-gate.py`) on every command the model emits.
 
 ---
 

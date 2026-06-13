@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-06-13T22:20:32.680Z",
+  "updated_at": "2026-06-13T22:26:34.119Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -423,47 +423,55 @@
     {
       "id": "dev-036",
       "title": "agent-development-loop: document ralph:regress pre-commit gate",
-      "status": "pending",
+      "status": "done",
       "priority": 36,
       "files": [
         "docs/agent-development-loop.md",
         "scripts/ralph-regress.mjs"
       ],
-      "acceptance": "Playbook lists npm run ralph:regress before commit when watch/headless touched files"
+      "acceptance": "Playbook lists npm run ralph:regress before commit when watch/headless touched files",
+      "started_at": "2026-06-13T22:21:00.586Z",
+      "completed_at": "2026-06-13T22:23:14.029Z"
     },
     {
       "id": "dev-037",
       "title": "ralph-turn-continuation: regress gate + seed dedupe behavior",
-      "status": "pending",
+      "status": "done",
       "priority": 37,
       "files": [
         "docs/ralph-turn-continuation.md"
       ],
-      "acceptance": "Doc explains regress on backlog clear and seed skips done task titles"
+      "acceptance": "Doc explains regress on backlog clear and seed skips done task titles",
+      "started_at": "2026-06-13T22:23:31.873Z",
+      "completed_at": "2026-06-13T22:24:07.475Z"
     },
     {
       "id": "dev-038",
       "title": "evaluation.md: xstest-overrefusal + zig-security corpus rows",
-      "status": "pending",
+      "status": "done",
       "priority": 38,
       "files": [
         "docs/evaluation.md",
         "scripts/count-eval-prompts.mjs"
       ],
-      "acceptance": "Corpus table documents xstest-overrefusal-sample and zig-security-prompts jsonl"
+      "acceptance": "Corpus table documents xstest-overrefusal-sample and zig-security-prompts jsonl",
+      "started_at": "2026-06-13T22:24:13.052Z",
+      "completed_at": "2026-06-13T22:25:17.667Z"
     },
     {
       "id": "dev-039",
       "title": "beginner guide: hardware-tool-gate.py + platform eval sample",
-      "status": "pending",
+      "status": "done",
       "priority": 39,
       "files": [
         "instructions/beginner-local-model-guide.md",
         "scripts/hardware-tool-gate.py"
       ],
-      "acceptance": "Guide mentions hardware gate script and platform-eval-sample.jsonl"
+      "acceptance": "Guide mentions hardware gate script and platform-eval-sample.jsonl",
+      "started_at": "2026-06-13T22:25:22.734Z",
+      "completed_at": "2026-06-13T22:26:30.026Z"
     }
   ],
-  "wave_index": 8,
+  "wave_index": 12,
   "last_seeded_at": "2026-06-13T22:20:32.680Z"
 }
