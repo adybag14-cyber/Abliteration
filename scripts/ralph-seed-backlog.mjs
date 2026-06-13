@@ -102,6 +102,28 @@ const WAVES = [
       acceptance: 'Guide mentions hardware gate script and platform-eval-sample.jsonl',
     },
   ],
+  [
+    {
+      title: 'README: add ralph:regress + ralph:monitor to quick commands',
+      files: ['README.md', 'package.json'],
+      acceptance: 'README lists regress and monitor npm scripts with one-line descriptions',
+    },
+    {
+      title: 'ralph-loop.md: document ralph:regress gate and when to run it',
+      files: ['docs/ralph-loop.md'],
+      acceptance: 'ralph-loop.md has regress section matching agent-development-loop pre-commit rule',
+    },
+    {
+      title: 'risks-and-ethics: link eval-driven-workflow + capability sanity gates',
+      files: ['docs/risks-and-ethics.md', 'instructions/eval-driven-workflow.md'],
+      acceptance: 'Ethics doc references eval workflow and post-abliteration capability checks',
+    },
+    {
+      title: 'advanced-techniques-catalog: cross-link projected + MoE hybrid techniques',
+      files: ['docs/advanced-techniques-catalog.md', 'techniques/moe-hybrid-abliteration.md'],
+      acceptance: 'Catalog table rows link projected-norm-preserving and moe-hybrid docs',
+    },
+  ],
 ];
 
 function stamp() {

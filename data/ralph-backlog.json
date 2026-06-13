@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-06-13T22:26:34.119Z",
+  "updated_at": "2026-06-13T22:26:51.941Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -470,8 +470,51 @@
       "acceptance": "Guide mentions hardware gate script and platform-eval-sample.jsonl",
       "started_at": "2026-06-13T22:25:22.734Z",
       "completed_at": "2026-06-13T22:26:30.026Z"
+    },
+    {
+      "id": "dev-040",
+      "title": "README: add ralph:regress + ralph:monitor to quick commands",
+      "status": "pending",
+      "priority": 40,
+      "files": [
+        "README.md",
+        "package.json"
+      ],
+      "acceptance": "README lists regress and monitor npm scripts with one-line descriptions"
+    },
+    {
+      "id": "dev-041",
+      "title": "ralph-loop.md: document ralph:regress gate and when to run it",
+      "status": "pending",
+      "priority": 41,
+      "files": [
+        "docs/ralph-loop.md"
+      ],
+      "acceptance": "ralph-loop.md has regress section matching agent-development-loop pre-commit rule"
+    },
+    {
+      "id": "dev-042",
+      "title": "risks-and-ethics: link eval-driven-workflow + capability sanity gates",
+      "status": "pending",
+      "priority": 42,
+      "files": [
+        "docs/risks-and-ethics.md",
+        "instructions/eval-driven-workflow.md"
+      ],
+      "acceptance": "Ethics doc references eval workflow and post-abliteration capability checks"
+    },
+    {
+      "id": "dev-043",
+      "title": "advanced-techniques-catalog: cross-link projected + MoE hybrid techniques",
+      "status": "pending",
+      "priority": 43,
+      "files": [
+        "docs/advanced-techniques-catalog.md",
+        "techniques/moe-hybrid-abliteration.md"
+      ],
+      "acceptance": "Catalog table rows link projected-norm-preserving and moe-hybrid docs"
     }
   ],
-  "wave_index": 12,
-  "last_seeded_at": "2026-06-13T22:20:32.680Z"
+  "wave_index": 25,
+  "last_seeded_at": "2026-06-13T22:26:51.941Z"
 }
