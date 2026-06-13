@@ -4,6 +4,8 @@ Evidence-based tool selection from cross-architecture evaluation research.
 
 **Source:** Young, R. J. — [arXiv:2512.13655](https://arxiv.org/abs/2512.13655) (v2, Jan 2026) — *Comparative Analysis of LLM Abliteration Methods: A Cross-Architecture Evaluation*
 
+The benchmark matrix and handbook interpretation of capability deltas integrate directly into the broader research taxonomy, method families, and capability-aware decision tree in [research-landscape.md](research-landscape.md). Cross-reference both when selecting tools for MoE/hybrid models or when GSM8K regression is a primary concern (see also the MoE per-expert technique in [../techniques/moe-hybrid-abliteration.md](../techniques/moe-hybrid-abliteration.md)).
+
 ---
 
 ## Tools compared
@@ -75,4 +77,4 @@ Tool selection from this benchmark data **must** be paired with the handbook's r
 
 - [research-landscape.md](research-landscape.md)
 - [toolchain-safetensors-gguf-lora.md](toolchain-safetensors-gguf-lora.md)
-- [tools/abliteration-tooling.md](tools/abliteration-tooling.md)
+- [tools/abliteration-tooling.md](tools/abliteration-tooling.md) — agent/tool-calling picker, failure matrix, decision flowcharts (Nous, huihui, OBLITERATUS, SuperGemma)

@@ -33,7 +33,7 @@ Full index: [kali-metapackages.md](kali-metapackages.md) · Official: [kali.org/
 | [zig-tooling.md](zig-tooling.md) | Cross-compile & build matrix |
 | [zig-canonical-syntax.md](zig-canonical-syntax.md) | **0.17 syntax** — [adybag14-cyber/zig](https://github.com/adybag14-cyber/zig) `master` |
 | [zig-advanced-techniques.md](zig-advanced-techniques.md) | **RE/exploit patterns** from canonical `test/behavior/*` |
-| [abliteration-tooling.md](abliteration-tooling.md) | **Heretic, PEFT, SAE, RepE, GGUF, vLLM** — full ML stack |
+| [abliteration-tooling.md](abliteration-tooling.md) | **Heretic, PEFT, SAE, RepE, GGUF, vLLM** — full ML stack; [agent + tool-calling picker](abliteration-tooling.md#agent--tool-calling-tool-picker-nous-huihui-obliteratus-supergemma) |
 | [heretic-tools-reference.md](heretic-tools-reference.md) | **Pinned Heretic configs** + refresh scripts |
 | [heretic-models-registry.md](heretic-models-registry.md) | **Open-weight HF** models tagged heretic/abliterated |
 | [../toolchain-safetensors-gguf-lora.md](../toolchain-safetensors-gguf-lora.md) | **Safetensors → GGUF → LoRA** master toolchain (Jun 2026) |
