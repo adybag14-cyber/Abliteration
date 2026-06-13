@@ -19,9 +19,13 @@ const turnsPath = join(dataDir, 'ralph-turns.jsonl');
 const signalPath = join(dataDir, 'ralph-autostart.signal.json');
 const pidPath = join(dataDir, '.ralph-autostart.pid');
 
+const backlogPath = join(dataDir, 'ralph-backlog.json');
+const handoffPath = join(dataDir, 'ralph-agent-handoff.md');
+
 const args = process.argv.slice(2);
 const messageIdx = args.indexOf('--message');
 const message = messageIdx >= 0 ? args[messageIdx + 1] || '' : process.env.RALPH_TURN_MESSAGE || '';
+const forceEnd = args.includes('--force');
 
 function stamp() {
   return new Date().toISOString();
@@ -71,6 +75,32 @@ function isDaemonAlive() {
   }
 }
 
+function pendingDevTasks() {
+  if (!existsSync(backlogPath)) return [];
+  try {
+    const backlog = JSON.parse(readFileSync(backlogPath, 'utf8'));
+    return (backlog.tasks || []).filter((t) => t.status === 'pending' || t.status === 'in_progress');
+  } catch {
+    return [];
+  }
+}
+
+function checkBacklogBeforeEnd() {
+  const pending = pendingDevTasks();
+  if (!pending.length) return true;
+
+  console.error(`\n⚠ Ralph backlog has ${pending.length} unfinished development task(s):`);
+  for (const t of pending.slice(0, 5)) {
+    console.error(`  • ${t.id} [${t.status}] ${t.title}`);
+  }
+  if (existsSync(handoffPath)) {
+    console.error(`\nRead handoff: ${handoffPath}`);
+  }
+  console.error('\nDo NOT end your turn until backlog is clear or --force is passed.');
+  console.error('Continue: npm run ralph:next → implement → npm run ralph:next -- --complete <id>\n');
+  return false;
+}
+
 function spawnAutostart() {
   const script = join(root, 'scripts', 'ralph-autostart.mjs');
   const child = spawn(process.execPath, [script, '--from-turn-end'], {
@@ -86,6 +116,11 @@ function spawnAutostart() {
 
 function main() {
   ensureDataDir();
+
+  if (!forceEnd && !checkBacklogBeforeEnd()) {
+    process.exit(2);
+  }
+
   const entry = logTurn();
   writeSignal(entry);
 

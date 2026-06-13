@@ -24,13 +24,23 @@ Living handbook for **LLM abliteration** — weight-level refusal removal — pl
 abliteration/
 ├── README.md
 ├── scripts/
-│   ├── fetch-docs.mjs           # headless Chromium/Firefox upstream fetch
-│   ├── fetch-heretic-tools.mjs  # sync pinned Heretic configs from GitHub
-│   ├── fetch-hf-heretic-models.mjs  # HF heretic/abliterated registry (Playwright)
-│   ├── hardware-tool-gate.py    # from JARVIS v7 — runtime command gate
+│   ├── fetch-docs.mjs              # headless Chromium/Firefox upstream fetch
+│   ├── fetch-heretic-tools.mjs     # sync pinned Heretic configs from GitHub
+│   ├── fetch-hf-heretic-models.mjs # HF heretic/abliterated registry (Playwright)
+│   ├── build-heretic-models-doc.mjs
+│   ├── export-abliteration-lora.py # ΔW → PEFT adapter safetensors
+│   ├── ralph-validate.mjs          # handbook integrity checks
+│   ├── ralph-loop.mjs              # validate → refresh → re-validate
+│   ├── ralph-next-task.mjs         # pick next dev task from backlog
+│   ├── ralph-turn-end.mjs          # agent turn hook + autostart
+│   ├── ralph-autostart.mjs         # background validate + dev handoff
+│   ├── count-eval-prompts.mjs      # eval corpus line counts
+│   ├── hardware-tool-gate.py       # from JARVIS v7 — runtime command gate
 │   └── validate-dataset.py
 ├── data/
-│   ├── heretic-models-registry.jsonl   # open-weight HF models attempted
+│   ├── ralph-backlog.json          # agent development task queue
+│   ├── ralph-agent-handoff.md      # next-task prompt for agents
+│   ├── heretic-models-registry.jsonl
 │   └── eval/
 │       ├── hardware-factory-prompts.jsonl
 │       └── cyber-research-prompts.jsonl
@@ -96,14 +106,17 @@ npm run fetch:hf-models:firefox           # HF blocks bare curl on some networks
 
 Pinned Heretic files: [sources/heretic-tools/IMPORT.md](sources/heretic-tools/IMPORT.md) · Model list: [docs/tools/heretic-models-registry.md](docs/tools/heretic-models-registry.md)
 
-**Validate before commit (Ralph loop):**
+**Validate + develop (Ralph loop):**
 
 ```bash
+npm run ralph:next        # pick next backlog task — implement before ending turn
 npm run validate          # links, jsonl, pins, python syntax
 npm run ralph             # validate → refresh → re-validate
+npm run eval:stats        # eval corpus line counts
+npm run ralph:turn-end    # log turn + background daemon (blocks if backlog unfinished)
 ```
 
-→ [docs/ralph-loop.md](docs/ralph-loop.md)
+→ [docs/ralph-loop.md](docs/ralph-loop.md) · [docs/agent-development-loop.md](docs/agent-development-loop.md)
 
 GitHub-first references: [references.md](references.md) · Context7: [docs/context7.md](docs/context7.md)
 

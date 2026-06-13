@@ -4,8 +4,8 @@
 
 Open-weight models tagged **heretic** or **abliterated** on Hugging Face, plus handbook-recommended bases.
 
-**Registry:** [../../data/heretic-models-registry.jsonl](../../data/heretic-models-registry.jsonl) (253 rows, 253 open weights)  
-**Last HF scrape:** 2026-06-12T23:41:07.737Z  
+**Registry:** [../../data/heretic-models-registry.jsonl](../../data/heretic-models-registry.jsonl) (257 rows, 257 open weights)  
+**Last HF scrape:** 2026-06-13T20:15:20.575Z  
 **Refresh:** `npm run fetch:hf-models` or `npm run fetch:hf-models:firefox` (see [heretic-tools-reference.md](heretic-tools-reference.md))  
 **Browse live:** [huggingface.co/models?other=heretic](https://huggingface.co/models?other=heretic)
 
@@ -35,7 +35,7 @@ Open-weight models tagged **heretic** or **abliterated** on Hugging Face, plus h
 
 | Model | Status | Open | Downloads | Notes |
 |-------|--------|------|-----------|-------|
-| [p-e-w/gemma-4-E2B-it-heretic-ara](https://huggingface.co/p-e-w/gemma-4-E2B-it-heretic-ara) | published_heretic | yes | 3.0k | — |
+| [p-e-w/gemma-4-E2B-it-heretic-ara](https://huggingface.co/p-e-w/gemma-4-E2B-it-heretic-ara) | published_heretic | yes | 2.9k | — |
 | [p-e-w/Qwen3-4B-Instruct-2507-heretic](https://huggingface.co/p-e-w/Qwen3-4B-Instruct-2507-heretic) | published_heretic | yes | — | Official Heretic output — download for Track C no-GPU |
 | [p-e-w/gemma-3-12b-it-heretic](https://huggingface.co/p-e-w/gemma-3-12b-it-heretic) | published_heretic | yes | — | Heretic README KL benchmark model |
 | [p-e-w/gpt-oss-20b-heretic](https://huggingface.co/p-e-w/gpt-oss-20b-heretic) | published_heretic | yes | — | Community-reviewed Heretic release |
@@ -47,56 +47,56 @@ Open-weight models tagged **heretic** or **abliterated** on Hugging Face, plus h
 
 | Model | Status | Open | Downloads | Notes |
 |-------|--------|------|-----------|-------|
-| [HauhauCS/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive](https://huggingface.co/HauhauCS/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive) | community_abliterated | yes | 604.6k | — |
-| [DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF](https://huggingface.co/DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF) | published_heretic | yes | 420.8k | — |
-| [DavidAU/Qwen3.6-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-NEO-CODE-Di-IMatrix-MAX-GGUF](https://huggingface.co/DavidAU/Qwen3.6-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-NEO-CODE-Di-IMatrix-MAX-GGUF) | published_heretic | yes | 400.7k | — |
-| [OBLITERATUS/gemma-4-E4B-it-OBLITERATED](https://huggingface.co/OBLITERATUS/gemma-4-E4B-it-OBLITERATED) | community_abliterated | yes | 303.3k | — |
-| [huihui-ai/Qwen2.5-72B-Instruct-abliterated](https://huggingface.co/huihui-ai/Qwen2.5-72B-Instruct-abliterated) | community_abliterated | yes | 244.3k | — |
-| [HauhauCS/Gemma-4-E2B-Uncensored-HauhauCS-Aggressive](https://huggingface.co/HauhauCS/Gemma-4-E2B-Uncensored-HauhauCS-Aggressive) | community_abliterated | yes | 151.6k | — |
-| [huihui-ai/Qwen2.5-VL-7B-Instruct-abliterated](https://huggingface.co/huihui-ai/Qwen2.5-VL-7B-Instruct-abliterated) | community_abliterated | yes | 127.5k | — |
-| [llmfan46/gemma-4-31B-it-uncensored-heretic-GGUF](https://huggingface.co/llmfan46/gemma-4-31B-it-uncensored-heretic-GGUF) | published_heretic | yes | 126.5k | — |
-| [llmfan46/gemma-4-E4B-it-ultra-uncensored-heretic-GGUF](https://huggingface.co/llmfan46/gemma-4-E4B-it-ultra-uncensored-heretic-GGUF) | published_heretic | yes | 88.8k | — |
-| [sakamakismile/Huihui-Qwen3.6-27B-abliterated-NVFP4-MTP](https://huggingface.co/sakamakismile/Huihui-Qwen3.6-27B-abliterated-NVFP4-MTP) | community_abliterated | yes | 88.6k | — |
+| [HauhauCS/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive](https://huggingface.co/HauhauCS/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive) | community_abliterated | yes | 432.4k | — |
+| [DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF](https://huggingface.co/DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF) | published_heretic | yes | 405.5k | — |
+| [DavidAU/Qwen3.6-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-NEO-CODE-Di-IMatrix-MAX-GGUF](https://huggingface.co/DavidAU/Qwen3.6-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-NEO-CODE-Di-IMatrix-MAX-GGUF) | published_heretic | yes | 387.0k | — |
+| [OBLITERATUS/gemma-4-E4B-it-OBLITERATED](https://huggingface.co/OBLITERATUS/gemma-4-E4B-it-OBLITERATED) | community_abliterated | yes | 300.8k | — |
+| [huihui-ai/Qwen2.5-72B-Instruct-abliterated](https://huggingface.co/huihui-ai/Qwen2.5-72B-Instruct-abliterated) | community_abliterated | yes | 223.9k | — |
+| [HauhauCS/Gemma-4-E2B-Uncensored-HauhauCS-Aggressive](https://huggingface.co/HauhauCS/Gemma-4-E2B-Uncensored-HauhauCS-Aggressive) | community_abliterated | yes | 109.4k | — |
+| [llmfan46/gemma-4-31B-it-uncensored-heretic-GGUF](https://huggingface.co/llmfan46/gemma-4-31B-it-uncensored-heretic-GGUF) | published_heretic | yes | 106.6k | — |
+| [huihui-ai/Qwen2.5-VL-7B-Instruct-abliterated](https://huggingface.co/huihui-ai/Qwen2.5-VL-7B-Instruct-abliterated) | community_abliterated | yes | 91.4k | — |
+| [sakamakismile/Huihui-Qwen3.6-27B-abliterated-NVFP4-MTP](https://huggingface.co/sakamakismile/Huihui-Qwen3.6-27B-abliterated-NVFP4-MTP) | community_abliterated | yes | 87.3k | — |
 | [llmfan46/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-GGUF](https://huggingface.co/llmfan46/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-GGUF) | published_heretic | yes | 85.7k | — |
-| [mradermacher/Llama3.3-8B-Instruct-Thinking-Heretic-Uncensored-Claude-4.5-Opus-High-Reasoning-i1-GGUF](https://huggingface.co/mradermacher/Llama3.3-8B-Instruct-Thinking-Heretic-Uncensored-Claude-4.5-Opus-High-Reasoning-i1-GGUF) | published_heretic | yes | 80.9k | — |
-| [huihui-ai/Huihui-Qwen3.6-35B-A3B-abliterated-MTP-GGUF](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-35B-A3B-abliterated-MTP-GGUF) | community_abliterated | yes | 80.1k | — |
-| [llmfan46/gemma-4-26B-A4B-it-ultra-uncensored-heretic-GGUF](https://huggingface.co/llmfan46/gemma-4-26B-A4B-it-ultra-uncensored-heretic-GGUF) | published_heretic | yes | 79.8k | — |
-| [AEON-7/Qwen3.6-27B-AEON-Ultimate-Uncensored-NVFP4](https://huggingface.co/AEON-7/Qwen3.6-27B-AEON-Ultimate-Uncensored-NVFP4) | community_abliterated | yes | 66.4k | — |
-| [huihui-ai/Huihui-Qwen3.6-27B-abliterated-MTP-GGUF](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-27B-abliterated-MTP-GGUF) | community_abliterated | yes | 65.3k | — |
-| [zaakirio/gemma-4-12b-it-uncensored-GGUF](https://huggingface.co/zaakirio/gemma-4-12b-it-uncensored-GGUF) | published_heretic | yes | 57.5k | — |
-| [llmfan46/Qwen3.6-35B-A3B-uncensored-heretic-Native-MTP-Preserved-GGUF](https://huggingface.co/llmfan46/Qwen3.6-35B-A3B-uncensored-heretic-Native-MTP-Preserved-GGUF) | published_heretic | yes | 57.4k | — |
-| [dealignai/Gemma-4-31B-JANG_4M-CRACK](https://huggingface.co/dealignai/Gemma-4-31B-JANG_4M-CRACK) | community_abliterated | yes | 49.7k | — |
-| [huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated](https://huggingface.co/huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated) | community_abliterated | yes | 47.2k | — |
-| [KevinJK51/Qwen3.6-12B-IQ-Ultra-Heretic-Uncensored-Thinking-V2-Hightop-GGUF](https://huggingface.co/KevinJK51/Qwen3.6-12B-IQ-Ultra-Heretic-Uncensored-Thinking-V2-Hightop-GGUF) | published_heretic | yes | 46.7k | — |
-| [cyberneurova/CyberNeurova-DeepSeek-V4-Flash-abliterated-GGUF](https://huggingface.co/cyberneurova/CyberNeurova-DeepSeek-V4-Flash-abliterated-GGUF) | community_abliterated | yes | 43.5k | — |
-| [DavidAU/Qwen3.6-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking](https://huggingface.co/DavidAU/Qwen3.6-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking) | published_heretic | yes | 42.3k | — |
-| [huihui-ai/Huihui-gpt-oss-20b-BF16-abliterated](https://huggingface.co/huihui-ai/Huihui-gpt-oss-20b-BF16-abliterated) | community_abliterated | yes | 40.6k | — |
-| [AEON-7/Qwen3.6-27B-AEON-Ultimate-Uncensored-Multimodal-NVFP4-MTP-XS](https://huggingface.co/AEON-7/Qwen3.6-27B-AEON-Ultimate-Uncensored-Multimodal-NVFP4-MTP-XS) | community_abliterated | yes | 39.6k | — |
-| [bartowski/DeepSeek-R1-Distill-Qwen-32B-abliterated-GGUF](https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-32B-abliterated-GGUF) | community_abliterated | yes | 38.6k | — |
-| [huihui-ai/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-MTP-GGUF](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-MTP-GGUF) | community_abliterated | yes | 37.0k | — |
-| [DavidAU/Qwen3.5-9B-Claude-4.6-OS-Auto-Variable-HERETIC-UNCENSORED-THINKING-MAX-NEOCODE-Imatrix-GGUF](https://huggingface.co/DavidAU/Qwen3.5-9B-Claude-4.6-OS-Auto-Variable-HERETIC-UNCENSORED-THINKING-MAX-NEOCODE-Imatrix-GGUF) | published_heretic | yes | 36.9k | — |
-| [igorls/gemma-4-12B-it-heretic-GGUF](https://huggingface.co/igorls/gemma-4-12B-it-heretic-GGUF) | published_heretic | yes | 36.7k | — |
-| [mradermacher/Huihui-Qwen3-Coder-30B-A3B-Instruct-abliterated-i1-GGUF](https://huggingface.co/mradermacher/Huihui-Qwen3-Coder-30B-A3B-Instruct-abliterated-i1-GGUF) | community_abliterated | yes | 35.8k | — |
-| [llmfan46/Qwen3.6-35B-A3B-uncensored-heretic-GGUF](https://huggingface.co/llmfan46/Qwen3.6-35B-A3B-uncensored-heretic-GGUF) | published_heretic | yes | 31.9k | — |
-| [mradermacher/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-i1-GGUF](https://huggingface.co/mradermacher/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-i1-GGUF) | published_heretic | yes | 30.8k | — |
-| [AEON-7/Qwen3.6-27B-AEON-Ultimate-Uncensored-BF16](https://huggingface.co/AEON-7/Qwen3.6-27B-AEON-Ultimate-Uncensored-BF16) | community_abliterated | yes | 29.0k | — |
-| [mradermacher/G4-MeroMero-26B-A4B-it-uncensored-heretic-i1-GGUF](https://huggingface.co/mradermacher/G4-MeroMero-26B-A4B-it-uncensored-heretic-i1-GGUF) | published_heretic | yes | 28.9k | — |
-| [DavidAU/OpenAi-GPT-oss-20b-abliterated-uncensored-NEO-Imatrix-gguf](https://huggingface.co/DavidAU/OpenAi-GPT-oss-20b-abliterated-uncensored-NEO-Imatrix-gguf) | community_abliterated | yes | 25.3k | — |
-| [mradermacher/Huihui-gemma-4-12B-it-abliterated-GGUF](https://huggingface.co/mradermacher/Huihui-gemma-4-12B-it-abliterated-GGUF) | community_abliterated | yes | 24.6k | — |
-| [DavidAU/GLM-4.7-Flash-Uncensored-Heretic-NEO-CODE-Imatrix-MAX-GGUF](https://huggingface.co/DavidAU/GLM-4.7-Flash-Uncensored-Heretic-NEO-CODE-Imatrix-MAX-GGUF) | published_heretic | yes | 23.1k | — |
-| [DavidAU/OpenAi-GPT-oss-20b-HERETIC-uncensored-NEO-Imatrix-gguf](https://huggingface.co/DavidAU/OpenAi-GPT-oss-20b-HERETIC-uncensored-NEO-Imatrix-gguf) | community_abliterated | yes | 23.1k | — |
-| [llmfan46/Qwen3.6-35B-A3B-uncensored-heretic-Native-MTP-Preserved](https://huggingface.co/llmfan46/Qwen3.6-35B-A3B-uncensored-heretic-Native-MTP-Preserved) | published_heretic | yes | 23.0k | — |
-| [mradermacher/gemma-4-31B-it-qat-q4_0-unquantized-heretic-i1-GGUF](https://huggingface.co/mradermacher/gemma-4-31B-it-qat-q4_0-unquantized-heretic-i1-GGUF) | published_heretic | yes | 22.9k | — |
-| [llmfan46/gemma-4-Ortenzya-The-Creative-Wordsmith-31B-it-uncensored-heretic-GGUF](https://huggingface.co/llmfan46/gemma-4-Ortenzya-The-Creative-Wordsmith-31B-it-uncensored-heretic-GGUF) | published_heretic | yes | 21.4k | — |
-| [ponpoke/flux2-klein-9b-uncensored-text-encoder](https://huggingface.co/ponpoke/flux2-klein-9b-uncensored-text-encoder) | community_abliterated | yes | 20.8k | — |
-| [mlabonne/Meta-Llama-3.1-8B-Instruct-abliterated-GGUF](https://huggingface.co/mlabonne/Meta-Llama-3.1-8B-Instruct-abliterated-GGUF) | community_abliterated | yes | 20.3k | — |
-| [OptimizeLLM/Qwen3.5-122B-A10B-heretic-MTP-NVFP4](https://huggingface.co/OptimizeLLM/Qwen3.5-122B-A10B-heretic-MTP-NVFP4) | community_abliterated | yes | 19.0k | — |
-| [llmfan46/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-NVFP4-GGUF](https://huggingface.co/llmfan46/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-NVFP4-GGUF) | published_heretic | yes | 17.8k | — |
-| [mradermacher/Mistral-Nemo-2407-12B-Thinking-Claude-Gemini-GPT5.2-Uncensored-HERETIC-GGUF](https://huggingface.co/mradermacher/Mistral-Nemo-2407-12B-Thinking-Claude-Gemini-GPT5.2-Uncensored-HERETIC-GGUF) | published_heretic | yes | 17.3k | — |
+| [huihui-ai/Huihui-Qwen3.6-35B-A3B-abliterated-MTP-GGUF](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-35B-A3B-abliterated-MTP-GGUF) | community_abliterated | yes | 80.9k | — |
+| [huihui-ai/Huihui-Qwen3.6-27B-abliterated-MTP-GGUF](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-27B-abliterated-MTP-GGUF) | community_abliterated | yes | 66.3k | — |
+| [AEON-7/Qwen3.6-27B-AEON-Ultimate-Uncensored-NVFP4](https://huggingface.co/AEON-7/Qwen3.6-27B-AEON-Ultimate-Uncensored-NVFP4) | community_abliterated | yes | 66.2k | — |
+| [llmfan46/gemma-4-26B-A4B-it-ultra-uncensored-heretic-GGUF](https://huggingface.co/llmfan46/gemma-4-26B-A4B-it-ultra-uncensored-heretic-GGUF) | published_heretic | yes | 63.2k | — |
+| [mradermacher/Llama3.3-8B-Instruct-Thinking-Heretic-Uncensored-Claude-4.5-Opus-High-Reasoning-i1-GGUF](https://huggingface.co/mradermacher/Llama3.3-8B-Instruct-Thinking-Heretic-Uncensored-Claude-4.5-Opus-High-Reasoning-i1-GGUF) | published_heretic | yes | 62.7k | — |
+| [llmfan46/gemma-4-E4B-it-ultra-uncensored-heretic-GGUF](https://huggingface.co/llmfan46/gemma-4-E4B-it-ultra-uncensored-heretic-GGUF) | published_heretic | yes | 62.0k | — |
+| [zaakirio/gemma-4-12b-it-uncensored-GGUF](https://huggingface.co/zaakirio/gemma-4-12b-it-uncensored-GGUF) | published_heretic | yes | 60.1k | — |
+| [llmfan46/Qwen3.6-35B-A3B-uncensored-heretic-Native-MTP-Preserved-GGUF](https://huggingface.co/llmfan46/Qwen3.6-35B-A3B-uncensored-heretic-Native-MTP-Preserved-GGUF) | published_heretic | yes | 57.2k | — |
+| [KevinJK51/Qwen3.6-12B-IQ-Ultra-Heretic-Uncensored-Thinking-V2-Hightop-GGUF](https://huggingface.co/KevinJK51/Qwen3.6-12B-IQ-Ultra-Heretic-Uncensored-Thinking-V2-Hightop-GGUF) | published_heretic | yes | 47.7k | — |
+| [cyberneurova/CyberNeurova-DeepSeek-V4-Flash-abliterated-GGUF](https://huggingface.co/cyberneurova/CyberNeurova-DeepSeek-V4-Flash-abliterated-GGUF) | community_abliterated | yes | 44.4k | — |
+| [DavidAU/Qwen3.6-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking](https://huggingface.co/DavidAU/Qwen3.6-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking) | published_heretic | yes | 43.7k | — |
+| [huihui-ai/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-MTP-GGUF](https://huggingface.co/huihui-ai/Huihui-Qwen3.6-35B-A3B-Claude-4.7-Opus-abliterated-MTP-GGUF) | community_abliterated | yes | 41.4k | — |
+| [huihui-ai/Huihui-Qwen3.5-27B-abliterated](https://huggingface.co/huihui-ai/Huihui-Qwen3.5-27B-abliterated) | community_abliterated | yes | 39.9k | — |
+| [AEON-7/Qwen3.6-27B-AEON-Ultimate-Uncensored-Multimodal-NVFP4-MTP-XS](https://huggingface.co/AEON-7/Qwen3.6-27B-AEON-Ultimate-Uncensored-Multimodal-NVFP4-MTP-XS) | community_abliterated | yes | 38.3k | — |
+| [igorls/gemma-4-12B-it-heretic-GGUF](https://huggingface.co/igorls/gemma-4-12B-it-heretic-GGUF) | published_heretic | yes | 37.7k | — |
+| [dealignai/Gemma-4-31B-JANG_4M-CRACK](https://huggingface.co/dealignai/Gemma-4-31B-JANG_4M-CRACK) | community_abliterated | yes | 36.1k | — |
+| [bartowski/DeepSeek-R1-Distill-Qwen-32B-abliterated-GGUF](https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-32B-abliterated-GGUF) | community_abliterated | yes | 35.1k | — |
+| [llmfan46/Qwen3.6-35B-A3B-uncensored-heretic-GGUF](https://huggingface.co/llmfan46/Qwen3.6-35B-A3B-uncensored-heretic-GGUF) | published_heretic | yes | 31.6k | — |
+| [mradermacher/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-i1-GGUF](https://huggingface.co/mradermacher/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-i1-GGUF) | published_heretic | yes | 31.0k | — |
+| [mradermacher/G4-MeroMero-26B-A4B-it-uncensored-heretic-i1-GGUF](https://huggingface.co/mradermacher/G4-MeroMero-26B-A4B-it-uncensored-heretic-i1-GGUF) | published_heretic | yes | 29.1k | — |
+| [DavidAU/Qwen3.5-9B-Claude-4.6-OS-Auto-Variable-HERETIC-UNCENSORED-THINKING-MAX-NEOCODE-Imatrix-GGUF](https://huggingface.co/DavidAU/Qwen3.5-9B-Claude-4.6-OS-Auto-Variable-HERETIC-UNCENSORED-THINKING-MAX-NEOCODE-Imatrix-GGUF) | published_heretic | yes | 29.0k | — |
+| [huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated](https://huggingface.co/huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated) | community_abliterated | yes | 27.4k | — |
+| [mradermacher/Huihui-gemma-4-12B-it-abliterated-GGUF](https://huggingface.co/mradermacher/Huihui-gemma-4-12B-it-abliterated-GGUF) | community_abliterated | yes | 25.7k | — |
+| [huihui-ai/Huihui-gpt-oss-20b-BF16-abliterated](https://huggingface.co/huihui-ai/Huihui-gpt-oss-20b-BF16-abliterated) | community_abliterated | yes | 24.5k | — |
+| [mudler/Qwen3.6-35B-A3B-uncensored-heretic-APEX-GGUF](https://huggingface.co/mudler/Qwen3.6-35B-A3B-uncensored-heretic-APEX-GGUF) | published_heretic | yes | 24.4k | — |
+| [mradermacher/gemma-4-31B-it-qat-q4_0-unquantized-heretic-i1-GGUF](https://huggingface.co/mradermacher/gemma-4-31B-it-qat-q4_0-unquantized-heretic-i1-GGUF) | published_heretic | yes | 23.4k | — |
+| [llmfan46/Qwen3.6-35B-A3B-uncensored-heretic-Native-MTP-Preserved](https://huggingface.co/llmfan46/Qwen3.6-35B-A3B-uncensored-heretic-Native-MTP-Preserved) | published_heretic | yes | 22.8k | — |
+| [huihui-ai/Huihui-DeepSeek-V4-Flash-abliterated-ds4-GGUF](https://huggingface.co/huihui-ai/Huihui-DeepSeek-V4-Flash-abliterated-ds4-GGUF) | community_abliterated | yes | 21.9k | — |
+| [llmfan46/gemma-4-Ortenzya-The-Creative-Wordsmith-31B-it-uncensored-heretic-GGUF](https://huggingface.co/llmfan46/gemma-4-Ortenzya-The-Creative-Wordsmith-31B-it-uncensored-heretic-GGUF) | published_heretic | yes | 21.8k | — |
+| [ponpoke/flux2-klein-9b-uncensored-text-encoder](https://huggingface.co/ponpoke/flux2-klein-9b-uncensored-text-encoder) | community_abliterated | yes | 20.6k | — |
+| [mradermacher/gemma-4-26B-A4B-it-heretic-GGUF](https://huggingface.co/mradermacher/gemma-4-26B-A4B-it-heretic-GGUF) | published_heretic | yes | 20.0k | — |
+| [DavidAU/OpenAi-GPT-oss-20b-HERETIC-uncensored-NEO-Imatrix-gguf](https://huggingface.co/DavidAU/OpenAi-GPT-oss-20b-HERETIC-uncensored-NEO-Imatrix-gguf) | community_abliterated | yes | 19.4k | — |
+| [DavidAU/OpenAi-GPT-oss-20b-abliterated-uncensored-NEO-Imatrix-gguf](https://huggingface.co/DavidAU/OpenAi-GPT-oss-20b-abliterated-uncensored-NEO-Imatrix-gguf) | community_abliterated | yes | 19.2k | — |
+| [DavidAU/GLM-4.7-Flash-Uncensored-Heretic-NEO-CODE-Imatrix-MAX-GGUF](https://huggingface.co/DavidAU/GLM-4.7-Flash-Uncensored-Heretic-NEO-CODE-Imatrix-MAX-GGUF) | published_heretic | yes | 18.3k | — |
+| [llmfan46/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-NVFP4-GGUF](https://huggingface.co/llmfan46/Qwen3.6-27B-uncensored-heretic-v2-Native-MTP-Preserved-NVFP4-GGUF) | published_heretic | yes | 17.4k | — |
 | [darkc0de/XORTRON-XPRT3-FAST](https://huggingface.co/darkc0de/XORTRON-XPRT3-FAST) | published_heretic | yes | 17.3k | — |
-| [huihui-ai/Huihui-DeepSeek-V4-Flash-abliterated-ds4-GGUF](https://huggingface.co/huihui-ai/Huihui-DeepSeek-V4-Flash-abliterated-ds4-GGUF) | community_abliterated | yes | 17.0k | — |
-| [mradermacher/gemma-4-12B-it-abliterated-uncensored-i1-GGUF](https://huggingface.co/mradermacher/gemma-4-12B-it-abliterated-uncensored-i1-GGUF) | community_abliterated | yes | 15.2k | — |
-| [kasimat/Qwen3.6-27B-AEON-Ultimate-Uncensored-FP8-MTP](https://huggingface.co/kasimat/Qwen3.6-27B-AEON-Ultimate-Uncensored-FP8-MTP) | community_abliterated | yes | 14.1k | — |
+| [mradermacher/gemma-4-12B-it-abliterated-uncensored-i1-GGUF](https://huggingface.co/mradermacher/gemma-4-12B-it-abliterated-uncensored-i1-GGUF) | community_abliterated | yes | 16.8k | — |
+| [huihui-ai/Huihui-gemma-4-12B-it-qat-q4_0-unquantized-abliterated-GGUF](https://huggingface.co/huihui-ai/Huihui-gemma-4-12B-it-qat-q4_0-unquantized-abliterated-GGUF) | community_abliterated | yes | 15.7k | — |
+| [llmfan46/Qwen3.6-27B-uncensored-heretic-v2-GGUF](https://huggingface.co/llmfan46/Qwen3.6-27B-uncensored-heretic-v2-GGUF) | published_heretic | yes | 15.5k | — |
+| [mlabonne/Meta-Llama-3.1-8B-Instruct-abliterated-GGUF](https://huggingface.co/mlabonne/Meta-Llama-3.1-8B-Instruct-abliterated-GGUF) | community_abliterated | yes | 13.9k | — |
 
 
 _Full list: `data/heretic-models-registry.jsonl` — regenerate with `node scripts/build-heretic-models-doc.mjs` after fetch._

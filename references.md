@@ -111,7 +111,7 @@ npm run validate    # links, jsonl, pins, python — exit 0 required before comm
 npm run ralph       # validate → refresh pins → re-validate (max 3)
 ```
 
-→ [docs/ralph-loop.md](docs/ralph-loop.md) · Benchmarks: [docs/comparative-abliteration-benchmarks.md](docs/comparative-abliteration-benchmarks.md) · [arXiv:2512.13655](https://arxiv.org/abs/2512.13655)
+→ [docs/ralph-loop.md](docs/ralph-loop.md) · [docs/agent-development-loop.md](docs/agent-development-loop.md) · Benchmarks: [docs/comparative-abliteration-benchmarks.md](docs/comparative-abliteration-benchmarks.md) · [arXiv:2512.13655](https://arxiv.org/abs/2512.13655)
 
 ## Agentic security & evaluation
 

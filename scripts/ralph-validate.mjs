@@ -90,6 +90,8 @@ function validateRequiredFiles() {
     'sources/heretic-tools/config.production.toml',
     'sources/heretic-tools/config.thinking-model.toml',
     'sources/heretic-tools/config.factory-qa.toml',
+    'sources/heretic-tools/config.noslop.toml',
+    'sources/heretic-tools/config.nohumor.toml',
     'sources/heretic-tools/UPSTREAM.json',
     'data/heretic-models-registry.seed.jsonl',
     'docs/toolchain-safetensors-gguf-lora.md',
@@ -97,6 +99,10 @@ function validateRequiredFiles() {
     'scripts/ralph-loop.mjs',
     'scripts/ralph-turn-end.mjs',
     'scripts/ralph-autostart.mjs',
+    'scripts/ralph-next-task.mjs',
+    'scripts/count-eval-prompts.mjs',
+    'data/ralph-backlog.json',
+    'docs/agent-development-loop.md',
     'scripts/export-abliteration-lora.py',
     'scripts/fetch-heretic-tools.mjs',
     'scripts/fetch-hf-heretic-models.mjs',
@@ -137,6 +143,7 @@ function validatePythonScripts() {
     'scripts/hardware-tool-gate.py',
     'scripts/validate-dataset.py',
     'scripts/check_env.py',
+    'scripts/filter-jarvis-eval.py',
   ];
   for (const rel of scripts) {
     const p = join(root, rel);

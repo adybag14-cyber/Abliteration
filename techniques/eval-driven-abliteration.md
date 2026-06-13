@@ -14,6 +14,10 @@ Use **your** task prompts — not only `harmful_behaviors` — to steer measurem
 
 Misalignment example: model scores well on `harmful_behaviors` but still refuses `wmic` — fix by changing **direction** datasets, not only deploy eval.
 
+**Tool selection evidence:** [../docs/comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md) (arXiv:2512.13655 — GSM8K sensitivity varies by tool/architecture).
+
+**Corpus sizes:** `npm run eval:stats`
+
 ---
 
 ## Custom plain-text prompts (Heretic-native)

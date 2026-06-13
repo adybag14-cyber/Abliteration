@@ -48,7 +48,7 @@ Evidence-based tool selection from cross-architecture evaluation research.
 
 Separate from refusal removal — [Reddit: abliteration reducing slop](https://www.reddit.com/r/LocalLLaMA/comments/1qa0w6c/it_works_abliteration_can_reduce_slop_without/) reports directional edits can reduce sycophantic filler **without** full uncensoring. Distinct objective — do not confuse with safety guard removal.
 
-Heretic ships optional configs: upstream `config.noslop.toml`, `config.nohumor.toml` — sync via `npm run fetch:heretic` if added to pin list.
+Heretic ships optional configs: `sources/heretic-tools/config.noslop.toml`, `config.nohumor.toml` — sync via `npm run fetch:heretic`.
 
 ---
 

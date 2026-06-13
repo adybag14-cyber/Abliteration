@@ -20,6 +20,8 @@ const pidPath = join(dataDir, '.ralph-autostart.pid');
 const logPath = join(dataDir, 'ralph-autostart.log');
 const statusPath = join(dataDir, 'ralph-autostart-status.json');
 const signalPath = join(dataDir, 'ralph-autostart.signal.json');
+const backlogPath = join(dataDir, 'ralph-backlog.json');
+const handoffPath = join(dataDir, 'ralph-agent-handoff.md');
 
 const args = process.argv.slice(2);
 const fromTurnEnd = args.includes('--from-turn-end');
@@ -100,6 +102,44 @@ function runRalph() {
   return r.status ?? 1;
 }
 
+function pendingDevTasks() {
+  if (!existsSync(backlogPath)) return [];
+  try {
+    const backlog = JSON.parse(readFileSync(backlogPath, 'utf8'));
+    return (backlog.tasks || []).filter((t) => t.status === 'pending' || t.status === 'in_progress');
+  } catch {
+    return [];
+  }
+}
+
+function writeDevHandoffReminder(pending) {
+  if (!pending.length) return;
+  const lines = [
+    '# Ralph agent handoff (daemon reminder)',
+    '',
+    `Updated: ${stamp()}`,
+    '',
+    `Validation passed but **${pending.length} development task(s)** remain.`,
+    '',
+    '## Next agent turn MUST',
+    '',
+    '```bash',
+    'npm run ralph:next',
+    '# implement task, then:',
+    'npm run ralph',
+    'npm run ralph:next -- --complete <task-id>',
+    '# repeat until backlog clear',
+    '```',
+    '',
+    '## Pending',
+    '',
+    ...pending.slice(0, 8).map((t) => `- **${t.id}** [${t.status}] ${t.title}`),
+    '',
+  ];
+  writeFileSync(handoffPath, lines.join('\n'));
+  log(`Dev handoff reminder written (${pending.length} pending tasks)`);
+}
+
 function gitDirty() {
   const r = spawnSync('git', ['status', '--porcelain'], { cwd: root, encoding: 'utf8' });
   if (r.status !== 0) return null;
@@ -147,6 +187,11 @@ async function loop() {
 
     if (exitCode === 0) {
       log('Ralph cycle PASSED');
+      const pending = pendingDevTasks();
+      if (pending.length) {
+        writeDevHandoffReminder(pending);
+        writeStatus({ pending_dev_tasks: pending.length, next_task_id: pending[0]?.id || null });
+      }
     } else {
       log('Ralph cycle FAILED — will retry after interval');
     }

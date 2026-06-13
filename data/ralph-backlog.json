@@ -1,0 +1,148 @@
+{
+  "version": 1,
+  "updated_at": "2026-06-13T20:16:00.946Z",
+  "tasks": [
+    {
+      "id": "dev-001",
+      "title": "Ralph dev handoff system (backlog + next-task + agent prompt)",
+      "status": "done",
+      "priority": 1,
+      "files": [
+        "scripts/ralph-next-task.mjs",
+        "data/ralph-backlog.json",
+        "data/ralph-agent-handoff.md"
+      ],
+      "acceptance": "npm run ralph:next prints next task; handoff file written",
+      "completed_at": "2026-06-13T20:25:00.000Z"
+    },
+    {
+      "id": "dev-002",
+      "title": "Update README repo tree with all scripts and Ralph commands",
+      "status": "done",
+      "priority": 2,
+      "files": [
+        "README.md"
+      ],
+      "acceptance": "Tree lists ralph-*, export-abliteration-lora.py, fetch scripts",
+      "completed_at": "2026-06-13T20:25:00.000Z"
+    },
+    {
+      "id": "dev-003",
+      "title": "Eval corpus stats script + evaluation.md counts",
+      "status": "done",
+      "priority": 3,
+      "files": [
+        "scripts/count-eval-prompts.mjs",
+        "docs/evaluation.md"
+      ],
+      "acceptance": "npm run eval:stats prints jsonl line counts",
+      "completed_at": "2026-06-13T20:25:00.000Z"
+    },
+    {
+      "id": "dev-004",
+      "title": "Refresh HF heretic model registry and rebuild doc",
+      "status": "done",
+      "priority": 4,
+      "files": [
+        "data/heretic-models-registry.jsonl",
+        "docs/tools/heretic-models-registry.md"
+      ],
+      "acceptance": "npm run fetch:hf-models:firefox && build:heretic-models-doc",
+      "completed_at": "2026-06-13T20:25:00.000Z"
+    },
+    {
+      "id": "dev-005",
+      "title": "Agent development playbook doc",
+      "status": "done",
+      "priority": 5,
+      "files": [
+        "docs/agent-development-loop.md"
+      ],
+      "acceptance": "Doc explains backlog-driven multi-turn dev workflow",
+      "completed_at": "2026-06-13T20:25:00.000Z"
+    },
+    {
+      "id": "dev-006",
+      "title": "Cross-link comparative benchmarks in technique README",
+      "status": "done",
+      "priority": 6,
+      "files": [
+        "techniques/README.md",
+        "techniques/eval-driven-abliteration.md"
+      ],
+      "acceptance": "Links to comparative-abliteration-benchmarks.md",
+      "completed_at": "2026-06-13T20:25:00.000Z"
+    },
+    {
+      "id": "dev-007",
+      "title": "Heretic noslop/nohumor config pins if upstream has them",
+      "status": "done",
+      "priority": 7,
+      "files": [
+        "sources/heretic-tools/UPSTREAM.json"
+      ],
+      "acceptance": "fetch:heretic syncs slop/humor configs when available",
+      "completed_at": "2026-06-13T20:25:00.000Z"
+    },
+    {
+      "id": "dev-008",
+      "title": "Ralph autostart writes dev handoff when backlog pending",
+      "status": "done",
+      "priority": 8,
+      "files": [
+        "scripts/ralph-autostart.mjs"
+      ],
+      "acceptance": "Daemon updates ralph-agent-handoff.md after PASS with pending tasks",
+      "completed_at": "2026-06-13T20:25:00.000Z"
+    },
+    {
+      "id": "dev-009",
+      "title": "Add next-wave backlog: MoE doc expansion, jarvis eval filter script",
+      "status": "done",
+      "priority": 9,
+      "files": [
+        "techniques/moe-hybrid-abliteration.md",
+        "scripts/filter-jarvis-eval.py"
+      ],
+      "acceptance": "MoE doc links safetensor pipeline; jarvis filter exports safe eval subset",
+      "started_at": "2026-06-13T20:15:47.864Z",
+      "completed_at": "2026-06-13T20:16:00.533Z"
+    },
+    {
+      "id": "dev-010",
+      "title": "Link agent-development-loop from research-landscape and references",
+      "status": "done",
+      "priority": 10,
+      "files": [
+        "docs/research-landscape.md",
+        "references.md"
+      ],
+      "acceptance": "Both docs link agent-development-loop.md",
+      "completed_at": "2026-06-13T20:16:00.945Z"
+    },
+    {
+      "id": "dev-011",
+      "title": "Heretic tools reference: document noslop/nohumor profiles",
+      "status": "pending",
+      "priority": 11,
+      "files": ["docs/tools/heretic-tools-reference.md"],
+      "acceptance": "Reference table includes noslop and nohumor configs with use cases"
+    },
+    {
+      "id": "dev-012",
+      "title": "Expand beginner guide with eval:jarvis-safe and eval:stats commands",
+      "status": "pending",
+      "priority": 12,
+      "files": ["instructions/beginner-local-model-guide.md"],
+      "acceptance": "Step 7 or appendix mentions npm run eval:stats and eval:jarvis-safe"
+    },
+    {
+      "id": "dev-013",
+      "title": "Add slop-abliteration technique doc cross-linking noslop config",
+      "status": "pending",
+      "priority": 13,
+      "files": ["techniques/steering-and-alternatives.md"],
+      "acceptance": "Section links config.noslop.toml and comparative benchmarks slop note"
+    }
+  ]
+}

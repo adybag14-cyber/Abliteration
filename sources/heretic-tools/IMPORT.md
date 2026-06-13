@@ -21,6 +21,8 @@ Pinned copies of **upstream Heretic** configuration and lockfiles for offline/do
 | `config.production.toml` | Handbook profile — agent quality | Maintained in abliteration repo |
 | `config.thinking-model.toml` | Thinking / CoT models | Maintained in abliteration repo |
 | `config.factory-qa.toml` | Factory bench domain prompts | Maintained in abliteration repo |
+| `config.noslop.toml` | Upstream slop-reduction profile | `fetch-heretic-tools.mjs` |
+| `config.nohumor.toml` | Upstream humor-reduction profile | `fetch-heretic-tools.mjs` |
 | `pyproject.toml.reference` | Dependency names / version pins | `fetch-heretic-tools.mjs` |
 | `uv.lock.reference` | Full uv lock for reproducible `uv run` | `fetch-heretic-tools.mjs` |
 | `UPSTREAM.json` | URLs, sync timestamps, sha256 | Written by fetch script |

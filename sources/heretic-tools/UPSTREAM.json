@@ -4,7 +4,7 @@
   "mirror_repo": "https://codeberg.org/p-e-w/heretic",
   "pypi_package": "heretic-llm",
   "default_branch": "master",
-  "synced_at": "2026-06-13T20:00:45.200Z",
+  "synced_at": "2026-06-13T20:15:41.525Z",
   "synced_by": "scripts/fetch-heretic-tools.mjs",
   "pinned_files": {
     "config.default.toml": {
@@ -12,21 +12,35 @@
       "local": "sources/heretic-tools/config.default.toml",
       "sha256": "23498cbe624627f3a31892f12e6fe07d1734f81399aa5eed83c57b20a573f2bc",
       "bytes": 7057,
-      "synced_at": "2026-06-13T20:00:45.200Z"
+      "synced_at": "2026-06-13T20:15:41.525Z"
     },
     "pyproject.toml.reference": {
       "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/pyproject.toml",
       "local": "sources/heretic-tools/pyproject.toml.reference",
       "sha256": "02d22654d7eba38bca882ef51fc3446a7ef40c5ea273a231590fcbc787f6cf4e",
       "bytes": 1980,
-      "synced_at": "2026-06-13T20:00:45.200Z"
+      "synced_at": "2026-06-13T20:15:41.525Z"
     },
     "uv.lock.reference": {
       "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/uv.lock",
       "local": "sources/heretic-tools/uv.lock.reference",
       "sha256": "de9de8005ca55a17111e3e7f136e6ba00db1f7bc899d6696fd66fd613fd455e9",
       "bytes": 893328,
-      "synced_at": "2026-06-13T20:00:45.200Z"
+      "synced_at": "2026-06-13T20:15:41.525Z"
+    },
+    "config.noslop.toml": {
+      "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/config.noslop.toml",
+      "local": "sources/heretic-tools/config.noslop.toml",
+      "sha256": "80a28290b9d34aa625cde3843e35a7e75b0e6ce984374e01ceaa1a391f704b3b",
+      "bytes": 3457,
+      "synced_at": "2026-06-13T20:15:41.525Z"
+    },
+    "config.nohumor.toml": {
+      "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/config.nohumor.toml",
+      "local": "sources/heretic-tools/config.nohumor.toml",
+      "sha256": "479a62c098e51301129743d4f4734ca65cbb4393d5507a6e37355b3f8df24aa9",
+      "bytes": 1374,
+      "synced_at": "2026-06-13T20:15:41.525Z"
     }
   },
   "handbook_profiles": {

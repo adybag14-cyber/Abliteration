@@ -186,3 +186,9 @@ Text-trunk abliteration for VLMs; mmproj export notes.
 | Production agent | `sources/heretic-tools/config.production.toml` | 12–24 GB |
 | Thinking / CoT | `sources/heretic-tools/config.thinking-model.toml` | Qwen3-Thinking, R1 |
 | Factory QA domain | `sources/heretic-tools/config.factory-qa.toml` | WMI/firmware bench |
+
+## Evidence-based tool choice
+
+Cross-architecture benchmark (Heretic vs DECCP vs ErisForge, GSM8K sensitivity): [../docs/comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md) · [arXiv:2512.13655](https://arxiv.org/abs/2512.13655)
+
+Eval gates and corpora: [eval-driven-abliteration.md](eval-driven-abliteration.md) · `npm run eval:stats`

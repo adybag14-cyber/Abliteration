@@ -132,4 +132,5 @@ Start: need refusal reduction on aligned model
 | [../instructions/troubleshooting-encyclopedia.md](../instructions/troubleshooting-encyclopedia.md) | Symptom → fix |
 | [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md) | arXiv:2512.13655 tool comparison |
 | [ralph-loop.md](ralph-loop.md) | Validate → refresh agent loop |
+| [agent-development-loop.md](agent-development-loop.md) | Backlog-driven multi-turn dev |
 | [../references.md](../references.md) | URLs & install commands |

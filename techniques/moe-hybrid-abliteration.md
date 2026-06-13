@@ -74,7 +74,16 @@ for i, layer in enumerate(model.model.layers):
 
 ---
 
+## Safetensor surgery surface
+
+MoE expert `down_proj` / `w2` / `output_linear` tensors live in the same HF `*.safetensors` shards as dense models. Heretic discovers expert modules automatically; manual edits must touch **every expert** in each MoE layer.
+
+→ [../methods/safetensor-abliteration-pipeline.md](../methods/safetensor-abliteration-pipeline.md) (tensor names, projected math, Heretic save layout)
+
+---
+
 ## Related
 
 - [../methods/moe-expert-abliteration.md](../methods/moe-expert-abliteration.md)
+- [../methods/safetensor-abliteration-pipeline.md](../methods/safetensor-abliteration-pipeline.md)
 - [../instructions/low-vram-abliteration.md](../instructions/low-vram-abliteration.md)

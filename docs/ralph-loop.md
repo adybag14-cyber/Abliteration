@@ -42,9 +42,25 @@ Status logs:
 
 ---
 
+## Development loop (primary)
+
+Ralph drives **continued repo development**, not just validation. See [agent-development-loop.md](agent-development-loop.md).
+
+```bash
+npm run ralph:next                              # claim next backlog task
+npm run ralph:next -- --complete dev-001        # mark done, show next
+npm run ralph:next -- --list                    # full queue
+```
+
+Backlog: `data/ralph-backlog.json` · Handoff: `data/ralph-agent-handoff.md`
+
+**Do not end your turn** while backlog has unfinished tasks — `ralph:turn-end` exits **2** until clear.
+
+---
+
 ## Autostart (agent turn-end)
 
-**Before ending any agent turn** that touched this repo, run:
+**After backlog is clear**, before ending any agent turn:
 
 ```bash
 npm run ralph:turn-end
@@ -56,7 +72,7 @@ This:
 2. Writes `data/ralph-autostart.signal.json` (wakes the daemon)
 3. Spawns `ralph-autostart` in the background if not already running
 
-The daemon loops `npm run ralph` on an interval (default **120s**, override with `RALPH_AUTOSTART_INTERVAL_MS`). Set `RALPH_AUTOSTART_SKIP_FETCH=1` for validate-only cycles.
+The daemon loops `npm run ralph` on an interval (default **120s**, override with `RALPH_AUTOSTART_INTERVAL_MS`). When validation passes but dev tasks remain, it refreshes `data/ralph-agent-handoff.md`.
 
 ```bash
 # Foreground (debug)

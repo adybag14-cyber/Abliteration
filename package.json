@@ -14,9 +14,12 @@
     "validate": "node scripts/ralph-validate.mjs",
     "ralph": "node scripts/ralph-loop.mjs",
     "ralph:ci": "node scripts/ralph-loop.mjs --skip-fetch --max 1",
+    "ralph:next": "node scripts/ralph-next-task.mjs",
     "ralph:turn-end": "node scripts/ralph-turn-end.mjs",
     "ralph:autostart": "node scripts/ralph-autostart.mjs",
-    "ralph:autostart:stop": "node scripts/ralph-autostart-stop.mjs"
+    "ralph:autostart:stop": "node scripts/ralph-autostart-stop.mjs",
+    "eval:stats": "node scripts/count-eval-prompts.mjs",
+    "eval:jarvis-safe": "python scripts/filter-jarvis-eval.py"
   },
   "devDependencies": {
     "playwright": "^1.49.0"

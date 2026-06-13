@@ -29,6 +29,16 @@ const FILES = [
     url: 'https://raw.githubusercontent.com/p-e-w/heretic/master/uv.lock',
     local: 'uv.lock.reference',
   },
+  {
+    key: 'config.noslop.toml',
+    url: 'https://raw.githubusercontent.com/p-e-w/heretic/master/config.noslop.toml',
+    local: 'config.noslop.toml',
+  },
+  {
+    key: 'config.nohumor.toml',
+    url: 'https://raw.githubusercontent.com/p-e-w/heretic/master/config.nohumor.toml',
+    local: 'config.nohumor.toml',
+  },
 ];
 
 function sha256(text) {
@@ -54,9 +64,13 @@ async function main() {
     const path = join(outDir, f.local);
     writeFileSync(path, body, 'utf8');
     const hash = sha256(body);
-    upstream.pinned_files[f.key].sha256 = hash;
-    upstream.pinned_files[f.key].bytes = body.length;
-    upstream.pinned_files[f.key].synced_at = stamp;
+    upstream.pinned_files[f.key] = {
+      url: f.url,
+      local: `sources/heretic-tools/${f.local}`,
+      sha256: hash,
+      bytes: body.length,
+      synced_at: stamp,
+    };
     console.log(`OK  ${f.local} (${body.length} bytes) sha256=${hash.slice(0, 12)}…`);
   }
 

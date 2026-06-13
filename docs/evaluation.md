@@ -2,6 +2,8 @@
 
 Always evaluate **before and after** abliteration. Keep the original checkpoint.
 
+**Corpus sizes:** `npm run eval:stats` — line counts for all `data/eval/*.jsonl` and `data/examples/*.jsonl`.
+
 ## Refusal rate (general)
 
 1. Build benchmark list (100–500 prompts) spanning benign diagnostics + policy-edge security tasks
@@ -81,7 +83,14 @@ Start with ~50-task subset before full 1,507.
 
 ## Jarvis tool-repair eval
 
-Filter `sources/jarvis-pack/.../eval_prompts.jsonl` to `category=safe` only.
+Export safe subset:
+
+```bash
+python scripts/filter-jarvis-eval.py
+# → data/eval/jarvis-safe-eval.jsonl
+```
+
+Source: `sources/jarvis-pack/.../eval_prompts.jsonl` (`category=safe`).
 
 Expected: `allow_tool` on `uname`, `wmic`, `lspci`, `nvidia-smi`, DiskPart list/detail.
 

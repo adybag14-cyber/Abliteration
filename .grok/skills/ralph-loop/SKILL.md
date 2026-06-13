@@ -1,50 +1,38 @@
 ---
 name: ralph-loop
 description: >
-  Run the Ralph Wiggum validate-refresh loop for the Abliteration handbook repo.
+  Run the Ralph Wiggum development loop for the Abliteration handbook repo.
   Use when maintaining this repo, before ending an agent turn, when the user says
-  "ralph", "validate handbook", "ralph loop", "ralph autostart", or "/ralph-loop".
-  Always run ralph:turn-end before finishing a turn.
+  "ralph", "validate handbook", "ralph loop", "continue development", "ralph autostart",
+  or "/ralph-loop". Pick backlog tasks, implement them, validate, and do NOT end
+  the turn until the backlog is clear.
 metadata:
-  short-description: "Abliteration Ralph Wiggum maintenance loop"
+  short-description: "Abliteration Ralph development + validation loop"
 ---
 
 # Ralph loop (Abliteration handbook)
 
-## Every turn (mandatory before ending)
+## Development-first workflow (every turn)
 
 ```bash
-npm run ralph:turn-end -- --message "<short summary of what you changed>"
-```
-
-This logs the turn and keeps the background `ralph:autostart` daemon running.
-
-## Fix-and-iterate workflow
-
-```bash
+npm run ralph:next
+# → implement the task
 npm run ralph
+npm run ralph:next -- --complete <task-id>
+# repeat until backlog clear
+npm run ralph:turn-end -- --message "<summary>"
 ```
 
-If FAIL: read errors, fix files, repeat until `✓ Ralph validate PASSED`.
-
-## Commands
-
-| Script | Purpose |
-|--------|---------|
-| `npm run validate` | Single validation pass |
-| `npm run ralph` | validate → refresh pins → re-validate (max 3) |
-| `npm run ralph:turn-end` | Agent turn hook + autostart daemon |
-| `npm run ralph:autostart:stop` | Stop background daemon |
-
-## Status files
-
-- `data/ralph-status.json` — last loop result
-- `data/ralph-autostart-status.json` — daemon state
-- `data/ralph-turns.jsonl` — turn-end log
+Read `data/ralph-agent-handoff.md` at turn start.
 
 ## Rules
 
-1. Do not stop on first validation failure — fix and re-run.
-2. After PASS with uncommitted changes: `git add -A && git commit && git push`.
-3. Always run `ralph:turn-end` as the last shell command before ending your turn.
-4. Read `docs/ralph-loop.md` for full details.
+1. Never end a turn with unfinished backlog tasks.
+2. Implement at least one dev task per turn when tasks exist.
+3. After PASS: commit and push.
+4. Add gaps to `data/ralph-backlog.json`.
+
+## Docs
+
+- `docs/agent-development-loop.md`
+- `docs/ralph-loop.md`
