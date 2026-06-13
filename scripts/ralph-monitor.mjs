@@ -6,7 +6,7 @@
  *   npm run ralph:monitor -- --loop    # continuous (default 90s interval)
  */
 import { existsSync, readFileSync, appendFileSync, mkdirSync, writeFileSync } from 'fs';
-import { spawn, spawnSync } from 'child_process';
+import { spawn, spawnSync, execSync } from 'child_process';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -17,6 +17,7 @@ const backlogPath = join(dataDir, 'ralph-backlog.json');
 const watchPidPath = join(dataDir, '.ralph-monitor.pid');
 const logPath = join(dataDir, 'ralph-monitor.log');
 const continuePidPath = join(dataDir, '.ralph-continue.pid');
+const statePath = join(dataDir, 'ralph-monitor-state.json');
 
 const args = process.argv.slice(2);
 const loop = args.includes('--loop');
@@ -67,6 +68,38 @@ function headlessRunning() {
   return isAlive(Number(readFileSync(continuePidPath, 'utf8').trim()));
 }
 
+function readState() {
+  return readJson(statePath) || { last_pending: null, last_regress_at: null };
+}
+
+function writeState(state) {
+  writeFileSync(statePath, JSON.stringify(state, null, 2) + '\n');
+}
+
+function gitDirty() {
+  try {
+    const out = execSync('git status --porcelain', { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+    return Boolean(out.trim());
+  } catch {
+    return false;
+  }
+}
+
+function runRegress() {
+  log('running ralph:regress (pre-commit gate)');
+  const r = spawnSync(process.execPath, [join(__dir, 'ralph-regress.mjs')], {
+    cwd: root,
+    encoding: 'utf8',
+    shell: false,
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  const ok = r.status === 0;
+  if (r.stdout) process.stdout.write(r.stdout);
+  if (r.stderr) process.stderr.write(r.stderr);
+  log(ok ? 'regress PASSED' : `regress FAILED (exit ${r.status ?? 1})`);
+  return ok;
+}
+
 function runSeed() {
   const r = spawnSync(process.execPath, [join(__dir, 'ralph-seed-backlog.mjs')], {
     cwd: root,
@@ -97,7 +130,18 @@ function startWatch() {
 
 function cycle() {
   mkdirSync(dataDir, { recursive: true });
+  const state = readState();
   let pending = pendingCount();
+  const prevPending = state.last_pending;
+
+  if (prevPending > 0 && pending === 0 && !headlessRunning()) {
+    if (gitDirty()) {
+      runRegress();
+      state.last_regress_at = stamp();
+    } else {
+      log('backlog cleared — tree clean, skip regress');
+    }
+  }
 
   if (pending === 0) {
     log('backlog empty — seeding next wave');
@@ -115,6 +159,9 @@ function cycle() {
   } else if (pending === 0 && !wr) {
     log('backlog clear, watch idle — will seed next cycle');
   }
+
+  state.last_pending = pending;
+  writeState(state);
 }
 
 function main() {

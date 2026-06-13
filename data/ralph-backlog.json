@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-06-13T22:19:15.156Z",
+  "updated_at": "2026-06-13T22:20:32.680Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -348,7 +348,7 @@
       ],
       "acceptance": "Catalog references platform eval sample for agent testing",
       "started_at": "2026-06-13T22:18:05.074Z",
-      "completed_at": "2026-06-13T22:19:14.212Z"
+      "completed_at": "2026-06-13T22:19:41.288Z"
     },
     {
       "id": "dev-030",
@@ -372,8 +372,98 @@
       ],
       "acceptance": "Docs list seed and monitor npm scripts",
       "completed_at": "2026-06-13T22:19:15.155Z"
+    },
+    {
+      "id": "dev-032",
+      "title": "eval-driven-workflow: corpus table with eval:stats counts + npm scripts",
+      "status": "done",
+      "priority": 32,
+      "files": [
+        "instructions/eval-driven-workflow.md"
+      ],
+      "acceptance": "Table lists jarvis-safe, cybergym-subset, eval:stats command",
+      "started_at": "2026-06-13T22:19:58.911Z",
+      "completed_at": "2026-06-13T22:20:25.902Z"
+    },
+    {
+      "id": "dev-033",
+      "title": "package.json: eval:cybergym script for cybergym-eval-stub.py",
+      "status": "done",
+      "priority": 33,
+      "files": [
+        "package.json",
+        "docs/use-cases/cybergym-benchmark.md"
+      ],
+      "acceptance": "npm run eval:cybergym -- --print-flow works",
+      "completed_at": "2026-06-13T22:20:29.937Z"
+    },
+    {
+      "id": "dev-034",
+      "title": "low-vram guide: link config.low-vram.toml + projected abliteration technique",
+      "status": "done",
+      "priority": 34,
+      "files": [
+        "instructions/low-vram-abliteration.md",
+        "techniques/projected-norm-preserving-abliteration.md"
+      ],
+      "acceptance": "Cross-links between low-vram guide and projected technique doc",
+      "completed_at": "2026-06-13T22:20:29.994Z"
+    },
+    {
+      "id": "dev-035",
+      "title": "factory-firmware-qa use-case: eval-driven-workflow + hardware eval JSONL",
+      "status": "done",
+      "priority": 35,
+      "files": [
+        "docs/use-cases/factory-firmware-qa.md"
+      ],
+      "acceptance": "Links eval-driven-workflow and hardware-factory-prompts.jsonl",
+      "completed_at": "2026-06-13T22:20:30.052Z"
+    },
+    {
+      "id": "dev-036",
+      "title": "agent-development-loop: document ralph:regress pre-commit gate",
+      "status": "pending",
+      "priority": 36,
+      "files": [
+        "docs/agent-development-loop.md",
+        "scripts/ralph-regress.mjs"
+      ],
+      "acceptance": "Playbook lists npm run ralph:regress before commit when watch/headless touched files"
+    },
+    {
+      "id": "dev-037",
+      "title": "ralph-turn-continuation: regress gate + seed dedupe behavior",
+      "status": "pending",
+      "priority": 37,
+      "files": [
+        "docs/ralph-turn-continuation.md"
+      ],
+      "acceptance": "Doc explains regress on backlog clear and seed skips done task titles"
+    },
+    {
+      "id": "dev-038",
+      "title": "evaluation.md: xstest-overrefusal + zig-security corpus rows",
+      "status": "pending",
+      "priority": 38,
+      "files": [
+        "docs/evaluation.md",
+        "scripts/count-eval-prompts.mjs"
+      ],
+      "acceptance": "Corpus table documents xstest-overrefusal-sample and zig-security-prompts jsonl"
+    },
+    {
+      "id": "dev-039",
+      "title": "beginner guide: hardware-tool-gate.py + platform eval sample",
+      "status": "pending",
+      "priority": 39,
+      "files": [
+        "instructions/beginner-local-model-guide.md",
+        "scripts/hardware-tool-gate.py"
+      ],
+      "acceptance": "Guide mentions hardware gate script and platform-eval-sample.jsonl"
     }
   ],
-  "wave_index": 3,
-  "last_seeded_at": "2026-06-13T22:16:20.541Z"
+  "wave_index": 8,
+  "last_seeded_at": "2026-06-13T22:20:32.680Z"
 }

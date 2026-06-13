@@ -38,6 +38,7 @@ data/.ralph-continue.pid
 data/ralph-continue.log
 data/ralph-monitor.log
 data/.ralph-monitor.pid
+data/ralph-monitor-state.json
 
 # Fetched upstream snapshots (regenerate with scripts/fetch-docs.mjs)
 sources/fetched/*.txt

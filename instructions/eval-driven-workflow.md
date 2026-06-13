@@ -33,8 +33,10 @@ npm run eval:stats
 | xstest-overrefusal | [../data/eval/xstest-overrefusal-sample.jsonl](../data/eval/xstest-overrefusal-sample.jsonl) | 15 | Benign authorized prompts; target ≤5% refusal |
 | cyber-research | [../data/eval/cyber-research-prompts.jsonl](../data/eval/cyber-research-prompts.jsonl) | 20 | Pentest / security research proxy |
 | osint-pentest | [../data/eval/osint-pentest-prompts.jsonl](../data/eval/osint-pentest-prompts.jsonl) | 30 | Tooling commands (amass, hashcat, etc.) |
+| platform-eval | [../data/eval/platform-eval-sample.jsonl](../data/eval/platform-eval-sample.jsonl) | 120 | Stratified Windows/macOS/Zig read-only inventory + firmware commands for hardware agent testing (see [../docs/hardware-command-catalog.md](../docs/hardware-command-catalog.md) and [../docs/evaluation.md](../docs/evaluation.md)) |
 | cybergym-subset | [../data/eval/cybergym-subset-sample.jsonl](../data/eval/cybergym-subset-sample.jsonl) | 8 | Execution-based vuln PoC repro proxy for local iteration. Regenerate: `python scripts/cybergym-eval-stub.py --prepare-subset --count 50 --out data/eval/cybergym-subset-sample.jsonl` (see [../docs/use-cases/cybergym-benchmark.md](../docs/use-cases/cybergym-benchmark.md) and [agentic-security-stack.md](agentic-security-stack.md)) |
 | jarvis-safe | [../data/eval/jarvis-safe-eval.jsonl](../data/eval/jarvis-safe-eval.jsonl) | 2509 | Filtered `category=safe` prompts for post-repair / post-abliteration benign tool execution measurement. Generate/refresh: `npm run eval:jarvis-safe` (see [agentic-security-stack.md](agentic-security-stack.md) and [../docs/evaluation.md](../docs/evaluation.md)) |
+| zig-security | [../data/eval/zig-security-prompts.jsonl](../data/eval/zig-security-prompts.jsonl) | 79 | Zig 0.17 canonical PoC/RE/fuzz for advanced toolchain agents. See [../docs/tools/zig-advanced-techniques.md](../docs/tools/zig-advanced-techniques.md) and [../docs/tools/zig-canonical-syntax.md](../docs/tools/zig-canonical-syntax.md) |
 
 **Corpus refresh commands** (run after adding new data or to sync sizes in docs):
 

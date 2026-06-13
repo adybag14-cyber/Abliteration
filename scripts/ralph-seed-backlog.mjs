@@ -80,6 +80,28 @@ const WAVES = [
       acceptance: 'Docs list seed and monitor npm scripts',
     },
   ],
+  [
+    {
+      title: 'agent-development-loop: document ralph:regress pre-commit gate',
+      files: ['docs/agent-development-loop.md', 'scripts/ralph-regress.mjs'],
+      acceptance: 'Playbook lists npm run ralph:regress before commit when watch/headless touched files',
+    },
+    {
+      title: 'ralph-turn-continuation: regress gate + seed dedupe behavior',
+      files: ['docs/ralph-turn-continuation.md'],
+      acceptance: 'Doc explains regress on backlog clear and seed skips done task titles',
+    },
+    {
+      title: 'evaluation.md: xstest-overrefusal + zig-security corpus rows',
+      files: ['docs/evaluation.md', 'scripts/count-eval-prompts.mjs'],
+      acceptance: 'Corpus table documents xstest-overrefusal-sample and zig-security-prompts jsonl',
+    },
+    {
+      title: 'beginner guide: hardware-tool-gate.py + platform eval sample',
+      files: ['instructions/beginner-local-model-guide.md', 'scripts/hardware-tool-gate.py'],
+      acceptance: 'Guide mentions hardware gate script and platform-eval-sample.jsonl',
+    },
+  ],
 ];
 
 function stamp() {
@@ -103,7 +125,7 @@ function pendingCount(tasks) {
   return (tasks || []).filter((t) => t.status === 'pending' || t.status === 'in_progress').length;
 }
 
-function main() {
+function main(depth = 0) {
   const force = process.argv.includes('--force');
   const backlog = loadBacklog();
   const pending = pendingCount(backlog.tasks);
@@ -113,12 +135,22 @@ function main() {
     process.exit(0);
   }
 
+  if (depth >= WAVES.length) {
+    console.log('All waves exhausted — nothing new to seed');
+    process.exit(0);
+  }
+
   const waveIdx = backlog.wave_index ?? 0;
   const wave = WAVES[waveIdx % WAVES.length];
   let id = nextId(backlog.tasks);
   const priority = id;
 
+  const doneTitles = new Set(
+    (backlog.tasks || []).filter((t) => t.status === 'done').map((t) => t.title),
+  );
+
   for (const item of wave) {
+    if (doneTitles.has(item.title)) continue;
     backlog.tasks.push({
       id: `dev-${String(id).padStart(3, '0')}`,
       title: item.title,
@@ -128,6 +160,15 @@ function main() {
       acceptance: item.acceptance,
     });
     id++;
+  }
+
+  const added = backlog.tasks.filter((t) => t.status === 'pending').length - pending;
+  if (added === 0) {
+    backlog.wave_index = waveIdx + 1;
+    backlog.updated_at = stamp();
+    writeFileSync(backlogPath, JSON.stringify(backlog, null, 2) + '\n');
+    console.log(`Wave ${waveIdx + 1} already done — advancing to next wave`);
+    return main(depth + 1);
   }
 
   backlog.wave_index = waveIdx + 1;
