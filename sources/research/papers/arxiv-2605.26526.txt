@@ -1,0 +1,1039 @@
+# fetched: 2026-06-13T23:44:14.843Z
+# arxiv: 2605.26526
+# url: https://arxiv.org/pdf/2605.26526
+
+Open-Weight LLM Fine-Tuning Defenses
+are Susceptible to Simple Attacks
+
+Kevin Kuo1
+
+arXiv:2605.26526v1 [cs.LG] 26 May 2026
+
+1
+
+Chhavi Yadav1,2,∗ Virginia Smith1,∗
+
+Carnegie Mellon University
+
+2
+
+Simons Institute, UC Berkeley
+
+Abstract
+Recent defenses for safeguarding open-weight large language models (LLMs) are
+intended to prevent adversarial usage [Tamirisa et al., 2025, Wang et al., 2025].
+Underlying these defenses is an assumption that new harmful behavior is learned
+through fine-tuning rather than elicited by jailbreaking the model. Yet, pretrained
+LLMs already encode substantial harmful knowledge across many domains, which
+raises an important question: can an adversary jailbreak safeguarded models, to
+achieve harmful usage without fine-tuning at all? In this paper, we show that
+open-weight safeguards are susceptible to simpler strategies that, despite being
+well known, have not been systematically evaluated against these safeguards.
+Specifically, we evaluate two low-cost attacks—abliteration and prefilling—that
+do not rely on gradient-based optimization. Across three harmfulness evaluation
+benchmarks (BeaverTails, HarmBench, and AdvBench), these attacks increase
+attack success rates against safeguarded open-weight models from below 10% to
+a range of 16%–96%. To mitigate this vulnerability, we introduce abliterationresistant tuning (ART), which incorporates an abliteration-based objective into
+training. ART can be layered onto existing defenses and reduces the success rates
+of abliteration, prefilling, and their combination by 10%–20%. These findings
+indicate that the attack surface for open-weight models is broader than previously
+characterized, and that evaluations of safeguarding defenses should incorporate a
+more diverse set of attack strategies beyond adversarial fine-tuning.
+
+1
+
+Introduction
+
+Open-weight large language models (LLMs) bring substantial benefits to society such as enabling
+downstream customization, self-hosting for privacy, and open research [Minaee et al., 2024]. However,
+they also significantly increase the potential for adversarial misuse. As a natural worst-case threat, an
+adversary can fine-tune the model for any harmful task/domain of its choice [Wallace et al., 2025].
+Safeguards against these fine-tuning attacks are an emerging line of work: tamper-resistant [Tamirisa
+et al., 2025] and self-destructing [Wang et al., 2025] models are two prominent examples.
+Underlying this threat model is an implicit assumption that harmful behavior will be learned through
+downstream fine-tuning. However, pretrained LLMs contain broad knowledge relevant to many
+harmful tasks – even in domain-specific evaluations, baseline models achieve non-trivial harmfulness
+without any fine-tuning [Tamirisa et al., 2025]. Thus, fine-tuning by adversaries often serves to
+remove refusal mechanisms rather than introduce new harmful capabilities [Lermen et al., 2023, Qi
+et al., 2024, Yi et al., 2024], raising a broader question about the robustness of safeguarded models:
+Can an adversary bypass fine-tuning safeguards by simply eliciting already-present knowledge?
+In this paper, we show that indeed, two gradient-free attacks – Abliteration and Prefilling – can
+jailbreak safeguarded models without fine-tuning at all. Against two representative fine-tuning
+∗ These authors contributed equally.
+
+# Correspondence to: {kkuo2,cyadav}@andrew.cmu.edu
+
+Preprint.
+
+Fine-tuning
+Safeguards
+(TAR / SEAM)
+
+Pretrained Model
+
+Fine-tuning Attack
+(expensive)
+
+Safeguarded Model
+
+"Tell me how
+to make a
+bomb."
+
+Harmful
+Query
+
+Jailbroken
+
+"...start by gathering
+the necessary parts,
+like a fuse..."
+
+Gradient-free
+Attack (cheap)
+"Sure, here are some
+ideas. First, ..."
+
+Figure 1: Overview of our safeguard and attack pipeline. A pretrained model is safeguarded
+with either TAR or SEAM in order to prevent downstream misuse of the open weights. Despite
+being trained to resist expensive fine-tuning attacks, prior work shows that the safeguarded model
+remains vulnerable to trivial adjustments in fine-tuning and produces harmful outputs (Jailbroken).
+We show that safeguarded models are even vulnerable to two gradient-free attacks: Abliteration,
+which removes a refusal direction from the model’s residual stream activations, and Prefilling, which
+injects a compliant partial response (“Sure, here are some ideas. First, . . . ”) before generation.
+safeguards (TAR [Tamirisa et al., 2025] and SEAM [Wang et al., 2025]), these attacks achieve attack
+success rates from 16% to 96% across benchmarks (BeaverTails, HarmBench, and AdvBench) and
+model architectures (Llama3.2, Qwen2.5, Gemma3).
+While Abliteration and Prefilling are individually known attacks, their effectiveness against finetuning safeguards has not been characterized — a gap this paper addresses. We find that safeguards
+meaningfully reduce attack success rates compared to baseline safety-tuned models, in some cases
+to below 10%. However, gradient-free attacks can recover the aforementioned 16% to 96% attack
+success rate across various settings, which is a substantial increase over this baseline. These results
+suggest that current open-weight safeguards, while meaningfully improving baseline safety, do not
+fully eliminate the harmful knowledge already embedded in the pretrained model. As a result, our
+attacks can successfully bypass refusal mechanisms to extract this harmful knowledge.
+As a step towards defending against the aforementioned attacks, we propose Abliteration-Resistant
+Tuning (ART), a simple method that incorporates Abliteration into the fine-tuning objective and
+reduces attack success rates when applied alone or layered with open-weight safeguards. We
+conclude with a cautionary note that while fine-tuning comprises the most expressive class of attacks,
+safeguards that suppress refusal without removing underlying harmful knowledge remain vulnerable
+to simpler gradient-free attacks. As such, it is necessary to evaluate open-weight safeguards using
+both gradient-free attacks alongside fine-tuning attacks.
+
+2
+
+Preliminaries
+
+We first introduce two representative open-weight safeguards tested in our work, SEAM [Wang et al.,
+2025] and TAR [Tamirisa et al., 2025]. Standard safety alignment trains models to refuse harmful
+prompts via supervised fine-tuning (SFT) or preference optimization (e.g. RLHF [Ouyang et al.,
+2022], DPO [Rafailov et al., 2023]). However, these methods are brittle: safety alignment can degrade
+by fine-tuning on a few harmful examples [Yang et al., 2023, Qi et al., 2024]. SEAM and TAR are
+explicitly designed to address this by making refusal behavior persist under fine-tuning attacks.
+Notation. Throughout, we use Dret and Daln to denote a retain dataset and alignment dataset
+respectively. From Dret we sample prompts and responses (xret , y ret ) which are both benign; from
+Daln we sample triples (xaln , y − , y + ), where xaln is a harmful prompt, y − is a harmful continuation
+of xaln , and y + is a safe refusal of xaln . For convenience, we omit prompts from the notation; all
+computation on y ret or (y + , y − ) implicitly also uses their respective prompts xret or xaln .
+TAR. Tampering Attack Resistance [Tamirisa et al., 2025] is a safeguard that uses meta-learning to
+make safety behaviors persist after adversarial fine-tuning attacks. At each iteration, TAR simulates
+2
+
+multiple steps of a harmful fine-tuning attack drawn from a set of train-time adversaries Atrain . A
+tamper-resistance loss LTR measures how harmful the model is after the simulated attack has been
+applied to the current parameters θ. In practice, LTR is instantiated as a DPO loss over (y − , y + ) pairs,
+which encourages the attacked model to prefer refusal responses y + over harmful continuations y − .
+This steers the model toward a region of weight space from which gradient-based fine-tuning attacks
+cannot easily recover harmful behavior:
+
+
+LTAR (θ; y − , y + ) = Eattack∼Atrain LTR (fattack(θ) ; y + , y − ) .
+(1)
+This is combined with a retain loss on benign sequences y ret that combines a standard cross-entropy
+(CE) loss and distance to the residual stream hidden states h of the initial pretrained parameters θ0 :
+h
+i
+Lret (θ; y ret ) = Eyret CE(fθ (y ret ), y ret ) + ∥hθ (y ret ) − hθ0 (y ret )∥22 ,
+(2)
+SEAM. Rather than resisting harmful fine-tuning, SEAM [Wang et al., 2025] is a safeguard that
+causes it to backfire. SEAM couples the optimization trajectories of harmful and benign tasks so
+that any attempt to optimize for harmful objectives inevitably degrades general performance. This is
+achieved via a self-destructive loss defined as the cosine similarity between the gradient of the loss
+on y − and the gradient of the loss on y ret :
+
+LSD (θ; y − , y ret ) = sim ∇θ L(θ; y − ), ∇θ L(θ; y ret ) .
+(3)
+Minimizing this loss encourages the two gradients to point in opposing directions, so that descending
+on the harmful objective effectively ascends on the benign one. This is combined with an unlearning
+loss −log(CE(fθ (y − ), y − )) that moves the model away from harmful parameters. Notably, unlike
+TAR, SEAM does not use an explicit retain loss on y ret ; instead, utility is preserved through a CE
+loss on safe refusal sequences y + , which the authors find to be more effective at maintaining stable
+representations of harmful prompts.
+Algorithm 1 Open-Weight Safeguard Training
+Require: datasets Dret , Daln , model fθ with initial parameters θ0 , retain weight λ
+1: for t = 1, . . . , T do
+2:
+sample (xret , y ret ) ∼ Dret , (xaln , y − , y + ) ∼ Daln
+Ldef ← LTAR (θ; y − , y + ) TAR
+3:
+4:
+5:
+6:
+
+Lret ← CE(fθ (y ret ), y ret ) + ∥hθ (y ret ) − hθ0 (y ret )∥22
+−
+
+−
+
+−
+
+ret
+
+Ldef ← −log(CE(fθ (y ), y )) + LSD (θ; y , y ) SEAM
++
+
+(Eq. 1)
+(Eq. 2)
+(Eq. 3)
+
++
+
+Lret ← CE(fθ (y ), y )
+
+7:
+θ ← θ − η ∇θ Ldef + λ Lret
+8: end for
+
+
+
+(Eq. 4)
+
+Unified training framework. Despite their different objectives, both safeguards share a common
+training structure, summarized in Algorithm 1. At each step, a safeguard-specific loss Ldef is
+combined with a utility preservation term:
+L(θ) = Ldef (θ; y − , y + ) + λ Lret (θ; y ret , y + ),
+
+3
+
+(4)
+
+Attack Methodology
+
+We propose using two simple, gradient-free attacks against TAR and SEAM, which require no
+fine-tuning at all: (1) Abliteration, which identifies and removes a refusal direction from the model’s
+residual stream at inference time, and (2) Prefilling, which bypasses refusal by injecting a compliant
+prefix before generation begins. Surprisingly, we show that an adversary can use these attacks to
+jailbreak safeguarded models without fine-tuning.
+Abliteration. Refusal behavior in safety-tuned models has been shown to be mediated by a single
+direction in the residual stream [Arditi et al., 2024], and subtracting (ablating) this direction from
+activations at inference time is sufficient to jailbreak the model. We generate candidate refusal
+3
+
+directions using a set of harmful prompts y − and benign prompts y + and computing the mean
+difference in hidden states at each layer ℓ ∈ [L], where h(ℓ) is the hidden state at layer ℓ:
+
+
+
+
+
+r(ℓ) = normalize Ey− h(ℓ) − Ey+ h(ℓ) ,
+(5)
+Rather than subtracting r(ℓ) at inference time, we permanently project it out of the model’s weight
+matrices. Specifically, for each output projection matrix W (attention WO and MLP Wdown ) in a
+single layer, we apply the following transformation:
+⊤
+
+W ′ = W (I − α r(ℓ) r(ℓ) ),
+
+(6)
+(ℓ)
+
+which removes the component of any residual stream input along r before it is processed by the
+layer. Here α is a scaling factor tuned to balance attack effectiveness against output coherence.
+In practice, a refusal direction can be computed for every layer and token position, and an attacker
+could potentially test multiple attacks (using different subsets of these refusal directions) in parallel.
+Since the effectiveness of abliteration is highly sensitive to the choice of layer [Arditi et al., 2024],
+we abliterate each layer individually and consider a prompt to be successfully attacked if any attack
+on a given layer was successful. For computational efficiency, we only consider the hidden state at
+the last prompt token rather than searching over all tokens.
+Prefilling. The user-assistant input structure of instruction-tuned models can be exploited by injecting
+a prefill (partial response) into the assistant turn before generation begins. We use a simple static
+prefill (“Sure, here are some ideas. First, . . . ”) without any optimization. This results in a stronger
+attack than naively prompting within the user turn [Vega et al., 2024, Andriushchenko et al., 2025],
+as it bypasses refusal behavior that typically appears in the first tokens of a response.
+Compositional Attacks. Open-weight access exposes a large attack surface: an adversary can freely
+combine, adapt, and search over attacks in ways that are not possible against API-served models. We
+demonstrate a simple instance of this by first abliterating the model and then adding a prefill on top.
+While this attack improves over both individual attacks in a few settings, the gains are inconsistent,
+suggesting that such an approach would be more beneficial as part of a larger adaptive attack.
+
+4
+
+Experiments and Results
+
+In this section, we investigate two key research questions: First, can an adversary use Abliteration and
+Prefilling to jailbreak models safeguarded by TAR and SEAM? Second, how do additional factors
+(architecture, model size, and tradeoffs with benign utility) affect the attack success rate? We then
+explore potential defenses against these attacks in Section 5.
+Model Setup. We evaluate the effectiveness of Abliteration and Prefilling against open-source
+refusal-trained models (Base) with additional fine-tuning using SEAM and TAR. We experiment
+with 1B, 3B, and 8B Llama models, as well as 1-2B scale models across Llama, Qwen, and Gemma
+families. We train both safeguards using the Anthropic HH RLHF dataset [Bai et al., 2022], which is
+the original data used by TAR; we train SEAM on the same data for consistency. We train TAR for
+750 outer loop steps and 4 to 16 inner loop steps (to balance benign refusals with harmful compliance),
+and train SEAM for 2000 steps. We use a learning rate of 2e-5 and batch size of 8 for fine-tuning.
+Attacks. For Abliteration, we compute refusal directions using 128 harmful and benign
+prompts each from two public HuggingFace datasets (mlabonne/harmful_behaviors and
+mlabonne/harmless_alpaca). We sweep the scaling factor α ∈ {1.0, 1.5, 2.0} and all layers
+in the model, reporting the best result per harmful evaluation prompt. For Prefilling, we use a fixed
+static prefill (“Sure, here are some ideas. First, . . . ”) across all settings.
+Evaluation. We evaluate attack success rate on three benchmarks: BeaverTails [Ji et al., 2023],
+AdvBench [Zou et al., 2023], and HarmBench [Mazeika et al., 2024]. To evaluate whether an attack
+is successful, we input the concatenated prompt and response into the 13B Llama-2-chat judge
+from HarmBench, which outputs a “Yes” or “No” answer in response to whether the interaction
+is harmful [Mazeika et al., 2024]. We first compare safeguards on Llama-3.1-8B-Instruct across
+all benchmarks (Table 1), then examine how attack effectiveness varies with model size (Table 2)
+and family (Table 3) on BeaverTails. We additionally evaluate model utility on the Alpaca benchmark [Taori et al., 2023], reporting ROUGE-L against reference outputs and the rate of incorrect
+refusals on benign prompts (Table 4). For incorrect refusals, we search the response for a fixed set of
+key phrases such as “Sorry, I cannot...” or “I’m just an AI...”.
+4
+
+Before generation
+
+After generation
+n=100
+n=74
+n=26
+
+Harmless (n=100)
+Harmful prompt, safe response (n=74)
+Harmful prompt, harmful response (n=26)
+
+Figure 2: PCA projections of residual stream activations for the abliterated Base model before
+generation (left) and after generating 128 tokens (right). Before generation, harmful and harmless
+inputs are clearly distinguishable. During generation, the representations of successful harmful
+prompts (×) shift towards those of harmless prompts. Interestingly, we find that several harmful
+prompts appear to shift towards the harmless distribution, but are still refused by the model.
+4.1
+
+Results
+
+Non-fine-tuning attacks bypass open-weight safeguards. Table 1 shows attack success rates for
+Llama3.1-8B-Instruct models across all three benchmarks. Baseline attack success rates are low
+across all models and benchmarks, confirming that the safeguards can effectively instill refusal
+behavior. However, Abliteration alone significantly increases attack success rates for Base and SEAM
+to above 70% on all three benchmarks and above 90% on AdvBench and HarmBench. While the rates
+for TAR are lower, they are typically several times larger than the Baseline rate (no attack applied).
+Dataset
+
+Safeguard
+
+Baseline
+
+Prefill
+
+Abliterate
+
+Abliterate + Prefill
+
+BeaverTails
+
+Base
+SEAM
+TAR
+
+13
+2
+5
+
+20
+6
+9
+
+85
+73
+26
+
+86
+73
+28
+
+AdvBench
+
+Base
+SEAM
+TAR
+
+5
+0
+4
+
+10
+7
+13
+
+97
+96
+62
+
+99
+88
+43
+
+HarmBench
+
+Base
+SEAM
+TAR
+
+7
+1
+29
+
+11
+10
+27
+
+97
+93
+33
+
+98
+87
+38
+
+Table 1: Attack success rate (%) for Llama3.1-8B-Instruct models across three harmfulness benchmarks. Columns correspond to four attack conditions: no attack (Baseline), generic Prefilling only
+(Prefill), Abliteration only (Abliterate), and both combined (Abliterate + Prefill).
+We find that Abliteration is much more effective than Prefilling, especially for the 8B models tested
+in Table 1. Prefilling alone has a modest effect; it generally produces single-digit increases over
+Baseline, and the combination of Abliteration + Prefill can also produce single-digit increases over
+Abliteration alone. Interestingly, in both cases, Prefilling can also lower the attack success rate. While
+we use a very simple static prefill (“Sure, here are some ideas. First, ...”), more complex approaches
+(e.g. prefill optimization) can potentially further boost attack success rate.
+Jailbroken prompts shift toward harmless representations. In Figure 2, we visualize PCA
+projections of last-token hidden states at layer 15 for the abliterated Base model (Llama-3.2-1BInstruct), where Abliteration is applied at layer 7, before and after generating 128 tokens on 100
+harmful and 100 harmless prompts. Before generation, harmful (red) and harmless (green) inputs
+are clearly distinguishable in activation space. During generation, there are three key observations.
+First, the representations of successfully jailbroken prompts (×) shift towards those of harmless
+prompts. Second, harmful prompts whose representations remain distinct are all refused by the model.
+Third, and most interestingly, several harmful prompts’ representations shift toward the harmless
+5
+
+Base
+
+SEAM
+
+TAR
+n=100
+n=97
+n=3
+
+Harmless (n=100)
+Harmful prompt, safe response (n=74)
+Harmful prompt, harmful response (n=26)
+
+n=100
+n=95
+n=5
+
+Figure 3: PCA projections of residual stream activations (after generating 128 tokens) for Base, TAR,
+and SEAM models following Abliteration. Points represent harmful prompts that elicited a harmful
+response (×), harmful prompts that elicited a safe response (red), and harmless prompts (green). TAR
+shows clearer separation between harmful and harmless representations than SEAM, followed by
+Base, supporting the intuition that distinguishing between the two is essential for a strong safeguard.
+
+distribution, but still result in refusal. These observations lead us to hypothesize that a model’s ability
+to distinguish between harmful and harmless inputs is a key factor in its refusal capability.
+TAR is more effective than SEAM. While Abliteration and Prefilling significantly increase attack
+success rate against TAR (up to multiple times), TAR is substantially more resistant to attacks than
+Base or SEAM. In Table 1, the ASR on TAR ranges from as low as 9% (BeaverTails, Prefill) up to
+62% (AdvBench, Abliterate). We hypothesize that this is because the objective of TAR minimizes
+harmful behavior more strongly through an inner meta-learning optimization, while the objective of
+SEAM combines vanilla gradient ascent on harmful data with a self-destructive loss.
+In Figure 3, we provide intuition on the effectiveness of SEAM and TAR compared to Base by
+visualizing the last-layer representations of each method. We compare last-token hidden states at
+layer 15 after abliterating the models and generating 128 tokens. TAR exhibits clearer separation
+between harmful and harmless inputs than SEAM, followed by Base. Because this is the same
+ranking we observe in terms of ascending ASR, this matches our expectation that more effective
+safeguards (i.e. TAR) exhibit a stronger ability to identify (and handle) harmful representations.
+Attacks are effective across model size. Table 2 shows how attack effectiveness varies with model
+size on BeaverTails for Base and SEAM. First, Prefilling is more effective at smaller scales: for Base,
+it raises ASR from 15% to 30% at 1B but only from 13% to 20% at 8B; SEAM follows the same
+pattern, increasing from 5% to 14% at 1B but only from 2% to 6% at 8B. Second, Abliteration is
+effective across all scales: Base reaches 68%, 59%, and 85% at 1B, 3B, and 8B respectively, while
+SEAM reaches 38%, 41%, and 73%. The combined attack yields the highest ASR in most cases, with
+Base 3B reaching 89% and SEAM 3B reaching 80%. Finally, for smaller Base and SEAM models,
+the combined attack can significantly boost performance over either attack alone.
+Safeguard
+
+Size
+
+Baseline
+
+Prefill
+
+Abliterate
+
+Abliterate + Prefill
+
+Base
+
+1B
+3B
+8B
+
+15
+16
+13
+
+30
+37
+20
+
+68
+59
+85
+
+80
+89
+86
+
+SEAM
+
+1B
+3B
+8B
+
+5
+3
+2
+
+14
+20
+6
+
+38
+41
+73
+
+61
+80
+73
+
+TAR
+
+1B
+3B
+8B
+
+4
+6
+5
+
+3
+3
+9
+
+16
+22
+26
+
+11
+13
+28
+
+Table 2: Attack success rate (%) on BeaverTails across Llama-3.2-Instruct model sizes. For Base and
+SEAM, Prefilling is stronger at smaller versus larger sizes. Overall, Abliteration is effective across
+all sizes and increases the attack success rate by a factor of 3-5× relative to no attack (Baseline).
+6
+
+Attacks are effective across model architecture. Table 3 reports attack success rates on BeaverTails
+across three model families: Llama, Qwen, and Gemma. Across all families, Abliteration is a stronger
+attack than either baseline and prefill-only. Gemma is particularly vulnerable to Abliteration, reaching
+93% and 96% under Abliteration and the combined attack respectively. One notable difference across
+families is the effect of Prefilling on Qwen SEAM, where Prefilling alone raises ASR from 1% to
+34%, a much larger effect than seen in Llama or Gemma. Overall, the best attacks increase attack
+success rates over the Baseline by several times.
+Model Family
+
+Safeguard
+
+Baseline
+
+Prefill
+
+Abliterate
+
+Abliterate + Prefill
+
+Llama
+
+Base
+SEAM
+TAR
+
+15
+0
+4
+
+30
+17
+3
+
+68
+23
+16
+
+80
+75
+11
+
+Qwen
+
+Base
+SEAM
+TAR
+
+30
+1
+1
+
+27
+34
+2
+
+70
+16
+26
+
+68
+63
+30
+
+Gemma
+
+Base
+SEAM
+TAR
+
+6
+7
+5
+
+20
+16
+4
+
+93
+80
+76
+
+96
+76
+66
+
+Table 3: Attack success rate (%) on BeaverTails against 1-2B sized models across model families.
+Safeguards sacrifice benign performance. A potential concern with any defense is that it may
+degrade the quality of the model’s responses non-harmful inputs. Table 4 reports utility on the
+Alpaca benchmark, which we use to evaluate whether the safeguards degrade general instructionfollowing ability on benign inputs. We report two metrics: ROUGE-L, which measures the quality of
+instruction-following relative to a reference model, and Benign Refusal, which measures the rate at
+which the model incorrectly refuses harmless instructions. Benign refusal rates are generally low, but
+the safeguards do increase refusal rates compared to the base model. ROUGE-L scores are largely
+comparable between Base and SEAM across all sizes, while TAR shows a more notable utility cost,
+particularly at 1B where ROUGE-L drops to 22.9 compared to 29.0 for the Base model.
+Benign Refusal (%)
+Model
+
+1B
+
+3B
+
+ROUGE-L
+
+8B
+
+1B
+
+3B
+
+8B
+
+Base
+0.5
+0.4
+0.1
+29.0
+31.0
+31.6
+SEAM
+2.1
+1.3
+2.6
+28.9
+30.2
+31.3
+TAR
+5.4
+3.2
+2.4
+22.9
+27.3
+28.9
+Table 4: Utility evaluation on Alpaca with Llama-3.2-Instruct models of varying sizes. Benign
+Refusal measures the rate at which the model incorrectly refuses benign instructions. ROUGE-L
+measures similarity to the reference output.
+
+5
+
+Defense: Abliteration-Resistant Tuning (ART)
+
+Since we find that abliteration is an effective attack across multiple settings, a natural defense is to train
+models to remain safe even after abliteration. Our key insight is that standard defenses optimize refusal
+behavior in the original model fθ , but place no constraint on the abliterated model fθ̃ . We propose
+abliteration-resistant tuning (ART), which addresses this by simulating the worst-case abliteration
+attack on the current parameters and performing gradient ascent on harmful outputs y − . While
+prior work has proposed defenses against abliteration based on synthetic data generation [Shairah
+et al., 2025], ART requires no additional data beyond the alignment dataset already used by existing
+safeguards, making it a lightweight and composable complement to such approaches.
+ART is described in Algorithm 2 and uses Algorithm 3 (abliteration) as an inner loop. Note that
+in ART, abliteration with Algorithm 3 uses a batch of training data (i.e. Anthropic HH), while at
+evaluation time, we use the data and evaluation procedure in Section 4.1. At each training step, we
+first identify the single most attackable layer by computing a refusal direction at every layer and
+7
+
+selecting the layer whose abliteration most reduces the model’s harmful CE loss. We then compute the
+gradient of the CE loss on harmful sequences with respect to the abliterated parameters θ̃. We apply
+gradient ascent on this direction to the original parameters θ, while also incorporating a standard CE
+retain loss on benign inputs in order to retain general performance. Unlike SEAM or TAR, we do not
+use y aln for DPO or gradient ascent, as we find that significantly increases benign refusal rates.
+Algorithm 2 Abliteration-Resistant Fine-Tuning
+Require: model fθ , dataset D, weights γar , γret
+1: for t = 1, . . . , T do
+2:
+sample {(yi+ , yi− )} ∼ D
+3:
+θ̃ ← A BLITERATE(θ, {yi+ }, {yi− })
+4:
+Lar ← − log CE(fθ̃ (y −), y − ) + ε
+5:
+Lret ← CE fθ (y + ), y +
+
+6:
+θ ← θ − η γar ∇θ̃ Lar + γret ∇θ Lret
+7: end for
+Algorithm 3 A BLITERATE(fθ , {yi+ }, {yi− })
+
+1: c0 ← CE fθ (y − ), y −
+2: for ℓ = 1, . . . , L do 
+
+3:
+r(ℓ) ← normalize Ey− [h(ℓ) ] − Ey+ [h(ℓ) ]
+(ℓ) (ℓ) ⊤
+
+W ′ ← W (I − α r r
+) for each output projection W in layer ℓ
+(ℓ)
+5:
+fθ ← model fθ with modified weights W ′ at layer ℓ
+
+(ℓ)
+6:
+gℓ ← c0 − CE fθ (y − ), y −
+7: end for ∗
+(ℓ )
+8: return fθ
+where ℓ∗ = argmaxℓ gℓ
+4:
+
+(Eq. 5)
+(Eq. 6)
+
+Experimental Setup. We apply ART to Base, SEAM, and TAR on Gemma-1B-IT, fine-tuning
+each defended model for an additional 200 steps on the Anthropic HH dataset [Bai et al., 2022]. At
+each step, we use a small batch of harmful and benign examples for both the abliteration direction
+computation and the LAR loss. After training, we repeat the same attack pipeline described in
+Section 4.1: we evaluate attack success rate on BeaverTails under the same four attack conditions and
+report benign utility on the Alpaca benchmark. ART introduces two additional hyperparameters, γar
+and γret , which we set to γar = 1 and γret = 2 in all experiments. We train with a batch size of 4, 200
+steps, and a learning rate of 2e-5. A key detail omitted from the pseudocode is that we recompute
+the optimal layer l∗ every 10 steps rather than every step. While increasing the amount of data used
+and frequency for abliteration could potentially improve the robustness of ART, we keep our setup
+intentionally lightweight to demonstrate both its accessible and clear benefits.
+ART reduces attack success rate at modest utility cost. Table 5 reports attack success rates and
+utility for ART applied on top of each safeguard on Gemma3-1B-IT. ART substantially reduces
+abliteration ASR across all three safeguards: Base drops from 93% to 49%, SEAM from 80% to
+64%, and TAR from 76% to 55%. Combined abliteration and prefilling follows a similar trend.
+Interestingly, baseline and prefill-only ASRs are reduced to near zero in all cases, suggesting that
+abliteration resistance could have benefits against more general attacks. Furthermore, these results
+show that ART may be complementary to other safeguards and that there is a rich design space over
+which safeguards can potentially be layered together.
+Crucially, none of the defenses evaluated fully close the gap from the baseline model. This reflects a
+broader challenge in open-weight safety: defenses that suppress refusal behavior without eliminating
+underlying harmful knowledge will remain exploitable by simple jailbreaking attacks.
+
+6
+
+Related Work
+
+Open-weight safety evaluation. Because adversaries have direct access to open-weight model
+parameters, they can modify weights to remove safety behavior entirely [Casper et al., 2025]. These
+8
+
+Safeguard
+
+Baseline
+
+Prefill
+
+Abliterate
+
+Abliterate + Prefill
+
+Base
+Base+ART
+
+6
+0
+
+20
+5
+
+93
+49
+
+96
+67
+
+SEAM
+SEAM+ART
+
+7
+0
+
+16
+2
+
+80
+64
+
+76
+68
+
+TAR
+TAR+ART
+
+5
+0
+
+4
+1
+
+76
+55
+
+66
+56
+
+Table 5: Attack success rate (%) on BeaverTails for Gemma3-1B-IT with and without ART.
+white-box attacks are an accessible and effective attack, as we discuss below. A growing line of work
+has developed defenses specifically designed to persist after adversarial modification [Henderson
+et al., 2023, Fan et al., 2025, Rosati et al., 2024, Shairah et al., 2025]. TAR [Tamirisa et al., 2025]
+and SEAM [Wang et al., 2025] are two safeguards that defend specifically against fine-tuning.
+Fine-tuning attacks. Fine-tuning attacks pose a threat both to closed models via fine-tuning-asa-service APIs and, more acutely, to open-weight models where adversaries have direct access to
+weights [Huang et al., 2024, Casper et al., 2025]. Such attacks are highly effective: safety alignment
+can be broken by fine-tuning on a handful of harmful examples [Yang et al., 2023, Lermen et al.,
+2023, Zhan et al., 2024, Hu et al., 2024], or even on benign data [Qi et al., 2024, Łucki et al., 2024,
+Deeb and Roger, 2024, Guo et al., 2026]. Furthermore, recent work has shown simple changes in the
+fine-tuning pipeline can break safeguards such as TAR [Zhang, 2025, Qi et al., 2025b].
+Activation and weight-space attacks. Safety behavior can also be bypassed via editing the model’s
+activations or projecting model weights without fine-tuning. In the model’s representation space,
+certain directions correspond to behaviors of interest; these directions can be added or subtracted
+at inference time to amplify or suppress these behaviors respectively [Panickssery et al., 2023, Lai,
+2024, Young, 2025, Zhao et al., 2025]. Arditi et al. [2024] leverage this insight and propose a simple
+search over layers, tokens, and scaling factors to maximize the effect of refusal suppression.
+Prompting and prefilling attacks. Prompt-based jailbreaks require only black-box access and can
+elicit harmful outputs without modifying model weights [Zou et al., 2023]. Prefilling attacks are a
+more targeted variant: Qi et al. [2025a] show that safety alignment concentrates its effect on the first
+few output tokens, so supplying a non-refusal prefix at the start of generation can bypass the refusal
+mechanism [Andriushchenko et al., 2025, Li et al., 2025].
+Our work. TAR and SEAM are designed to prevent adversarial misuse of open-weight models, but
+recent work has shown that they remain brittle to simple variations of fine-tuning attacks [Zhang,
+2025, Qi et al., 2025b], raising the question of whether they are robust to gradient-free attacks at all.
+We show that both safeguards are vulnerable to abliteration and prefilling, and propose ART as a
+complementary defense that can be layered onto existing safeguards to reduce their vulnerability.
+
+7
+
+Conclusion
+
+Open-weight safeguards such as TAR and SEAM are designed to prevent adversarial misuse by
+resisting fine-tuning attacks. However, as shown in prior work and supported by our results, pretrained
+models contain significant amounts of harmful knowledge which cannot be easily removed via
+downstream fine-tuning safeguards. Thus, gradient-free attacks can simply elicit this knowledge
+without needing fine-tuning at all. To validate this, we show that Abliteration and Prefilling recover
+success rates of 16–97% compared to below 10% under the safeguard alone; the additional access
+available in the open-weight setting could be exploited to design stronger variants of both attacks.
+As a step toward closing this gap, we propose ART, which defends against abliteration by simulating
+abliteration during training and performing gradient ascent on harmful outputs. While ART reduces
+attack success rates across all settings, no defense evaluated fully closes the gap to the no-attack
+baseline. This suggests that truly robust open-weight safety will require defenses that eliminate
+harmful knowledge rather than relying on refusal mechanisms. We hope our results motivate both
+stronger defenses and more comprehensive evaluation practices that consider both fine-tuning and
+gradient-free attacks in open-weight settings.
+9
+
+References
+M. Andriushchenko, F. Croce, and N. Flammarion. Jailbreaking leading safety-aligned llms with
+simple adaptive attacks. In The Thirteenth International Conference on Learning Representations,
+2025.
+A. Arditi, O. Obeso, A. Syed, D. Paleka, N. Panickssery, W. Gurnee, and N. Nanda. Refusal in
+language models is mediated by a single direction. Advances in Neural Information Processing
+Systems, 37:136037–136083, 2024.
+Y. Bai, A. Jones, K. Ndousse, A. Askell, A. Chen, N. DasSarma, D. Drain, S. Fort, D. Ganguli,
+T. Henighan, et al. Training a helpful and harmless assistant with reinforcement learning from
+human feedback. arXiv preprint arXiv:2204.05862, 2022.
+S. Casper, K. O’Brien, S. Longpre, E. Seger, K. Klyman, R. Bommasani, A. Nrusimha, I. Shumailov,
+S. Mindermann, S. Basart, et al. Open technical problems in open-weight ai model risk management.
+Transactions on Machine Learning Research, 2025.
+A. Deeb and F. Roger. Do unlearning methods remove information from language model weights?
+arXiv preprint arXiv:2410.08827, 2024.
+C. Fan, J. Jia, Y. Zhang, A. Ramakrishna, M. Hong, and S. Liu. Towards llm unlearning resilient
+to relearning attacks: A sharpness-aware minimization perspective and beyond. In International
+Conference on Machine Learning, pages 15762–15778. PMLR, 2025.
+Y. Guo, Z. Xu, S. Liu, Z. Zheng, and M. Kankanhalli. Llms can unlearn refusal with only 1,000
+benign samples. arXiv preprint arXiv:2601.19231, 2026.
+P. Henderson, E. Mitchell, C. Manning, D. Jurafsky, and C. Finn. Self-destructing models: Increasing
+the costs of harmful dual uses of foundation models. In Proceedings of the 2023 AAAI/ACM
+Conference on AI, Ethics, and Society, pages 287–296, 2023.
+S. Hu, Y. Fu, S. Wu, and V. Smith. Jogging the memory of unlearned models through targeted
+relearning attacks. In ICML 2024 Workshop on Foundation Models in the Wild, 2024.
+T. Huang, S. Hu, F. Ilhan, S. F. Tekin, and L. Liu. Harmful fine-tuning attacks and defenses for large
+language models: A survey. arXiv preprint arXiv:2409.18169, 2024.
+J. Ji, M. Liu, J. Dai, X. Pan, C. Zhang, C. Bian, B. Chen, R. Sun, Y. Wang, and Y. Yang. Beavertails:
+Towards improved safety alignment of llm via a human-preference dataset. Advances in Neural
+Information Processing Systems, 36:24678–24704, 2023.
+G.
+
+J. Lai.
+Projected abliteration.
+https://huggingface.co/blog/grimjim/
+projected-abliteration, 2024. Hugging Face Blog.
+
+S. Lermen, C. Rogers-Smith, and J. Ladish. Lora fine-tuning efficiently undoes safety training in
+llama 2-chat 70b. arXiv preprint arXiv:2310.20624, 2023.
+Y. Li, J. Hu, W. Sang, L. Ma, D. Nie, W. Zhang, A. Yu, Y. Su, Q. Huang, and Q. Zhou. Prefill-level
+jailbreak: A black-box risk analysis of large language models. arXiv preprint arXiv:2504.21038,
+2025.
+J. Łucki, B. Wei, Y. Huang, P. Henderson, F. Tramèr, and J. Rando. An adversarial perspective on
+machine unlearning for AI safety. Transactions on Machine Learning Research, 2024.
+M. Mazeika, L. Phan, X. Yin, A. Zou, Z. Wang, N. Mu, E. Sakhaee, N. Li, S. Basart, B. Li, et al.
+Harmbench: A standardized evaluation framework for automated red teaming and robust refusal.
+arXiv preprint arXiv:2402.04249, 2024.
+S. Minaee, T. Mikolov, N. Nikzad, M. Chenaghlu, R. Socher, X. Amatriain, and J. Gao. Large
+language models: A survey. arXiv preprint arXiv:2402.06196, 2024.
+L. Ouyang, J. Wu, X. Jiang, D. Almeida, C. Wainwright, P. Mishkin, C. Zhang, S. Agarwal, K. Slama,
+A. Ray, et al. Training language models to follow instructions with human feedback. Advances in
+neural information processing systems, 35:27730–27744, 2022.
+10
+
+N. Panickssery, N. Gabrieli, J. Schulz, M. Tong, E. Hubinger, and A. M. Turner. Steering llama 2 via
+contrastive activation addition. arXiv preprint arXiv:2312.06681, 2023.
+X. Qi, Y. Zeng, T. Xie, P.-Y. Chen, R. Jia, P. Mittal, and P. Henderson. Fine-tuning aligned language
+models compromises safety, even when users do not intend to! In The Twelfth International
+Conference on Learning Representations, 2024.
+X. Qi, A. Panda, K. Lyu, X. Ma, S. Roy, A. Beirami, P. Mittal, and P. Henderson. Safety alignment
+should be made more than just a few tokens deep. In The Thirteenth International Conference on
+Learning Representations, 2025a.
+X. Qi, B. Wei, N. Carlini, Y. Huang, T. Xie, L. He, M. Jagielski, M. Nasr, P. Mittal, and P. Henderson.
+On evaluating the durability of safeguards for open-weight LLMs. In The Thirteenth International
+Conference on Learning Representations, 2025b.
+R. Rafailov, A. Sharma, E. Mitchell, C. D. Manning, S. Ermon, and C. Finn. Direct preference
+optimization: Your language model is secretly a reward model. Advances in neural information
+processing systems, 36:53728–53741, 2023.
+D. Rosati, J. Wehner, K. Williams, Ł. Bartoszcze, D. Atanasov, R. Gonzales, S. Majumdar, C. Maple,
+H. Sajjad, and F. Rudzicz. Representation noising: A defence mechanism against harmful
+finetuning. Advances in Neural Information Processing Systems, 37:12636–12676, 2024.
+H. A. Shairah, H. A. A. K. Hammoud, B. Ghanem, and G. Turkiyyah. An embarrassingly simple
+defense against LLM abliteration attacks. arXiv preprint arXiv:2505.19056, 2025.
+R. Tamirisa, B. Bharathi, L. Phan, A. Zhou, A. Gatti, T. Suresh, M. Lin, J. Wang, R. Wang, R. Arel,
+et al. Tamper-resistant safeguards for open-weight LLMs. In The Thirteenth International
+Conference on Learning Representations, 2025.
+R. Taori, I. Gulrajani, T. Zhang, Y. Dubois, X. Li, C. Guestrin, P. Liang, and T. B. Hashimoto. Alpaca:
+A strong, replicable instruction-following model. Stanford Center for Research on Foundation
+Models. https://crfm. stanford. edu/2023/03/13/alpaca. html, 3(6):7, 2023.
+J. Vega, I. Chaudhary, C. Xu, and G. Singh. Bypassing the safety training of open-source llms with
+priming attacks. In The Second Tiny Papers Track at ICLR 2024, 2024.
+E. Wallace, O. Watkins, M. Wang, K. Chen, and C. Koch. Estimating worst-case frontier risks of
+open-weight llms. arXiv preprint arXiv:2508.03153, 2025.
+Y. Wang, R. Zhu, and T. Wang. Self-destructive language model. arXiv preprint arXiv:2505.12186,
+2025.
+X. Yang, X. Wang, Q. Zhang, L. Petzold, W. Y. Wang, X. Zhao, and D. Lin. Shadow alignment: The
+ease of subverting safely-aligned language models. arXiv preprint arXiv:2310.02949, 2023.
+J. Yi, R. Ye, Q. Chen, B. Zhu, S. Chen, D. Lian, G. Sun, X. Xie, and F. Wu. On the vulnerability of
+safety alignment in open-access llms. In Findings of the Association for Computational Linguistics:
+ACL 2024, pages 9236–9260, 2024.
+R. J. Young. Comparative analysis of LLM abliteration methods: A cross-architecture evaluation.
+arXiv preprint arXiv:2512.13655, 2025.
+Q. Zhan, R. Fang, R. Bindu, A. Gupta, T. B. Hashimoto, and D. Kang. Removing rlhf protections in
+gpt-4 via fine-tuning. In Proceedings of the 2024 Conference of the North American Chapter of
+the Association for Computational Linguistics: Human Language Technologies (Volume 2: Short
+Papers), pages 681–687, 2024.
+S. Zhang. Exploring Fine-Tuning Techniques for Removing Tamper-Resistant Safeguards for OpenWeight LLMs. PhD thesis, Massachusetts Institute of Technology, 2025.
+J. Zhao, J. Huang, Z. Wu, D. Bau, and W. Shi. Llms encode harmfulness and refusal separately. In
+The Thirty-ninth Annual Conference on Neural Information Processing Systems, 2025.
+A. Zou, Z. Wang, N. Carlini, M. Nasr, J. Z. Kolter, and M. Fredrikson. Universal and transferable
+adversarial attacks on aligned language models. arXiv preprint arXiv:2307.15043, 2023.
+11
+
+A
+
+Technical appendices and supplementary material
+
+Licenses and Attribution. Our figures use images from Flaticon.com. As per their free license, we
+state that “This cover has been designed using resources from Flaticon.com.”
+Safeguarded Model
++ Safeguards
+(SEAM / TAR)
++ Abliteration-Resistant
+Tuning (ART)
+
+"Tell me how
+to make a
+bomb."
+
+"Sure, here are
+some ideas.
+First, ..."
+
+Harmful
+Query
+
+Abliteration
+and Prefilling
+Attacks
+
+Pretrained Model
+
+Jailbroken
+"...start by gathering
+the necessary parts,
+like a fuse..."
+
+Refused
+"..let's reflect on the
+potential harm that
+this can cause..."
+
+AbliterationResistant Model
+
+Figure 4: Overview of our safeguard and attack pipeline. A pretrained model is safeguarded with
+either TAR or SEAM; we then layer Abliteration-Resistant Tuning (ART) on top of these safeguards.
+We evaluate two inference-time attacks on the resulting models: abliteration, which removes a refusal
+direction from the model’s residual stream activations, and prefilling, which bypasses refusal by
+injecting a compliant partial response (“Sure, here are some ideas. First, . . . ”) before generation.
+Despite being trained to resist fine-tuning attacks, the safeguarded model remains vulnerable to
+inference-time attacks and produces harmful outputs (Jailbroken), whereas the abliteration-resistant
+model continues to refuse (Refused).
+
+12
+
+

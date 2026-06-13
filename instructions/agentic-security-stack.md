@@ -20,6 +20,8 @@ heretic Qwen/Qwen3-4B-Instruct-2507
 
 Output: decensored checkpoint with low KL drift (see Heretic eval).
 
+**If abliteration barely moves refusal:** base may use **extended-refusal** or **ART** defenses — see [../docs/defenses-against-abliteration.md](../docs/defenses-against-abliteration.md) and try factory-specific `[bad_prompts]` before raising surgery strength.
+
 **Optional:** export LoRA adapter instead of full weights for bench OTA updates:
 
 ```bash

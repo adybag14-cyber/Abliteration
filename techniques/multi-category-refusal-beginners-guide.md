@@ -2,7 +2,7 @@
 
 Plain-language summary of [arXiv:2602.02132](https://arxiv.org/abs/2602.02132) — *There Is More to Refusal in LLMs than a Single Direction* (Joad et al., Qatar Computing Research Institute, Feb 2026).
 
-**Fetched source:** [../sources/fetched/arxiv-2602-02132.pdf](../sources/fetched/arxiv-2602-02132.pdf) · text extract: `sources/fetched/arxiv-2602-02132.txt` (regenerate: `npm run fetch:arxiv-qcri`)
+**Fetched source:** [../sources/research/papers/arxiv-2602.02132.pdf](../sources/research/papers/arxiv-2602.02132.pdf) · full paper map: [../docs/refusal-research-beginners-guide.md](../docs/refusal-research-beginners-guide.md) (regenerate: `npm run fetch:research-papers`)
 
 **You are here if:** you finished [../instructions/beginner-reproduction-methodology.md](../instructions/beginner-reproduction-methodology.md) and want to understand **leading-edge refusal research** without reading the full paper.
 

@@ -197,7 +197,11 @@ Text-trunk abliteration for VLMs; mmproj export notes.
 
 ## Evidence-based tool choice
 
+**Research beginners hub (2024–2026 papers + repo PDFs):** [../docs/refusal-research-beginners-guide.md](../docs/refusal-research-beginners-guide.md) · [../sources/research/README.md](../sources/research/README.md)
+
 Cross-architecture benchmark (Heretic vs DECCP vs ErisForge vs FailSpy, GSM8K sensitivity): [../docs/comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md) · [arXiv:2512.13655](https://arxiv.org/abs/2512.13655)
+
+Defenses against abliteration (extended-refusal, ART): [../docs/defenses-against-abliteration.md](../docs/defenses-against-abliteration.md)
 
 Extended toolkit (Abliterix, ErisForge, Nous/DECCP, FailSpy — placement + commands): [extended-abliteration-toolkit.md](extended-abliteration-toolkit.md)
 

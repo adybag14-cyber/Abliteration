@@ -2,6 +2,8 @@
 
 Taxonomy of **papers**, **open-source tools**, and **when each method applies**. Updated Jun 2026.
 
+**Beginner paper map (PDFs in repo):** [refusal-research-beginners-guide.md](refusal-research-beginners-guide.md) · [../sources/research/README.md](../sources/research/README.md)
+
 ---
 
 ## Timeline
@@ -20,7 +22,13 @@ Taxonomy of **papers**, **open-source tools**, and **when each method applies**.
 | 2026 | [llm-abliteration v1.2](https://github.com/jim-plus/llm-abliteration/releases/tag/v1.2) | Sharded ablate, MoE, Metal |
 | 2026 | [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp) | HF org; `convert_lora_to_gguf`, multi-LoRA server |
 | 2026 | Community Heretic 1.2 | Reported ~70% VRAM reduction (keep pip current) |
-| 2026 | [Young — comparative abliteration](https://arxiv.org/abs/2512.13655) | Heretic vs DECCP vs ErisForge vs FailSpy; GSM8K sensitivity |
+| 2025 | [Shairah — extended-refusal defense](https://arxiv.org/abs/2505.19056) | Abliteration drops refusal ≤10% vs 70–80% on defended models |
+| 2025 | [Siu — COSMIC](https://arxiv.org/abs/2506.00085) | Output-independent refusal direction ID (ACL Findings) |
+| 2025 | [Agnihotri — safety pretraining](https://arxiv.org/abs/2510.02768) | Checkpoint-level robustness under abliteration |
+| 2026 | [Young — comparative abliteration](https://arxiv.org/abs/2512.13655) | Heretic 16/16 compat; DECCP/ErisForge GSM8K; FailSpy research |
+| 2026 | [Petrov — contrast baselines](https://arxiv.org/abs/2603.22061) | Topic-matched harmful/harmless pairs can fail |
+| 2026 | [Kuo — defenses vs abliteration](https://arxiv.org/abs/2605.26526) | TAR/SEAM vulnerable; ART mitigation |
+| 2026 | [Carleo — code LLM abliteration](https://arxiv.org/abs/2606.05396) | Refusal vs capability separation |
 
 ---
 

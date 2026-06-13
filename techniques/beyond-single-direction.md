@@ -29,7 +29,7 @@
 
 ## 2. Concept cones & gradient RDO (TUM 2025)
 
-[The Geometry of Refusal — Concept Cones](https://arxiv.org/html/2502.17420v2) (Wollschläger et al.):
+[The Geometry of Refusal — Concept Cones](https://arxiv.org/abs/2502.17420) (Wollschläger et al.) — **Repo PDF:** [../sources/research/papers/arxiv-2502.17420.pdf](../sources/research/papers/arxiv-2502.17420.pdf) · beginner context: [../docs/refusal-research-beginners-guide.md](../docs/refusal-research-beginners-guide.md) §4
 
 - Refusal directions form **multi-dimensional cones**, not a single line.
 - **Refusal Direction Optimization (RDO):** gradient-based search for `r` optimizing:

@@ -1,15 +1,24 @@
 # References
 
-> **Source policy:** GitHub repos and arXiv first. Hugging Face is listed for weights and the heretic/abliterated model registry. Refresh with `npm run fetch:all` (or `fetch:heretic` / `fetch:docs` / `fetch:web-research` / `fetch:hf-models:firefox`).
+> **Source policy:** GitHub repos and arXiv first. Hugging Face is listed for weights and the heretic/abliterated model registry. Refresh with `npm run fetch:all` (or `fetch:heretic` / `fetch:docs` / `fetch:research-papers` / `fetch:hf-models:firefox`).
+
+**Offline research corpus (PDFs + text):** [sources/research/README.md](sources/research/README.md) · **Beginner map:** [docs/refusal-research-beginners-guide.md](docs/refusal-research-beginners-guide.md)
 
 ## Primary papers
 
-| Title | Link | GitHub reproduction |
-|-------|------|---------------------|
-| Refusal in LLMs is mediated by a single direction | [arXiv:2406.11717](https://arxiv.org/abs/2406.11717) | [andyrdt/refusal_direction](https://github.com/andyrdt/refusal_direction) |
+| Title | Link | Repo PDF / code |
+|-------|------|-----------------|
+| **Refusal in LLMs is mediated by a single direction** (Arditi, NeurIPS 2024) | [arXiv:2406.11717](https://arxiv.org/abs/2406.11717) | [PDF](sources/research/papers/arxiv-2406.11717.pdf) · [andyrdt/refusal_direction](https://github.com/andyrdt/refusal_direction) |
 | Accessible summary | [LessWrong](https://www.lesswrong.com/posts/jGuXSZgv6qfdhMCuJ/refusal-in-llms-is-mediated-by-a-single-direction) | — |
-| The Geometry of Refusal — concept cones | [arXiv:2502.17420](https://arxiv.org/html/2502.17420v2) | [TUM geometry-of-refusal](https://www.cs.cit.tum.de/daml/geometry-of-refusal/) |
-| More to refusal than a single direction (QCRI) | [arXiv:2602.02132](https://arxiv.org/abs/2602.02132) · [PDF](https://arxiv.org/pdf/2602.02132) | Handbook: [techniques/multi-category-refusal-beginners-guide.md](techniques/multi-category-refusal-beginners-guide.md) |
+| **Geometry of Refusal — concept cones** (TUM 2025) | [arXiv:2502.17420](https://arxiv.org/abs/2502.17420) | [PDF](sources/research/papers/arxiv-2502.17420.pdf) · [geometry-of-refusal](https://www.cs.cit.tum.de/daml/geometry-of-refusal/) |
+| **Comparative abliteration methods** (Young 2025/26) | [arXiv:2512.13655](https://arxiv.org/abs/2512.13655) | [PDF](sources/research/papers/arxiv-2512.13655.pdf) · [ricyoung/abliteration-comparison](https://github.com/ricyoung/abliteration-comparison) |
+| **More to refusal than a single direction** (QCRI 2026) | [arXiv:2602.02132](https://arxiv.org/abs/2602.02132) | [PDF](sources/research/papers/arxiv-2602.02132.pdf) · [multi-category-refusal-beginners-guide.md](techniques/multi-category-refusal-beginners-guide.md) |
+| **Defense: extended-refusal fine-tuning** (Shairah 2025) | [arXiv:2505.19056](https://arxiv.org/abs/2505.19056) | [PDF](sources/research/papers/arxiv-2505.19056.pdf) · [defenses-against-abliteration.md](docs/defenses-against-abliteration.md) |
+| **COSMIC — refusal direction ID** (Siu, ACL 2025) | [arXiv:2506.00085](https://arxiv.org/abs/2506.00085) | [PDF](sources/research/papers/arxiv-2506.00085.pdf) · [wang-research-lab/COSMIC](https://github.com/wang-research-lab/COSMIC) |
+| **Safety pretraining under abliteration** (2025) | [arXiv:2510.02768](https://arxiv.org/abs/2510.02768) | [PDF](sources/research/papers/arxiv-2510.02768.pdf) · [safety_pretraining](https://github.com/shashankskagnihotri/safety_pretraining) |
+| **Topic-matched contrast baselines fail** (2026) | [arXiv:2603.22061](https://arxiv.org/abs/2603.22061) | [PDF](sources/research/papers/arxiv-2603.22061.pdf) | — |
+| **Open-weight defenses vs abliteration** (Kuo 2026) | [arXiv:2605.26526](https://arxiv.org/abs/2605.26526) | [PDF](sources/research/papers/arxiv-2605.26526.pdf) | ART mitigation in paper |
+| **Code LLMs — refusal vs capability** (2026) | [arXiv:2606.05396](https://arxiv.org/abs/2606.05396) | [PDF](sources/research/papers/arxiv-2606.05396.pdf) | — |
 | Representation Engineering | [arXiv:2310.01405](https://arxiv.org/abs/2310.01405) | RepE ecosystem |
 | Circuit Breakers (defensive) | [arXiv:2406.04313](https://arxiv.org/html/2406.04313v3) | [GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) |
 | Projected abliteration (blog) | [grimjim/projected](https://huggingface.co/blog/grimjim/projected-abliteration) | llm-abliteration `--projected` |
@@ -32,6 +41,9 @@
 | **abliterate.cpp** | [github.com/kabachuha/abliterate.cpp](https://github.com/kabachuha/abliterate.cpp) | GGUF measure → llm-abliteration (WIP) |
 | **Abliterix** | [github.com/wuwangzhang1216/abliterix](https://github.com/wuwangzhang1216/abliterix) | Optuna multi-objective; 150+ configs; HonestAbliterationBench |
 | **DECCP** | [github.com/AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) | Multilingual deccp topics for `measure.py --deccp` |
+| **COSMIC** | [github.com/wang-research-lab/COSMIC](https://github.com/wang-research-lab/COSMIC) | Cosine-similarity refusal direction ID (ACL 2025) |
+| **abliteration-comparison** | [github.com/ricyoung/abliteration-comparison](https://github.com/ricyoung/abliteration-comparison) | Young arXiv:2512.13655 reproduction assets |
+| **spkgyk/abliteration** | [github.com/spkgyk/abliteration](https://github.com/spkgyk/abliteration) | Pure PyTorch hooks (no TransformerLens) |
 | **GraySwan circuit-breakers** | [github.com/GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) | Defensive alignment (contrast) |
 
 Heretic also mirrors to [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/heretic).

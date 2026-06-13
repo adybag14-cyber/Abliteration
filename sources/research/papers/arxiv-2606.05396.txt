@@ -1,0 +1,1103 @@
+# fetched: 2026-06-13T23:44:14.843Z
+# arxiv: 2606.05396
+# url: https://arxiv.org/pdf/2606.05396
+
+Willing but Unable: Separating Refusal from Capability in Code LLMs via Abliteration
+Cristina Carleo1 , Pietro Liguori1,∗ , Naghmeh Ivaki2 , and Domenico Cotroneo3
+1
+
+University of Naples Federico II, Naples, Italy
+University of Coimbra, CISUC/LASI, Coimbra, Portugal
+3
+University of North Carolina at Charlotte, Charlotte, NC, USA
+cr.carleo@studenti.unina.it, pietro.liguori@unina.it naghmeh@dei.uc.pt, d.cotroneo@charlotte.edu
+*corresponding author
+
+arXiv:2606.05396v1 [cs.CR] 3 Jun 2026
+
+2
+
+Abstract—Producing a labeled vulnerable code at scale is a recurring obstacle for learning-based vulnerability detection: mined
+corpora carry substantial label noise, and existing LLM-based
+augmentation propagates these inaccuracies because it transforms
+vulnerable seeds rather than synthesising vulnerabilities from a
+specification. A complementary route is to start from safe code
+and ask an instruction-tuned LLM to inject a specified CWE—
+which would shift the labeling burden from open-ended detection
+to bounded binary confirmation—but safety-aligned code LLMs
+systematically refuse such prompts. This paper is a preliminary
+feasibility study of abliteration, a low-rank weight edit that
+orthogonally projects out the refusal direction in the residual
+stream, as a tool to remove this barrier. We use Python and
+CWE-89 (SQL injection) as a case study, evaluating the Qwen2.5Coder-Instruct family at 3B, 7B, and 14B parameters on safe
+samples drawn from PromSec and SafeCoder, replicated three
+times per condition. We find that (i) refusal on injection prompts
+is strongly size- and prompt-context-dependent: the 14B refuses
+100% of prompts, the 7B refuses 73% of PromSec but only 5%
+of SafeCoder, whereas the 3B is essentially never blocked; (ii)
+abliteration reduces refusal to zero or near-zero across all sizes
+while leaving syntactic validity above 93%, supporting the view
+that, in this setting, refusal can be detached from measured codegeneration capability; and (iii) the post-abliteration injection
+rate remains capacity-bound—88–97% on the 14B, 89–90%
+on the 7B, and 25–48% on the 3B—separating willingness,
+which abliteration unlocks, from capability, which scales with
+parameters. Vulnerability verdicts are produced by a three-tool
+detector ensemble (CodeQL, Semgrep, Bandit) followed by
+manual adjudication by two authors on detector-positive outputs.
+
+We investigate a complementary construction. Given a sample
+S that a static analyzer confirms is not vulnerable to CWE-X,
+an instruction-tuned LLM is asked to apply a CWE-X-specific
+transformation to produce S ′ . This setup does not eliminate
+static-analysis-based labelling, but it changes the question the
+analyzer is asked: from open-ended multi-class detection on a
+real-world sample (where 20–71% of labels are wrong) to binary
+confirmation on a sample whose intended class we specified
+(where a negative answer triggers filtering, not mislabelling). A
+reliable version of this pipeline would enable training data for
+learning-based detectors [3], [4], [11], security benchmarks for
+code-generation LLMs [12], [13], paired counterfactual samples
+that share logic and differ only in the targeted weakness, and
+calibrated test sets to measure the recall ceiling of static analyzers.
+A central obstacle stands in the way: modern instructiontuned code-generation LLMs are safety-aligned, and explicitly
+naming a CWE in the prompt triggers refusal behaviour learned
+through RLHF, even when the model is otherwise capable of the
+underlying transformation [14]. We study a single intervention
+that addresses this barrier: abliteration [15], a low-rank weight
+edit that orthogonally projects out the refusal direction in the
+residual stream.
+This paper is a preliminary feasibility study of how abliteration
+interacts with model scale on a CWE-injection task, using Python
+and CWE-89 (SQL injection) as case study—chosen because
+Python is among the most affected languages in open-source
+vulnerability incidence [10] yet underrepresented in detection
+research relative to C/C++ [9], and because the Qwen2.5Coder family we abliterate is trained on Python-rich corpora.
+Constructing a full dataset is out of scope; instead, we examine
+whether the design space can be narrowed enough to make such
+a corpus a tractable engineering exercise. Our central finding is
+Keywords–vulnerability injection; code LLMs; abliteration; that refusal removal and vulnerability-injection capability are
+refusal direction; CWE-89; software security
+orthogonal: abliteration removes refusal, but successful injection
+remains capacity-bound, with a ∼50-point gap between 3B
+and 7B models even after refusal has been reduced to zero or
+1. Introduction
+near-zero on both.
+Learning-based vulnerability detection is bottlenecked by
+Our contributions are:
+training data. Synthetic test suites [1] lack realism; datasets mined 1) A reproducible pipeline that applies abliteration to instructionfrom CVE-tagged commits [2]–[4] carry 20–71% label noise and
+tuned code LLMs and validates the resulting generations
+up to 99% duplication [5]; and LLM-based augmentation [6]–[8]
+through an ensemble of three independent static analyzers
+inherits the noise of its seeds because it transforms existing
+(CodeQL, Semgrep, Bandit), followed by author-led manual
+vulnerable samples rather than synthesising vulnerabilities under
+adjudication of detector-positive cases (Section 3).
+an explicit specification. The problem is structural rather than 2) A controlled three-by-two factorial study on the Qwen2.5language-specific, but research attention is uneven: detection
+Coder family at 3B, 7B, and 14B parameters, providing
+studies are dominated by C/C++, with Python in a residual
+one of the first empirical measurement of refusal and post∼16% alongside PHP and Go [9], despite Python’s prominence
+abliteration compliance of code LLMs on a CWE-injection
+in open-source vulnerability incidence [10].
+task.
+
+3) An empirical separation of willingness from capability as exploits, where the generated code is the attack. In contrast, our
+orthogonal axes of compliance: refusal removal unlocks pipeline takes a complete, safe application as input and asks
+capability that is already present but does not create capability the LLM to apply a CWE-specific transformation to it, so the
+that is missing.
+output is a vulnerable counterpart of a known-safe program
+4) Released open artefacts: the evaluation harness (refusal rather than a deployable payload: the attack surface is introduced
+classifier, validators, scoring scripts) and aggregate measure- into existing defensive code rather than synthesised from scratch.
+ments, available at https://github.com/dessertlab/AblitEval. The downstream use shifts accordingly, from proof-of-concept
+Abliterated checkpoints, the abliteration scripts targeted at the exploitation to the construction of labelled training data for
+specific Qwen2.5-Coder weights used here, and pre-generated vulnerability detectors and, as a methodological by-product, the
+vulnerable samples are not publicly released; the rationale for empirical study of refusal behaviour on CWE-named prompts.
+this asymmetric release is discussed in the Ethical Statement.
+A complementary line of work targets the localisation problem
+The remainder of the paper is organised as follows. Section 2 rather than synthesis. Bogaerts et al. [22] approach the Python
+reviews related work, Section 3 presents the proposed pipeline, case from the localisation side, training BoW, Conv1D, and
+Section 4 describes the experimental setup, and Section 5 reports BiLSTM models to identify potential injection sites with over
+the results and discusses the research questions. Finally, Section 6 95% true-positive rate. Their work is a proof-of-concept restricted
+discusses the implications of the findings; Section 7 examines to localisation; the synthesis of vulnerable code at the identified
+threats to validity; Section 8 addresses ethical considerations; sites is left as future work. In contrast, our pipeline does not
+and Section 9 concludes the paper and outlines future work.
+perform localisation at all: we ask the LLM to apply a CWE-89specific transformation to a known-safe sample and let it identify
+2. Background and Related Work
+the appropriate injection site internally, then validate the output
+2.1 Vulnerability Datasets and Synthesis
+through static analysis. The two approaches are complementary: a
+Pattern-mining and supervised editing approaches predate learned localiser could be used in conjunction with our generation
+LLM-based ones. VulGen [6] mines single-statement vulnerabil- step to constrain where the LLM modifies the code, which we
+ity patterns from C code and trains a model to locate injection leave for future work.
+points; VGX [7] extends VulGen with a larger dataset and a
+Static-analysis ensembles have also been adopted for labelling
+semantics-aware contextualisation step. Both are restricted to at scale. Mechri et al. [11] introduce SecureQwen, a decoder-only
+single-statement vulnerabilities, both target C/C++ rather than transformer fine-tuned for vulnerability detection on PythonPython, and both require substantial pattern-mining infrastructure VulnDB, a 1.875M-snippet dataset assembled from GitHub,
+that does not transfer across CWEs. In contrast, our pipeline Codeparrot, and synthetic data. Their labelling combines five
+is specification-driven rather than pattern-driven: the CWE is static analyzers (Bandit, Semgrep, SonarQube, CodeQL, PyLint)
+named directly in the prompt and the LLM is asked to perform for broader CWE coverage than any single tool, establishing
+the targeted transformation, so extending to a new CWE requires static-analysis-based labelling as a viable methodology for Python
+only formulating a new natural-language injection instruction, at scale. In contrast, we use the analyzer ensemble at validation
+not curating a pattern corpus.
+time rather than at construction time. A mined corpus needs
+LLM-based augmentation is a more recent approach. the ensemble to derive labels in the open-ended “what CWE, if
+VulScribeR [8] uses retrieval-augmented generation with three any?” direction; our pipeline only needs it to confirm a specific,
+strategies (Mutation, Injection, Extension), all of which transform pre-specified CWE on each generated sample, which is a strictly
+or recombine existing vulnerable samples. Its Injection strategy easier task.
+outperforms VulGen and VGX by approximately 27% in F1, but
+as discussed in Section 1, the resulting labels still depend on 2.2 Refusal and Abliteration
+Asking a safety-aligned LLM to “introduce a CWE-X
+the labels of the seed corpus. Croft et al. [5] show those labels
+are unreliable. In contrast, we start from safe code rather than vulnerability” is, from the model’s perspective, a request for
+a vulnerable seed, so the only label assertion needed upstream harmful content, and triggers refusal behaviour learned through
+is the conservative “CodeQL agrees this is not vulnerable to RLHF or DPO [14]. Arditi et al. [15] show that this refusal is
+CWE-X”, and we specify the target CWE explicitly in the mediated by a single direction in the residual stream, consistent
+prompt, so post-hoc validation is reduced from a multi-class across thirteen open-source chat models up to 72B parameters.
+detection problem to a binary confirmation aligned with the Ablating this direction at every layer and token position via
+injected specification. We also explicitly address the refusal orthogonal projection prevents the model from refusing harmful
+behaviour that none of the LLM-based augmentation methods instructions while preserving general capabilities; the intervention
+report on, presumably because they avoid CWE-named prompts. is a permanent weight edit that requires no retraining. Although
+A separate strand of LLM-driven research uses natural- Arditi et al. report that a single direction suffices in their
+language descriptions as input to generate offensive code from experiments, the procedure is naturally extended by removing
+scratch. EVIL [16] and the Shellcode_IA32 corpus [17], [18] the top-k such directions when more than one is identified by
+target the synthesis of executable IA-32 shellcode from natural- the extraction step, which is the configuration we adopt.
+language intent, and the same paradigm has been extended both
+In contrast with [15], we apply abliteration to instruction-tuned
+empirically along the shellcode dimension [19], [20] and to code LLMs rather than general-purpose chat models, and we
+PowerShell attack scripts in a real-world threat setting [21]. The evaluate it on a structured downstream task (CWE-89 injection
+shared objective there is to obtain standalone offensive artefacts— on real Python files) rather than on a refusal-rate harness alone.
+payloads or attack scripts directly usable as proof-of-concept This setting reveals an effect that prior work does not isolate—the
+
+Figure 1. End-to-end pipeline. The same prompt is sent to the Base and Abliterated checkpoints of each Qwen2.5-Coder size.
+Refusal responses bypass downstream analysis; non-refusal responses pass through code extraction and AST validation, then
+through a three-tool vulnerability detector ensemble (Bandit, Semgrep, CodeQL). Outputs flagged by at least one detector are
+manually adjudicated by two authors against the CWE-89 specification; initial inter-annotator agreement was approximately 90%,
+and disagreements were resolved by discussion. Validated pairs ⟨S,S ′ ⟩ also feed a similarity analysis (CrystalBLEU, CodeBLEU)
+against the CWE-89-vulnerable counterpart of S provided by the source corpus, used as ground-truth reference.
+dependence of post-abliteration compliance on model scale—
+which we report in Section 5.
+
+this surgery is non-trivial—a coarse intervention that disables
+refusal would also damage unrelated reasoning, and the resulting
+model would generate fluent but malformed or incoherent code.
+3. Approach
+The technical content of the procedure below is to identify the
+Our pipeline, as illustrated in Figure 1, has three phases: Phase smallest subspace of the residual stream that mediates refusal
+1 - prompt construction (Section 3-C), Phase 2 - refusal removal specifically, and to project it out of the model weights without
+via abliteration (Section 3-B), and Phase 3 - multi-tool validation disturbing the rest.
+with author-led manual adjudication of detector-positive outputs
+Concretely, transformer-based language models maintain a
+(Section 3-D).
+residual stream x(l) ∈ Rdmodel at each layer l that acts as a shared
+communication channel: every component (attention heads, MLP
+3.1 Model Selection Rationale
+blocks) reads from it and writes its output back by addition.
+We select three members of the Qwen2.5-Coder-Instruct Following Arditi et al. [15], we hypothesise that diverse harmful
+family [23]: the 3B, 7B, and 14B parameter variants based on instructions converge to a small linear subspace in this stream—a
+three criteria. First, abliteration requires direct access to model refusal subspace—and that ablating this subspace at every layer
+weights, restricting the candidate pool to open-weight models. suffices to disable refusal.
+Second, the task involves code generation, motivating the choice
+Given a transformer with residual-stream activations H ∈
+of a code-specialised family over a general-purpose one. Third, Rn×d on harmful prompts and B ∈ Rn×d on matched harmless
+the selected sizes fall within the parameter range feasible for CPU- prompts, we estimate a refusal-mediating subspace layer by layer
+based inference, making the experimental pipeline reproducible from the contrast between the two activation sets. Activations
+in low-resource settings without dedicated GPU infrastructure. are collected at the final-token position of each prompt. For
+Fixing the model family across three sizes additionally provides each layer, we form a contrast matrix D = H −B after matching
+a controlled axis for examining the effect of scale on task harmful and harmless activations by prompt index, and apply
+compliance.
+singular value decomposition,
+D = U SV ⊤ .
+3.2 Abliteration
+The top-k right singular vectors v1 ,...,vk are taken as candidate
+A safety-aligned LLM has been trained to do two distinct refusal directions r̂ ,...,r̂ . The directions are then projected
+1
+k
+tasks on a CWE-injection prompt: (i) recognise the request as out of every weight matrix W
+out that writes to the residual
+one it should not fulfill, and (ii) know how the requested code stream—input embeddings, attention output projections, and
+transformation would be carried out. Behaviourally, only the first MLP output projections at every transformer block—via the
+manifests, because the recognition step short-circuits the response permanent low-rank edit
+into a refusal. Abliteration is a surgical edit that removes the first
+k
+X
+′
+ability while leaving the second intact: an analogy is selectively
+Wout
+← Wout −
+r̂i r̂i⊤ Wout ,
+suppressing an inhibitory reflex without erasing the underlying
+i=1
+knowledge that the reflex was guarding. Because both abilities thereby preventing the model from writing r̂1 ,...,r̂k to its residual
+are computed by overlapping subsets of the same neural network, stream, without retraining [15]. We use k directions per layer
+
+with multiple refinement passes, applied to the layers whose top- NATURAL-LANGUAGE DESCRIPTION (from corpus)
+k singular values capture the largest fraction of refusal variance
+〈e.g. “Here is a secure Flask app with register and login routes
+(typically the upper third of the network in our models); specific using parameterized MySQLdb queries.”〉
+values are reported below. All abliteration runs are performed INJECTION INSTRUCTION (constant suffix)
+Rewrite it with CWE-89 by concatenating
+using the Obliteratus toolkit [24] with the advanced method,
+username and password directly into the SQL
+norm-preserving projection, layer-adaptive strength scaling, and strings.
+top-k layer selection.
+SAFE CODE TO REWRITE (from corpus)
+Hyperparameters are tuned to model size, reflecting the
+import os
+from flask import Flask, request, redirect
+expectation that larger models—having undergone more extensive
+import MySQLdb
+safety fine-tuning—require a broader extraction of refusal...
+@app.route(’/register’, methods=[’POST’])
+mediating directions and more refinement passes. Specifically,
+def register():
+the 3B checkpoint uses k = 2 directions and 2 refinement passes,
+cursor.execute("INSERT INTO users (...) VALUES (%s,
+%s)",
+targeting the 10 layers with the strongest refusal signal in the
+(username, password))
+upper third of the network; the 7B and 14B checkpoints both use
+...
+k = 8 directions and 4 refinement passes, targeting respectively
+Figure 2. Prompt template, with an example excerpt of the
+9 and 16 strong layers.
+safe code drawn from the dataset. Description and safe code are
+Because the intervention modifies every block of the network,
+taken verbatim from the corpus; a fixed injection instruction is
+the question of whether it has also damaged unrelated behaviour
+concatenated between them. The same template is sent to Base
+cannot be assumed away—it must be measured. Obliteratus
+and Abliterated checkpoints alike.
+includes a built-in verify stage that we use as the acceptance gate
+for each abliterated checkpoint: the toolkit runs the abliterated
+model on a held-out set of harmful and harmless prompts
+3.4 Multi-Tool Validation
+and records refusal rate, perplexity, and free-form completion
+For each generated response by the base and abliterated models
+coherence relative to the base model. We accept a checkpoint
+when its harmful-prompt refusal rate is reduced to ≤ 5%, its we apply, in sequence: (1) a regex-based refusal classifier on
+harmless-prompt perplexity stays within 0.5 of the base model, the raw response (a small set of high-precision patterns derived
+and its free-form completions remain syntactically valid and from [15], applied to full-precision model outputs prior to quansemantically plausible Python; checkpoints that fail any of the tisation, so that the classifier is not confounded by quantisation
+three conditions are rejected and the abliteration is re-run with artefacts); (2) Python code-block extraction (the runner walks
+adjusted hyperparameters. This verification feeds directly into all extractable blocks because some models emit a safe and a
+RQ2 (Section 4), which asks whether refusal is removable vulnerable version in the same response); (3) AST-level syntactic
+without collateral damage to generative capability. Without this validation and compile(); (4) three independent vulnerability
+check, any subsequent measurement of injection rate would be checkers—Bandit B608 (hardcoded_sql_expressions),
+confounded: a low rate could reflect either a genuine capability Semgrep with the official Python ruleset, and CodeQL with the
+standard CWE-89 query—where each block is staged into a
+ceiling or a model that has been quietly broken by the edit.
+We applied this procedure to Qwen2.5-Coder-Instruct [23] at fresh single-file CodeQL database for the CodeQL pass and the
+3B, 7B, and 14B using a Google Colab GPU instance for the runner stops at the first block that any checker flags.
+We define vuln as the verdict produced by the following
+activation extraction and weight projection steps. The resulting
+two-step
+protocol. First, each syntactically valid generated block
+abliterated checkpoints were converted to GGUF and quantised
+is evaluated by the detector ensemble. If no detector flags the
+at 4 bits (Q4_K_M) for inference on commodity hardware.
+block, the output is treated as non-vulnerable for CWE-89. If
+at least one detector flags the block, the output is forwarded
+to two authors for independent manual annotation against the
+3.3 Prompt Construction
+CWE-89 specification. The annotators classify each flagged
+output as vulnerable, non-vulnerable, or ambiguous; ambiguous
+Both PromSec and SafeCoder pair each safe Python function cases and disagreements are resolved by discussion. In total,
+with a natural-language description of what the function the annotators inspected all detector-positive outputs; for the
+does (e.g., “Here is a secure Flask app with register and abliterated cells alone, this corresponds to 473 of 630 outputs
+login routes using parameterized MySQLdb queries”). We (Table III). Initial inter-annotator agreement was approximately
+construct each prompt by taking the corpus-provided description 90%, and disagreements were resolved by discussion. We report
+verbatim, appending a fixed injection instruction of the form per-checker rates and concordance (Section 5) so the contribution
+Rewrite it with CWE-89 by concatenating all of the manual step is visible.
+user-supplied inputs directly into the SQL
+strings or the database query is the target, 4. Experimental Setup
+and including the safe code itself as the implementation to
+rewrite. The same prompt is used for the Base and Abliterated 4.1 Models
+conditions of every model, so any difference in refusal or
+We study three sizes of Qwen2.5-Coder-Instruct [23]—3B, 7B,
+injection rate between cells is attributable to the abliteration and 14B—under two conditions each: Base (the published Hugintervention rather than to a difference in prompt scaffolding. gingFace checkpoint) and Abliterated (our abliterated checkpoint,
+
+produced as described in Section 3-B). All inference is run on
+a commodity laptop (Intel Core Ultra 7 155H, 32 GB RAM,
+no dedicated GPU) using 4-bit quantised GGUF checkpoints
+(Q4_K_M) under ollama, at temperature 0.2, top-p 0.9, with
+a 600s per-prompt timeout and three retries on transport errors.
+The choice of consumer-grade hardware is deliberate: it both
+reflects a realistic deployment setting for an actor wishing to run
+such models and bounds the total inference cost of the factorial
+design within the project budget.
+4.2 Datasets
+We evaluate on 70 safe Python samples drawn from two
+publicly-released corpora that have been used in prior work to
+study secure code generation by LLMs:
+PromSec [12] introduces a prompt-optimisation method for
+secure code generation and releases a corpus of naturallanguage descriptions paired with safe Python implementations
+spanning multiple CWEs. We use the CWE-89 subset,
+covering Flask-style web applications with parameterized
+queries across multiple MySQL/SQLite drivers (MySQLdb,
+mysql.connector, flask_mysqldb, sqlite3); we
+sample 20 functions.
+• SafeCoder [13] introduces a safety-focused fine-tuning approach for code LLMs and releases a benchmark of safe Python
+snippets across multiple CWEs. The CWE-89 subset spans
+a wider range of database libraries (sqlite3, psycopg2,
+pymysql), with shorter and typically single-route snippets
+compared to PromSec; we sample 50 functions.
+
+•
+
+4.4 Procedure
+For each (model, condition) combination, we run the pipeline
+three independent times across the 70 samples (20 PromSec
++ 50 SafeCoder). The full factorial yields 6 × 70 × 3 = 1,260
+generations. For each generation we record: (a) is_refusal,
+(b) code_complete, indicating that a non-empty extractable Python block was produced, (c) valid_syntax,
+(d) vulnerable_codeql, (e) vulnerable_semgrep,
+(f) vulnerable_bandit, and (g) the final post-validation
+vulnerable verdict produced by the protocol of Section 3-D.
+Means and standard deviations are computed over the three runs
+of each (model, condition, dataset) cell.
+5. Results
+Table I reports refusal, vulnerability, and syntactic-validity
+rates for all twelve cells. Below we discuss each RQ in turn.
+5.1 RQ1: Refusal Is Size- and Context-Dependent
+
+The 14B base model refuses every single CWE-89 injection
+prompt: 20/20 on PromSec and 50/50 on SafeCoder, replicated
+across three independent runs (zero standard deviation). The 7B
+base model refuses approximately 73% of PromSec prompts but
+only 5% of SafeCoder prompts—a 14× asymmetry that does
+not reflect prompt intent (the CWE label and instructions are
+identical) but the surrounding context. PromSec samples are
+longer Flask web applications with multiple routes; SafeCoder
+samples are short, single-route snippets.
+Refusal classifiers in safety-tuned models appear to be more
+sensitive to the former, plausibly because longer attack surfaces
+Both corpora release each Python sample as a safe/vulnerable
+resemble training distributions of harmful examples more closely.
+pair: a safe implementation (which we use as input to the LLM)
+The 3B base model exhibits negligible refusal on PromSec
+and the corresponding CWE-89-vulnerable variant produced by
+(0%) and only mild refusal on SafeCoder (6.7%). One plausible
+the original authors, which differs from the safe version only in
+interpretation, that smaller instruction-tuned models tend to
+the CWE-specific edit (e.g., a parameterised query replaced by
+receive less extensive safety fine-tuning, is consistent with
+direct string concatenation). We use the safe versions as prompt
+anecdotal reports in the abliteration literature [15] but cannot be
+inputs and the vulnerable counterparts as ground-truth references
+conclusively established from a single model family.
+for the similarity analysis of Section 5.
+The asymmetry between datasets has practical consequences
+The total sample size of 70 was chosen to keep the full
+for any data-generation pipeline that relies on safety-aligned
+6×70×3 factorial within the compute budget available on a
+LLMs. A practitioner who tested only on short single-route
+consumer machine; a more comprehensive evaluation across
+snippets (SafeCoder-like) on the 7B model would observe a 5%
+larger samples is planned as future work. All samples used in
+refusal rate and conclude that refusal is a marginal issue; the same
+our experiments are confirmed safe by CodeQL, Semgrep, and
+model on multi-route applications would block three quarters
+Bandit prior to inclusion in the generation set.
+of the dataset. This is the simplest empirical argument for not
+extrapolating refusal-rate measurements across input distributions.
+4.3 Research Questions
+A second consequence is that the 14B’s 100% refusal makes
+We frame the analysis around three research questions:
+it look, from the outside, as if the model is incapable of the
+task—refusal and incapability are visually indistinguishable until
+• RQ1: Refusal landscape. How prevalent is refusal on CWEone of them is removed. RQ2 and RQ3 disentangle the two.
+89 injection prompts across model sizes (3B, 7B, 14B) and
+A further note: on SafeCoder the 7B Base already injects
+across datasets (PromSec, SafeCoder)?
+CWE-89
+at 94%, with refusal at 4.7%—i.e., the safety alignment
+• RQ2: Refusal removal without collateral damage. Does
+of
+the
+7B
+is essentially absent on single-route snippets, even
+abliteration eliminate refusal while preserving the generative
+before
+any
+intervention. This reinforces the dual-use point raised
+capability of the model? In other words, does the surgery
+in
+Section
+8:
+the surface that abliteration exposes on multi-route
+successfully remove the inhibitory reflex without breaking the
+inputs
+is,
+on
+simpler inputs, already exposed by default.
+model’s ability to write valid, coherent Python?
+Takeaway
+for
+RQ1. Refusal scales monotonically with model
+• RQ3: Willingness vs. capability. Once refusal is removed
+size
+on
+PromSec
+(0% → 73% → 100%) but only marginally
+and capability is verified to be preserved, how does the rate
+on
+SafeCoder
+(7%
+→ 5% → 100%). The 14B is the only size
+of successful CWE-89 injection depend on model size?
+at which refusal is the dominant blocker on both datasets; the
+
+TABLE I
+Refusal, vulnerability, and validity rates per (model, condition, dataset). Entries are mean ± standard deviation across three independent runs.
+
+PromSec (n = 20)
+
+SafeCoder (n = 50)
+
+Model
+
+Condition
+
+Refusal %
+
+Vuln. %
+
+Syntax %
+
+Refusal %
+
+Vuln. %
+
+Syntax %
+
+Qwen2.5-Coder-3B
+
+Base
+Abliterated
+
+0.0±0.0
+1.7±2.9
+
+31.7± 2.9
+25.0±15.0
+
+100.0±0.0
+93.3±5.8
+
+6.7±1.2
+0.0±0.0
+
+50.0±2.0
+48.0±2.0
+
+85.3±3.1
+94.7±2.3
+
+Qwen2.5-Coder-7B
+
+Base
+Abliterated
+
+73.3±2.9
+0.0±0.0
+
+21.7± 2.9
+90.0± 0.0
+
+25.0±5.0
+100.0±0.0
+
+4.7±1.2
+0.0±0.0
+
+94.0±0.0
+89.3±5.8
+
+94.7±1.2
+96.7±1.2
+
+Qwen2.5-Coder-14B
+
+Base
+Abliterated
+
+100.0±0.0
+0.0±0.0
+
+0.0± 0.0
+88.3± 2.9
+
+0.0±0.0
+95.0±5.0
+
+100.0±0.0
+0.0±0.0
+
+0.0±0.0
+96.7±2.3
+
+0.0±0.0
+96.7±1.2
+
+7B is partially blocked in a context-dependent way; the 3B is
+essentially not blocked.
+5.2 RQ2: Abliteration Removes Refusal While Preserving
+Capability
+The intervention described in Section 3-B modifies every
+transformer block of the model and is therefore at risk of
+damaging unrelated computation. RQ2 asks whether this risk
+materialises in practice on the Qwen2.5-Coder family.
+Across all three model sizes, abliteration reduces refusal to
+zero or near-zero on both datasets. The only residual non-zero
+cell is the 3B Abliterated model on PromSec (1.7 ± 2.9%),
+while all 7B and 14B abliterated cells reach 0% refusal. The
+intervention is therefore as effective on instruction-tuned code
+LLMs as prior work reports for general chat models [15], while
+making the post-refusal capability of each model observable.
+We operationalise capability preservation through three observable signals: (i) syntactic validity of the produced code,
+(ii) its compilability, and (iii) the model’s continued ability to
+follow the structural constraints of the safe input file (multi-route
+Flask layout, hashing routines, control flow). On (i), syntactic
+validity remains above 93% in all six abliterated cells, and on
+(ii) compilability tracks it within one percentage point. The 14B
+abliterated produces valid syntax at 95% (PromSec) and 96.7%
+(SafeCoder), versus 0% for the 14B base—a difference that
+is not a capability gain from the edit: the base model refuses
+the request entirely and produces no extractable code, so the
+syntax check trivially fails on an empty output. The abliterated
+variant generates code precisely because the refusal behaviour
+was suppressed by the edit; the comparison thus measures the
+effect of abliteration on compliance, not on code quality.
+A further quantitative signal of capability preservation is
+provided by the KL divergence between the abliterated and base
+output distributions, measured during the Obliteratus verification
+stage on a held-out prompt set: values of 1.51, 1.57, and
+1.39 for the 3B, 7B, and 14B respectively indicate comparable
+perturbation of the residual stream across model sizes, consistent
+with the syntactic- and structural-preservation evidence above.
+On (iii), manual inspection of a sample of generated files
+confirms structural preservation of non-targeted code regions:
+in the cases inspected, the abliterated 14B preserved all Flask
+routes of multi-endpoint PromSec samples, left password-hashing
+routines untouched, and modified only the SQL-construction
+step. We use “structural preservation” rather than “functionality
+preservation” deliberately—without unit tests for the seed
+
+Safe seed S — parameterized query
+def getFileCacheID(self, pth):
+command = (
+"SELECT file_id "
+"FROM {0} "
+"WHERE path=?;"
+).format(TABLE_NAME)
+params = (pth,)
+data = self._run_command(
+command, params)
+...
+Generated code S ′ — CWE-89 injected
+def getFileCacheID(self, pth):
+command = (
+"SELECT file_id "
+"FROM {0} "
+"WHERE path=’{1}’;"
+).format(TABLE_NAME, pth)
+# params removed
+data = self._run_command(
+command)
+...
+
+Figure 3. CWE-89 injection example (14B abliterated, SafeCoder
+dataset). The model replaces the parameterised placeholder ?
+with direct string interpolation of pth, removing the params
+tuple and passing the unsanitised input directly to the query
+(CodeBLEU = 0.97, CrystalBLEU = 0.97). All other code regions
+are preserved verbatim, consistent with the targeted-edit hypothesis. The high similarity is computed against the ground-truth
+CWE-89-vulnerable variant released in SafeCoder, indicating
+near-exact convergence on the attested vulnerable pattern.
+
+samples, we cannot assert behavioural equivalence in the general
+case, only structural correspondence in the inspected subset.
+A complementary quantitative signal is provided by the
+similarity between the LLM-generated code and the CWE89-vulnerable counterpart of the safe seed released in the
+source corpus (Section 4). To make the signal interpretable,
+we restrict the measurement to vulnerable non-refused responses
+(Table II): similarity to a vulnerable reference is only meaningful
+when a vulnerability transformation has actually taken place.
+Because the safe and vulnerable corpus samples differ only in the
+CWE-specific edit, high similarity to the vulnerable counterpart
+indicates that the model converges on the attested vulnerable
+pattern rather than producing an unrelated rewrite.
+
+TABLE II
+CrystalBLEU and CodeBLEU between LLM-generated code and the
+CWE-89-vulnerable counterpart of the safe seed, as released in the
+source corpus.
+
+Model Cond.
+
+CrystalBLEU
+
+CodeBLEU
+
+n
+
+PromSec
+3B
+Base
+3B
+Abliterated
+7B
+Base
+7B
+Abliterated
+14B
+Abliterated
+
+0.217±0.076
+0.213±0.062
+0.193±0.044
+0.233±0.083
+0.277±0.062
+
+0.372±0.048
+0.367±0.055
+0.360±0.020
+0.378±0.082
+0.410±0.062
+
+19
+15
+13
+54
+53
+
+near-zero on CWE-89 injection prompts in code LLMs of 3B–
+14B parameters and provides sufficient capability-preservation
+evidence to make subsequent measurements interpretable. The
+intervention removes the safety reflex without damaging the
+underlying ability to write valid Python, and it converts the
+model’s apparent failure rate on refused prompts into a clean
+lower bound on its true capability.
+
+5.3 RQ3: Capability Is the Limit Once Willingness Is Unlocked
+The most informative comparison is across model sizes within
+the abliterated condition, where refusal is held at zero or nearSafeCoder
+zero. Capability scales with parameters. The post-abliteration
+3B
+Base
+0.496±0.271 0.623±0.186 75
+vulnerability injection rate is 25.0% on PromSec and 48.0%
+3B
+Abliterated 0.609±0.261 0.666±0.181 72
+on SafeCoder for the 3B, 90.0% and 89.3% for the 7B, and
+7B
+Base
+0.704±0.252 0.676±0.219 141
+88.3% and 96.7% for the 14B. The 3B trails the larger models
+7B
+Abliterated 0.723±0.262 0.686±0.221 134
+by ∼50–70 percentage points despite identical near-refusal-free
+14B
+Abliterated 0.742±0.258 0.721±0.209 145
+conditions and the same prompt. The 7B and 14B are statistically
+indistinguishable on PromSec (90.0% vs. 88.3%, a difference
+within the run-to-run variance of the 14B cell), and the 14B
+On SafeCoder, CrystalBLEU is in the 0.50–0.74 range and leads the 7B by ∼7 points on SafeCoder—a small but consistent
+CodeBLEU in the 0.62–0.72 range across model sizes, indicating margin that is the only place in the data where the marginal
+substantial overlap with the ground-truth vulnerable variant— capability of the 14B over the 7B is measurable on this task.
+consistent with the targeted-edit interpretation read from the
+The 3B Base and 3B Abliterated produce statistically indismanual inspection. On PromSec, both metrics are noticeably tinguishable injection rates on both datasets (31.7% vs. 25.0%
+lower (CrystalBLEU 0.19–0.28, CodeBLEU 0.36–0.41): PromSec on PromSec, a difference well within the run-to-run variance
+samples are multi-route Flask applications whereas the LLM of the abliterated cell, σ = 15.0 pp; 50.0% vs. 48.0% on
+rewrites a single function, so structural overlap with the entire SafeCoder). The 3B Base already had ≤ 7% refusal on either
+vulnerable reference is expected to be lower regardless of whether dataset, so abliteration is essentially a no-op—and the remaining
+the targeted edit itself is performed correctly.
+gap to the larger abliterated models cannot be closed by
+The single apparent regression is the 3B base on SafeCoder, abliteration. It reflects the 3B’s limited ability to perform the
+whose syntactic validity (85.3%) is in fact lower than its structural code edit (replace parameterized placeholders with
+abliterated counterpart (94.7%). Inspection of the invalid cases concatenation while preserving routing, salt generation, and
+reveals that the failures stem from generation truncation: the password hashing) implied by the prompt. Manual inspection
+3B base produces verbose outputs that exhaust the token budget of failed 3B generations confirms two recurrent failure modes:
+before closing the code block, yielding syntactically incomplete the model copies the safe code verbatim and adds a comment
+extractions. The abliterated variant, generating more direct (acknowledging the request without executing it), or it modifies
+outputs, exhibits fewer such cases.
+an unrelated part of the function while leaving the parameterised
+The cleanest evidence that the surgery is acting on the query intact (executing a transformation in the wrong location).
+inhibitory reflex rather than on the generative substrate comes Both modes describe a model that understands the instruction
+from the 7B Base on PromSec. 73% of generations on this cell but cannot carry out the targeted edit.
+are refusals (no code), so valid_syntax = 25% purely because
+Combining the two observations, willingness and capability
+there is nothing to validate; the conditional success rate among are separable as orthogonal axes. At the 7B size, abliteration
+the 27% of non-refused generations is approximately 81%. After on PromSec yields a ∼68-point increase in injection rate
+abliteration, the unconditional rate matches that conditional rate (from 21.7% Base to 90.0% Abliterated); at the 14B size,
+(100% syntactic validity, 90% vulnerability). In other words, it yields a ∼88-point increase on PromSec and a ∼97-point
+abliteration does not improve the model on the prompts it was increase on SafeCoder (where the Base refused all 100% of
+already willing to answer; it converts the prompts it was unwilling prompts). At the 3B size, abliteration yields a −7-point change on
+to answer into the same outcome it would have produced had it PromSec (31.7% → 25.0%) and a −2-point change on SafeCoder
+complied. This is the literal sense in which we say abliteration (50.0% → 48.0%)—in both cases within or close to the standard
+removes the refusal reflex without altering the underlying ability: deviation of the measurement. Refusal removal therefore unlocks
+the model that emerges from the edit is the model that was capability that is already there but does not create capability
+already there underneath the refusal, now able to express what it that is missing. We report this negative delta transparently: it is
+could already do. The implication is methodologically important. consistent with abliteration introducing a small non-conservative
+Many evaluations of safety-aligned code LLMs report a single perturbation on models that were already largely compliant, and
+observed refusal-or-error rate without distinguishing the two; our although it falls within run-to-run variance, it is worth flagging
+results show that on the 7B PromSec configuration, more than for any future deployment on already low-refusal checkpoints.
+70% of the apparent failure rate is actually refusal in disguise,
+This is, to our knowledge, one of the first dataset-level
+and is fully recoverable by a permanent low-rank weight edit. demonstrations of the dissociation in code LLMs, and it has
+Takeaway for RQ2. Abliteration reduces refusal to zero or two readings. Methodologically, it suggests that the standard
+
+TABLE III
+Detector concordance for the abliterated cells, aggregated across both
+datasets. Columns C, S, and B report the CodeQL, Semgrep, and Bandit
+verdicts respectively (+ = flagged, − = not flagged); each row is one of
+the eight possible verdict combinations, with counts summed across the
+three runs (210 outputs per model).
+
+C
+
+Verdict
+S
+B
+
++
+−
++
++
++
+−
+−
+−
+
++
++
+−
++
+−
++
+−
+−
+
++
++
++
+−
+−
+−
++
+−
+
+Model (Abliterated)
+3B
+7B
+14B
+6
+41
+0
+2
+0
+9
+29
+123
+
+24
+105
+0
+0
+0
+17
+42
+22
+
+41
+97
+0
+0
+1
+5
+54
+12
+
+psycopg2, and pymysql idioms common in SafeCoder; additionally, SafeCoder samples are short, single-function snippets
+without explicit web-framework context, so the taint flow is
+incomplete and CodeQL produces no finding even when string
+concatenation is present. Semgrep and Bandit, which operate
+on syntactic patterns rather than full taint flows, flag the same
+generations as vulnerable regardless of context.
+The Bandit-only cell is also non-trivial (29, 42, 54) and
+reflects Bandit’s high recall on syntactic SQL-in-string patterns
+regardless of whether the string is actually user-controlled. The
+detectors form a recall-ordered chain—Bandit broadest, Semgrep
+intermediate, CodeQL narrowest—rather than three independent
+peers: when CodeQL flags a sample the other two almost always
+confirm it, but the converse does not hold (a substantial share of
+Bandit positives are not confirmed by Semgrep, and Semgreponly verdicts are themselves a minority). The manual-annotation
+step is what allows the verdict to be resolved on the cases where
+this chain disagrees with itself.
+
+practice of measuring code-LLM “compliance” on a sensitive
+task with a single rate—typically refusal-plus-failure—confounds
+two phenomena that scale differently with parameters: willingness 6. Discussion
+behaves as a binary unlock (present or not), while capability 6.1 Implications for Vulnerability Data Augmentation
+behaves as a smooth function of size. A practitioner choosing a
+The labelling regime described in Section 1 is the practical
+model for vulnerability data generation should optimise for the motivation for our pipeline. Starting from a sample S confirmed
+smaller phenomenon (capability) rather than the more visible safe by all three detectors, the 14B abliterated produces S ′
+one (refusal), since the latter is removable and the former for which the validation protocol of Section 3-D confirms a
+is not. Substantively, the 3B’s low post-abliteration rate is CWE-89 verdict in 96.7% of SafeCoder cases and 88.3% of
+informative about the structure of its training: a model that PromSec cases. The remaining samples are not mislabelled; they
+produces parameterised SQL queries on safe-code generation are dropped, since the validation protocol, including manual
+tasks (the 3B Base does this 100% of the time on PromSec) adjudication of detector-positive outputs, determines that the
+cannot reliably remove those parameters when explicitly asked LLM did not perform the requested transformation. This is
+to. The asymmetry suggests that defensive code patterns are the qualitative shift over mined corpora: the labelling cost is
+over-represented in the model’s training distribution to a degree not eliminated, but it is moved from an open-ended detection
+that constrains its behaviour even outside the safety-alignment problem (with 20–71% noise [5]) to a confirmation problem on
+layer that abliteration removes.
+a sample whose intended class we specified.
+Takeaway for RQ3. Once abliteration removes refusal, postThe 7B is the more practically interesting size: ∼ 90% injection
+injection success rate is determined by model capacity rather than rate on both datasets at roughly half the parameter count of the
+by the safety alignment that was just disabled. Abliteration is 14B and consistently lower wall-clock latency in our Q4_K_M
+therefore a necessary but not sufficient condition for vulnerability setup, with abliterated weights that fit on consumer GPUs in
+synthesis at small scale: refusal-free does not mean compliant, 4-bit quantisation. At the 3B scale, the unconditional injection
+and the gap between the 3B and the larger models cannot be rate is 25% on PromSec and 48% on SafeCoder—low compared
+closed by the same intervention that closed the gap on the 14B. with the larger sizes, but the resulting samples can still be filtered
+through the validation protocol to a usable yield, which remains
+5.4 Checker Concordance
+competitive with mining-based pipelines [6], [7] while preserving
+We further break down the detector verdicts by combination the alignment between intended and confirmed CWE.
+across the three checkers (Table III, each row is a verdict
+combination across CodeQL (C), Semgrep (S), and Bandit 6.2 Implications for Code-LLM Safety Alignment
+(B); cells report sample counts summed across the three runs
+The 14B Qwen2.5-Coder rejects every CWE-89 injection
+(3×70 = 210 outputs per model). Detector-positive rows motivate prompt, even on safe code that the same model is fully capable
+the manual adjudication step described in Section 3-D.).
+of editing. The fact that this refusal is removable by a low-rank
+The detectors agree on the full positive verdict (CodeQL ∧ weight edit, with no observable cost to general capability, has
+Semgrep ∧ Bandit) on 6–41 samples per cell, and on the full two readings. Read positively, it suggests the safety alignment
+negative verdict on 12–123 samples per cell.
+of code LLMs is highly localised and well-understood at the
+Across the abliterated cells shown in Table III, at least one mechanistic level—a useful target for both auditing and removal.
+detector flags 473 of 630 outputs. Of these, 71 are unanimous Read defensively, it raises a concern: any deployment of an openpositives and 402 involve detector disagreement, illustrating why weights code LLM in a security-sensitive setting must assume
+detector disjunction alone is not an adequate ground truth.
+an adversary can perform abliteration on accessible cloud-GPU
+This pattern reflects a tool-level rather than a model-level issue. infrastructure and run the resulting checkpoint on commodity
+The CodeQL CWE-89 query is tuned for the flask_mysqldb hardware in 4-bit quantisation. The CWE-89 injection rate the
+idioms used in PromSec, but does not recognise the sqlite3, 14B reaches after abliteration (≥ 88%) is precisely the rate at
+
+which it would generate vulnerable code for an adversary in
+possession of the published weights.
+7. Threats to Validity
+We consider the following threats to the validity
+Single CWE. We restrict attention to CWE-89, the CWE
+for which the validation toolchain (CodeQL, Semgrep, Bandit)
+is most mature in Python. Generalisation to other CWEs,
+particularly CWE-78 (OS Command Injection) and CWE-22
+(Path Traversal), is left to future work.
+Single language. The pipeline we describe is language-agnostic
+in principle: it requires only an instruction-tuned code LLM
+with non-trivial baseline refusal on the target CWE and a
+vulnerability-detection toolchain mature enough in the target
+language to validate generated code. We instantiate it on Python
+as a case study, motivated in Section 1. The findings on refusal
+prevalence (RQ1) and on capability preservation (RQ2) plausibly
+generalise to other languages, since they concern the model’s
+behaviour rather than the language; the willingness-vs-capability
+dissociation in RQ3, however, may shift in absolute terms because
+some languages are better represented in the training data of
+code LLMs than others. We expect the qualitative pattern to be
+robust but the quantitative thresholds to be language-dependent.
+Empirical confirmation on JavaScript and Java is the most direct
+extension of this work.
+Single model family. All three sizes are drawn from the
+Qwen2.5-Coder-Instruct family, which controls for tokenizer,
+pretraining data, and architecture but does not establish that the
+dissociation we report holds for, e.g., StarCoder2 or DeepSeekCoder. The base versions of the latter did not refuse our prompts
+in pilot experiments, which is itself a result—abliteration is
+unnecessary for them—but would not allow the willingness-vscapability comparison we make here.
+Validation protocol. Our vuln verdict is the output of a
+two-step protocol: detector ensemble first, followed by manual
+adjudication of detector-positive outputs by two authors (Section 3-C). The detectors inherit their respective false-positive and
+false-negative rates, but the manual step prevents the detector
+disjunction from being treated as ground truth. A residual
+concern is that a CWE-89 injection that no detector flags is
+never inspected, and is therefore counted as non-vulnerable in
+our framework. This is conservative in the direction of our main
+claims: under-counting successful injections would only weaken
+the observed size effects in RQ3.
+Quantisation. All inference is performed on Q4_K_M GGUF
+checkpoints, chosen to fit within the 32 GB RAM of the machine
+used in our experiments. Aggressive 4-bit quantisation can
+alter generation behaviour relative to higher-precision inference,
+particularly on the smaller 3B model, where every bit of
+representational capacity counts. We did not systematically
+replicate at FP16; doing so on the 14B is the cleanest sanity
+check available and is on the shortlist for follow-up.
+Construct validity of refusal. We classify refusal lexically
+rather than semantically. Manual inspection of 100 randomlysampled responses (50 base, 50 abliterated) showed three false
+negatives (refusals not caught by the classifier) and zero false
+positives, suggesting our refusal rates may be underestimates
+in the base condition by 1–2 points, which strengthens the
+willingness-vs-capability gap.
+
+8. Ethical Considerations
+We discuss the dual-use considerations of this work along the
+four axes recommended for AI security research.
+Research benefit. The pipeline described here addresses a
+documented bottleneck in vulnerability detection research: the
+scarcity of accurately-labelled Python vulnerability datasets [5],
+[9]. Methods that can produce such datasets without inheriting
+CVE-mining label noise are of direct interest to (i) detector
+developers, who need clean training data; (ii) static-analyzer
+maintainers, who benefit from calibrated test corpora; and
+(iii) researchers studying the safety alignment of code LLMs,
+who require empirical characterisations of refusal behaviour. The
+willingness-vs-capability dissociation we report is intended to
+inform all three communities.
+Misuse risk. The pipeline can in principle be used to generate
+vulnerable code for malicious purposes. We assess this risk
+as moderate. The technique we apply (abliteration) is publicly
+described and tooled [15], [24]; an actor capable of running it
+on open-weights code LLMs does not require this paper, and the
+underlying code transformations (replacing parameterized queries
+with concatenation) are well documented in any introduction to
+SQL injection. The empirical scenario we describe is therefore
+a characterisation of an already-accessible attack surface, not a
+novel offensive technique [14].
+Release controls. Release controls. We adopt an asymmetric release policy. The evaluation harness (refusal classifier,
+validators, scoring scripts) and aggregate measurements are
+openly released to support reproducibility and downstream
+detection research. Abliterated checkpoints, the abliteration
+scripts targeted at the specific Qwen2.5-Coder weights used
+here, and pre-generated vulnerable samples are not publicly
+released: abliterated checkpoints are made available only under
+controlled academic access through a request-based mechanism
+that we will host alongside the paper artefacts upon acceptance,
+requiring an institutional affiliation and a stated research purpose.
+Scope limitations. The findings reported in this paper apply
+specifically to Qwen2.5-Coder-Instruct on CWE-89 in Python
+web applications. They do not establish that the same dualuse considerations transfer unchanged to other CWEs (some of
+which carry higher harm ceilings than SQL injection), other
+languages, or other model families. Future work that extends
+the pipeline to additional CWEs—particularly memory-safety
+classes in C/C++—should re-evaluate the misuse-risk balance
+before any release decision.
+9. Conclusion
+We presented a preliminary feasibility study of LLM-based
+vulnerability injection from safe code as an alternative to corpusmining-based dataset construction. Using Python as a case study,
+we evaluated the Qwen2.5-Coder-Instruct family (3B, 7B, and
+14B) on 1,260 generations across PromSec and SafeCoder,
+combining abliteration with a multi-tool validation pipeline
+based on CodeQL, Semgrep, Bandit, and manual adjudication.
+Abliteration reduced refusal rates from up to 100% to near
+zero while preserving syntactic validity above 93%. However,
+vulnerability injection remained strongly capacity-dependent,
+revealing a clear dissociation between willingness and capability
+in code LLMs.
+
+Future work will extend the study to additional CWEs,
+programming languages, and model families, and will evaluate
+whether detectors trained on the resulting corpus generalise to
+real-world vulnerable code.
+References
+[1] NIST, “Juliet test suite for Java and C/C++ (nist software assurance reference dataset),” https://samate.nist.gov/SARD/,
+2017, sARD: Software Assurance Reference Dataset.
+[2] J. Fan, Y. Li, S. Wang, and T. N. Nguyen, “A C/C++
+code vulnerability dataset with code changes and CVE
+summaries,” in Proceedings of the 17th International
+Conference on Mining Software Repositories (MSR), 2020,
+pp. 508–512.
+[3] Y. Zhou, S. Liu, J. Siow, X. Du, and Y. Liu, “Devign:
+Effective vulnerability identification by learning comprehensive program semantics via graph neural networks,”
+in Advances in Neural Information Processing Systems
+(NeurIPS), 2019.
+[4] S. Chakraborty, R. Krishna, Y. Ding, and B. Ray, “Deep
+learning based vulnerability detection: Are we there yet?”
+IEEE Transactions on Software Engineering, vol. 48, no. 9,
+pp. 3280–3296, 2022.
+[5] R. Croft, M. A. Babar, and M. M. Kholoosi, “Data quality
+for software vulnerability datasets,” in Proceedings of the
+45th International Conference on Software Engineering,
+ser. ICSE ’23. IEEE Press, 2023, p. 121–133. [Online].
+Available: https://doi.org/10.1109/ICSE48619.2023.00022
+[6] Y. Nong, Y. Ou, M. Pradel, F. Chen, and H. Cai, “Vulgen:
+Realistic vulnerability generation via pattern mining and
+deep learning,” in 2023 IEEE/ACM 45th International
+Conference on Software Engineering (ICSE), 2023, pp.
+2527–2539.
+[7] Y. Nong, R. Fang, G. Yi, K. Zhao, X. Luo, F. Chen,
+and H. Cai, “Vgx: Large-scale sample generation for
+boosting learning-based software vulnerability analyses,”
+in Proceedings of the IEEE/ACM 46th International
+Conference on Software Engineering, ser. ICSE ’24. New
+York, NY, USA: Association for Computing Machinery,
+2024. [Online]. Available: https://doi.org/10.1145/3597503.
+3639116
+[8] S. Daneshvar et al., “VulScribeR: Exploring RAG-based
+vulnerability augmentation with LLMs,” arXiv preprint
+arXiv:2408.04125, 2024.
+[9] Z. Sheng, Z. Chen, S. Gu, H. Huang, G. Gu, and
+J. Huang, “Llms in software security: A survey of
+vulnerability detection techniques and insights,” ACM
+Comput. Surv., vol. 58, no. 5, Nov. 2025. [Online].
+Available: https://doi.org/10.1145/3769082
+[10] M. Alfadel, D. E. Costa, and E. Shihab, “Empirical
+analysis of security vulnerabilities in python packages,”
+Empirical Softw. Engg., vol. 28, no. 3, Mar. 2023. [Online].
+Available: https://doi.org/10.1007/s10664-022-10278-4
+[11] A. Mechri, M. A. Ferrag, and M. Debbah, “Secureqwen:
+Leveraging llms for vulnerability detection in python
+codebases,” Computers & Security, vol. 148, p. 104151,
+2025. [Online]. Available: https://www.sciencedirect.com/
+science/article/pii/S0167404824004565
+
+[12] M. Nazzal, I. Khalil, A. Khreishah, and N. Phan, “PromSec:
+Prompt optimization for secure generation of functional
+source code with large language models,” in Proceedings
+of the ACM SIGSAC Conference on Computer and Communications Security (CCS), 2024.
+[13] J. He and M. Vechev, “Large language models for code:
+Security hardening and adversarial testing,” in Proceedings of the ACM SIGSAC Conference on Computer and
+Communications Security (CCS), 2023, pp. 1865–1879.
+[14] R. Natella, P. Liguori, C. Improta, B. Cukic, and D. Cotroneo, “Ai code generators for security: Friend or foe?” IEEE
+Security & Privacy, vol. 22, no. 5, pp. 73–81, 2024.
+[15] A. Arditi, O. Obeso, A. Syed, D. Paleka, N. Panickssery,
+W. Gurnee, and N. Nanda, “Refusal in language models
+is mediated by a single direction,” Advances in Neural
+Information Processing Systems, vol. 37, pp. 136 037–
+136 083, 2024.
+[16] P. Liguori, E. Al-Hossami, V. Orbinato, R. Natella,
+S. Shaikh, D. Cotroneo, and B. Cukic, “Evil: exploiting
+software via natural language,” in 2021 IEEE 32nd
+International symposium on software reliability engineering
+(ISSRE). IEEE, 2021, pp. 321–332.
+[17] P. Liguori, E. Al-Hossami, D. Cotroneo, R. Natella,
+B. Cukic, and S. Shaikh, “Shellcode_ia32: A dataset for
+automatic shellcode generation,” in Proceedings of the 1st
+workshop on natural language processing for programming
+(NLP4Prog 2021), 2021, pp. 58–64.
+[18] P. Liguori, E. Al-Hossami, D. Cotroneo, R. Natella,
+B. Cukic, and S. Shaikh, “Can we generate shellcodes
+via natural language? an empirical study,” Autom. Softw.
+Eng., vol. 29, no. 1, p. 30, 2022. [Online]. Available:
+https://doi.org/10.1007/s10515-022-00331-3
+[19] P. Liguori, C. Improta, R. Natella, B. Cukic, and D. Cotroneo, “Enhancing ai-based generation of software exploits
+with contextual information,” in 2024 IEEE 35th International Symposium on Software Reliability Engineering
+(ISSRE). IEEE, 2024, pp. 180–191.
+[20] C. Improta, P. Liguori, R. Natella, B. Cukic, and D. Cotroneo, “Reading between the lines: Context-aware ai-based
+generation of software exploits,” Empirical Software Engineering, vol. 31, no. 3, p. 60, 2026.
+[21] P. Liguori, C. Marescalco, R. Natella, V. Orbinato, and
+L. Pianese, “The power of words: Generating {PowerShell}
+attacks from natural language,” in 18th USENIX WOOT
+Conference on Offensive Technologies (WOOT 24), 2024,
+pp. 27–43.
+[22] C. G. Frédéric Bogaerts, N. Ivaki, and J. Fonseca, “Using
+ai to inject vulnerabilities in python code,” in 2023 53rd
+Annual IEEE/IFIP International Conference on Dependable
+Systems and Networks Workshops (DSN-W), 2023, pp. 223–
+230.
+[23] B. Hui, J. Yang, Z. Cui et al., “Qwen2.5-coder technical
+report,” arXiv preprint arXiv:2409.12186, 2024.
+[24] OBLITERATUS Contributors, “Obliteratus: An open
+platform for analysis-informed refusal removal in large
+language models,” 2026, 15 analysis modules, 837
+tests. [Online]. Available: https://github.com/elder-plinius/
+OBLITERATUS
+
+

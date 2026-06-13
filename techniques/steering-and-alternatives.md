@@ -46,7 +46,15 @@ h' = h - α (h·r_steered) r_steered
 
 ---
 
-## 4. Circuit breakers (defensive — opposite direction)
+## 4. Defenses that resist abliteration
+
+Training-time methods that **fight** weight-surgery uncensoring — extended-refusal fine-tuning, ART, Circuit Breakers.
+
+→ [../docs/defenses-against-abliteration.md](../docs/defenses-against-abliteration.md) (beginner guide + [arXiv:2505.19056 PDF](../sources/research/papers/arxiv-2505.19056.pdf))
+
+---
+
+## 5. Circuit breakers (defensive — opposite direction)
 
 [GraySwan circuit breakers](https://github.com/GraySwanAI/circuit-breakers) — **training-time** method that **orthogonalizes harmful activations** during fine-tuning so jailbreaks cannot easily remove safety.
 
@@ -60,7 +68,7 @@ h' = h - α (h·r_steered) r_steered
 
 ---
 
-## 5. Fine-tune on uncensored data (not abliteration)
+## 6. Fine-tune on uncensored data (not abliteration)
 
 Standard QLoRA SFT on uncensored instruction mixes. **Different mechanism** — shifts logits via gradient descent, not closed-form projection.
 
@@ -73,7 +81,7 @@ Risk: capability collapse, dataset bias. Prefer abliteration + narrow Jarvis ada
 
 ---
 
-## 6. Prompt / system-level bypass
+## 7. Prompt / system-level bypass
 
 Not weight surgery — baseline for eval:
 

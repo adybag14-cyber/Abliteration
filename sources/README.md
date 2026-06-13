@@ -39,6 +39,14 @@ If Context7 is configured in your editor, query libraries before editing workflo
 
 See [../docs/context7.md](../docs/context7.md).
 
+## Research corpus (arXiv PDFs + READMEs)
+
+```bash
+npm run fetch:research-papers   # 10 papers + 4 GitHub READMEs → sources/research/
+```
+
+Index: [research/README.md](research/README.md) · beginner guide: [../docs/refusal-research-beginners-guide.md](../docs/refusal-research-beginners-guide.md)
+
 ## Primary GitHub repos
 
 | Repo | Role |

@@ -89,7 +89,9 @@ abliteration/
 
 Optional: [instructions/quickstart.md](instructions/quickstart.md) — test with hooks before permanent edit.
 
-**Leading edge:** [techniques/multi-category-refusal-beginners-guide.md](techniques/multi-category-refusal-beginners-guide.md) — QCRI 2026 (eleven refusal types, one volume knob). Fetch paper: `npm run fetch:arxiv-qcri`
+**Research map (2024–2026 papers + repo PDFs):** [docs/refusal-research-beginners-guide.md](docs/refusal-research-beginners-guide.md) · [sources/research/README.md](sources/research/README.md) · `npm run fetch:research-papers`
+
+**Leading edge:** [techniques/multi-category-refusal-beginners-guide.md](techniques/multi-category-refusal-beginners-guide.md) — QCRI 2026 · [docs/defenses-against-abliteration.md](docs/defenses-against-abliteration.md) — what resists surgery
 
 ## Quick start paths
 

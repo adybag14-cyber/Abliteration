@@ -1,0 +1,111 @@
+{
+  "fetched": "2026-06-13T23:44:14.843Z",
+  "papers": [
+    {
+      "id": "2406.11717",
+      "url": "https://arxiv.org/pdf/2406.11717",
+      "pdf": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2406.11717.pdf",
+      "txt": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2406.11717.txt",
+      "pdf_bytes": 1107843,
+      "txt_chars": 123681
+    },
+    {
+      "id": "2502.17420",
+      "url": "https://arxiv.org/pdf/2502.17420",
+      "pdf": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2502.17420.pdf",
+      "txt": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2502.17420.txt",
+      "pdf_bytes": 3261118,
+      "txt_chars": 74434
+    },
+    {
+      "id": "2505.19056",
+      "url": "https://arxiv.org/pdf/2505.19056",
+      "pdf": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2505.19056.pdf",
+      "txt": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2505.19056.txt",
+      "pdf_bytes": 781340,
+      "txt_chars": 55583
+    },
+    {
+      "id": "2506.00085",
+      "url": "https://arxiv.org/pdf/2506.00085",
+      "pdf": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2506.00085.pdf",
+      "txt": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2506.00085.txt",
+      "pdf_bytes": 2399941,
+      "txt_chars": 83867
+    },
+    {
+      "id": "2510.02768",
+      "url": "https://arxiv.org/pdf/2510.02768",
+      "pdf": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2510.02768.pdf",
+      "txt": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2510.02768.txt",
+      "pdf_bytes": 2991878,
+      "txt_chars": 61334
+    },
+    {
+      "id": "2512.13655",
+      "url": "https://arxiv.org/pdf/2512.13655",
+      "pdf": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2512.13655.pdf",
+      "txt": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2512.13655.txt",
+      "pdf_bytes": 599000,
+      "txt_chars": 55830
+    },
+    {
+      "id": "2602.02132",
+      "url": "https://arxiv.org/pdf/2602.02132",
+      "pdf": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2602.02132.pdf",
+      "txt": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2602.02132.txt",
+      "pdf_bytes": 727456,
+      "txt_chars": 84719
+    },
+    {
+      "id": "2603.22061",
+      "url": "https://arxiv.org/pdf/2603.22061",
+      "pdf": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2603.22061.pdf",
+      "txt": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2603.22061.txt",
+      "pdf_bytes": 315302,
+      "txt_chars": 24383
+    },
+    {
+      "id": "2605.26526",
+      "url": "https://arxiv.org/pdf/2605.26526",
+      "pdf": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2605.26526.pdf",
+      "txt": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2605.26526.txt",
+      "pdf_bytes": 2998316,
+      "txt_chars": 43147
+    },
+    {
+      "id": "2606.05396",
+      "url": "https://arxiv.org/pdf/2606.05396",
+      "pdf": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2606.05396.pdf",
+      "txt": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\papers\\arxiv-2606.05396.txt",
+      "pdf_bytes": 505505,
+      "txt_chars": 61236
+    }
+  ],
+  "readmes": [
+    {
+      "id": "refusal-direction-readme",
+      "url": "https://raw.githubusercontent.com/andyrdt/refusal_direction/main/README.md",
+      "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\readmes\\refusal-direction-readme.md",
+      "bytes": 4210
+    },
+    {
+      "id": "cosmic-readme",
+      "url": "https://raw.githubusercontent.com/wang-research-lab/COSMIC/main/README.md",
+      "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\readmes\\cosmic-readme.md",
+      "bytes": 3025
+    },
+    {
+      "id": "abliteration-comparison-readme",
+      "url": "https://raw.githubusercontent.com/ricyoung/abliteration-comparison/main/README.md",
+      "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\readmes\\abliteration-comparison-readme.md",
+      "bytes": 3948
+    },
+    {
+      "id": "safety-pretraining-readme",
+      "url": "https://raw.githubusercontent.com/shashankskagnihotri/safety_pretraining/main/README.md",
+      "out": "C:\\Users\\adyba\\Desktop\\abliteration\\sources\\research\\readmes\\safety-pretraining-readme.md",
+      "bytes": 15038
+    }
+  ]
+}

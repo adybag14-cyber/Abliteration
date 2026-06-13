@@ -4,6 +4,8 @@ Evidence-based tool selection from cross-architecture evaluation research.
 
 **Source:** Young, R. J. — [arXiv:2512.13655](https://arxiv.org/abs/2512.13655) (v2, Jan 2026) — *Comparative Analysis of LLM Abliteration Methods: A Cross-Architecture Evaluation*
 
+**Repo PDF:** [../sources/research/papers/arxiv-2512.13655.pdf](../sources/research/papers/arxiv-2512.13655.pdf) · **Comparison repo:** [github.com/ricyoung/abliteration-comparison](https://github.com/ricyoung/abliteration-comparison) · **Beginner summary:** [refusal-research-beginners-guide.md](refusal-research-beginners-guide.md) §3
+
 The benchmark matrix and handbook interpretation of capability deltas integrate directly into the broader research taxonomy, method families, and capability-aware decision tree in [research-landscape.md](research-landscape.md). Cross-reference both when selecting tools for MoE/hybrid models or when GSM8K regression is a primary concern (see also the MoE per-expert technique in [../techniques/moe-hybrid-abliteration.md](../techniques/moe-hybrid-abliteration.md)).
 
 ---
@@ -12,13 +14,13 @@ The benchmark matrix and handbook interpretation of capability deltas integrate 
 
 | Tool | Type | Notes from paper / upstream |
 |------|------|----------------------------|
-| **Heretic** | Bayesian Optuna + projected abliteration | Variable KL (0.043–1.646); model-dependent capability impact |
+| **Heretic** | Bayesian Optuna + projected abliteration | **16/16 model compatibility** (paper); variable KL (0.043–1.646); model-dependent capability impact |
 | **DECCP** | Single-pass + deccp topics | Avg GSM8K Δ **-0.13 pp** on benchmarked subset |
 | **ErisForge** | Single-pass toolkit | Avg GSM8K Δ **-0.28 pp** on benchmarked subset |
-| **FailSpy/abliterator** | TransformerLens hook ablation | Lowest compatibility in 16-model matrix; best for prototyping |
+| **FailSpy/abliterator** | TransformerLens hook ablation | **Lowest compatibility** in 16-model matrix (research/notebook); best for prototyping |
 | **Abliterix** | Optuna TPE multi-objective (refusals + KL); Heretic-lineage extension | Not in arXiv:2512.13655 matrix — upstream **HonestAbliterationBench** + low-KL Gemma-4-E4B examples; verify per model |
 
-16 instruction-tuned models (7B–14B) tested for tool compatibility in the paper; quantitative GSM8K metrics on tool-supported subsets.
+16 instruction-tuned models (7B–14B) tested for tool compatibility in the paper; quantitative GSM8K metrics on tool-supported subsets. GSM8K change range across tools/models: **+1.51 pp to −18.81 pp** (−26.5% relative worst case).
 
 **Extended toolkit (handbook):** Full placement, commands, and decision tree → [../techniques/extended-abliteration-toolkit.md](../techniques/extended-abliteration-toolkit.md)
 
