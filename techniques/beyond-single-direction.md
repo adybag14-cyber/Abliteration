@@ -92,6 +92,30 @@ Orthogonal `r₁ ⊥ r₂` does **not** imply independent intervention effects. 
 
 ---
 
+## 6. Mechanistic tools (FailSpy/abliterator)
+
+[FailSpy/abliterator](https://github.com/FailSpy/abliterator) is the handbook's **notebook-first** path when you need to understand refusal geometry before permanent weight edits.
+
+| Capability | Use |
+|------------|-----|
+| Activation caching | Compare harmful vs harmless residuals per layer |
+| Refusal direction compute | Validate mean-difference `r_ℓ` before YAML/Heretic |
+| Hook ablation (temp) | A/B refusal rate without saving weights |
+| Hook ablation (permanent) | Bake only after temp hooks pass eval |
+| Layer whitelist/blacklist | Surgical bands — pairs with [layer-selective-abliteration.md](layer-selective-abliteration.md) |
+
+**Limits:** TransformerLens architecture coverage is **narrower** than Heretic/Abliterix (lowest compatibility in arXiv:2512.13655). Use for prototyping; export winning directions to Heretic custom prompts or Abliterix presets.
+
+```python
+# Pattern — see upstream notebooks for full API
+from transformer_lens import HookedTransformer
+# cache activations → compute r → hook blocks.{L}.hook_resid_post
+```
+
+Complements SAE latent work (§4) and multi-direction PCA (§3). VRAM path: [../instructions/low-vram-abliteration.md](../instructions/low-vram-abliteration.md#path-c--inference-hooks-only-zero-weight-edit)
+
+---
+
 ## Comparison
 
 | Method | Complexity | Best for |
@@ -102,6 +126,7 @@ Orthogonal `r₁ ⊥ r₂` does **not** imply independent intervention effects. 
 | Gradient RDO | ★★★★ | Research / hard models |
 | SAE latents | ★★★★ | Interpretability + targeted edits |
 | Domain-specific DIM | ★★☆ | Factory / pentest false-refusal |
+| FailSpy hooks | ★★☆ | Notebook prototyping → bake with Heretic/Abliterix |
 
 ---
 
@@ -109,4 +134,5 @@ Orthogonal `r₁ ⊥ r₂` does **not** imply independent intervention effects. 
 
 - [domain-specific-abliteration.md](domain-specific-abliteration.md)
 - [layer-selective-abliteration.md](layer-selective-abliteration.md)
+- [extended-abliteration-toolkit.md](extended-abliteration-toolkit.md)
 - [../docs/research-landscape.md](../docs/research-landscape.md)

@@ -197,6 +197,8 @@ Text-trunk abliteration for VLMs; mmproj export notes.
 
 ## Evidence-based tool choice
 
-Cross-architecture benchmark (Heretic vs DECCP vs ErisForge, GSM8K sensitivity): [../docs/comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md) · [arXiv:2512.13655](https://arxiv.org/abs/2512.13655)
+Cross-architecture benchmark (Heretic vs DECCP vs ErisForge vs FailSpy, GSM8K sensitivity): [../docs/comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md) · [arXiv:2512.13655](https://arxiv.org/abs/2512.13655)
+
+Extended toolkit (Abliterix, ErisForge, Nous/DECCP, FailSpy — placement + commands): [extended-abliteration-toolkit.md](extended-abliteration-toolkit.md)
 
 Eval gates and corpora: [eval-driven-abliteration.md](eval-driven-abliteration.md) · `npm run eval:stats`

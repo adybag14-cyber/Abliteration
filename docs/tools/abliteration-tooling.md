@@ -14,12 +14,12 @@ Tools for **weight surgery**, **4-bit measure**, **LoRA export**, **quantized in
 | **refusal_direction** | [andyrdt/refusal_direction](https://github.com/andyrdt/refusal_direction) | Paper reproduction | Research GPU |
 | **remove-refusals-with-transformers** | [Sumandora/remove-refusals-with-transformers](https://github.com/Sumandora/remove-refusals-with-transformers) | Pure HF, no TransformerLens | Medium |
 | **abliterate.cpp** | [kabachuha/abliterate.cpp](https://github.com/kabachuha/abliterate.cpp) | GGUF-native direction measure → llm-abliteration | WIP experimental |
-| **abliterix** | [wuwangzhang1216/abliterix](https://github.com/wuwangzhang1216/abliterix) | Community CLI wrapper | Verify before production |
-| **ErisForge** | [Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) | Toolkit | Varies |
+| **Abliterix** | [wuwangzhang1216/abliterix](https://github.com/wuwangzhang1216/abliterix) | Optuna TPE multi-objective; 150+ configs; MoE/VL/SSM; LoRA/ORBA/SAE | Heretic-lineage; HonestAbliterationBench; AGPL-3.0 |
+| **ErisForge** | [Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) | Layer-band single-pass; `ExpressionRefusalScorer` | GSM8K-friendly subset; lower arch coverage |
 | **TransformerLens** | [TransformerLensOrg/TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) | Hooks, direction probes | 1–3B on 8 GB |
 | **wassname/abliterator** | [wassname/abliterator](https://github.com/wassname/abliterator) | Community | Legacy |
-| **FailSpy/abliterator** | [FailSpy/abliterator](https://github.com/FailSpy/abliterator) | Early tooling | Legacy |
-| **Nous llm-abliteration** | [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | jim-plus fork; YAML per-layer + projected/normpreserve | 4-bit measure |
+| **FailSpy/abliterator** | [FailSpy/abliterator](https://github.com/FailSpy/abliterator) | TransformerLens hooks; temp/permanent ablation | Notebook prototyping; narrow arch support |
+| **Nous llm-abliteration** | [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | jim-plus fork; YAML + sharded ablate + `--deccp` | 4-bit measure; lowest peak VRAM for large models |
 | **OBLITERATUS** | [elder-plinius/OBLITERATUS](https://github.com/elder-plinius/OBLITERATUS) | SVD + entanglement analysis; `surgical` CoT-aware mode | Hermes Agent skill |
 | **huihui_ai** | [ollama.com/huihui_ai](https://ollama.com/huihui_ai/gemma-4-abliterated) | Sumandora abliterates; layer-banded GGUF drops | Fast uncensor, weak tool QA |
 | **199-biotech Gemma 4** | [gemma-4-abliterated](https://github.com/199-biotechnologies/gemma-4-abliterated) | Per-layer MLX pipeline; weight factor 1.0 | Gemma 4 31B quality-first |
@@ -27,6 +27,8 @@ Tools for **weight surgery**, **4-bit measure**, **LoRA export**, **quantized in
 **Master toolchain doc:** [../toolchain-safetensors-gguf-lora.md](../toolchain-safetensors-gguf-lora.md) · Safetensors: [../../methods/safetensor-abliteration-pipeline.md](../../methods/safetensor-abliteration-pipeline.md)
 
 Workflows: [../../instructions/heretic-workflow.md](../../instructions/heretic-workflow.md) · [../../instructions/low-vram-abliteration.md](../../instructions/low-vram-abliteration.md)
+
+**Extended toolkit (Abliterix, ErisForge, Nous/DECCP, FailSpy):** comparison table, commands, decision tree → [../../techniques/extended-abliteration-toolkit.md](../../techniques/extended-abliteration-toolkit.md)
 
 ---
 
@@ -127,8 +129,10 @@ Surgery on Mac: prefer cloud Heretic + local GGUF.
 | **repeng / RepE** | [arxiv 2310.01405](https://arxiv.org/abs/2310.01405) | Representation engineering vectors |
 | **TUM geometry-of-refusal** | [cs.cit.tum.de/daml/geometry-of-refusal](https://www.cs.cit.tum.de/daml/geometry-of-refusal/) | Gradient RDO code |
 | **GraySwan circuit-breakers** | [GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) | Defensive training (contrast) |
-| **ErisForge** | [Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) | Abliteration toolkit |
-| **Nous llm-abliteration** | [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Fork of manual pipeline |
+| **ErisForge** | [Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) | Layer-band ablation + refusal scorer |
+| **Abliterix** | [wuwangzhang1216/abliterix](https://github.com/wuwangzhang1216/abliterix) | Multi-technique automation; HonestAbliterationBench |
+| **FailSpy/abliterator** | [FailSpy/abliterator](https://github.com/FailSpy/abliterator) | Activation cache + hook ablation |
+| **Nous llm-abliteration** | [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Sharded manual pipeline + DECCP measure |
 
 ---
 
@@ -182,7 +186,8 @@ Use this section when the deploy goal is **agents with online/native tool callin
 | Stack | Engine | Typical target | Tool-call preservation | Best for |
 |-------|--------|----------------|------------------------|----------|
 | **Heretic** (handbook default) | Optuna + projected + norm-preserving | Any HF instruct model | Medium — tune KL + eval gates | Automatic deploy + factory/CyberGym eval |
-| **Nous / jim-plus llm-abliteration** | `measure.py` → YAML `sharded_ablate.py` | Llama, Qwen, Gemma 3+, Mistral | Medium-low if conservative YAML | Manual per-architecture control |
+| **Abliterix** | Optuna TPE multi-objective; 150+ presets; MoE/VL/SSM | Gemma 4, MoE, hybrid, VL families | Medium-high when preset matches — verify HonestAbliterationBench + handbook JSONL | Heretic alternative when arch-specific automation needed |
+| **Nous / jim-plus llm-abliteration** | `measure.py` → YAML `sharded_ablate.py` | Llama, Qwen, Gemma 3+, Mistral | Medium-low if conservative YAML | Manual per-architecture control; 20B+ sharded |
 | **Nous Hermes + OBLITERATUS** | `obliteratus obliterate --method advanced\|surgical` | 3B–70B instruct | Medium-high with `surgical` on reasoning models | Research agents, CoT models |
 | **OBLITERATUS** (standalone) | SVD + norm-preserving + KL co-opt | Wide model list | Medium-high with `advanced`; use `surgical` for R1/CoT | When entanglement analysis matters |
 | **ErisForge / DECCP** | Single-pass | GSM8K-sensitive bases | Medium — better math subset in [arXiv:2512.13655](https://arxiv.org/abs/2512.13655) | When Heretic KL is poor |

@@ -218,7 +218,7 @@ This is **not** QLoRA fine-tuning — no gradient updates on refusal. For SGD QL
 | **refusal_direction** | Research | `direction.pt` | Paper repro |
 | **remove-refusals-with-transformers** | Community | Safetensors | No TransformerLens |
 | **abliterate.cpp** | WIP | measurements.pt | GGUF measure |
-| **abliterix** | Community CLI | Varies | Alt wrapper — verify before use |
+| **Abliterix** | Optuna multi-objective; MoE/VL presets | Safetensors | Heretic-lineage; HonestAbliterationBench; AGPL-3.0 |
 | **llama.cpp convert** | Production | GGUF | All local deploy |
 | **GGUF-my-LoRA** | Production | GGUF LoRA | Adapter sidecars |
 | **Unsloth GGUF export** | Production | GGUF | Post QLoRA repair |

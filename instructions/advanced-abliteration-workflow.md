@@ -165,16 +165,59 @@ Always 4-bit + CPU offload for MoE on consumer GPUs.
 
 ---
 
+## Track J — Abliterix (MoE / hybrid / VL / multi-technique)
+
+**Goal:** Architecture-specific automation when Heretic presets are thin — expert-granular MoE, LoRA abliteration, steering, ORBA, or SAE paths in one CLI.
+
+| Step | Action |
+|------|--------|
+| 1 | Read upstream `benchmarks/SPEC.md` (**HonestAbliterationBench**) — not a substitute for handbook JSONL gates |
+| 2 | Pick matching preset from Abliterix `configs/` (150+ upstream) |
+| 3 | Run multi-objective Optuna (refusals + KL) per upstream README |
+| 4 | Eval: factory + XSTest + GSM8K/MMLU + CyberGym proxy |
+| 5 | Label checkpoint; note AGPL-3.0 if redistributing |
+
+```bash
+git clone https://github.com/wuwangzhang1216/abliterix.git
+cd abliterix && pip install -e .
+abliterix run --config configs/<family>.yaml   # verify model id
+```
+
+→ [../techniques/extended-abliteration-toolkit.md](../techniques/extended-abliteration-toolkit.md) · [../techniques/model-family-playbook.md](../techniques/model-family-playbook.md)
+
+---
+
+## Track K — ErisForge quick layer-band pass
+
+**Goal:** Single-pass ablation after you have a layer band from Track B geometry — minimal config, GSM8K-friendly on benchmarked subsets.
+
+| Step | Action |
+|------|--------|
+| 1 | `heretic <model> --print-residual-geometry` → pick `L_peak ± 4` |
+| 2 | ErisForge `AblationDecoderLayer` on that band |
+| 3 | `ExpressionRefusalScorer` sanity check |
+| 4 | Full handbook eval gates |
+
+```bash
+git clone https://github.com/Tsadoq/ErisForge.git && cd ErisForge && pip install -e .
+```
+
+→ [../techniques/layer-selective-abliteration.md](../techniques/layer-selective-abliteration.md#erisforge--quick-prototyping) · [../docs/comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md)
+
+---
+
 ## Technology stack reference
 
 | Layer | Tools |
 |-------|-------|
-| Surgery | Heretic, llm-abliteration |
+| Surgery (auto) | Heretic, **Abliterix** (MoE/VL/SSM presets) |
+| Surgery (manual) | llm-abliteration + DECCP, **ErisForge** (layer band) |
+| Prototyping | **FailSpy/abliterator**, TransformerLens hooks |
 | Quant | bitsandbytes, llama.cpp |
 | Adapters | PEFT, Unsloth, export script |
-| Interpretability | TransformerLens, GemmaScope SAE |
+| Interpretability | TransformerLens, GemmaScope SAE, Abliterix SAE/ORBA |
 | Agents | OpenHands, vLLM, Ollama |
-| Gates | hardware-tool-gate.py |
+| Gates | hardware-tool-gate.py, HonestAbliterationBench (upstream sanity) |
 
 Full catalog: [../docs/tools/abliteration-tooling.md](../docs/tools/abliteration-tooling.md)
 

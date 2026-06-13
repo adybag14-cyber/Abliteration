@@ -31,3 +31,17 @@ r_ℓ    = (μ_A^ℓ - μ_B^ℓ) / ||μ_A^ℓ - μ_B^ℓ||
 
 - `directions.pt` or JSON: `{layer_idx: [d_model floats]}`
 - Metadata: model revision, hook point, token index strategy
+
+---
+
+## ErisForge `ExpressionRefusalScorer`
+
+[ErisForge](https://github.com/Tsadoq/ErisForge) implements the same mean-difference intuition with a built-in scorer — useful for **quick layer-band experiments** without writing custom hooks:
+
+1. Collect harmful/harmless pairs (or use upstream examples).
+2. Compute per-layer separation signal.
+3. Apply `AblationDecoderLayer` on the peak band only.
+
+Pairs with [layer-selective-abliteration.md](layer-selective-abliteration.md#erisforge--quick-prototyping) and [extended-abliteration-toolkit.md](extended-abliteration-toolkit.md).
+
+For deeper mechanistic control (caching, temp hooks), use [FailSpy/abliterator](https://github.com/FailSpy/abliterator) → [beyond-single-direction.md](beyond-single-direction.md#6-mechanistic-tools-failspyabliterator).

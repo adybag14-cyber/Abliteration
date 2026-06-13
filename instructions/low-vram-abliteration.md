@@ -128,7 +128,9 @@ See:
 
 ## Path B — llm-abliteration 4-bit measure + sharded ablate
 
-Best when Heretic OOMs but you have **CPU RAM** for layer-wise surgery.
+Best when Heretic OOMs but you have **CPU RAM** for layer-wise surgery. **Peak VRAM stays low** because `sharded_ablate.py` edits one layer matrix at a time — the full model never loads into GPU memory during ablation.
+
+**Forks:** [jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) (handbook default, v1.2+ projected/normpreserve) · [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) (community YAML) · pin commit for production.
 
 ```bash
 git clone https://github.com/jim-plus/llm-abliteration.git tools/llm-abliteration
@@ -141,7 +143,12 @@ cd tools/llm-abliteration && pip install -r requirements.txt bitsandbytes
 python measure.py -m <model_path> -o directions.pt --quant 4bit \
   --data-harmful ./data/harmful.txt \
   --data-harmless ./data/harmless.txt
+
+# Multilingual / Chinese topics — DECCP prompt sets
+python measure.py -m <model_path> -o directions.pt --quant 4bit --deccp
 ```
+
+**DECCP** ([AUGMXNT/deccp](https://github.com/AUGMXNT/deccp)): use when English-only harmful/harmless sets misalign refusal geometry on CJK or multilingual instruct models. DECCP showed the **lowest avg GSM8K drop** (-0.13 pp) on the arXiv:2512.13655 subset — still run factory JSONL gates.
 
 ### 2. Analyze (CPU OK)
 
@@ -157,9 +164,9 @@ Pick middle-to-late layers in the YAML config (see repo examples).
 python sharded_ablate.py abliteration_config.yaml --normpreserve --projected
 ```
 
-`sharded_ablate.py` processes weight shards so the **full model never sits in VRAM at once**. Peak demand is one layer matrix + direction vectors.
+`sharded_ablate.py` processes weight shards so the **full model never sits in VRAM at once**. Peak demand is one layer matrix + direction vectors. Prefer this path for **20B+** checkpoints on consumer GPUs.
 
-Full workflow: [llm-abliteration-workflow.md](llm-abliteration-workflow.md).
+Full workflow: [llm-abliteration-workflow.md](llm-abliteration-workflow.md) · toolkit comparison: [../techniques/extended-abliteration-toolkit.md](../techniques/extended-abliteration-toolkit.md)
 
 ---
 
@@ -179,7 +186,9 @@ model = HookedTransformer.from_pretrained(
 
 Use 1–3B models; store direction `.pt` on disk (~MB). Good for validating refusal removal before committing GPU hours to Heretic.
 
-→ [quickstart.md](quickstart.md)
+**FailSpy/abliterator** ([github.com/FailSpy/abliterator](https://github.com/FailSpy/abliterator)) wraps the same TransformerLens pattern with activation caching, layer whitelist/blacklist, and temp vs permanent hook ablation — best for notebook prototyping; bake winning directions with Heretic or Abliterix.
+
+→ [quickstart.md](quickstart.md) · [../techniques/beyond-single-direction.md](../techniques/beyond-single-direction.md#6-mechanistic-tools-failspyabliterator)
 
 ---
 

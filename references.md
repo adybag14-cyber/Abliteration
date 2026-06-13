@@ -24,14 +24,14 @@
 | **llm-abliteration** | [github.com/jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) | measure.py → analyze.py → sharded_ablate.py |
 | **refusal_direction** | [github.com/andyrdt/refusal_direction](https://github.com/andyrdt/refusal_direction) | Paper pipeline, `direction.pt` artifacts |
 | **TransformerLens** | [github.com/TransformerLensOrg/TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) | Hooks, residual analysis |
-| **FailSpy/abliterator** | [github.com/FailSpy/abliterator](https://github.com/FailSpy/abliterator) | Early public abliterator |
+| **FailSpy/abliterator** | [github.com/FailSpy/abliterator](https://github.com/FailSpy/abliterator) | TransformerLens hooks; mechanistic prototyping |
 | **remove-refusals-with-transformers** | [github.com/Sumandora/remove-refusals-with-transformers](https://github.com/Sumandora/remove-refusals-with-transformers) | Pure Transformers, no TransformerLens |
 | **wassname/abliterator** | [github.com/wassname/abliterator](https://github.com/wassname/abliterator) | Community implementation |
-| **ErisForge** | [github.com/Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) | Toolkit |
-| **NousResearch/llm-abliteration** | [github.com/NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Community fork |
+| **ErisForge** | [github.com/Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) | Layer-band single-pass; ExpressionRefusalScorer |
+| **NousResearch/llm-abliteration** | [github.com/NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Sharded manual pipeline; `--deccp` measure |
 | **abliterate.cpp** | [github.com/kabachuha/abliterate.cpp](https://github.com/kabachuha/abliterate.cpp) | GGUF measure → llm-abliteration (WIP) |
-| **abliterix** | [github.com/wuwangzhang1216/abliterix](https://github.com/wuwangzhang1216/abliterix) | Community CLI (verify before use) |
-| **deccp** | [github.com/AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) | Dataset / deccp topics for measurement |
+| **Abliterix** | [github.com/wuwangzhang1216/abliterix](https://github.com/wuwangzhang1216/abliterix) | Optuna multi-objective; 150+ configs; HonestAbliterationBench |
+| **DECCP** | [github.com/AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) | Multilingual deccp topics for `measure.py --deccp` |
 | **GraySwan circuit-breakers** | [github.com/GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) | Defensive alignment (contrast) |
 
 Heretic also mirrors to [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/heretic).
@@ -47,7 +47,7 @@ git clone https://github.com/Tsadoq/ErisForge.git && cd ErisForge && pip install
 git clone https://github.com/AUGMXNT/deccp.git && cd deccp && pip install -r requirements.txt
 ```
 
-→ [docs/comparative-abliteration-benchmarks.md](docs/comparative-abliteration-benchmarks.md)
+→ [docs/comparative-abliteration-benchmarks.md](docs/comparative-abliteration-benchmarks.md) · [techniques/extended-abliteration-toolkit.md](techniques/extended-abliteration-toolkit.md)
 
 **Tool selection for responsible use:** GSM8K capability deltas and architecture-specific findings in the comparative benchmarks directly inform risk mitigation. Pair any tool decision with the capability sanity gates, post-edit labeling, and authorized scope rules in [docs/risks-and-ethics.md](docs/risks-and-ethics.md). 
 

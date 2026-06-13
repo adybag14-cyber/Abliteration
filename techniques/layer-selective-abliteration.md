@@ -75,6 +75,27 @@ Optuna searches:
 
 ---
 
+## ErisForge — quick prototyping
+
+When geometry is already known and you want a **single-pass** layer-band ablation without Optuna:
+
+| Step | Tool |
+|------|------|
+| 1 | Heretic `--print-residual-geometry` or `analyze.py` → `L_peak` |
+| 2 | ErisForge `AblationDecoderLayer` on `[L_peak-4, L_peak+4]` |
+| 3 | `ExpressionRefusalScorer` quick check |
+| 4 | Handbook eval gates |
+
+```bash
+git clone https://github.com/Tsadoq/ErisForge.git && cd ErisForge && pip install -e .
+```
+
+ErisForge averaged **-0.28 pp** GSM8K on the arXiv:2512.13655 subset — lower model compatibility than Heretic; always re-eval on your checkpoint.
+
+→ [extended-abliteration-toolkit.md](extended-abliteration-toolkit.md) · [../instructions/advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md) Track K · [mean-difference-direction.md](mean-difference-direction.md#erisforge-expressionrefusalscorer)
+
+---
+
 ## MLP vs attention
 
 | Target | Effect |
