@@ -79,7 +79,9 @@ Full agent eval on [CyberGym](use-cases/cybergym-benchmark.md):
 | Union @6 rollouts | Track test-time scaling |
 | Confirm-loop rate | Should drop post-abliteration |
 
-Start with ~50-task subset before full 1,507.
+Use the local sample [../data/eval/cybergym-subset-sample.jsonl](../data/eval/cybergym-subset-sample.jsonl) (generated via `python scripts/cybergym-eval-stub.py --prepare-subset --count 50 --out data/eval/cybergym-subset-sample.jsonl`) for rapid local iteration on agent PoC reproduction and refusal patterns. Current sample contains representative memory-safety / parser / kernel tasks (see also cyber-research-prompts for non-execution proxy).
+
+Start with this subset (or a regenerated 50-task slice) before scaling to the full 1,507-task CyberGym run.
 
 ## Jarvis tool-repair eval
 
@@ -90,9 +92,15 @@ python scripts/filter-jarvis-eval.py
 # → data/eval/jarvis-safe-eval.jsonl
 ```
 
+Or via npm: `npm run eval:jarvis-safe`.
+
+The resulting [../data/eval/jarvis-safe-eval.jsonl](../data/eval/jarvis-safe-eval.jsonl) (~2509 lines) is the canonical filtered corpus (`category=safe`) used for post-abliteration + post-Jarvis-repair measurement of benign tool execution. It focuses on commands that should succeed without refusal after repair (e.g. disk, process, hardware inventory).
+
 Source: `sources/jarvis-pack/.../eval_prompts.jsonl` (`category=safe`).
 
 Expected: `allow_tool` on `uname`, `wmic`, `lspci`, `nvidia-smi`, DiskPart list/detail.
+
+See also: [agentic-security-stack.md](../instructions/agentic-security-stack.md) and the filter script.
 
 ## Capability benchmarks (sanity)
 

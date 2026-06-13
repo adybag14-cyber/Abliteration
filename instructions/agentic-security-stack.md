@@ -69,12 +69,28 @@ Extend `SAFE_EXACT_COMMANDS` in the script for your factory SKU manifests.
 
 ## Phase 4 — Evaluate
 
-| Corpus | File |
-|--------|------|
+| Corpus | File / Command |
+|--------|----------------|
 | Factory / firmware | `data/eval/hardware-factory-prompts.jsonl` |
 | Cyber research | `data/eval/cyber-research-prompts.jsonl` |
 | OSINT / Kali / hashcat | `data/eval/osint-pentest-prompts.jsonl` |
-| Jarvis full eval | `sources/jarvis-pack/.../eval_prompts.jsonl` (filter categories) |
+| CyberGym proxy subset (local) | `python scripts/cybergym-eval-stub.py --prepare-subset --count 50 --out data/eval/cybergym-subset-sample.jsonl` (see also [cybergym-benchmark.md](../docs/use-cases/cybergym-benchmark.md)) |
+| Jarvis safe tool eval (post-repair) | `npm run eval:jarvis-safe` → `data/eval/jarvis-safe-eval.jsonl` (filters `sources/jarvis-pack/.../eval_prompts.jsonl` for `category=safe`) |
+
+**Usage:**
+
+```bash
+# CyberGym dry-run prep + flow docs
+python scripts/cybergym-eval-stub.py --help
+python scripts/cybergym-eval-stub.py --print-flow
+python scripts/cybergym-eval-stub.py --prepare-subset --count 50 --out data/eval/cybergym-subset-sample.jsonl
+
+# Jarvis safe subset for benign command eval (after tool-repair adapter)
+npm run eval:jarvis-safe
+# equivalent: python scripts/filter-jarvis-eval.py
+```
+
+See full eval matrices, targets, and cross-corpus details in [../docs/evaluation.md](../docs/evaluation.md).
 
 Tool playbooks: [../docs/tools/agent-playbooks.md](../docs/tools/agent-playbooks.md) · Catalog: [../docs/tools/README.md](../docs/tools/README.md)
 

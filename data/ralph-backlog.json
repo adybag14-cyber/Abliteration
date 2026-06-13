@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-06-13T21:54:08.912Z",
+  "updated_at": "2026-06-13T22:00:40.557Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -188,6 +188,43 @@
       ],
       "acceptance": "Both docs have consistent abliterate.cpp status and links",
       "completed_at": "2026-06-13T21:54:08.911Z"
+    },
+    {
+      "id": "dev-017",
+      "title": "evaluation.md: add cybergym-subset + jarvis-safe corpus rows",
+      "status": "done",
+      "priority": 17,
+      "files": [
+        "docs/evaluation.md",
+        "scripts/count-eval-prompts.mjs"
+      ],
+      "acceptance": "evaluation.md documents cybergym-subset-sample.jsonl and jarvis-safe-eval.jsonl",
+      "started_at": "2026-06-13T21:57:33.977Z",
+      "completed_at": "2026-06-13T21:58:12.145Z"
+    },
+    {
+      "id": "dev-018",
+      "title": "agentic-security-stack: link cybergym stub + filter-jarvis-eval",
+      "status": "done",
+      "priority": 18,
+      "files": [
+        "instructions/agentic-security-stack.md"
+      ],
+      "acceptance": "Stack doc references cybergym-eval-stub.py and eval:jarvis-safe",
+      "started_at": "2026-06-13T21:58:57.788Z",
+      "completed_at": "2026-06-13T21:59:16.704Z"
+    },
+    {
+      "id": "dev-019",
+      "title": "README: add ralph:continue:watch to quick commands",
+      "status": "done",
+      "priority": 19,
+      "files": [
+        "README.md"
+      ],
+      "acceptance": "README lists continue:on, continue:watch, continue:status",
+      "started_at": "2026-06-13T21:59:18.748Z",
+      "completed_at": "2026-06-13T22:00:40.556Z"
     }
   ]
 }

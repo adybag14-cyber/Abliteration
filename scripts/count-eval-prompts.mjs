@@ -74,6 +74,10 @@ function main() {
 
   console.log('-'.repeat(60));
   console.log(`${'TOTAL'.padEnd(52)}${total}`);
+
+  console.log('\nNotable corpora:');
+  console.log('  • cybergym-subset-sample.jsonl — local CyberGym vuln-repro proxy (see docs/use-cases/cybergym-benchmark.md and evaluation.md)');
+  console.log('  • jarvis-safe-eval.jsonl — filtered safe tool prompts from Jarvis pack for repair/adapter eval');
 }
 
 main();

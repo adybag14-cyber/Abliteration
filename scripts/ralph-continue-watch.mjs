@@ -32,7 +32,7 @@ function runOnce() {
     const child = spawn(process.execPath, [join(__dir, 'ralph-continue-on.mjs')], {
       cwd: root,
       stdio: 'inherit',
-      shell: process.platform === 'win32',
+      shell: false,
     });
     child.on('exit', (code) => resolve(code ?? 1));
   });

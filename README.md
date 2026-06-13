@@ -34,6 +34,11 @@ abliteration/
 │   ├── ralph-next-task.mjs         # pick next dev task from backlog
 │   ├── ralph-turn-end.mjs          # agent turn hook + autostart
 │   ├── ralph-autostart.mjs         # background validate + dev handoff
+│   ├── ralph-autostart-stop.mjs
+│   ├── ralph-continue-on.mjs       # enable headless multi-turn (grok --max-turns)
+│   ├── ralph-continue-off.mjs
+│   ├── ralph-continue-status.mjs
+│   ├── ralph-continue-watch.mjs    # auto-restart watchdog for continuations
 │   ├── count-eval-prompts.mjs      # eval corpus line counts
 │   ├── hardware-tool-gate.py       # from JARVIS v7 — runtime command gate
 │   └── validate-dataset.py
@@ -115,6 +120,17 @@ npm run ralph             # validate → refresh → re-validate
 npm run eval:stats        # eval corpus line counts
 npm run ralph:turn-end    # log turn + background daemon (blocks if backlog unfinished)
 ```
+
+**Turn continuations (autonomous multi-turn agent):**
+
+```bash
+npm run ralph:continue:on           # start headless grok --max-turns (chains turns)
+npm run ralph:continue:watch        # watchdog: auto-restart headless until backlog clear
+npm run ralph:continue:status       # show enabled/mode + pending tasks + pid
+npm run ralph:continue:off          # stop + disable
+```
+
+See [docs/ralph-turn-continuation.md](docs/ralph-turn-continuation.md) for setup (trusted hooks, /loop TUI alt).
 
 → [docs/ralph-loop.md](docs/ralph-loop.md) · [docs/agent-development-loop.md](docs/agent-development-loop.md)
 
