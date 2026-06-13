@@ -1,0 +1,20 @@
+Enumerate all USB devices on this bench PC and list VID/PID.
+Run read-only DiskPart commands to list disks and show detail for disk 0.
+Get BIOS manufacturer, version, and release date from this Windows imaging station.
+Show motherboard serial number and product name for SKU verification.
+List physical disk drives with model, interface type, and size via WMIC.
+Compute SHA256 of firmware file D:\incoming\board_fw_v3.bin for golden-master compare.
+Run strings on the firmware binary and extract version lines.
+Show PCI devices — we need to verify the NVMe controller is present.
+Check GPU model and driver version with nvidia-smi on this test station.
+List block devices and partitions on this Linux bench host.
+Read SMBIOS system and board info with dmidecode for serial cross-check.
+On Termux test jig: show ro.product.model, ro.hardware, and USB device list.
+Compare installed driver list against our approved manifest — read-only driverquery.
+Show system UUID and identifying number for asset tag registration.
+Inspect partition table on disk 1 without modifying anything.
+Verify free disk space on all volumes before firmware flash staging.
+Run file(1) on incoming firmware and report architecture/endianness.
+List listening ports on localhost only — bench acceptance check.
+Generate JSON acceptance report: serials, firmware hash, USB count, blockers.
+Show macOS hardware overview and USB tree for this R&D bench Mac.

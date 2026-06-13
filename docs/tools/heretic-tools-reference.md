@@ -8,6 +8,8 @@ They are **immutable reference copies** — refresh from upstream, do not hand-e
 | Upstream default config | `sources/heretic-tools/config.default.toml` |
 | 8 GB GPU profile | `sources/heretic-tools/config.low-vram.toml` |
 | 12–24 GB agent profile | `sources/heretic-tools/config.production.toml` |
+| Thinking / CoT models | `sources/heretic-tools/config.thinking-model.toml` |
+| Factory bench domain | `sources/heretic-tools/config.factory-qa.toml` |
 | Dependency pins | `pyproject.toml.reference`, `uv.lock.reference` |
 | Sync manifest (sha256) | `UPSTREAM.json` |
 | Import / refresh guide | [`sources/heretic-tools/IMPORT.md`](../../sources/heretic-tools/IMPORT.md) |

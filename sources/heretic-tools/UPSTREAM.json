@@ -31,7 +31,9 @@
   },
   "handbook_profiles": {
     "config.low-vram.toml": "Maintained in-repo — 8–12 GB GPU, bnb_4bit",
-    "config.production.toml": "Maintained in-repo — 12–24 GB, projected + norm-preserving"
+    "config.production.toml": "Maintained in-repo — 12–24 GB, projected + norm-preserving",
+    "config.thinking-model.toml": "Maintained in-repo — CoT skips, longer max_response_length",
+    "config.factory-qa.toml": "Maintained in-repo — factory good/bad .txt prompts"
   },
   "install": {
     "pip": "pip install -U heretic-llm bitsandbytes accelerate",

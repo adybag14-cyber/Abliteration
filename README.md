@@ -71,6 +71,10 @@ Optional: [instructions/quickstart.md](instructions/quickstart.md) — test with
 | Research landscape & papers | [docs/research-landscape.md](docs/research-landscape.md) |
 | Abliteration tools (PEFT, GGUF, SAE, …) | [docs/tools/abliteration-tooling.md](docs/tools/abliteration-tooling.md) |
 | **Heretic pins + HF model registry** | [docs/tools/heretic-tools-reference.md](docs/tools/heretic-tools-reference.md) |
+| **Model family picker (Qwen/Gemma/Llama)** | [instructions/model-family-guide.md](instructions/model-family-guide.md) |
+| **Thinking models (CoT)** | [instructions/thinking-models-guide.md](instructions/thinking-models-guide.md) |
+| **Eval-driven factory deploy** | [instructions/eval-driven-workflow.md](instructions/eval-driven-workflow.md) |
+| **Troubleshooting** | [instructions/troubleshooting-encyclopedia.md](instructions/troubleshooting-encyclopedia.md) |
 | Factory QA agent | [instructions/agentic-security-stack.md](instructions/agentic-security-stack.md) |
 | Hardware commands | [docs/hardware-command-catalog.md](docs/hardware-command-catalog.md) |
 | Security tool catalogs | [docs/tools/README.md](docs/tools/README.md) |

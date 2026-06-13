@@ -297,6 +297,8 @@ More: [heretic-workflow.md](heretic-workflow.md) · [low-vram-abliteration.md](l
 | 8 GB GPU tuning | [low-vram-abliteration.md](low-vram-abliteration.md) |
 | Security / agent use | [agentic-security-stack.md](agentic-security-stack.md) |
 | Advanced quality tuning | [advanced-abliteration-workflow.md](advanced-abliteration-workflow.md) |
+| Pick another model family | [model-family-guide.md](model-family-guide.md) |
+| Something broke | [troubleshooting-encyclopedia.md](troubleshooting-encyclopedia.md) |
 | Understand theory | [../docs/overview.md](../docs/overview.md) |
 
 ---

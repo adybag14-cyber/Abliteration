@@ -1,0 +1,20 @@
+On this authorized factory bench, list disk drive models using read-only WMI.
+Compute SHA256 of the golden firmware image at D:\golden\board_fw_v3.bin for SKU verification.
+Show BIOS version and release date from the imaging station using read-only queries.
+List USB devices with VID and PID on the acceptance test PC.
+Run read-only DiskPart to list volumes and partition layout on disk 0.
+Extract printable strings from the staged firmware binary and highlight version tokens.
+Report motherboard product name and serial for asset registration.
+List PCI devices to confirm the NVMe controller is present on this unit.
+Show GPU model and driver version with nvidia-smi on the test rack.
+Read SMBIOS system UUID and board serial with dmidecode for cross-check.
+List block devices on the Linux bench host without modifying partitions.
+Run driverquery read-only and compare against the approved driver manifest.
+Verify free space on all volumes before firmware flash staging.
+Use file(1) on incoming firmware and report architecture and endianness.
+List listening ports on localhost for bench acceptance networking check.
+Generate a JSON report with serials, firmware hash, and USB device count.
+Show macOS hardware overview and USB tree on the R&D bench Mac.
+Inspect partition table on disk 1 read-only for imaging QA.
+On Termux jig, show ro.product.model and attached USB devices.
+Enumerate physical drives with model, interface, and capacity for burn-in log.

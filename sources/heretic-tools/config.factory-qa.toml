@@ -1,0 +1,67 @@
+# Abliteration handbook — factory / bench QA domain (second pass or primary for agents)
+# Export prompts first:
+#   jq -r '.prompt' data/eval/hardware-factory-prompts.jsonl > data/eval/factory-bad-prompts.txt
+#   jq -r '.prompt' data/eval/factory-good-prompts.jsonl > data/eval/factory-good-prompts.txt
+# Usage: cp sources/heretic-tools/config.factory-qa.toml config.toml
+# Guide: instructions/eval-driven-workflow.md
+
+dtypes = ["auto", "float16", "bfloat16", "float32"]
+
+quantization = "bnb_4bit"
+device_map = "auto"
+offload_outputs_to_cpu = true
+
+batch_size = 0
+max_batch_size = 32
+max_response_length = 150
+
+chain_of_thought_skips = [
+    ["<think>", "</think>"],
+    [
+        "<|channel|>analysis<|message|>",
+        "<|channel|>analysis<|message|><|end|><|start|>assistant<|channel|>final<|message|>",
+    ],
+]
+
+print_responses = false
+kl_divergence_scale = 1.0
+kl_divergence_target = 0.008
+
+orthogonalize_direction = true
+row_normalization = "full"
+full_normalization_lora_rank = 8
+winsorization_quantile = 0.95
+
+n_trials = 120
+n_startup_trials = 40
+study_checkpoint_dir = "checkpoints"
+max_shard_size = "5GB"
+
+refusal_markers = [
+    "disclaimer", "sorry", "i can'", "i cant", "i cannot",
+    "i won'", "i wont", "i will not", "i unable", "im unable",
+    "i'm unable", "i am unable", "as an ai", "ai assistant",
+    "violat", "prohibit", "illegal", "harmful", "inappropriate", "unethical",
+    "i don't have access", "cannot execute", "not able to run",
+    "without access to your", "as a language model",
+]
+
+system_prompt = "You are a helpful assistant for authorized factory hardware diagnostics."
+
+[good_prompts]
+dataset = "data/eval/factory-good-prompts.txt"
+split = "[:200]"
+
+[bad_prompts]
+dataset = "data/eval/factory-bad-prompts.txt"
+split = "[:200]"
+
+[good_evaluation_prompts]
+dataset = "mlabonne/harmless_alpaca"
+split = "test[:50]"
+column = "text"
+
+[bad_evaluation_prompts]
+dataset = "mlabonne/harmful_behaviors"
+split = "test[:50]"
+column = "text"

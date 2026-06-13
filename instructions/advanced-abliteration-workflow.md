@@ -125,6 +125,36 @@ Always 4-bit + CPU offload for MoE on consumer GPUs.
 
 ---
 
+## Track H — Thinking models (CoT)
+
+**Goal:** Qwen3-Thinking, R1 distill, gpt-oss — refusal in final channel only.
+
+| Step | Action |
+|------|--------|
+| 1 | `cp sources/heretic-tools/config.thinking-model.toml config.toml` |
+| 2 | Verify `chain_of_thought_skips` match your template (`print_responses = true` once) |
+| 3 | `max_response_length = 256+` if CoT is long |
+| 4 | `heretic <model>` → eval final answer block |
+
+→ [thinking-models-guide.md](thinking-models-guide.md) · [../techniques/thinking-model-abliteration.md](../techniques/thinking-model-abliteration.md)
+
+---
+
+## Track I — Eval-driven factory deploy
+
+**Goal:** Pass `hardware-factory-prompts.jsonl` and XSTest over-refusal gates.
+
+| Step | Action |
+|------|--------|
+| 1 | Pass 1: `config.production.toml` |
+| 2 | Export factory `.txt` from JSONL (see eval-driven workflow) |
+| 3 | Pass 2: `config.factory-qa.toml` on pass-1 checkpoint |
+| 4 | Score `xstest-overrefusal-sample.jsonl` ≤ 5% refusal |
+
+→ [eval-driven-workflow.md](eval-driven-workflow.md) · [../techniques/eval-driven-abliteration.md](../techniques/eval-driven-abliteration.md)
+
+---
+
 ## Track G — Inference prototype (no weight edit)
 
 **Goal:** Validate factory prompt pairs before GPU surgery.

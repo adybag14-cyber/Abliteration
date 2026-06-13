@@ -113,6 +113,48 @@ RepE, circuit breakers (defensive), OAS, fine-tune baselines.
 
 → [steering-and-alternatives.md](steering-and-alternatives.md)
 
+## 18. Thinking-model / CoT handling
+
+Strip `chain_of_thought` blocks before refusal scoring; longer `max_response_length`.
+
+→ [thinking-model-abliteration.md](thinking-model-abliteration.md) · [../instructions/thinking-models-guide.md](../instructions/thinking-models-guide.md)
+
+## 19. Kernel shaping & depth profiles
+
+Heretic Optuna searches `max_weight_position`, kernel width, per-layer amplitude.
+
+→ [kernel-shaping-depth-profile.md](kernel-shaping-depth-profile.md)
+
+## 20. Iterative & multi-pass abliteration
+
+Second pass for factory refusals; partial α stacking with eval gates.
+
+→ [iterative-abliteration.md](iterative-abliteration.md)
+
+## 21. Eval-driven measurement
+
+Align `[bad_prompts]` with deploy JSONL; XSTest over-refusal checks.
+
+→ [eval-driven-abliteration.md](eval-driven-abliteration.md) · [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md)
+
+## 22. Refusal marker tuning
+
+Customize `refusal_markers` for tool-refusal phrasing and multilingual models.
+
+→ [refusal-marker-tuning.md](refusal-marker-tuning.md)
+
+## 23. Model family playbook
+
+Qwen, Gemma, Llama, MoE, VL — per-family targets and configs.
+
+→ [model-family-playbook.md](model-family-playbook.md) · [../instructions/model-family-guide.md](../instructions/model-family-guide.md)
+
+## 24. Vision / multimodal
+
+Text-trunk abliteration for VLMs; mmproj export notes.
+
+→ [vision-multimodal-abliteration.md](vision-multimodal-abliteration.md)
+
 ## Comparison matrix
 
 | Technique | Alters weights | Needs dataset | Typical difficulty |
@@ -129,5 +171,18 @@ RepE, circuit breakers (defensive), OAS, fine-tune baselines.
 | MoE per-expert | Yes | Medium | ★★★★☆ |
 | SAE latent steering | No* | Large | ★★★★★ |
 | RepE inference steer | No | Small | ★★☆☆☆ |
+| Thinking-model CoT skips | Yes | Small | ★★★☆☆ |
+| Eval-driven custom prompts | Yes | Custom JSONL | ★★☆☆☆ |
+| Iterative multi-pass | Yes | Per pass | ★★★☆☆ |
+| Kernel depth shaping | Yes | Medium | ★★☆☆☆ (Heretic auto) |
 
 \* SAE ablation can be baked to weights in advanced pipelines.
+
+## Config profiles (handbook)
+
+| Profile | File | Use |
+|---------|------|-----|
+| Low VRAM 8 GB | `sources/heretic-tools/config.low-vram.toml` | Qwen 1.5B / 4B 4-bit |
+| Production agent | `sources/heretic-tools/config.production.toml` | 12–24 GB |
+| Thinking / CoT | `sources/heretic-tools/config.thinking-model.toml` | Qwen3-Thinking, R1 |
+| Factory QA domain | `sources/heretic-tools/config.factory-qa.toml` | WMI/firmware bench |

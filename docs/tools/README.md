@@ -59,6 +59,8 @@ Factory bench commands (WMIC, DiskPart, USB, firmware hash): [../hardware-comman
 | [../../data/eval/hardware-factory-prompts.jsonl](../../data/eval/hardware-factory-prompts.jsonl) | Factory acceptance |
 | [../../data/eval/platform-eval-sample.jsonl](../../data/eval/platform-eval-sample.jsonl) | Windows/macOS/Zig sample (120) |
 | [../../data/eval/zig-security-prompts.jsonl](../../data/eval/zig-security-prompts.jsonl) | Zig 0.17 PoC / RE / fuzz (79) |
+| [../../data/eval/xstest-overrefusal-sample.jsonl](../../data/eval/xstest-overrefusal-sample.jsonl) | Over-refusal check (15) |
+| [../../data/eval/factory-good-prompts.jsonl](../../data/eval/factory-good-prompts.jsonl) | Factory good pairs (20) |
 
 ## Abliteration research docs
 

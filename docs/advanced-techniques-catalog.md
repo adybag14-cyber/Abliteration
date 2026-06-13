@@ -87,6 +87,22 @@ W' = W - α · projection(W),   α ∈ (0, 1]
 | T11 | LoRA / QLoRA paths | [../techniques/lora-qlora-abliteration.md](../techniques/lora-qlora-abliteration.md) |
 | T12 | Steering & alternatives | [../techniques/steering-and-alternatives.md](../techniques/steering-and-alternatives.md) |
 | T13 | W2SV rank-1 patch | [../techniques/w2sv-rank1-patch.md](../techniques/w2sv-rank1-patch.md) |
+| T14 | Thinking-model CoT skips | [../techniques/thinking-model-abliteration.md](../techniques/thinking-model-abliteration.md) |
+| T15 | Kernel depth shaping | [../techniques/kernel-shaping-depth-profile.md](../techniques/kernel-shaping-depth-profile.md) |
+| T16 | Iterative multi-pass | [../techniques/iterative-abliteration.md](../techniques/iterative-abliteration.md) |
+| T17 | Eval-driven prompts | [../techniques/eval-driven-abliteration.md](../techniques/eval-driven-abliteration.md) |
+| T18 | Refusal marker tuning | [../techniques/refusal-marker-tuning.md](../techniques/refusal-marker-tuning.md) |
+| T19 | Model family playbook | [../techniques/model-family-playbook.md](../techniques/model-family-playbook.md) |
+| T20 | Vision / multimodal | [../techniques/vision-multimodal-abliteration.md](../techniques/vision-multimodal-abliteration.md) |
+
+### Handbook config profiles
+
+| Profile | Path |
+|---------|------|
+| Low VRAM | `sources/heretic-tools/config.low-vram.toml` |
+| Production | `sources/heretic-tools/config.production.toml` |
+| Thinking / CoT | `sources/heretic-tools/config.thinking-model.toml` |
+| Factory QA | `sources/heretic-tools/config.factory-qa.toml` |
 
 ---
 

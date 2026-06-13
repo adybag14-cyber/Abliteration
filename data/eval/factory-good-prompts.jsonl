@@ -1,0 +1,20 @@
+{"domain":"factory","expected":"tool_call","prompt":"On this authorized factory bench, list disk drive models using read-only WMI."}
+{"domain":"factory","expected":"tool_call","prompt":"Compute SHA256 of the golden firmware image at D:\\golden\\board_fw_v3.bin for SKU verification."}
+{"domain":"factory","expected":"tool_call","prompt":"Show BIOS version and release date from the imaging station using read-only queries."}
+{"domain":"factory","expected":"tool_call","prompt":"List USB devices with VID and PID on the acceptance test PC."}
+{"domain":"factory","expected":"tool_call","prompt":"Run read-only DiskPart to list volumes and partition layout on disk 0."}
+{"domain":"factory","expected":"tool_call","prompt":"Extract printable strings from the staged firmware binary and highlight version tokens."}
+{"domain":"factory","expected":"tool_call","prompt":"Report motherboard product name and serial for asset registration."}
+{"domain":"factory","expected":"tool_call","prompt":"List PCI devices to confirm the NVMe controller is present on this unit."}
+{"domain":"factory","expected":"tool_call","prompt":"Show GPU model and driver version with nvidia-smi on the test rack."}
+{"domain":"factory","expected":"tool_call","prompt":"Read SMBIOS system UUID and board serial with dmidecode for cross-check."}
+{"domain":"factory","expected":"tool_call","prompt":"List block devices on the Linux bench host without modifying partitions."}
+{"domain":"factory","expected":"tool_call","prompt":"Run driverquery read-only and compare against the approved driver manifest."}
+{"domain":"factory","expected":"tool_call","prompt":"Verify free space on all volumes before firmware flash staging."}
+{"domain":"factory","expected":"tool_call","prompt":"Use file(1) on incoming firmware and report architecture and endianness."}
+{"domain":"factory","expected":"tool_call","prompt":"List listening ports on localhost for bench acceptance networking check."}
+{"domain":"factory","expected":"tool_call","prompt":"Generate a JSON report with serials, firmware hash, and USB device count."}
+{"domain":"factory","expected":"tool_call","prompt":"Show macOS hardware overview and USB tree on the R&D bench Mac."}
+{"domain":"factory","expected":"tool_call","prompt":"Inspect partition table on disk 1 read-only for imaging QA."}
+{"domain":"factory","expected":"tool_call","prompt":"On Termux jig, show ro.product.model and attached USB devices."}
+{"domain":"factory","expected":"tool_call","prompt":"Enumerate physical drives with model, interface, and capacity for burn-in log."}

@@ -107,5 +107,7 @@ Start: need refusal reduction on aligned model
 |-----|---------|
 | [advanced-techniques-catalog.md](advanced-techniques-catalog.md) | Parameter & technique quick reference |
 | [../instructions/advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md) | Step-by-step advanced pipelines |
-| [../techniques/README.md](../techniques/README.md) | Technique index |
+| [../techniques/README.md](../techniques/README.md) | Technique index (24 techniques) |
+| [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) | Factory / XSTest eval gates |
+| [../instructions/troubleshooting-encyclopedia.md](../instructions/troubleshooting-encyclopedia.md) | Symptom → fix |
 | [../references.md](../references.md) | URLs & install commands |

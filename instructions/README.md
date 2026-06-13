@@ -27,6 +27,10 @@ Step-by-step workflows. **Start here if you are improving a local model for the 
 | Test idea without saving weights | [quickstart.md](quickstart.md) |
 | Security / factory agent | [agentic-security-stack.md](agentic-security-stack.md) |
 | Best quality / research | [advanced-abliteration-workflow.md](advanced-abliteration-workflow.md) |
+| Pick model by GPU / family | [model-family-guide.md](model-family-guide.md) |
+| Thinking / CoT models | [thinking-models-guide.md](thinking-models-guide.md) |
+| Eval-aligned factory deploy | [eval-driven-workflow.md](eval-driven-workflow.md) |
+| Something broke | [troubleshooting-encyclopedia.md](troubleshooting-encyclopedia.md) |
 | Manual control | [manual-full-pipeline.md](manual-full-pipeline.md) |
 
 ---
@@ -42,6 +46,10 @@ Step-by-step workflows. **Start here if you are improving a local model for the 
 | [heretic-workflow.md](heretic-workflow.md) | ~1–2 hr | ★★☆☆☆ |
 | [low-vram-abliteration.md](low-vram-abliteration.md) | ~1–3 hr | ★★★☆☆ |
 | [advanced-abliteration-workflow.md](advanced-abliteration-workflow.md) | ~2–8 hr | ★★★★☆ |
+| [model-family-guide.md](model-family-guide.md) | ~10 min | ★☆☆☆☆ |
+| [thinking-models-guide.md](thinking-models-guide.md) | ~2–4 hr | ★★★☆☆ |
+| [eval-driven-workflow.md](eval-driven-workflow.md) | ~1–3 hr | ★★★☆☆ |
+| [troubleshooting-encyclopedia.md](troubleshooting-encyclopedia.md) | reference | — |
 | [agentic-security-stack.md](agentic-security-stack.md) | ~2–4 hr | ★★★☆☆ |
 | Tool catalogs | [../docs/tools/README.md](../docs/tools/README.md) | reference |
 | Abliteration tooling | [../docs/tools/abliteration-tooling.md](../docs/tools/abliteration-tooling.md) | reference |
