@@ -10,7 +10,10 @@
     "fetch:hf-models": "node scripts/fetch-hf-heretic-models.mjs",
     "fetch:hf-models:firefox": "node scripts/fetch-hf-heretic-models.mjs --firefox",
     "fetch:all": "node scripts/fetch-heretic-tools.mjs && node scripts/fetch-docs.mjs && node scripts/fetch-hf-heretic-models.mjs --firefox && node scripts/build-heretic-models-doc.mjs",
-    "build:heretic-models-doc": "node scripts/build-heretic-models-doc.mjs"
+    "build:heretic-models-doc": "node scripts/build-heretic-models-doc.mjs",
+    "validate": "node scripts/ralph-validate.mjs",
+    "ralph": "node scripts/ralph-loop.mjs",
+    "ralph:ci": "node scripts/ralph-loop.mjs --skip-fetch --max 1"
   },
   "devDependencies": {
     "playwright": "^1.49.0"

@@ -4,7 +4,7 @@
   "mirror_repo": "https://codeberg.org/p-e-w/heretic",
   "pypi_package": "heretic-llm",
   "default_branch": "master",
-  "synced_at": "2026-06-12T23:39:58.008Z",
+  "synced_at": "2026-06-13T20:00:45.200Z",
   "synced_by": "scripts/fetch-heretic-tools.mjs",
   "pinned_files": {
     "config.default.toml": {
@@ -12,21 +12,21 @@
       "local": "sources/heretic-tools/config.default.toml",
       "sha256": "23498cbe624627f3a31892f12e6fe07d1734f81399aa5eed83c57b20a573f2bc",
       "bytes": 7057,
-      "synced_at": "2026-06-12T23:39:58.008Z"
+      "synced_at": "2026-06-13T20:00:45.200Z"
     },
     "pyproject.toml.reference": {
       "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/pyproject.toml",
       "local": "sources/heretic-tools/pyproject.toml.reference",
-      "sha256": "a27b94683b850791b6656461119123d0104c9b00e94fb39576922f2137593d89",
-      "bytes": 1981,
-      "synced_at": "2026-06-12T23:39:58.008Z"
+      "sha256": "02d22654d7eba38bca882ef51fc3446a7ef40c5ea273a231590fcbc787f6cf4e",
+      "bytes": 1980,
+      "synced_at": "2026-06-13T20:00:45.200Z"
     },
     "uv.lock.reference": {
       "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/uv.lock",
       "local": "sources/heretic-tools/uv.lock.reference",
       "sha256": "de9de8005ca55a17111e3e7f136e6ba00db1f7bc899d6696fd66fd613fd455e9",
       "bytes": 893328,
-      "synced_at": "2026-06-12T23:39:58.008Z"
+      "synced_at": "2026-06-13T20:00:45.200Z"
     }
   },
   "handbook_profiles": {

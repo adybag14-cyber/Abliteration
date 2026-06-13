@@ -104,6 +104,15 @@ python llama.cpp/convert_lora_to_gguf.py --outfile lora.gguf --base-model-id <id
 
 **Toolchain overview:** [docs/toolchain-safetensors-gguf-lora.md](docs/toolchain-safetensors-gguf-lora.md)
 
+## Validation & agent loop
+
+```bash
+npm run validate    # links, jsonl, pins, python — exit 0 required before commit
+npm run ralph       # validate → refresh pins → re-validate (max 3)
+```
+
+→ [docs/ralph-loop.md](docs/ralph-loop.md) · Benchmarks: [docs/comparative-abliteration-benchmarks.md](docs/comparative-abliteration-benchmarks.md) · [arXiv:2512.13655](https://arxiv.org/abs/2512.13655)
+
 ## Agentic security & evaluation
 
 | Project | URL | Role |

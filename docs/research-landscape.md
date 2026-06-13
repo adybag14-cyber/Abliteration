@@ -20,6 +20,7 @@ Taxonomy of **papers**, **open-source tools**, and **when each method applies**.
 | 2026 | [llm-abliteration v1.2](https://github.com/jim-plus/llm-abliteration/releases/tag/v1.2) | Sharded ablate, MoE, Metal |
 | 2026 | [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp) | HF org; `convert_lora_to_gguf`, multi-LoRA server |
 | 2026 | Community Heretic 1.2 | Reported ~70% VRAM reduction (keep pip current) |
+| 2026 | [Young — comparative abliteration](https://arxiv.org/abs/2512.13655) | Heretic vs DECCP vs ErisForge vs FailSpy; GSM8K sensitivity |
 
 ---
 
@@ -129,4 +130,6 @@ Start: need refusal reduction on aligned model
 | [../techniques/README.md](../techniques/README.md) | Technique index (24 techniques) |
 | [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) | Factory / XSTest eval gates |
 | [../instructions/troubleshooting-encyclopedia.md](../instructions/troubleshooting-encyclopedia.md) | Symptom → fix |
+| [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md) | arXiv:2512.13655 tool comparison |
+| [ralph-loop.md](ralph-loop.md) | Validate → refresh agent loop |
 | [../references.md](../references.md) | URLs & install commands |

@@ -96,6 +96,15 @@ npm run fetch:hf-models:firefox           # HF blocks bare curl on some networks
 
 Pinned Heretic files: [sources/heretic-tools/IMPORT.md](sources/heretic-tools/IMPORT.md) · Model list: [docs/tools/heretic-models-registry.md](docs/tools/heretic-models-registry.md)
 
+**Validate before commit (Ralph loop):**
+
+```bash
+npm run validate          # links, jsonl, pins, python syntax
+npm run ralph             # validate → refresh → re-validate
+```
+
+→ [docs/ralph-loop.md](docs/ralph-loop.md)
+
 GitHub-first references: [references.md](references.md) · Context7: [docs/context7.md](docs/context7.md)
 
 ## JARVIS Tool Repair Pack v7
