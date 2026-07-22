@@ -103,10 +103,12 @@ Optional: [instructions/quickstart.md](instructions/quickstart.md) — test with
 npm install
 npm run dev          # local Vite development server
 npm run test:site    # interaction tests
+npx playwright install chromium  # one-time browser install
+npm run test:e2e     # real Chromium: desktop + mobile + screenshots
 npm run build        # static GitHub Pages artifact in dist/
 ```
 
-The site uses shadcn-style local components, Radix primitives, CSS-variable theming, accessible motion, and a repository-relative Vite base for GitHub Pages. Publishing is handled by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) after changes reach `main`.
+The site uses shadcn-style local components, Radix primitives, CSS-variable theming, accessible motion, and a repository-relative Vite base for GitHub Pages. Playwright stores its HTML report, traces, and inspectable desktop/mobile captures under `artifacts/playwright/` (gitignored). Publishing is handled by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) after changes reach `main`; the workflow now runs the real browser suite before deployment and retains its evidence as an Actions artifact.
 
 **Research map (2024–2026 papers + repo PDFs):** [docs/refusal-research-beginners-guide.md](docs/refusal-research-beginners-guide.md) · [sources/research/README.md](sources/research/README.md) · `npm run fetch:research-papers`
 

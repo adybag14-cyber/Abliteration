@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-07-22T12:27:13.346Z",
+  "updated_at": "2026-07-22T14:12:40.206Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -738,6 +738,21 @@
       "acceptance": "Site tests and production build pass, Pages workflow deploys main, live URL loads at the repository subpath, and desktop/mobile interactions are verified",
       "started_at": "2026-07-22T12:17:35.714Z",
       "completed_at": "2026-07-22T12:27:13.345Z"
+    },
+    {
+      "id": "dev-060",
+      "title": "Add Playwright browser and visual verification",
+      "status": "done",
+      "priority": 60,
+      "files": [
+        "playwright.config.ts",
+        "e2e/field-guide.spec.ts",
+        ".github/workflows/guide-ci.yml",
+        ".github/workflows/pages.yml"
+      ],
+      "acceptance": "Installed Chromium drives the real guide at desktop and mobile viewports, verifies primary interactions and layout invariants, captures inspectable screenshots, and runs in GitHub verification before deployment",
+      "started_at": "2026-07-22T14:01:07.488Z",
+      "completed_at": "2026-07-22T14:12:40.205Z"
     }
   ],
   "wave_index": 192,
