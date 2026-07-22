@@ -9,6 +9,8 @@
     "preview": "vite preview",
     "test:site": "vitest run",
     "test:site:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:report": "playwright show-report artifacts/playwright/report",
     "fetch:docs": "node scripts/fetch-docs.mjs",
     "fetch:docs:firefox": "node scripts/fetch-docs.mjs --firefox",
     "fetch:arxiv-qcri": "node scripts/fetch-research-papers.mjs",
@@ -43,6 +45,7 @@
     "ralph:regress": "node scripts/ralph-regress.mjs"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
@@ -53,7 +56,7 @@
     "@vitejs/plugin-react": "^6.0.4",
     "axe-core": "^4.12.1",
     "jsdom": "^29.1.1",
-    "playwright": "^1.49.0",
+    "playwright": "^1.60.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vite": "^8.1.5",

@@ -59,7 +59,7 @@ export function MethodRadar() {
             const [x, y] = point(index, 5);
             return <line key={index} x1={center} y1={center} x2={x} y2={y} stroke="var(--border)" strokeWidth="1" />;
           })}
-          <motion.polygon points={shape} animate={{ points: shape }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }} fill={profile.color} fillOpacity="0.18" stroke={profile.color} strokeWidth="3" strokeLinejoin="round" />
+          <motion.polygon points={shape} initial={{ points: shape }} animate={{ points: shape }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }} fill={profile.color} fillOpacity="0.18" stroke={profile.color} strokeWidth="3" strokeLinejoin="round" />
           {profile.values.map((value, index) => {
             const [x, y] = point(index, value);
             return <motion.circle key={`${profile.key}-${index}`} initial={{ r: 0 }} animate={{ r: 5 }} cx={x} cy={y} fill={profile.color} stroke="var(--card)" strokeWidth="3" />;
