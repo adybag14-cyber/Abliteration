@@ -6,8 +6,6 @@ description: >
   "ralph", "validate handbook", "ralph loop", "continue development", "ralph autostart",
   or "/ralph-loop". Pick backlog tasks, implement them, validate, and do NOT end
   the turn until the backlog is clear.
-metadata:
-  short-description: "Abliteration Ralph development + validation loop"
 ---
 
 # Ralph loop (Abliteration handbook)

@@ -74,6 +74,10 @@ heretic <model> --plot-residuals
 
 Then run full abliteration with tuned `n_trials` if geometry is noisy.
 
+Before permanent surgery, use the held-out causal gate in
+[direction-diagnostics-and-localization.md](../methods/direction-diagnostics-and-localization.md).
+Train-set separation alone is not sufficient.
+
 ---
 
 ## Track C — Manual projected + norm-preserving
@@ -250,5 +254,18 @@ Full catalog: [../docs/tools/abliteration-tooling.md](../docs/tools/abliteration
 [ ] hardware-tool-gate on destructive commands
 [ ] Original checkpoint archived
 ```
+
+Make the gate executable rather than manually comparing percentages:
+
+```bash
+python scripts/compare-abliteration-evals.py runs/base.jsonl runs/candidate.jsonl \
+  --require-all-matched --max-benign-refusal 0.05 \
+  --min-target-refusal-drop 0.20 --max-task-score-drop 0.03 \
+  --max-degenerate-rate 0.01 --output runs/comparison.json
+```
+
+Tune thresholds per deployment and freeze them before selecting a checkpoint.
+The comparator uses paired bootstrap intervals and McNemar discordant counts so
+small improvements cannot hide prompt-level regressions.
 
 → [../docs/evaluation.md](../docs/evaluation.md)

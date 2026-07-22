@@ -97,6 +97,29 @@ W' = W - α · projection(W),   α ∈ (0, 1]
 | T18 | Refusal marker tuning | [../techniques/refusal-marker-tuning.md](../techniques/refusal-marker-tuning.md) |
 | T19 | Model family playbook | [../techniques/model-family-playbook.md](../techniques/model-family-playbook.md) |
 | T20 | Vision / multimodal | [../techniques/vision-multimodal-abliteration.md](../techniques/vision-multimodal-abliteration.md) |
+| T21 | Direction diagnostics + causal localization | [../methods/direction-diagnostics-and-localization.md](../methods/direction-diagnostics-and-localization.md) |
+| T22 | Contrast-set design + confound audit | [../methods/contrast-set-design.md](../methods/contrast-set-design.md) |
+| T23 | Paired bootstrap + McNemar deployment gates | [evaluation.md](evaluation.md#paired-statistical-comparison) |
+| T24 | Content-addressed experiment provenance | [experiment-provenance.md](experiment-provenance.md) |
+| T25 | Covariance-aware directions | [../techniques/advanced-experimental-methods.md](../techniques/advanced-experimental-methods.md#t25--covariance-aware-directions) |
+| T26 | Bootstrap consensus directions | [../techniques/advanced-experimental-methods.md](../techniques/advanced-experimental-methods.md#t26--bootstrap-consensus-directions) |
+| T27 | Cross-layer direction tracking | [../techniques/advanced-experimental-methods.md](../techniques/advanced-experimental-methods.md#t27--cross-layer-direction-tracking) |
+| T28 | Protected capability subspaces | [../methods/protected-subspace-abliteration.md](../methods/protected-subspace-abliteration.md) |
+| T29 | Conditional inference-time ablation | [../techniques/advanced-experimental-methods.md](../techniques/advanced-experimental-methods.md#t29--conditional-inference-time-ablation) |
+| T30 | Quantization-aware surgery | [../techniques/advanced-experimental-methods.md](../techniques/advanced-experimental-methods.md#t30--quantization-aware-surgery) |
+| T31 | Router-weighted MoE diagnostics | [../techniques/advanced-experimental-methods.md](../techniques/advanced-experimental-methods.md#t31--router-weighted-moe-diagnostics) |
+| T32 | Pareto-front checkpoint selection | [../techniques/advanced-experimental-methods.md](../techniques/advanced-experimental-methods.md#t32--pareto-front-checkpoint-selection) |
+| T33 | Negative-control interventions | [../techniques/advanced-experimental-methods.md](../techniques/advanced-experimental-methods.md#t33--negative-control-interventions) |
+
+### Diagnostic gate before surgery (T21)
+
+Do not promote a direction because it has high train-set cosine separation.
+Require held-out geometry, reversible single-layer interventions, an ablation
+and addition test, prompt-level bootstrap intervals, and tensor-orientation
+invariants. For a subspace, select the smallest effective rank on held-out
+behavior and build `QQ^T` from an SVD/QR basis rather than inverting a nearly
+singular Gram matrix. The implementation and complement-error warning are in
+[multi-direction-ablation.md](../methods/multi-direction-ablation.md).
 
 **Cross-technique guidance (T03 + T08):** Projected + norm-preserving (T03) is the recommended foundation when working with MoE and hybrid models (T08). The orthogonalize step (`orthogonalize_direction = true`) protects harmless directions inside each routed expert independently; pair it with `row_normalization = "full"` (default LoRA rank 3) to keep per-expert capability intact on Qwen3-MoE, Phi-MoE, Granite hybrids, etc. See overview.md for high-level "When abliteration works well", production use-cases table, and the explicit T03/T08 production stack recommendation that cross-links back here + to eval-driven-workflow.md.
 

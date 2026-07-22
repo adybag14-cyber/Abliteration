@@ -1,0 +1,4 @@
+interface:
+  display_name: "Abliteration Experiment"
+  short_description: "Run guarded, reproducible model surgery"
+  default_prompt: "Use $abliteration-experiment to plan and validate a reversible abliteration experiment."

@@ -306,5 +306,5 @@ ReleaseFast, use pub fn main(init: std.process.Init), and zig build run.
 ## References in this repo
 
 - [zig-tooling.md](zig-tooling.md) — command corpus
-- [../../sources/zig-canonical/](../../sources/zig-canonical/) — local clone (gitignored)
+- [Zig canonical source import instructions](../../sources/zig-canonical-IMPORT.md) — clone the gitignored source tree locally when needed
 - Upstream langref: `doc/langref.html` inside compiler tree or [ziglang.org/documentation/master](https://ziglang.org/documentation/master/)

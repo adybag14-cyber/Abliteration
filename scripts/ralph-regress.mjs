@@ -18,7 +18,9 @@ function run(label, cmd, args = []) {
   const r = spawnSync(cmd, args, {
     cwd: root,
     stdio: 'inherit',
-    shell: process.platform === 'win32',
+    // node/python are executables, not shell built-ins. Avoid shell argument
+    // concatenation and Node's DEP0190 warning on Windows.
+    shell: false,
   });
   if (r.status !== 0) {
     console.error(`\n✗ REGRESSION: ${label} failed (exit ${r.status ?? 1})`);
@@ -42,6 +44,10 @@ const pyScripts = [
   'scripts/export-abliteration-lora.py',
   'scripts/hardware-tool-gate.py',
   'scripts/check_env.py',
+  'scripts/prepare-contrast-set.py',
+  'scripts/compare-abliteration-evals.py',
+  'scripts/experiment-manifest.py',
+  'scripts/test-advanced-tools.py',
 ];
 for (const rel of pyScripts) {
   run(`py_compile ${rel}`, process.platform === 'win32' ? 'python' : 'python3', ['-m', 'py_compile', rel]);

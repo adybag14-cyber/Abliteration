@@ -163,6 +163,35 @@ Text-trunk abliteration for VLMs; mmproj export notes.
 
 → [vision-multimodal-abliteration.md](vision-multimodal-abliteration.md)
 
+## 25. Direction diagnostics and contrast controls
+
+Held-out geometry, causal layer sweeps, addition/ablation tests, deterministic
+contrast splits, leakage detection, and competing baseline designs.
+
+→ [../methods/direction-diagnostics-and-localization.md](../methods/direction-diagnostics-and-localization.md) · [../methods/contrast-set-design.md](../methods/contrast-set-design.md)
+
+## 26. Protected-subspace projection
+
+Orthogonalize the refusal basis against a measured capability basis before
+weight surgery; report remaining rank and protection limits.
+
+→ [../methods/protected-subspace-abliteration.md](../methods/protected-subspace-abliteration.md)
+
+## 27. Advanced experimental methods
+
+Covariance-aware and bootstrap-consensus directions, cross-layer tracking,
+conditional hooks, quantization-aware edits, router-weighted MoE diagnostics,
+Pareto checkpoint selection, and negative-control interventions.
+
+→ [advanced-experimental-methods.md](advanced-experimental-methods.md)
+
+## 28. Statistical gates and artifact integrity
+
+Paired bootstrap intervals, McNemar discordant counts, cohort-specific
+deployment gates, and SHA-256 manifests for exact configs, inputs, and outputs.
+
+→ [../docs/evaluation.md](../docs/evaluation.md#paired-statistical-comparison) · [../docs/experiment-provenance.md](../docs/experiment-provenance.md)
+
 ## Comparison matrix
 
 | Technique | Alters weights | Needs dataset | Typical difficulty |
@@ -183,6 +212,12 @@ Text-trunk abliteration for VLMs; mmproj export notes.
 | Eval-driven custom prompts | Yes | Custom JSONL | ★★☆☆☆ |
 | Iterative multi-pass | Yes | Per pass | ★★★☆☆ |
 | Kernel depth shaping | Yes | Medium | ★★☆☆☆ (Heretic auto) |
+| Protected capability subspace | Yes | Medium–large | ★★★★★ |
+| Conditional inference ablation | No | Medium | ★★★★☆ |
+| Covariance-aware / bootstrap consensus | No* | Large | ★★★★★ |
+| Quantization-aware surgery | Yes | Medium | ★★★★☆ |
+
+\* Direction estimation itself is non-mutating; a later export may edit weights.
 
 \* SAE ablation can be baked to weights in advanced pipelines.
 

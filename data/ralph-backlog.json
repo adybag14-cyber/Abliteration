@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-06-13T23:23:02.404Z",
+  "updated_at": "2026-07-22T11:52:29.472Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -624,8 +624,92 @@
       ],
       "acceptance": "Tools index lists npm eval:* and ralph:regress with script paths",
       "completed_at": "2026-06-13T23:23:00.551Z"
+    },
+    {
+      "id": "dev-052",
+      "title": "Correct multi-direction projector math and add advanced direction diagnostics",
+      "status": "done",
+      "priority": 52,
+      "files": [
+        "methods/multi-direction-ablation.md",
+        "methods/direction-diagnostics-and-localization.md",
+        "docs/advanced-techniques-catalog.md"
+      ],
+      "acceptance": "Subspace update preserves the orthogonal complement; diagnostics cover held-out causal layer and direction checks",
+      "started_at": "2026-07-22T11:38:03.438Z",
+      "completed_at": "2026-07-22T11:41:16.148Z"
+    },
+    {
+      "id": "dev-053",
+      "title": "Add deterministic contrast-set preparation and confound audit tool",
+      "status": "done",
+      "priority": 53,
+      "files": [
+        "scripts/prepare-contrast-set.py",
+        "methods/contrast-set-design.md",
+        "data/examples/contrast-set.sample.jsonl"
+      ],
+      "acceptance": "Tool detects leakage, creates deterministic train/validation exports, and emits a hashed manifest",
+      "started_at": "2026-07-22T11:41:16.547Z",
+      "completed_at": "2026-07-22T11:43:13.118Z"
+    },
+    {
+      "id": "dev-054",
+      "title": "Add paired before-after evaluation statistics and deployment gates",
+      "status": "done",
+      "priority": 54,
+      "files": [
+        "scripts/compare-abliteration-evals.py",
+        "docs/evaluation.md",
+        "instructions/advanced-abliteration-workflow.md"
+      ],
+      "acceptance": "Comparator reports paired deltas, bootstrap intervals, McNemar counts, cohort metrics, and machine-readable gates",
+      "started_at": "2026-07-22T11:43:13.485Z",
+      "completed_at": "2026-07-22T11:45:18.321Z"
+    },
+    {
+      "id": "dev-055",
+      "title": "Add experiment provenance manifest create and verify tool",
+      "status": "done",
+      "priority": 55,
+      "files": [
+        "scripts/experiment-manifest.py",
+        "docs/experiment-provenance.md",
+        "package.json"
+      ],
+      "acceptance": "Manifest records model revision, git state, parameters, and SHA-256 inputs/artifacts; verify detects drift",
+      "started_at": "2026-07-22T11:45:18.698Z",
+      "completed_at": "2026-07-22T11:47:01.651Z"
+    },
+    {
+      "id": "dev-056",
+      "title": "Add reusable advanced experiment and research maintenance skills",
+      "status": "done",
+      "priority": 56,
+      "files": [
+        ".grok/skills/abliteration-experiment/SKILL.md",
+        ".grok/skills/handbook-research-refresh/SKILL.md"
+      ],
+      "acceptance": "Both skills have valid concise triggering metadata, deterministic workflows, decision gates, and UI metadata",
+      "started_at": "2026-07-22T11:47:02.044Z",
+      "completed_at": "2026-07-22T11:48:23.337Z"
+    },
+    {
+      "id": "dev-057",
+      "title": "Expand handbook navigation and validation for advanced tools and skills",
+      "status": "done",
+      "priority": 57,
+      "files": [
+        "README.md",
+        "methods/README.md",
+        "techniques/README.md",
+        "scripts/ralph-validate.mjs"
+      ],
+      "acceptance": "All advanced additions are discoverable and validation checks project skills, technique IDs, Python syntax, and example schemas",
+      "started_at": "2026-07-22T11:48:23.681Z",
+      "completed_at": "2026-07-22T11:52:29.471Z"
     }
   ],
   "wave_index": 192,
-  "last_seeded_at": "2026-06-13T23:21:51.402Z"
+  "last_seeded_at": "2026-07-22T00:00:00.000Z"
 }

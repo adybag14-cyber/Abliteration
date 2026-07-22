@@ -16,6 +16,9 @@
 | Multi-direction subspace | [multi-direction-ablation.md](multi-direction-ablation.md) |
 | Gradient RDO | [gradient-rdo-pipeline.md](gradient-rdo-pipeline.md) |
 | MoE per-expert | [moe-expert-abliteration.md](moe-expert-abliteration.md) |
+| Contrast-set design and leakage control | [contrast-set-design.md](contrast-set-design.md) |
+| Held-out direction diagnostics and causal localization | [direction-diagnostics-and-localization.md](direction-diagnostics-and-localization.md) |
+| Protected capability subspace | [protected-subspace-abliteration.md](protected-subspace-abliteration.md) |
 
 ## Method selection guide
 
@@ -37,9 +40,15 @@ Start here
     ├─ Need projected/normpreserve manual? ──► projected-llm-abliteration
     │
     ├─ Multi-direction / RDO research? ──► multi-direction-ablation / gradient-rdo-pipeline
+    │                                        └─► protected-subspace-abliteration
     │
     ├─ MoE model? ──► moe-expert-abliteration (or Heretic)
     │
     └─ Deploy in llama.cpp? ──► safetensor surgery → gguf-export-notes
          └─ LoRA sidecar? ──► lora-adapter-export → convert_lora_to_gguf
 ```
+
+Before every permanent path: prepare contrasts with
+[contrast-set-design.md](contrast-set-design.md), require held-out causal evidence
+with [direction-diagnostics-and-localization.md](direction-diagnostics-and-localization.md),
+and bind outputs with [experiment provenance](../docs/experiment-provenance.md).
