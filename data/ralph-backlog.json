@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-07-22T12:17:35.714Z",
+  "updated_at": "2026-07-22T12:27:13.346Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -728,7 +728,7 @@
     {
       "id": "dev-059",
       "title": "Publish and verify the interactive guide on GitHub Pages",
-      "status": "in_progress",
+      "status": "done",
       "priority": 59,
       "files": [
         ".github/workflows/pages.yml",
@@ -736,7 +736,8 @@
         "src/App.test.tsx"
       ],
       "acceptance": "Site tests and production build pass, Pages workflow deploys main, live URL loads at the repository subpath, and desktop/mobile interactions are verified",
-      "started_at": "2026-07-22T12:17:35.714Z"
+      "started_at": "2026-07-22T12:17:35.714Z",
+      "completed_at": "2026-07-22T12:27:13.345Z"
     }
   ],
   "wave_index": 192,

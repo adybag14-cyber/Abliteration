@@ -1,19 +1,18 @@
-# Ralph agent handoff (daemon reminder)
+# Ralph agent handoff
 
-Updated: 2026-07-22T12:19:20.247Z
+Updated: 2026-07-22T12:27:13.347Z
 
-Validation passed but **1 development task(s)** remain.
+## Current task
 
-## Next agent turn MUST
+_No pending tasks — add items to `data/ralph-backlog.json`._
 
-```bash
-npm run ralph:next
-# implement task, then:
-npm run ralph
-npm run ralph:next -- --complete <task-id>
-# repeat until backlog clear
+## Workflow
+
+```text
+1. npm run ralph:next
+2. Implement the current task
+3. npm run ralph
+4. npm run ralph:next -- --complete <id>
+5. If more tasks pending → goto 1 (do NOT stop)
+6. npm run ralph:turn-end -- --message "summary"
 ```
-
-## Pending
-
-- **dev-059** [in_progress] Publish and verify the interactive guide on GitHub Pages
