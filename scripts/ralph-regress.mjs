@@ -34,6 +34,7 @@ run('validate', 'node', ['scripts/ralph-validate.mjs']);
 run('site-tests', 'node', ['node_modules/vitest/vitest.mjs', 'run']);
 run('site-typecheck', 'node', ['node_modules/typescript/bin/tsc', '-b']);
 run('site-build', 'node', ['node_modules/vite/bin/vite.js', 'build']);
+run('puppeteer-live-audit-syntax', 'node', ['--check', 'scripts/puppeteer-live-audit.mjs']);
 run('ralph-ci', 'node', ['scripts/ralph-loop.mjs', '--skip-fetch', '--max', '1']);
 run('eval-stats', 'node', ['scripts/count-eval-prompts.mjs']);
 run('eval-cybergym', process.platform === 'win32' ? 'python' : 'python3', [

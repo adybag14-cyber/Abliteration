@@ -108,6 +108,7 @@ function validateRequiredFiles() {
     'scripts/ralph-seed-backlog.mjs',
     'scripts/ralph-monitor.mjs',
     'scripts/ralph-regress.mjs',
+    'scripts/puppeteer-live-audit.mjs',
     'AGENTS.md',
     'scripts/export-abliteration-lora.py',
     'scripts/fetch-heretic-tools.mjs',

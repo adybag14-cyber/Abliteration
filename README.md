@@ -105,10 +105,11 @@ npm run dev          # local Vite development server
 npm run test:site    # interaction tests
 npx playwright install chromium  # one-time browser install
 npm run test:e2e     # real Chromium: desktop + mobile + screenshots
+npm run audit:live:puppeteer  # audit the public Pages URL + write PNG/JSON evidence
 npm run build        # static GitHub Pages artifact in dist/
 ```
 
-The site uses shadcn-style local components, Radix primitives, CSS-variable theming, accessible motion, and a repository-relative Vite base for GitHub Pages. Playwright stores its HTML report, traces, and inspectable desktop/mobile captures under `artifacts/playwright/` (gitignored). Publishing is handled by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) after changes reach `main`; the workflow now runs the real browser suite before deployment and retains its evidence as an Actions artifact.
+The site uses shadcn-style local components, Radix primitives, CSS-variable theming, accessible motion, and a repository-relative Vite base for GitHub Pages. Playwright stores its HTML report, traces, and inspectable desktop/mobile captures under `artifacts/playwright/`; the independent Puppeteer live audit writes full-page and focused production screenshots plus `audit.json` under `artifacts/puppeteer-live/` (both are gitignored). Publishing is handled by [`.github/workflows/pages.yml`](.github/workflows/pages.yml): Playwright verifies the artifact before deployment, then Puppeteer opens the deployed public URL and retains a second evidence bundle.
 
 **Research map (2024–2026 papers + repo PDFs):** [docs/refusal-research-beginners-guide.md](docs/refusal-research-beginners-guide.md) · [sources/research/README.md](sources/research/README.md) · `npm run fetch:research-papers`
 
