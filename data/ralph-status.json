@@ -1,15 +1,15 @@
 {
-  "started_at": "2026-07-22T11:55:25.110Z",
-  "max_iter": 1,
-  "skip_fetch": true,
+  "started_at": "2026-07-22T12:19:18.152Z",
+  "max_iter": 3,
+  "skip_fetch": false,
   "iterations": [
     {
       "ok": true,
       "iter": 1,
       "validateStatus": 0,
-      "at": "2026-07-22T11:55:27.023Z"
+      "at": "2026-07-22T12:19:20.172Z"
     }
   ],
-  "completed_at": "2026-07-22T11:55:27.023Z",
+  "completed_at": "2026-07-22T12:19:20.172Z",
   "status": "PASS"
 }

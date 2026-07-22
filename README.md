@@ -2,6 +2,8 @@
 
 Living handbook for **LLM abliteration** — weight-level refusal removal — plus **agentic security** stacks for factory firmware QA, pentest labs, and [CyberGym](https://cybergym.io) evaluation.
 
+> **New to the subject?** Open the [interactive Abliteration Field Guide](https://adybag14-cyber.github.io/Abliteration/) for a visual route finder, six-step checklist, method spider diagram, searchable technique atlas, and evaluation-gate simulator.
+
 ## What is abliteration?
 
 **Abliteration** surgically removes refusal-related directions from transformer weights (Arditi et al., 2024). Result: models that **execute** legitimate security and hardware diagnostics instead of false-refusing `wmic`, `nmap`, firmware analysis, and multi-step agent workflows.
@@ -94,6 +96,17 @@ abliteration/
 5. [instructions/run-locally-ollama-lmstudio.md](instructions/run-locally-ollama-lmstudio.md) — GGUF + Ollama import
 
 Optional: [instructions/quickstart.md](instructions/quickstart.md) — test with hooks before permanent edit.
+
+### Run the interactive guide locally
+
+```bash
+npm install
+npm run dev          # local Vite development server
+npm run test:site    # interaction tests
+npm run build        # static GitHub Pages artifact in dist/
+```
+
+The site uses shadcn-style local components, Radix primitives, CSS-variable theming, accessible motion, and a repository-relative Vite base for GitHub Pages. Publishing is handled by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) after changes reach `main`.
 
 **Research map (2024–2026 papers + repo PDFs):** [docs/refusal-research-beginners-guide.md](docs/refusal-research-beginners-guide.md) · [sources/research/README.md](sources/research/README.md) · `npm run fetch:research-papers`
 

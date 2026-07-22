@@ -124,6 +124,15 @@ function validateRequiredFiles() {
     '.grok/skills/ralph-loop/SKILL.md',
     '.grok/skills/abliteration-experiment/SKILL.md',
     '.grok/skills/handbook-research-refresh/SKILL.md',
+    'index.html',
+    'vite.config.ts',
+    'components.json',
+    'src/App.tsx',
+    'src/index.css',
+    'src/App.test.tsx',
+    '.github/workflows/pages.yml',
+    'public/.nojekyll',
+    'public/favicon.svg',
   ];
   for (const rel of required) {
     if (!existsSync(join(root, rel))) err(`missing required file: ${rel}`);

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f7f4" />
+    <meta
+      name="description"
+      content="A beautiful, interactive beginner's guide to reversible, evidence-led LLM abliteration."
+    />
+    <meta property="og:title" content="Abliteration Field Guide" />
+    <meta
+      property="og:description"
+      content="Understand the ideas, choose a safe path, and follow every step with confidence."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <title>Abliteration Field Guide</title>
+    <script>
+      (() => {
+        const stored = localStorage.getItem("abliteration-theme");
+        const dark = stored === "dark" || (!stored && matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", dark);
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to the guide</a>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
