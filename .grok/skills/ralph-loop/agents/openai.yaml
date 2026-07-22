@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ralph Handbook Loop"
+  short_description: "Run the backlog and validation loop"
+  default_prompt: "Use $ralph-loop to implement the next Abliteration handbook task and validate it."

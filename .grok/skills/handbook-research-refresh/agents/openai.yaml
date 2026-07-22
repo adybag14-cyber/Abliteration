@@ -1,0 +1,4 @@
+interface:
+  display_name: "Handbook Research Refresh"
+  short_description: "Refresh and audit primary research sources"
+  default_prompt: "Use $handbook-research-refresh to audit and update the Abliteration handbook from primary sources."

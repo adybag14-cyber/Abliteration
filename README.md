@@ -31,6 +31,10 @@ abliteration/
 │   ├── fetch-hf-heretic-models.mjs # HF heretic/abliterated registry (Playwright)
 │   ├── build-heretic-models-doc.mjs
 │   ├── export-abliteration-lora.py # ΔW → PEFT adapter safetensors
+│   ├── prepare-contrast-set.py      # deterministic splits + leakage/confound audit
+│   ├── compare-abliteration-evals.py # paired bootstrap/McNemar + deploy gates
+│   ├── experiment-manifest.py       # SHA-256 provenance create/verify
+│   ├── test-advanced-tools.py       # regression tests for advanced tools
 │   ├── ralph-validate.mjs          # handbook integrity checks
 │   ├── ralph-loop.mjs              # validate → refresh → re-validate
 │   ├── ralph-next-task.mjs         # pick next dev task from backlog
@@ -69,7 +73,12 @@ abliteration/
 │   ├── hardware-command-catalog.md
 │   ├── use-cases/
 │   ├── context7.md
+│   ├── experiment-provenance.md
 │   └── ...
+├── .grok/skills/
+│   ├── ralph-loop/                  # backlog-driven maintenance
+│   ├── abliteration-experiment/     # guarded experiment workflow
+│   └── handbook-research-refresh/   # primary-source refresh + audit
 ├── techniques/  methods/  instructions/
 └── references.md
 ```
@@ -99,6 +108,9 @@ Optional: [instructions/quickstart.md](instructions/quickstart.md) — test with
 | **8 GB GPU / low RAM** | [instructions/low-vram-abliteration.md](instructions/low-vram-abliteration.md) |
 | **LoRA / QLoRA techniques** | [techniques/lora-qlora-abliteration.md](techniques/lora-qlora-abliteration.md) |
 | **Advanced methods (projected, MoE, RDO)** | [instructions/advanced-abliteration-workflow.md](instructions/advanced-abliteration-workflow.md) |
+| **Experimental methods (T25–T33)** | [techniques/advanced-experimental-methods.md](techniques/advanced-experimental-methods.md) |
+| **Contrast design + causal diagnostics** | [methods/contrast-set-design.md](methods/contrast-set-design.md) · [methods/direction-diagnostics-and-localization.md](methods/direction-diagnostics-and-localization.md) |
+| **Statistical comparison + provenance** | [docs/evaluation.md](docs/evaluation.md#paired-statistical-comparison) · [docs/experiment-provenance.md](docs/experiment-provenance.md) |
 | Research landscape & papers | [docs/research-landscape.md](docs/research-landscape.md) |
 | Abliteration tools (PEFT, GGUF, SAE, …) | [docs/tools/abliteration-tooling.md](docs/tools/abliteration-tooling.md) |
 | **Heretic pins + HF model registry** | [docs/tools/heretic-tools-reference.md](docs/tools/heretic-tools-reference.md) |
@@ -138,6 +150,10 @@ npm run ralph             # validate → refresh → re-validate
 npm run eval:stats        # eval corpus line counts
 npm run eval:jarvis-safe  # export jarvis-safe-eval.jsonl
 npm run eval:cybergym     # CyberGym eval stub (--print-flow)
+npm run contrast:prepare -- <input.jsonl> --output-dir <run-dir>
+npm run eval:compare -- <before.jsonl> <after.jsonl> [frozen gates]
+npm run experiment:manifest -- create|verify ...
+npm run test:advanced-tools # leakage, gate-failure, byte-drift regressions
 npm run ralph:turn-end    # log turn + background daemon (blocks if backlog unfinished)
 npm run ralph:regress     # pre-commit gate for watch/headless/monitor output (validate + ralph-ci + evals + py_compile)
 npm run ralph:monitor     # one-shot: print status, seed if empty, auto-start watch; add -- --loop for continuous
