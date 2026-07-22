@@ -131,6 +131,7 @@ function validateRequiredFiles() {
     'src/index.css',
     'src/App.test.tsx',
     '.github/workflows/pages.yml',
+    '.github/workflows/guide-ci.yml',
     'public/.nojekyll',
     'public/favicon.svg',
   ];
