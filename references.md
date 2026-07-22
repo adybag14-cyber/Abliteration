@@ -87,11 +87,11 @@ See the dedicated "Tool selection via comparative benchmarks" section + "Agentic
 |------|-----|
 | abliteration.ai docs | [docs.abliteration.ai](https://docs.abliteration.ai/what-is-abliteration) |
 | Agent doc index | [docs.abliteration.ai/llms.txt](https://docs.abliteration.ai/llms.txt) |
-| Heretic README (fetched) | [sources/fetched/heretic-readme.txt](sources/fetched/heretic-readme.txt) |
-| CyberGym paper (fetched) | [sources/fetched/cybergym-arxiv.txt](sources/fetched/cybergym-arxiv.txt) |
-| OpenHands README (fetched) | [sources/fetched/openhands-readme.txt](sources/fetched/openhands-readme.txt) |
-| hashcat README (fetched) | [sources/fetched/hashcat-readme.txt](sources/fetched/hashcat-readme.txt) |
-| Kali metapackages (fetched) | [sources/fetched/kali-metapackages.txt](sources/fetched/kali-metapackages.txt) |
+| Heretic README | [p-e-w/heretic](https://github.com/p-e-w/heretic#readme) |
+| CyberGym paper | [arXiv:2506.02548](https://arxiv.org/abs/2506.02548) |
+| OpenHands README | [OpenHands/OpenHands](https://github.com/OpenHands/OpenHands#readme) |
+| hashcat README | [hashcat/hashcat](https://github.com/hashcat/hashcat#readme) |
+| Kali metapackages | [Kali documentation](https://www.kali.org/docs/general-use/metapackages/) |
 
 ## Low VRAM & LoRA tooling
 
