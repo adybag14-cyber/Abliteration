@@ -159,7 +159,7 @@ heretic <model> --plot-residuals
 | Gated model 403 | `huggingface-cli login` |
 | Chat template weird | Match template in Ollama Modelfile to model family |
 
-See [../sources/fetched/heretic-readme.txt](../sources/fetched/heretic-readme.txt).
+See the canonical [Heretic README](https://github.com/p-e-w/heretic#readme).
 
 ---
 

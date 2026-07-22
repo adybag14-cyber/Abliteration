@@ -1,5 +1,7 @@
 # Node (fetch scripts)
 node_modules/
+dist/
+coverage/
 
 # Python
 __pycache__/

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-07-22T11:52:29.472Z",
+  "updated_at": "2026-07-22T12:17:35.714Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -708,6 +708,35 @@
       "acceptance": "All advanced additions are discoverable and validation checks project skills, technique IDs, Python syntax, and example schemas",
       "started_at": "2026-07-22T11:48:23.681Z",
       "completed_at": "2026-07-22T11:52:29.471Z"
+    },
+    {
+      "id": "dev-058",
+      "title": "Build beginner-first interactive shadcn-style field guide",
+      "status": "done",
+      "priority": 58,
+      "files": [
+        "src/App.tsx",
+        "src/components",
+        "src/index.css",
+        "src/data/guide.ts",
+        "components.json"
+      ],
+      "acceptance": "Responsive guide includes route finder, six-step progress, flow and radar diagrams, searchable techniques, evaluation simulator, dark mode, reduced motion, and accessible interactions",
+      "started_at": "2026-07-22T12:17:21.772Z",
+      "completed_at": "2026-07-22T12:17:35.345Z"
+    },
+    {
+      "id": "dev-059",
+      "title": "Publish and verify the interactive guide on GitHub Pages",
+      "status": "in_progress",
+      "priority": 59,
+      "files": [
+        ".github/workflows/pages.yml",
+        "README.md",
+        "src/App.test.tsx"
+      ],
+      "acceptance": "Site tests and production build pass, Pages workflow deploys main, live URL loads at the repository subpath, and desktop/mobile interactions are verified",
+      "started_at": "2026-07-22T12:17:35.714Z"
     }
   ],
   "wave_index": 192,
