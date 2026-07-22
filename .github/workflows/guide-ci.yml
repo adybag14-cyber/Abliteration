@@ -27,6 +27,8 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: "true"
         run: npm ci
 
       - name: Install Playwright Chromium

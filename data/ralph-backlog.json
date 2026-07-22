@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-07-22T14:12:40.206Z",
+  "updated_at": "2026-07-22T15:02:14.329Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -753,6 +753,21 @@
       "acceptance": "Installed Chromium drives the real guide at desktop and mobile viewports, verifies primary interactions and layout invariants, captures inspectable screenshots, and runs in GitHub verification before deployment",
       "started_at": "2026-07-22T14:01:07.488Z",
       "completed_at": "2026-07-22T14:12:40.205Z"
+    },
+    {
+      "id": "dev-061",
+      "title": "Add Puppeteer live browser and screenshot audit",
+      "status": "done",
+      "priority": 61,
+      "files": [
+        "scripts/puppeteer-live-audit.mjs",
+        "package.json",
+        ".github/workflows/pages.yml",
+        "README.md"
+      ],
+      "acceptance": "Puppeteer launches its managed Chrome against the public Pages URL, verifies live layout and interactions at desktop and mobile sizes, writes JSON plus inspectable screenshots, closes without orphan processes, and is documented for repeatable use",
+      "started_at": "2026-07-22T14:52:17.101Z",
+      "completed_at": "2026-07-22T15:02:14.328Z"
     }
   ],
   "wave_index": 192,

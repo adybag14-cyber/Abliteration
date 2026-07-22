@@ -3,6 +3,7 @@ node_modules/
 dist/
 coverage/
 artifacts/playwright/
+artifacts/puppeteer-live/
 playwright-report/
 test-results/
 

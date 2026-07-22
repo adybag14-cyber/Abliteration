@@ -60,6 +60,15 @@ test("renders the complete responsive guide without browser errors or horizontal
     () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
   );
   expect(hasHorizontalOverflow).toBe(false);
+  const clippedRadarLabels = await page.locator("#compare svg text").evaluateAll((labels) =>
+    labels
+      .filter((label) => {
+        const bounds = label.getBoundingClientRect();
+        return bounds.left < 0 || bounds.right > document.documentElement.clientWidth;
+      })
+      .map((label) => label.textContent),
+  );
+  expect(clippedRadarLabels).toEqual([]);
 
   const mobileNavigation = page.getByRole("navigation", { name: "Guide sections mobile" });
   const desktopNavigation = page.getByRole("navigation", { name: "Guide sections", exact: true });

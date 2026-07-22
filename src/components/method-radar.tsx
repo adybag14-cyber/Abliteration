@@ -66,8 +66,12 @@ export function MethodRadar() {
           })}
           {radarAxes.map((axis, index) => {
             const [x, y] = point(index, 5, labelRadius);
-            const anchor = x < center - 15 ? "end" : x > center + 15 ? "start" : "middle";
-            return <text key={axis} x={x} y={y} textAnchor={anchor} dominantBaseline="middle" className="fill-foreground text-[12px] font-semibold">{axis}</text>;
+            const nearLeftEdge = x < 70;
+            const nearRightEdge = x > 350;
+            const labelX = nearLeftEdge ? 14 : nearRightEdge ? 406 : x;
+            const labelY = nearLeftEdge || nearRightEdge ? y - 12 : y;
+            const anchor = nearLeftEdge ? "start" : nearRightEdge ? "end" : x < center - 15 ? "end" : x > center + 15 ? "start" : "middle";
+            return <text key={axis} x={labelX} y={labelY} textAnchor={anchor} dominantBaseline="middle" className="fill-foreground text-[12px] font-semibold">{axis}</text>;
           })}
         </svg>
       </div>
