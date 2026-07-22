@@ -208,9 +208,26 @@ async function auditViewport(browser, viewport) {
 
 await mkdir(outputDirectory, { recursive: true });
 const executablePath = await puppeteer.executablePath();
+const sandboxDisabled = process.platform === "linux" && Boolean(process.env.CI || process.env.GITHUB_ACTIONS);
+const launchArguments = ["--disable-dev-shm-usage"];
+if (sandboxDisabled) launchArguments.push("--no-sandbox", "--disable-setuid-sandbox");
+await writeFile(
+  path.join(outputDirectory, "preflight.json"),
+  `${JSON.stringify({
+    schemaVersion: 1,
+    targetUrl,
+    executablePath,
+    platform: process.platform,
+    architecture: process.arch,
+    nodeVersion: process.version,
+    sandboxDisabled,
+    generatedAt: new Date().toISOString(),
+  }, null, 2)}\n`,
+  "utf8",
+);
 const browser = await puppeteer.launch({
   headless: !headed,
-  args: ["--disable-dev-shm-usage"],
+  args: launchArguments,
 });
 const browserProcessId = browser.process()?.pid ?? null;
 let audit;
@@ -225,6 +242,7 @@ try {
     browserVersion,
     executablePath,
     browserProcessId,
+    sandboxDisabled,
     generatedAt: new Date().toISOString(),
     results,
     ok: results.every((result) => result.ok),
