@@ -27,6 +27,9 @@ const SEARCH_QUERIES = [
   { id: 'search-gemma4-abliterated', q: 'Gemma 4 abliterated tool calling heretic' },
   { id: 'search-projected-abliteration', q: 'projected norm preserving abliteration grimjim' },
   { id: 'search-multi-direction-refusal', q: 'QCRI refusal more than single direction 2602.02132' },
+  { id: 'search-orba-lai', q: 'ORBA orthogonal reflection bounded ablation grimjim Lai 2026' },
+  { id: 'search-cosmic-som-svd', q: 'COSMIC SOM abliteration OBLITERATUS SVD refusal direction' },
+  { id: 'search-harm-vs-refusal', q: 'LLMs encode harmfulness and refusal separately Zhao 2507.11878' },
 ];
 
 /** Direct pages not covered by fetch-docs.mjs raw targets */

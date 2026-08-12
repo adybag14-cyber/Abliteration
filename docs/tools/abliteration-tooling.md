@@ -23,6 +23,10 @@ Tools for **weight surgery**, **4-bit measure**, **LoRA export**, **quantized in
 | **OBLITERATUS** | [elder-plinius/OBLITERATUS](https://github.com/elder-plinius/OBLITERATUS) | SVD + entanglement analysis; `surgical` CoT-aware mode | Hermes Agent skill |
 | **huihui_ai** | [ollama.com/huihui_ai](https://ollama.com/huihui_ai/gemma-4-abliterated) | Sumandora abliterates; layer-banded GGUF drops | Fast uncensor, weak tool QA |
 | **199-biotech Gemma 4** | [gemma-4-abliterated](https://github.com/199-biotechnologies/gemma-4-abliterated) | Per-layer MLX pipeline; weight factor 1.0 | Gemma 4 31B quality-first |
+| **ablate-llm** | [AIAnytime/ablate](https://github.com/AIAnytime/ablate) | `pip install ablate-llm` KL search + Hub push | Not in Young matrix — eval locally |
+| **J-Wash** | [Extraltodeus/J-Wash](https://github.com/Extraltodeus/J-Wash) | Jacobian-lens manual alignment, exportable | Research / visualization |
+| **Blasphemer** | [sunkencity999/blasphemer](https://github.com/sunkencity999/blasphemer) | Heretic fork, macOS + LM Studio | Apple Silicon automation |
+| **Handbook CLIs** | [../../scripts/abliteration_math.py](../../scripts/abliteration_math.py) | DIM / ORBA / subspace / hooks / eval | `npm run abliterate:*` |
 
 **Master toolchain doc:** [../toolchain-safetensors-gguf-lora.md](../toolchain-safetensors-gguf-lora.md) · Safetensors: [../../methods/safetensor-abliteration-pipeline.md](../../methods/safetensor-abliteration-pipeline.md)
 

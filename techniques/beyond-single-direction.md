@@ -132,6 +132,10 @@ Complements SAE latent work (§4) and multi-direction PCA (§3). VRAM path: [../
 | SAE latents | ★★★★ | Interpretability + targeted edits |
 | Domain-specific DIM | ★★☆ | Factory / pentest false-refusal |
 | FailSpy hooks | ★★☆ | Notebook prototyping → bake with Heretic/Abliterix |
+| SOM (T35) | ★★★ | Manifold leftovers after DIM — [som-multi-directional-refusal.md](som-multi-directional-refusal.md) |
+| SVD subspace (T37) | ★★★ | OBLITERATUS / `estimate --mode svd` |
+| COSMIC (T36) | ★★☆ | No output template — [cosmic-refusal-direction.md](cosmic-refusal-direction.md) |
+| Harm vs refuse (T39) | ★★★ | Do not wipe both axes — [harm-vs-refusal-directions.md](harm-vs-refusal-directions.md) |
 
 ---
 

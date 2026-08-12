@@ -59,6 +59,10 @@ Factory bench commands (WMIC, DiskPart, USB, firmware hash): [../hardware-comman
 | `npm run eval:jarvis-safe` | `scripts/filter-jarvis-eval.py` | Export / refresh `data/eval/jarvis-safe-eval.jsonl` |
 | `npm run eval:cybergym` | `scripts/cybergym-eval-stub.py` | CyberGym eval flow (`--print-flow`) and subset generator |
 | `npm run ralph:regress` | `scripts/ralph-regress.mjs` | Pre-commit gate: validate + ralph-ci + eval scripts + py_compile |
+| `npm run abliterate:estimate` | `scripts/estimate-refusal-direction.py` | DIM / projected / COSMIC / SVD direction |
+| `npm run abliterate:apply` | `scripts/apply-weight-abliteration.py` | Bake `r` into safetensors |
+| `npm run abliterate:hook` | `scripts/inference-hook-ablation.py` | Reversible residual wipe |
+| `npm run eval:refusal` | `scripts/eval-refusal-rate.py` | Marker scorer for generation JSONL |
 
 Full eval matrices: [../evaluation.md](../evaluation.md) · Deploy workflow: [../../instructions/eval-driven-workflow.md](../../instructions/eval-driven-workflow.md)
 

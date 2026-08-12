@@ -4,6 +4,8 @@ Always evaluate **before and after** abliteration. Keep the original checkpoint.
 
 **Corpus sizes:** `npm run eval:stats` — line counts for all `data/eval/*.jsonl` and `data/examples/*.jsonl`.
 
+**Marker scorer (offline generations):** `npm run eval:refusal -- --responses-jsonl <dump.jsonl>` — [../scripts/eval-refusal-rate.py](../scripts/eval-refusal-rate.py). Curriculum: [complete-curriculum.md](complete-curriculum.md) Stage 3.
+
 ## Paired statistical comparison
 
 Store frozen baseline and candidate results with the same stable IDs. Each row

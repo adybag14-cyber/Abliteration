@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-07-22T15:02:14.329Z",
+  "updated_at": "2026-08-12T19:37:48.000Z",
   "tasks": [
     {
       "id": "dev-001",
@@ -768,8 +768,81 @@
       "acceptance": "Puppeteer launches its managed Chrome against the public Pages URL, verifies live layout and interactions at desktop and mobile sizes, writes JSON plus inspectable screenshots, closes without orphan processes, and is documented for repeatable use",
       "started_at": "2026-07-22T14:52:17.101Z",
       "completed_at": "2026-07-22T15:02:14.328Z"
+    },
+    {
+      "id": "dev-062",
+      "title": "World-class curriculum + setup encyclopedia + bleeding-edge map",
+      "status": "done",
+      "priority": 62,
+      "files": [
+        "docs/complete-curriculum.md",
+        "docs/setup-encyclopedia.md",
+        "docs/bleeding-edge.md"
+      ],
+      "acceptance": "Curriculum covers every method family; setup encyclopedia covers Windows/WSL/Linux/Mac/VRAM; bleeding-edge maps ORBA/COSMIC/SVD/SOM/J-Wash",
+      "completed_at": "2026-08-12T19:37:47.790Z"
+    },
+    {
+      "id": "dev-063",
+      "title": "ORBA + COSMIC technique and method docs",
+      "status": "done",
+      "priority": 63,
+      "files": [
+        "techniques/orba-orthogonal-reflection.md",
+        "techniques/cosmic-refusal-direction.md",
+        "methods/orba-pipeline.md",
+        "methods/cosmic-direction-id.md"
+      ],
+      "acceptance": "ORBA Householder vs directional ablation documented with math; COSMIC cosine direction-ID pipeline documented",
+      "completed_at": "2026-08-12T19:37:47.847Z"
+    },
+    {
+      "id": "dev-064",
+      "title": "SVD/OBLITERATUS + SOM + harm-vs-refusal + false-refusal techniques",
+      "status": "done",
+      "priority": 64,
+      "files": [
+        "techniques/svd-whitened-obliteratus.md",
+        "techniques/som-multi-directional-refusal.md",
+        "techniques/harm-vs-refusal-directions.md",
+        "techniques/false-refusal-vector-ablation.md",
+        "methods/svd-refusal-subspace.md"
+      ],
+      "acceptance": "Four bleeding-edge technique docs + SVD method with formulas and tool commands",
+      "completed_at": "2026-08-12T19:37:47.896Z"
+    },
+    {
+      "id": "dev-065",
+      "title": "Practical surgery scripts: estimate, apply, hook, eval",
+      "status": "done",
+      "priority": 65,
+      "files": [
+        "scripts/abliteration_math.py",
+        "scripts/estimate-refusal-direction.py",
+        "scripts/apply-weight-abliteration.py",
+        "scripts/inference-hook-ablation.py",
+        "scripts/eval-refusal-rate.py",
+        "package.json"
+      ],
+      "acceptance": "Scripts --self-test pass; npm run abliterate:* wired; ralph-validate compiles them",
+      "completed_at": "2026-08-12T19:37:47.946Z"
+    },
+    {
+      "id": "dev-066",
+      "title": "Index, fetch lists, cookbook, GitHub description for world-class handbook",
+      "status": "done",
+      "priority": 66,
+      "files": [
+        "README.md",
+        "methods/README.md",
+        "techniques/README.md",
+        "references.md",
+        "instructions/method-cookbook.md"
+      ],
+      "acceptance": "README positions complete encyclopedia; catalogs list T34+; cookbook has every tool command; GitHub description updated",
+      "completed_at": "2026-08-12T19:37:47.999Z"
     }
   ],
-  "wave_index": 192,
-  "last_seeded_at": "2026-07-22T00:00:00.000Z"
+  "wave_index": 193,
+  "last_seeded_at": "2026-08-12T12:00:00.000Z"
 }

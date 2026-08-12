@@ -52,6 +52,11 @@ const pyScripts = [
   'scripts/compare-abliteration-evals.py',
   'scripts/experiment-manifest.py',
   'scripts/test-advanced-tools.py',
+  'scripts/abliteration_math.py',
+  'scripts/estimate-refusal-direction.py',
+  'scripts/apply-weight-abliteration.py',
+  'scripts/inference-hook-ablation.py',
+  'scripts/eval-refusal-rate.py',
 ];
 for (const rel of pyScripts) {
   run(`py_compile ${rel}`, process.platform === 'win32' ? 'python' : 'python3', ['-m', 'py_compile', rel]);

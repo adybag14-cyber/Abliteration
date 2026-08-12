@@ -95,6 +95,10 @@ function validateRequiredFiles() {
     'sources/heretic-tools/UPSTREAM.json',
     'data/heretic-models-registry.seed.jsonl',
     'docs/toolchain-safetensors-gguf-lora.md',
+    'docs/complete-curriculum.md',
+    'docs/setup-encyclopedia.md',
+    'docs/bleeding-edge.md',
+    'instructions/method-cookbook.md',
     'scripts/ralph-validate.mjs',
     'scripts/ralph-loop.mjs',
     'scripts/ralph-turn-end.mjs',
@@ -178,6 +182,11 @@ function validatePythonScripts() {
     'scripts/compare-abliteration-evals.py',
     'scripts/experiment-manifest.py',
     'scripts/test-advanced-tools.py',
+    'scripts/abliteration_math.py',
+    'scripts/estimate-refusal-direction.py',
+    'scripts/apply-weight-abliteration.py',
+    'scripts/inference-hook-ablation.py',
+    'scripts/eval-refusal-rate.py',
   ];
   for (const rel of scripts) {
     const p = join(root, rel);

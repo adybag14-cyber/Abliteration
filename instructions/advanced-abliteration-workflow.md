@@ -12,7 +12,9 @@ The beginner guide's Step 7 appendix now also points here for advanced tuning + 
 
 **Read first:** [../docs/research-landscape.md](../docs/research-landscape.md) · [../docs/advanced-techniques-catalog.md](../docs/advanced-techniques-catalog.md) · [../docs/refusal-research-beginners-guide.md](../docs/refusal-research-beginners-guide.md)
 
-**Track index:** A production · B diagnostics · C manual llm-abliteration · D multi-direction · E MoE · F adapter · G hooks prototype · H thinking · I factory eval · J Abliterix · K ErisForge
+**Track index:** A production · B diagnostics · C manual llm-abliteration · D multi-direction · E MoE · F adapter · G hooks prototype · H thinking · I factory eval · J Abliterix · K ErisForge · **L ORBA/COSMIC** · **M SVD/OBLITERATUS** · **N false-refusal / factory vector**
+
+Curriculum: [../docs/complete-curriculum.md](../docs/complete-curriculum.md) · Cookbook: [method-cookbook.md](method-cookbook.md)
 
 > **Note:** Track C here = manual **llm-abliteration** / DECCP (advanced). Beginner [Track C (no GPU)](beginner-local-model-guide.md#track-c--no-gpu-download--quantize-only) is download/quantize only — different path.
 
@@ -211,6 +213,47 @@ git clone https://github.com/Tsadoq/ErisForge.git && cd ErisForge && pip install
 ```
 
 → [../techniques/layer-selective-abliteration.md](../techniques/layer-selective-abliteration.md#erisforge--quick-prototyping) · [../docs/comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md)
+
+---
+
+## Track L — ORBA / COSMIC (direction then bake)
+
+**Goal:** better `r` or a geometrically cleaner rank-1 operator when Heretic DIM is noisy.
+
+| Step | Action |
+|------|--------|
+| 1 | Cache residuals (FailSpy or `measure.py`) |
+| 2 | `python scripts/estimate-refusal-direction.py --mode cosmic` **or** `--mode projected` |
+| 3 | Bake `python scripts/apply-weight-abliteration.py --mode orba-directional` (or Heretic T03) |
+| 4 | Optional A/B: `--mode orba-householder` — expect semantic drift |
+| 5 | Full eval gates |
+
+→ [../techniques/orba-orthogonal-reflection.md](../techniques/orba-orthogonal-reflection.md) · [../techniques/cosmic-refusal-direction.md](../techniques/cosmic-refusal-direction.md)
+
+---
+
+## Track M — SVD / OBLITERATUS subspace
+
+**Goal:** leftover refusal after rank-1.
+
+```bash
+python scripts/estimate-refusal-direction.py --mode svd --rank 4 --bad bad.pt --good good.pt --out R.pt
+python scripts/apply-weight-abliteration.py --mode subspace --direction R.pt --weights ./base --out ./out
+# or
+obliteratus obliterate <model> --method advanced --output-dir ./out
+```
+
+→ [../techniques/svd-whitened-obliteratus.md](../techniques/svd-whitened-obliteratus.md)
+
+---
+
+## Track N — False-refusal only (factory)
+
+**Goal:** `wmic` / lab `nmap` without wiping the safety DIM.
+
+Point Heretic at `data/eval/factory-bad-prompts.txt` / `factory-good-prompts.txt` **or** estimate T25 vector and bake with `--alpha 0.5`. Hold out true-harmful prompts — refusal must not go to ~0.
+
+→ [../techniques/false-refusal-vector-ablation.md](../techniques/false-refusal-vector-ablation.md) · [../techniques/harm-vs-refusal-directions.md](../techniques/harm-vs-refusal-directions.md)
 
 ---
 

@@ -136,6 +136,21 @@ const TARGETS = [
     url: 'https://raw.githubusercontent.com/elder-plinius/OBLITERATUS/main/README.md',
     kind: 'raw',
   },
+  {
+    id: 'cosmic-readme-raw',
+    url: 'https://raw.githubusercontent.com/wang-research-lab/COSMIC/main/README.md',
+    kind: 'raw',
+  },
+  {
+    id: 'j-wash-readme',
+    url: 'https://raw.githubusercontent.com/Extraltodeus/J-Wash/main/README.md',
+    kind: 'raw',
+  },
+  {
+    id: 'ablate-llm-readme',
+    url: 'https://raw.githubusercontent.com/AIAnytime/ablate/main/README.md',
+    kind: 'raw',
+  },
   // —— Key papers (abstract pages) ——
   {
     id: 'arxiv-2512-13655',

@@ -117,6 +117,18 @@ Research / direction prototyping only?
 
 Agent + tool-calling specifics → [../docs/tools/abliteration-tooling.md](../docs/tools/abliteration-tooling.md#agent--tool-calling-tool-picker-nous-huihui-obliteratus-supergemma)
 
+**Every install one-liner:** [../instructions/method-cookbook.md](../instructions/method-cookbook.md)
+
+**Also in the 2026 toolbox (not in Young’s 16-model matrix):**
+
+| Tool | Role | Handbook |
+|------|------|----------|
+| **OBLITERATUS** | SVD / `surgical` CoT | [svd-whitened-obliteratus.md](svd-whitened-obliteratus.md) |
+| **COSMIC** | Output-independent `r` | [cosmic-refusal-direction.md](cosmic-refusal-direction.md) |
+| **ablate-llm** | KL-guided pip CLI | [../docs/bleeding-edge.md](../docs/bleeding-edge.md) |
+| **J-Wash** | Jacobian-lens manual edit | [../docs/bleeding-edge.md](../docs/bleeding-edge.md) |
+| **Handbook `abliterate:*`** | DIM / ORBA / subspace without cloning | [../docs/complete-curriculum.md](../docs/complete-curriculum.md) |
+
 ---
 
 ## Related

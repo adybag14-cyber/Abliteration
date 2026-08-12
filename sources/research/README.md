@@ -24,6 +24,10 @@ Pinned PDFs, text extracts, and GitHub README snapshots for handbook citations.
 | [2603.22061](https://arxiv.org/abs/2603.22061) | Failure of Topic-Matched Contrast Baselines | [arxiv-2603.22061.pdf](papers/arxiv-2603.22061.pdf) | [arxiv-2603.22061.txt](papers/arxiv-2603.22061.txt) |
 | [2605.26526](https://arxiv.org/abs/2605.26526) | Open-Weight Defenses vs Abliteration + Prefilling | [arxiv-2605.26526.pdf](papers/arxiv-2605.26526.pdf) | [arxiv-2605.26526.txt](papers/arxiv-2605.26526.txt) |
 | [2606.05396](https://arxiv.org/abs/2606.05396) | Code LLMs — Refusal vs Capability | [arxiv-2606.05396.pdf](papers/arxiv-2606.05396.pdf) | [arxiv-2606.05396.txt](papers/arxiv-2606.05396.txt) |
+| [2410.03415](https://arxiv.org/abs/2410.03415) | False-refusal single vector (ICLR 2025) | [arxiv-2410.03415.pdf](papers/arxiv-2410.03415.pdf) | [arxiv-2410.03415.txt](papers/arxiv-2410.03415.txt) |
+| [2507.11878](https://arxiv.org/abs/2507.11878) | Harmfulness ≠ refusal (Zhao) | [arxiv-2507.11878.pdf](papers/arxiv-2507.11878.pdf) | [arxiv-2507.11878.txt](papers/arxiv-2507.11878.txt) |
+| [2511.08379](https://arxiv.org/abs/2511.08379) | SOM multi-direction (AAAI 2026) | [arxiv-2511.08379.pdf](papers/arxiv-2511.08379.pdf) | [arxiv-2511.08379.txt](papers/arxiv-2511.08379.txt) |
+| [2603.27518](https://arxiv.org/abs/2603.27518) | Task-conditioned refusal | [arxiv-2603.27518.pdf](papers/arxiv-2603.27518.pdf) | [arxiv-2603.27518.txt](papers/arxiv-2603.27518.txt) |
 
 Machine manifest: [manifest.json](manifest.json)
 

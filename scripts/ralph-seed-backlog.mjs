@@ -146,6 +146,28 @@ const WAVES = [
       acceptance: 'Tools index lists npm eval:* and ralph:regress with script paths',
     },
   ],
+  [
+    {
+      title: 'Fetch new research PDFs (2410.03415, 2507.11878, 2511.08379, 2603.27518)',
+      files: ['scripts/fetch-research-papers.mjs', 'sources/research/README.md'],
+      acceptance: 'npm run fetch:research-papers writes the four new arXiv PDFs under sources/research/papers/',
+    },
+    {
+      title: 'Apple Silicon / Blasphemer / vauban walkthrough in setup-encyclopedia',
+      files: ['docs/setup-encyclopedia.md', 'instructions/run-locally-ollama-lmstudio.md'],
+      acceptance: 'Mac path lists Blasphemer, vauban, MLX, and llama.cpp Metal with eval gates',
+    },
+    {
+      title: 'Cross-lingual refusal direction technique (arXiv:2505.17306)',
+      files: ['techniques/cross-lingual-refusal.md', 'docs/bleeding-edge.md'],
+      acceptance: 'Doc explains English r transferring to other languages + DECCP pairing',
+    },
+    {
+      title: 'J-Wash / Jacobian-lens technique page + tooling row',
+      files: ['techniques/jacobian-j-wash.md', 'docs/tools/abliteration-tooling.md'],
+      acceptance: 'J-Wash documented as manual alignment export, not default bake',
+    },
+  ],
 ];
 
 function stamp() {

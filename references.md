@@ -19,6 +19,11 @@
 | **Topic-matched contrast baselines fail** (2026) | [arXiv:2603.22061](https://arxiv.org/abs/2603.22061) | [PDF](sources/research/papers/arxiv-2603.22061.pdf) | — |
 | **Open-weight defenses vs abliteration** (Kuo 2026) | [arXiv:2605.26526](https://arxiv.org/abs/2605.26526) | [PDF](sources/research/papers/arxiv-2605.26526.pdf) | ART mitigation in paper |
 | **Code LLMs — refusal vs capability** (2026) | [arXiv:2606.05396](https://arxiv.org/abs/2606.05396) | [PDF](sources/research/papers/arxiv-2606.05396.pdf) | — |
+| **False-refusal single vector** (Wang, ICLR 2025) | [arXiv:2410.03415](https://arxiv.org/abs/2410.03415) | [PDF](sources/research/papers/arxiv-2410.03415.pdf) · [False-Refusal-Mitigation](https://github.com/mainlp/False-Refusal-Mitigation) · [T25](techniques/false-refusal-vector-ablation.md) |
+| **Harmfulness ≠ refusal** (Zhao 2025) | [arXiv:2507.11878](https://arxiv.org/abs/2507.11878) | [PDF](sources/research/papers/arxiv-2507.11878.pdf) · [CHATS-lab code](https://github.com/CHATS-lab/LLMs_Encode_Harmfulness_Refusal_Separately) · [T26](techniques/harm-vs-refusal-directions.md) |
+| **SOM multi-direction** (Piras, AAAI 2026) | [arXiv:2511.08379](https://arxiv.org/abs/2511.08379) | [PDF](sources/research/papers/arxiv-2511.08379.pdf) · [T22](techniques/som-multi-directional-refusal.md) |
+| **ORBA** (Lai 2026) | [HF blog](https://huggingface.co/blog/grimjim/orthogonal-reflection-bounded-ablation) | [T21](techniques/orba-orthogonal-reflection.md) · [orba-pipeline](methods/orba-pipeline.md) |
+| **Task-conditioned refusal** (2026) | [arXiv:2603.27518](https://arxiv.org/abs/2603.27518) | [PDF](sources/research/papers/arxiv-2603.27518.pdf) |
 | Representation Engineering | [arXiv:2310.01405](https://arxiv.org/abs/2310.01405) | RepE ecosystem |
 | Circuit Breakers (defensive) | [arXiv:2406.04313](https://arxiv.org/html/2406.04313v3) | [GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) |
 | Projected abliteration (blog) | [grimjim/projected](https://huggingface.co/blog/grimjim/projected-abliteration) | llm-abliteration `--projected` |
@@ -44,6 +49,14 @@
 | **COSMIC** | [github.com/wang-research-lab/COSMIC](https://github.com/wang-research-lab/COSMIC) | Cosine-similarity refusal direction ID (ACL 2025) |
 | **abliteration-comparison** | [github.com/ricyoung/abliteration-comparison](https://github.com/ricyoung/abliteration-comparison) | Young arXiv:2512.13655 reproduction assets |
 | **spkgyk/abliteration** | [github.com/spkgyk/abliteration](https://github.com/spkgyk/abliteration) | Pure PyTorch hooks (no TransformerLens) |
+| **OBLITERATUS** | [github.com/elder-plinius/OBLITERATUS](https://github.com/elder-plinius/OBLITERATUS) | SVD / surgical / CoT-aware presets |
+| **ablate-llm** | [github.com/AIAnytime/ablate](https://github.com/AIAnytime/ablate) | `pip install ablate-llm` KL-guided CLI |
+| **J-Wash** | [github.com/Extraltodeus/J-Wash](https://github.com/Extraltodeus/J-Wash) | Jacobian-lens manual alignment |
+| **Blasphemer** | [github.com/sunkencity999/blasphemer](https://github.com/sunkencity999/blasphemer) | Heretic fork for macOS / LM Studio |
+| **vauban** | [github.com/teilomillet/vauban](https://github.com/teilomillet/vauban) | MLX-native steering / abliteration |
+| **senbonzakura** | [github.com/elementmerc/senbonzakura](https://github.com/elementmerc/senbonzakura) | Multi-direction refusal CLI |
+| **Awesome-Refusal-Suppression** | [github.com/ant-research/Awesome-Refusal-Suppression](https://github.com/ant-research/Awesome-Refusal-Suppression) | External catalog (cross-check, not a substitute) |
+| **Handbook CLIs** | [scripts/abliteration_math.py](scripts/abliteration_math.py) | `npm run abliterate:*` |
 | **GraySwan circuit-breakers** | [github.com/GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) | Defensive alignment (contrast) |
 
 Heretic also mirrors to [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/heretic).

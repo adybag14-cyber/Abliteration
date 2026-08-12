@@ -19,6 +19,9 @@
 | Contrast-set design and leakage control | [contrast-set-design.md](contrast-set-design.md) |
 | Held-out direction diagnostics and causal localization | [direction-diagnostics-and-localization.md](direction-diagnostics-and-localization.md) |
 | Protected capability subspace | [protected-subspace-abliteration.md](protected-subspace-abliteration.md) |
+| ORBA / directional rank-1 | [orba-pipeline.md](orba-pipeline.md) |
+| COSMIC direction ID | [cosmic-direction-id.md](cosmic-direction-id.md) |
+| SVD refusal subspace | [svd-refusal-subspace.md](svd-refusal-subspace.md) |
 
 ## Method selection guide
 
@@ -38,6 +41,12 @@ Start here
     │                                      └─► mlp-down-proj-abliteration
     │
     ├─ Need projected/normpreserve manual? ──► projected-llm-abliteration
+    │
+    ├─ Have r.pt already (COSMIC/SOM/factory)? ──► orba-pipeline / apply-weight-abliteration.py
+    │
+    ├─ Weakly aligned / no refusal template? ──► cosmic-direction-id
+    │
+    ├─ Need k-D subspace (not one arrow)? ──► svd-refusal-subspace
     │
     ├─ Multi-direction / RDO research? ──► multi-direction-ablation / gradient-rdo-pipeline
     │                                        └─► protected-subspace-abliteration

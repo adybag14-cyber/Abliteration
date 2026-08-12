@@ -81,6 +81,9 @@ Stack: Heretic abliteration → optional [Jarvis v7](../sources/jarvis-pack/IMPO
 | T04: Geometric median + winsorization | [../techniques/geometric-median-winsorization.md](../techniques/geometric-median-winsorization.md) |
 | T12: Steering & alternatives | [../techniques/steering-and-alternatives.md](../techniques/steering-and-alternatives.md) |
 | T17: Eval-driven prompts & gates | [../techniques/eval-driven-abliteration.md](../techniques/eval-driven-abliteration.md) · [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) |
+| T34–T39: ORBA, SOM, COSMIC, SVD, false-refusal, harm≠refusal | [bleeding-edge.md](bleeding-edge.md) |
+
+**Full curriculum (every method + setup + script):** [complete-curriculum.md](complete-curriculum.md) · **install matrix:** [setup-encyclopedia.md](setup-encyclopedia.md) · **commands:** [../instructions/method-cookbook.md](../instructions/method-cookbook.md)
 
 **See full numbered T-catalog** (T01–T20 table, T03+T08 cross-guidance, Heretic params, module targets) in [advanced-techniques-catalog.md](advanced-techniques-catalog.md) — this overview is referenced from the catalog for high-level pipeline context. 
 

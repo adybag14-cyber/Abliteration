@@ -1,6 +1,10 @@
-# Abliteration — One-Stop Reference
+# Abliteration — Complete Handbook
 
-Living handbook for **LLM abliteration** — weight-level refusal removal — plus **agentic security** stacks for factory firmware QA, pentest labs, and [CyberGym](https://cybergym.io) evaluation.
+**Goal:** the most complete abliteration guide on the internet — every major **method**, **setup**, **bleeding-edge technique**, and **runnable script**, from Arditi 2024 through ORBA / COSMIC / SOM / SVD (2025–2026).
+
+Living handbook for **LLM abliteration** (weight-level refusal-direction surgery) plus **agentic security** stacks for factory firmware QA, pentest labs, and [CyberGym](https://cybergym.io) evaluation.
+
+**Start here (full path):** [docs/complete-curriculum.md](docs/complete-curriculum.md) · **every OS/VRAM:** [docs/setup-encyclopedia.md](docs/setup-encyclopedia.md) · **frontier 2025–2026:** [docs/bleeding-edge.md](docs/bleeding-edge.md) · **copy-paste commands:** [instructions/method-cookbook.md](instructions/method-cookbook.md)
 
 > **New to the subject?** Open the [interactive Abliteration Field Guide](https://adybag14-cyber.github.io/Abliteration/) for a visual route finder, six-step checklist, method spider diagram, searchable technique atlas, and evaluation-gate simulator.
 
@@ -37,6 +41,11 @@ abliteration/
 │   ├── compare-abliteration-evals.py # paired bootstrap/McNemar + deploy gates
 │   ├── experiment-manifest.py       # SHA-256 provenance create/verify
 │   ├── test-advanced-tools.py       # regression tests for advanced tools
+│   ├── abliteration_math.py        # DIM / ORBA / subspace operators
+│   ├── estimate-refusal-direction.py
+│   ├── apply-weight-abliteration.py
+│   ├── inference-hook-ablation.py
+│   ├── eval-refusal-rate.py
 │   ├── ralph-validate.mjs          # handbook integrity checks
 │   ├── ralph-loop.mjs              # validate → refresh → re-validate
 │   ├── ralph-next-task.mjs         # pick next dev task from backlog
@@ -85,6 +94,25 @@ abliteration/
 └── references.md
 ```
 
+## Handbook surgery scripts
+
+No Heretic install required for the linear algebra:
+
+```bash
+npm run abliterate:estimate -- --self-test
+npm run abliterate:apply -- --self-test
+npm run abliterate:hook -- --self-test
+npm run abliterate:eval -- --self-test
+```
+
+| Script | Role |
+|--------|------|
+| `estimate-refusal-direction.py` | DIM / projected / COSMIC score / SVD `r` |
+| `apply-weight-abliteration.py` | Bake `r` into `down_proj` / `o_proj` (Arditi, ORBA, subspace) |
+| `inference-hook-ablation.py` | Reversible residual wipe |
+| `eval-refusal-rate.py` | Marker scorer for generation JSONL |
+| `export-abliteration-lora.py` | ΔW → PEFT adapter |
+
 ## Improve your local model (beginners)
 
 **Start here** if you use Ollama / LM Studio and want fewer refusals:
@@ -119,6 +147,10 @@ The site uses shadcn-style local components, Radix primitives, CSS-variable them
 
 | Goal | Start here |
 |------|------------|
+| **Entire curriculum (all methods)** | [docs/complete-curriculum.md](docs/complete-curriculum.md) |
+| **OS / VRAM / tool install matrix** | [docs/setup-encyclopedia.md](docs/setup-encyclopedia.md) |
+| **Bleeding-edge 2025–2026** | [docs/bleeding-edge.md](docs/bleeding-edge.md) |
+| **Copy-paste every tool** | [instructions/method-cookbook.md](instructions/method-cookbook.md) |
 | **First local model improvement** | [instructions/beginner-local-model-guide.md](instructions/beginner-local-model-guide.md) |
 | Abliterate a model (reference) | [instructions/heretic-workflow.md](instructions/heretic-workflow.md) |
 | **8 GB GPU / low RAM** | [instructions/low-vram-abliteration.md](instructions/low-vram-abliteration.md) |
@@ -170,6 +202,8 @@ npm run contrast:prepare -- <input.jsonl> --output-dir <run-dir>
 npm run eval:compare -- <before.jsonl> <after.jsonl> [frozen gates]
 npm run experiment:manifest -- create|verify ...
 npm run test:advanced-tools # leakage, gate-failure, byte-drift regressions
+npm run eval:refusal      # marker-based refusal rate on a JSONL dump
+npm run abliterate:estimate -- --self-test
 npm run ralph:turn-end    # log turn + background daemon (blocks if backlog unfinished)
 npm run ralph:regress     # pre-commit gate for watch/headless/monitor output (validate + ralph-ci + evals + py_compile)
 npm run ralph:monitor     # one-shot: print status, seed if empty, auto-start watch; add -- --loop for continuous

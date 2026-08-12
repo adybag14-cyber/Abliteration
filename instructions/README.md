@@ -31,6 +31,8 @@ Step-by-step workflows. **Start here if you are improving a local model for the 
 | Test idea without saving weights | [quickstart.md](quickstart.md) |
 | Security / factory agent | [agentic-security-stack.md](agentic-security-stack.md) |
 | Best quality / research | [advanced-abliteration-workflow.md](advanced-abliteration-workflow.md) |
+| Every tool’s commands | [method-cookbook.md](method-cookbook.md) |
+| Full curriculum | [../docs/complete-curriculum.md](../docs/complete-curriculum.md) |
 | Pick model by GPU / family | [model-family-guide.md](model-family-guide.md) |
 | Thinking / CoT models | [thinking-models-guide.md](thinking-models-guide.md) |
 | Eval-aligned factory deploy | [eval-driven-workflow.md](eval-driven-workflow.md) |
@@ -61,6 +63,7 @@ Step-by-step workflows. **Start here if you are improving a local model for the 
 | [llm-abliteration-workflow.md](llm-abliteration-workflow.md) | ~2–4 hr | ★★★☆☆ |
 | [manual-full-pipeline.md](manual-full-pipeline.md) | ~4–8 hr | ★★★★☆ |
 | [inference-only-prototype.md](inference-only-prototype.md) | ~1 hr | ★★☆☆☆ |
+| [method-cookbook.md](method-cookbook.md) | reference | — |
 
 ---
 

@@ -29,6 +29,11 @@ Taxonomy of **papers**, **open-source tools**, and **when each method applies**.
 | 2026 | [Petrov — contrast baselines](https://arxiv.org/abs/2603.22061) | Topic-matched harmful/harmless pairs can fail |
 | 2026 | [Kuo — defenses vs abliteration](https://arxiv.org/abs/2605.26526) | TAR/SEAM vulnerable; ART mitigation |
 | 2026 | [Carleo — code LLM abliteration](https://arxiv.org/abs/2606.05396) | Refusal vs capability separation |
+| 2024/25 | [Wang — false-refusal vector](https://arxiv.org/abs/2410.03415) | Over-refusal DIM; keep true-safety refusals (ICLR 2025) |
+| 2025 | [Zhao — harm ≠ refusal](https://arxiv.org/abs/2507.11878) | Separate harmfulness axis; Latent Guard |
+| 2025 | [Piras — SOM multi-direction](https://arxiv.org/abs/2511.08379) | SOMs generalize DIM (AAAI 2026) |
+| 2026 | [Lai — ORBA](https://huggingface.co/blog/grimjim/orthogonal-reflection-bounded-ablation) | Householder vs directional rank-1 |
+| 2026 | [Task-conditioned refusal](https://arxiv.org/abs/2603.27518) | Global harm vector vs task-specific over-refusal |
 
 ---
 
@@ -139,7 +144,9 @@ Start: need refusal reduction on aligned model
 |-----|---------|
 | [advanced-techniques-catalog.md](advanced-techniques-catalog.md) | Parameter & technique quick reference |
 | [../instructions/advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md) | Step-by-step advanced pipelines |
-| [../techniques/README.md](../techniques/README.md) | Technique index (24 techniques) |
+| [../techniques/README.md](../techniques/README.md) | Technique index (T01–T26) |
+| [complete-curriculum.md](complete-curriculum.md) | All methods + setups + scripts |
+| [bleeding-edge.md](bleeding-edge.md) | ORBA / COSMIC / SOM / SVD / J-Wash |
 | [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) | Factory / XSTest eval gates |
 | [../instructions/troubleshooting-encyclopedia.md](../instructions/troubleshooting-encyclopedia.md) | Symptom → fix |
 | [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md) | Benchmark matrix (arXiv:2512.13655) — Heretic/DECCP/ErisForge GSM8K & KL |

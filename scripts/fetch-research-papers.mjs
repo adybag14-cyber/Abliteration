@@ -27,6 +27,10 @@ const PAPERS = [
   { id: '2603.22061', title: 'Failure of Topic-Matched Contrast Baselines' },
   { id: '2605.26526', title: 'Open-Weight Defenses vs Abliteration + Prefilling' },
   { id: '2606.05396', title: 'Code LLMs — Refusal vs Capability (abliteration)' },
+  { id: '2410.03415', title: 'False-Refusal Single Vector Ablation (ICLR 2025)' },
+  { id: '2507.11878', title: 'LLMs Encode Harmfulness and Refusal Separately' },
+  { id: '2511.08379', title: 'SOM Directions are Better than One (AAAI 2026)' },
+  { id: '2603.27518', title: 'Task-Conditioned Refusal vs Global Harm Direction' },
 ];
 
 const READMES = [

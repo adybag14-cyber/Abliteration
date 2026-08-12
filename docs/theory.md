@@ -79,6 +79,10 @@ r = normalize(r_raw - (r_raw · g) g)
 
 Only the component of refusal **orthogonal to helpful behavior** is suppressed — lowers KL vs raw Arditi.
 
+**ORBA (Lai 2026):** the same rank-1 wipe is the `α=0` case of directional steering `W ← W + α (Ws)⊗s`. Householder reflection (`I − 2uuᵀ`) is the isometric cousin — exact but more brittle. See [../techniques/orba-orthogonal-reflection.md](../techniques/orba-orthogonal-reflection.md).
+
+**Curriculum (all operators):** [complete-curriculum.md](complete-curriculum.md) · [bleeding-edge.md](bleeding-edge.md)
+
 **Norm-preserving:** rescale rows of `W'` to match `‖W[i,:]‖` before and after ablation (biprojected). Heretic `row_normalization = full` approximates via rank-r LoRA.
 
 → [../techniques/projected-norm-preserving-abliteration.md](../techniques/projected-norm-preserving-abliteration.md)

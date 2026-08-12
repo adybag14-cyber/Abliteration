@@ -16,8 +16,11 @@ Plain-language map of the papers and tools that matter for this handbook. Every 
 3. Young 2025/26      — which tool to pick (Heretic vs DECCP vs ErisForge)
 4. QCRI 2026          — eleven refusal types, one volume knob
 5. Defenses section   — what can block abliteration (extended-refusal)
-6. Everything else    — when you hit edge cases
+6. Bleeding-edge map  — ORBA, COSMIC, SOM, SVD, harm≠refusal
+7. Everything else    — when you hit edge cases
 ```
+
+Frontier write-ups: [bleeding-edge.md](bleeding-edge.md) · [complete-curriculum.md](complete-curriculum.md)
 
 ---
 
@@ -143,6 +146,8 @@ Plain-language map of the papers and tools that matter for this handbook. Every 
 | **Repo PDF** | [sources/research/papers/arxiv-2506.00085.pdf](../sources/research/papers/arxiv-2506.00085.pdf) |
 
 **Beginner takeaway:** Advanced alternative to mean-difference when refusal has no template phrase (weakly aligned models). Complements Heretic measure pass.
+
+**Handbook:** [../techniques/cosmic-refusal-direction.md](../techniques/cosmic-refusal-direction.md) · [../methods/cosmic-direction-id.md](../methods/cosmic-direction-id.md)
 
 ### arXiv:2510.02768 — Safety pretraining study
 

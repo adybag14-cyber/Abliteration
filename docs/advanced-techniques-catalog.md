@@ -110,6 +110,12 @@ W' = W - α · projection(W),   α ∈ (0, 1]
 | T31 | Router-weighted MoE diagnostics | [../techniques/advanced-experimental-methods.md](../techniques/advanced-experimental-methods.md#t31--router-weighted-moe-diagnostics) |
 | T32 | Pareto-front checkpoint selection | [../techniques/advanced-experimental-methods.md](../techniques/advanced-experimental-methods.md#t32--pareto-front-checkpoint-selection) |
 | T33 | Negative-control interventions | [../techniques/advanced-experimental-methods.md](../techniques/advanced-experimental-methods.md#t33--negative-control-interventions) |
+| T34 | ORBA (Householder vs directional) | [../techniques/orba-orthogonal-reflection.md](../techniques/orba-orthogonal-reflection.md) · [../methods/orba-pipeline.md](../methods/orba-pipeline.md) |
+| T35 | SOM multi-directional | [../techniques/som-multi-directional-refusal.md](../techniques/som-multi-directional-refusal.md) |
+| T36 | COSMIC direction ID | [../techniques/cosmic-refusal-direction.md](../techniques/cosmic-refusal-direction.md) |
+| T37 | SVD / OBLITERATUS subspace | [../techniques/svd-whitened-obliteratus.md](../techniques/svd-whitened-obliteratus.md) |
+| T38 | False-refusal vector | [../techniques/false-refusal-vector-ablation.md](../techniques/false-refusal-vector-ablation.md) |
+| T39 | Harm vs refusal axes | [../techniques/harm-vs-refusal-directions.md](../techniques/harm-vs-refusal-directions.md) |
 
 ### Diagnostic gate before surgery (T21)
 

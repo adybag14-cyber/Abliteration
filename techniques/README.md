@@ -192,6 +192,42 @@ deployment gates, and SHA-256 manifests for exact configs, inputs, and outputs.
 
 → [../docs/evaluation.md](../docs/evaluation.md#paired-statistical-comparison) · [../docs/experiment-provenance.md](../docs/experiment-provenance.md)
 
+## 29. ORBA (T34)
+
+Householder vs directional rank-1. Directional ablation is the stable operator; full reflection can flip semantics.
+
+→ [orba-orthogonal-reflection.md](orba-orthogonal-reflection.md)
+
+## 30. SOM multi-direction (T35)
+
+Self-organizing maps on harmful residuals generalize DIM (AAAI 2026).
+
+→ [som-multi-directional-refusal.md](som-multi-directional-refusal.md)
+
+## 31. COSMIC direction ID (T36)
+
+Cosine inversion — pick `r` without output refusal templates (ACL 2025).
+
+→ [cosmic-refusal-direction.md](cosmic-refusal-direction.md)
+
+## 32. SVD / OBLITERATUS subspace (T37)
+
+Whitened SVD, `advanced` / `surgical` presets.
+
+→ [svd-whitened-obliteratus.md](svd-whitened-obliteratus.md)
+
+## 33. False-refusal vector only (T38)
+
+ICLR 2025 single-vector over-refusal ablation — factory `wmic` without flattening safety DIM.
+
+→ [false-refusal-vector-ablation.md](false-refusal-vector-ablation.md)
+
+## 34. Harm vs refusal (T39)
+
+Zhao 2025: harmfulness ⊥ refusal. Keep `r_harm` for Latent Guard; ablate factory false-refusal separately.
+
+→ [harm-vs-refusal-directions.md](harm-vs-refusal-directions.md)
+
 ## Comparison matrix
 
 | Technique | Alters weights | Needs dataset | Typical difficulty |
@@ -216,10 +252,12 @@ deployment gates, and SHA-256 manifests for exact configs, inputs, and outputs.
 | Conditional inference ablation | No | Medium | ★★★★☆ |
 | Covariance-aware / bootstrap consensus | No* | Large | ★★★★★ |
 | Quantization-aware surgery | Yes | Medium | ★★★★☆ |
+| ORBA directional | Yes | Medium | ★★★☆☆ |
+| COSMIC ID + bake | Yes | Medium | ★★★☆☆ |
+| SOM / SVD subspace | Yes | Large | ★★★★☆ |
+| False-refusal vector | Yes | Custom benign set | ★★★☆☆ |
 
-\* Direction estimation itself is non-mutating; a later export may edit weights.
-
-\* SAE ablation can be baked to weights in advanced pipelines.
+\* SAE ablation can be baked to weights in advanced pipelines. Direction estimation itself is non-mutating; a later export may edit weights.
 
 ## Config profiles (handbook)
 
