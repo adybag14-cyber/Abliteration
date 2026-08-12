@@ -5,6 +5,7 @@
 
 #include <cmath>
 #include <cstdlib>
+#include <filesystem>
 #include <iostream>
 #include <string>
 
@@ -140,6 +141,30 @@ void test_eval_empty_is_not_safety() {
   expect(s.false_refusal == 0, "comply row was not refused");
 }
 
+void test_find_examples_dir_via_exe() {
+  namespace fs = std::filesystem;
+  const auto here = fs::current_path();
+  std::error_code ec;
+  const auto tmp = fs::temp_directory_path() / "abliterate-ops-cwd";
+  fs::create_directories(tmp, ec);
+  if (ec) {
+    std::cerr << "note: cannot mkdir for find_examples_dir test\n";
+    return;
+  }
+  fs::current_path(tmp, ec);
+  if (ec) {
+    std::cerr << "note: cannot chdir for find_examples_dir test\n";
+    return;
+  }
+  const auto ex = abliteration::find_examples_dir();
+  fs::current_path(here, ec);
+  if (ex.empty()) {
+    std::cerr << "note: examples/ not next to exe — skip find_examples_dir\n";
+    return;
+  }
+  expect(fs::exists(ex / "tiny-bad.txt"), "find_examples_dir works from a foreign cwd");
+}
+
 void test_shipped_examples() {
   const auto ex = abliteration::find_examples_dir();
   if (ex.empty()) {
@@ -168,7 +193,8 @@ void test_json_field() {
 
 }  // namespace
 
-int main() {
+int main(int argc, char** argv) {
+  if (argc > 0) abliteration::set_argv0(argv[0]);
   test_self_check_shared();
   test_generated_dim();
   test_projection_kills_r();
@@ -176,11 +202,12 @@ int main() {
   test_eval_generated();
   test_eval_empty_is_not_safety();
   test_json_field();
+  test_find_examples_dir_via_exe();
   test_shipped_examples();
   if (fails) {
     std::cerr << fails << " test(s) failed\n";
     return 1;
   }
-  std::cout << "ok 8 suites (self-check + generated + empty-eval + shipped examples)\n";
+  std::cout << "ok 9 suites (self-check + generated + empty-eval + shipped examples + exe paths)\n";
   return 0;
 }

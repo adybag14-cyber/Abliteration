@@ -95,7 +95,7 @@ Format of every matrix: first line `rows cols`, then floats. That is the whole f
 | “ORBA directional / α=0 rank-1” | `apply --mode orba-directional` |
 | “Householder / reflection” | `apply --mode orba-householder` (A/B only) |
 | “inference ablation / steering hook” | `hook --h … --direction r.txt` |
-| “false refusal / over-refusal / wmic” | DIM on **factory-false vs comply** sets, then small `--alpha` |
+| “false refusal / over-refusal / wmic” | two DIMs (`v` harmful/harmless, `w` factory-false/comply), form `w′ ← w − λ v` **offline** — no Wang flag; `estimate --mode dim` is **not** Wang |
 | “harm ≠ refusal (Zhao)” | two DIMs; wipe factory only |
 | “Heretic / Abliterix / Optuna” | **not this binary** — after demo |
 

@@ -44,11 +44,20 @@ Machine manifest: [manifest.json](manifest.json)
 
 ---
 
-## Community blogs (fetch via `npm run fetch:docs`)
+## Community blogs (live URLs)
+
+Listed in `scripts/fetch-docs.mjs`. Offline files `sources/fetched/grimjim-projected-blog.txt` and `grimjim-normpreserve-blog.txt` are **not** in this tree until a successful `npm run fetch:docs` writes them.
 
 | Topic | URL |
 |-------|-----|
 | Projected abliteration | [grimjim/projected-abliteration](https://huggingface.co/blog/grimjim/projected-abliteration) |
 | Norm-preserving biprojected | [grimjim/norm-preserving-biprojected-abliteration](https://huggingface.co/blog/grimjim/norm-preserving-biprojected-abliteration) |
 
-Snapshots: `sources/fetched/grimjim-projected-blog.txt`, `grimjim-normpreserve-blog.txt`
+## Listed in `fetch-research-papers.mjs` (not in `papers/` until a successful fetch)
+
+| arXiv | Title |
+|-------|-------|
+| [2509.15202](https://arxiv.org/abs/2509.15202) | DeepRefusal (defense — train-time probabilistic ablation) |
+| [2511.06852](https://arxiv.org/abs/2511.06852) | Differentiated Directional Intervention (Zhang) |
+| [2603.04355](https://arxiv.org/abs/2603.04355) | Efficient refusal ablation via optimal transport |
+| [2607.02396](https://arxiv.org/abs/2607.02396) | Fast multi-dimensional refusal subspaces (RFM-AGOP) |

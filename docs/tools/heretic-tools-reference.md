@@ -23,17 +23,19 @@ They are **immutable reference copies** — refresh from upstream, do not hand-e
 
 | Artifact | URL |
 |----------|-----|
-| Repository | [github.com/p-e-w/heretic](https://github.com/p-e-w/heretic) (`master`) |
+| Pin | **heretic-llm 1.4.0** · git tag **[v1.4.0](https://github.com/p-e-w/heretic/tree/v1.4.0)** (2026-06-14) |
+| Repository | [github.com/p-e-w/heretic](https://github.com/p-e-w/heretic) — fetch **tag**, never silent `master` |
 | Mirror | [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/heretic) |
-| PyPI package | `heretic-llm` |
-| Live docs | [p-e-w-heretic.mintlify.app](https://p-e-w-heretic.mintlify.app/) |
+| PyPI package | `heretic-llm==1.4.0` |
+| Live docs | [heretic-project.org/tutorial](https://heretic-project.org/tutorial) |
+| Mintlify (may be stale) | [p-e-w-heretic.mintlify.app](https://p-e-w-heretic.mintlify.app/) — generated ~Mar 2026; prefer the live tutorial |
 
 **Where to update from:** run `npm run fetch:heretic` (or `node scripts/fetch-heretic-tools.mjs`).  
-That script pulls raw GitHub files and writes sha256 timestamps into `UPSTREAM.json`.
+That script pulls raw files from tag **v1.4.0** (not `master`) and writes sha256 timestamps into `UPSTREAM.json`. Post-1.4.0 `master` uses a plugin scorer schema that breaks handbook factory/thinking profiles.
 
 Handbook-only profiles (`config.low-vram.toml`, `config.production.toml`) are **edited in this repo** — not overwritten by fetch.
 
-Upstream optional profiles (`config.noslop.toml`, `config.nohumor.toml`) are **pinned from GitHub** via `npm run fetch:heretic`.
+Upstream optional profiles (`config.noslop.toml`, `config.nohumor.toml`) are **pinned from the v1.4.0 tag** via `npm run fetch:heretic`.
 
 ### Optional profiles (style, not refusal)
 

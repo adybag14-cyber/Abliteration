@@ -167,7 +167,7 @@ cp /path/to/abliteration/sources/heretic-tools/config.low-vram.toml config.toml
 Or fetch live upstream defaults and edit manually:
 
 ```bash
-curl -L -o config.toml https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml
+curl -L -o config.toml https://raw.githubusercontent.com/p-e-w/heretic/v1.4.0/config.default.toml
 # then set quantization = "bnb_4bit", offload_outputs_to_cpu = true, etc.
 ```
 

@@ -1,6 +1,6 @@
 # llm-abliteration workflow
 
-Manual measure → analyze → ablate pipeline from [jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration).
+Manual measure → analyze → ablate pipeline from [jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) **v1.2**. [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) last push 2025-11-27 — treat as frozen; do not use it as the handbook path.
 
 ## Clone
 
@@ -30,7 +30,7 @@ python measure.py -m <model> -o directions.pt \
 |------|--------|
 | `--quant 4bit` | On-the-fly bitsandbytes quant for measurement (**low VRAM**) |
 | `--projected` | Projected abliteration (orthogonalize vs harmless dir) |
-| `--deccp` | Extra topics for Chinese models |
+| `--deccp` | Add [AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) topics to the harmful set. That repo is a Qwen2 PoC + dataset, not a peer CLI. |
 
 ## 2. Analyze
 

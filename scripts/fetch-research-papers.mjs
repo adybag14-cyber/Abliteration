@@ -31,6 +31,10 @@ const PAPERS = [
   { id: '2507.11878', title: 'LLMs Encode Harmfulness and Refusal Separately' },
   { id: '2511.08379', title: 'SOM Directions are Better than One (AAAI 2026)' },
   { id: '2603.27518', title: 'Task-Conditioned Refusal vs Global Harm Direction' },
+  { id: '2509.15202', title: 'DeepRefusal — Probabilistic Ablation During Fine-tuning (defense, EMNLP 2025)' },
+  { id: '2603.04355', title: 'Efficient Refusal Ablation in LLM through Optimal Transport' },
+  { id: '2607.02396', title: 'Fast Multi-dimensional Refusal Subspaces via RFM-AGOP' },
+  { id: '2511.06852', title: 'Differentiated Directional Intervention (Zhang)' },
 ];
 
 const READMES = [

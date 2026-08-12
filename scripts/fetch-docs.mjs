@@ -17,7 +17,7 @@ const browserType = useFirefox ? 'firefox' : 'chromium';
 const TARGETS = [
   {
     id: 'heretic-readme',
-    url: 'https://raw.githubusercontent.com/p-e-w/heretic/master/README.md',
+    url: 'https://raw.githubusercontent.com/p-e-w/heretic/v1.4.0/README.md',
     kind: 'raw',
   },
   {
@@ -32,7 +32,7 @@ const TARGETS = [
   },
   {
     id: 'heretic-config',
-    url: 'https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml',
+    url: 'https://raw.githubusercontent.com/p-e-w/heretic/v1.4.0/config.default.toml',
     kind: 'raw',
   },
   {

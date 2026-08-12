@@ -1,6 +1,8 @@
 # Automated Heretic search
 
-Source of truth: **[github.com/p-e-w/heretic](https://github.com/p-e-w/heretic)** · PyPI `heretic-llm` · Live docs [mintlify](https://p-e-w-heretic.mintlify.app/).
+Source of truth: **[github.com/p-e-w/heretic](https://github.com/p-e-w/heretic)** tag **v1.4.0** · PyPI `heretic-llm==1.4.0` · Live docs [heretic-project.org/tutorial](https://heretic-project.org/tutorial) (Mintlify may be stale).
+
+> **Pin warning:** Git `master` after v1.4.0 uses a plugin scorer schema (`[scorer.KeywordRate] keyword_markers`, …) that is **not** the same as these 1.3/1.4 handbook profiles. Do not mix master `config.default.toml` with factory/thinking configs.
 
 **Output:** Hugging Face safetensors layout — convert to GGUF separately ([gguf-export-notes.md](gguf-export-notes.md)).
 
@@ -38,7 +40,7 @@ Low VRAM guide: [../instructions/low-vram-abliteration.md](../instructions/low-v
 ## Install & run
 
 ```bash
-pip install -U heretic-llm
+pip install heretic-llm==1.4.0
 heretic <model_name_or_path>
 ```
 

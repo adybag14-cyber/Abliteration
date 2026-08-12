@@ -94,6 +94,8 @@ inline void jacobi_eigen_symmetric(Mat& a, Mat& v, int max_sweeps = 64) {
   const Vec mg = mean_rows(h_good);
   const std::size_t n = h_bad.rows;
   const std::size_t d = h_bad.cols;
+  // Toy Jacobi on C[d,d] — refuse 7B-scale residual dims (d=4096 → d*d huge).
+  if (d > 512) throw std::invalid_argument("svd: d too large for in-process Jacobi (d*d)");
   Mat delta(n, d);
   for (std::size_t i = 0; i < n; ++i)
     for (std::size_t j = 0; j < d; ++j) delta(i, j) = h_bad(i, j) - mg[j];

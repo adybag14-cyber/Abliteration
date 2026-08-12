@@ -30,8 +30,10 @@ source ~/local-ai-abliterate/.venv/bin/activate
 
 ### Step 3 — Install Heretic
 
+Pin **heretic-llm 1.4.0** (PyPI current as of 2026-08-12). Handbook `config.toml` profiles use the 1.3/1.4 classic keys; that package still accepts them.
+
 ```bash
-pip install -U heretic-llm bitsandbytes accelerate huggingface_hub
+pip install heretic-llm==1.4.0 bitsandbytes accelerate huggingface_hub
 heretic --help
 ```
 
@@ -48,8 +50,8 @@ cp sources/heretic-tools/config.low-vram.toml config.toml
 # Or upstream defaults (immutable pin in repo)
 cp sources/heretic-tools/config.default.toml config.toml
 
-# Or live GitHub (needs network)
-curl -L -o config.toml https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml
+# Or live GitHub *tag* (needs network) — never raw …/master/…
+curl -L -o config.toml https://raw.githubusercontent.com/p-e-w/heretic/v1.4.0/config.default.toml
 ```
 
 See [../docs/tools/heretic-tools-reference.md](../docs/tools/heretic-tools-reference.md) · [../sources/heretic-tools/IMPORT.md](../sources/heretic-tools/IMPORT.md)
@@ -111,16 +113,30 @@ Accept `--evaluate-model` if offered — record refusal count and KL.
 ### PyPI (recommended)
 
 ```bash
-pip install -U heretic-llm
+pip install heretic-llm==1.4.0
 ```
 
-### Reproducible (GitHub + uv)
+Unpinned `pip install -U heretic-llm` currently resolves to 1.4.0, but pin the version so a later release does not surprise you.
+
+### Reproducible (GitHub **tag** + uv)
+
+Do **not** clone `master` and `uv run` it as a drop-in for this handbook. Git master after v1.4.0 uses a plugin scorer schema (`[scorer.KeywordRate]`, `keyword_markers`) that is **not** compatible with the handbook factory/thinking TOML profiles.
 
 ```bash
-git clone https://github.com/p-e-w/heretic.git tools/heretic
+git clone --branch v1.4.0 --depth 1 https://github.com/p-e-w/heretic.git tools/heretic
 cd tools/heretic
 uv run heretic --help
 ```
+
+### Replay a published run (`reproduce.json` / Grimoire)
+
+Heretic 1.4.0 can restore a run from a `reproduce.json` sidecar (written when you opt into reproducibility on Hugging Face upload). [Heretic Grimoire](https://huggingface.co/spaces/heretic-org/Heretic-Grimoire) archives public `reproduce.json` files.
+
+```bash
+heretic --reproduce reproduce.json
+```
+
+That replays an existing trial. It is not a substitute for handbook `config.toml` profiles.
 
 ---
 
@@ -140,7 +156,7 @@ Full numbered path: [low-vram-abliteration.md](low-vram-abliteration.md) · LoRA
 ## Research extras
 
 ```bash
-pip install -U "heretic-llm[research]"
+pip install "heretic-llm[research]==1.4.0"
 heretic <model> --print-residual-geometry
 heretic <model> --plot-residuals
 ```

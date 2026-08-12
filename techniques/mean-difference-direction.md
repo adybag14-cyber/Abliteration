@@ -1,4 +1,4 @@
-# Mean-difference refusal direction
+# Mean-difference refusal direction (DIM / Arditi)
 
 ## Idea
 

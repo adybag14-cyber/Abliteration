@@ -224,7 +224,7 @@ ICLR 2025 single-vector over-refusal ablation — factory `wmic` without flatten
 
 ## 34. Harm vs refusal (T39)
 
-Zhao 2025: harmfulness ⊥ refusal. Keep `r_harm` for Latent Guard; ablate factory false-refusal separately.
+Zhao 2025 (NeurIPS): harm and refusal are **distinct** (different token positions), not proven orthogonal. Keep `r_harm` for Latent Guard; ablate factory false-refusal (T38) separately.
 
 → [harm-vs-refusal-directions.md](harm-vs-refusal-directions.md)
 

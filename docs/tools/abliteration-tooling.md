@@ -19,7 +19,7 @@ Tools for **weight surgery**, **4-bit measure**, **LoRA export**, **quantized in
 | **TransformerLens** | [TransformerLensOrg/TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) | Hooks, direction probes | 1–3B on 8 GB |
 | **wassname/abliterator** | [wassname/abliterator](https://github.com/wassname/abliterator) | Community | Legacy |
 | **FailSpy/abliterator** | [FailSpy/abliterator](https://github.com/FailSpy/abliterator) | TransformerLens hooks; temp/permanent ablation | Notebook prototyping; narrow arch support |
-| **Nous llm-abliteration** | [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | jim-plus fork; YAML + sharded ablate + `--deccp` | 4-bit measure; lowest peak VRAM for large models |
+| **Nous llm-abliteration** | [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Frozen jim-plus fork (last push ~2025-11-27) | Historical YAML only — manual path is **jim-plus v1.2** |
 | **OBLITERATUS** | [elder-plinius/OBLITERATUS](https://github.com/elder-plinius/OBLITERATUS) | SVD + entanglement analysis; `surgical` CoT-aware mode | Hermes Agent skill |
 | **huihui_ai** | [ollama.com/huihui_ai](https://ollama.com/huihui_ai/gemma-4-abliterated) | Sumandora abliterates; layer-banded GGUF drops | Fast uncensor, weak tool QA |
 | **199-biotech Gemma 4** | [gemma-4-abliterated](https://github.com/199-biotechnologies/gemma-4-abliterated) | Per-layer MLX pipeline; weight factor 1.0 | Gemma 4 31B quality-first |
@@ -32,7 +32,7 @@ Tools for **weight surgery**, **4-bit measure**, **LoRA export**, **quantized in
 
 Workflows: [../../instructions/heretic-workflow.md](../../instructions/heretic-workflow.md) · [../../instructions/low-vram-abliteration.md](../../instructions/low-vram-abliteration.md)
 
-**Extended toolkit (Abliterix, ErisForge, Nous/DECCP, FailSpy):** comparison table, commands, decision tree → [../../techniques/extended-abliteration-toolkit.md](../../techniques/extended-abliteration-toolkit.md)
+**Extended toolkit (Abliterix, ErisForge, jim-plus + `--deccp`, FailSpy):** comparison table, commands, decision tree → [../../techniques/extended-abliteration-toolkit.md](../../techniques/extended-abliteration-toolkit.md)
 
 ---
 
@@ -136,7 +136,7 @@ Surgery on Mac: prefer cloud Heretic + local GGUF.
 | **ErisForge** | [Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) | Layer-band ablation + refusal scorer |
 | **Abliterix** | [wuwangzhang1216/abliterix](https://github.com/wuwangzhang1216/abliterix) | Multi-technique automation; HonestAbliterationBench |
 | **FailSpy/abliterator** | [FailSpy/abliterator](https://github.com/FailSpy/abliterator) | Activation cache + hook ablation |
-| **Nous llm-abliteration** | [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Sharded manual pipeline + DECCP measure |
+| **Nous llm-abliteration** | [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Frozen fork (~2025-11-27); use jim-plus v1.2 + `measure.py --deccp` |
 
 ---
 
@@ -160,7 +160,7 @@ Surgery on Mac: prefer cloud Heretic + local GGUF.
 |---------|-----|-----|
 | mlabonne/harmless_alpaca | HF | Heretic default good prompts |
 | mlabonne/harmful_behaviors | HF | Heretic default bad prompts |
-| deccp | [AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) | llm-abliteration `--deccp` |
+| deccp | [AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) | Qwen2 PoC + topic dataset — **not** a peer CLI; use jim-plus `measure.py --deccp` |
 
 Custom: one prompt per line `.txt` or JSONL — see Heretic `config.default.toml` `[good_prompts]` / `[bad_prompts]`.
 
@@ -191,10 +191,10 @@ Use this section when the deploy goal is **agents with online/native tool callin
 |-------|--------|----------------|------------------------|----------|
 | **Heretic** (handbook default) | Optuna + projected + norm-preserving | Any HF instruct model | Medium — tune KL + eval gates | Automatic deploy + factory/CyberGym eval |
 | **Abliterix** | Optuna TPE multi-objective; 150+ presets; MoE/VL/SSM | Gemma 4, MoE, hybrid, VL families | Medium-high when preset matches — verify HonestAbliterationBench + handbook JSONL | Heretic alternative when arch-specific automation needed |
-| **Nous / jim-plus llm-abliteration** | `measure.py` → YAML `sharded_ablate.py` | Llama, Qwen, Gemma 3+, Mistral | Medium-low if conservative YAML | Manual per-architecture control; 20B+ sharded |
+| **jim-plus llm-abliteration** (v1.2) | `measure.py` → YAML `sharded_ablate.py` | Llama, Qwen, Gemma 3+, Mistral | Medium-low if conservative YAML | Manual path; 20B+ sharded. Nous fork last push ~2025-11-27 — frozen. |
 | **Nous Hermes + OBLITERATUS** | `obliteratus obliterate --method advanced\|surgical` | 3B–70B instruct | Medium-high with `surgical` on reasoning models | Research agents, CoT models |
 | **OBLITERATUS** (standalone) | SVD + norm-preserving + KL co-opt | Wide model list | Medium-high with `advanced`; use `surgical` for R1/CoT | When entanglement analysis matters |
-| **ErisForge / DECCP** | Single-pass | GSM8K-sensitive bases | Medium — better math subset in [arXiv:2512.13655](https://arxiv.org/abs/2512.13655) | When Heretic KL is poor |
+| **ErisForge** | Single-pass layer-band | GSM8K-sensitive bases | Medium — better math subset in [arXiv:2512.13655](https://arxiv.org/abs/2512.13655) | When Heretic KL is poor. Young’s “DECCP” cell is not a peer CLI — use jim-plus `measure.py --deccp` for those topics. |
 | **huihui_ai** | [Sumandora/remove-refusals-with-transformers](https://github.com/Sumandora/remove-refusals-with-transformers) | Gemma 4 GGUF/Ollama | **Low** — fast uncensor, no tool eval | Local chat uncensoring, not production agents |
 | **199-biotechnologies Gemma 4** | Per-layer directions, weight 1.0, MLX | `google/gemma-4-31b-it` | Medium-high on capability suite | Apple Silicon, quality-first Gemma |
 | **SuperGemma 4 (Jiunsong) v2** | Fine-tuned agentic base + mild abliterate/uncensor pass | Gemma 4 26B/31B | **Often high** — format re-grounded + permissive base | Gemma agents when huihui GGUF breaks tools |
@@ -221,7 +221,7 @@ flowchart TD
 
   Q2 -->|Gemma 4 + native HF tools| G1{Download only or self-abliterate?}
   G1 -->|Download| G2[Prefer SuperGemma v2 / 199-biotech / official HF + eval]
-  G1 -->|Self-abliterate| G3[199-biotech or Nous llm-abliteration projected + normpreserve]
+  G1 -->|Self-abliterate| G3[199-biotech or jim-plus llm-abliteration projected + normpreserve]
   G2 --> EVAL
   G3 --> EVAL
 
@@ -233,7 +233,7 @@ flowchart TD
 
   Q2 -->|General instruct 7B–14B| H1{Heretic KL acceptable on pilot?}
   H1 -->|Yes| H2[Heretic + eval-driven-workflow]
-  H1 -->|No| H3[ErisForge or DECCP or llm-abliteration YAML]
+  H1 -->|No| H3[ErisForge or jim-plus YAML + optional measure.py --deccp]
   H2 --> EVAL
   H3 --> EVAL
 
@@ -276,7 +276,7 @@ flowchart TD
   S2 -->|Calls wrong function / bad args| C1[Capability regression]
   C1 --> C1a[GSM8K / MMLU slice]
   C1 --> C1b[Reduce n_directions / weight factor]
-  C1 --> C1c[Switch to ErisForge/DECCP or projected+normpreserve]
+  C1 --> C1c[Switch to ErisForge or jim-plus projected+normpreserve]
 
   S2 -->|Garbled tool syntax| F1[Format subspace damaged]
   F1 --> F1a[Never use aggressive multi-pass on Gemma]
@@ -336,7 +336,7 @@ Full matrices: [../evaluation.md](../evaluation.md) · Workflow: [../../instruct
 | 2 | **"I don't have access / cannot execute"** without refusal tone | Over-refusal subspace (XSTest class) partially intact | Include XSTest-style pairs in good set; eval `xstest-overrefusal-sample.jsonl` |
 | 3 | **No `<|tool_call>` output** (Gemma 4) | Wrong chat template; Ollama chat without `tools=` | Use HF `AutoProcessor.apply_chat_template(..., tools=[...])`; append `tool_responses` per [Google guide](https://ai.google.dev/gemma/docs/capabilities/text/function-calling-gemma4) |
 | 4 | **Malformed tool JSON / tokens** | Collateral damage to format subspace; aggressive ablation | Reduce layers/directions; `--projected` + `--normpreserve`; re-abliterate from bf16; Jarvis SFT |
-| 5 | **Wrong function name or args** | Reasoning/capability regression (not refusal) | GSM8K/MMLU gate; try ErisForge/DECCP; lower Heretic KL target; OBLITERATUS with higher regularization |
+| 5 | **Wrong function name or args** | Reasoning/capability regression (not refusal) | GSM8K/MMLU gate; try ErisForge or jim-plus `--projected --normpreserve`; lower Heretic KL target; OBLITERATUS with higher regularization |
 | 6 | **Works in HF, breaks in GGUF/Ollama** | Quantization + conversion dropped tool tokens | Abliterate bf16 → convert → verify tokenizer; avoid re-quantizing already-quantized abliterates |
 | 7 | **Works on stock, breaks on huihui GGUF** | Fast Sumandora pass + layer band only (e.g. 23–28) + no tool eval | Switch to SuperGemma v2, 199-biotech, or self-abliterate with eval gates; don't assume Ollama tags are agent-safe |
 | 8 | **SuperGemma works, your Heretic run doesn't** | SuperGemma includes agent fine-tune + mild surgery | Add Jarvis QLoRA after your abliteration; or start from SuperGemma base for Gemma agents |
@@ -355,7 +355,7 @@ Full matrices: [../evaluation.md](../evaluation.md) · Workflow: [../../instruct
 | Goal | Pipeline |
 |------|----------|
 | **Factory firmware agent** | Heretic (factory bad/good `.txt`) → eval factory JSONL → optional Jarvis QLoRA → `hardware-tool-gate.py` |
-| **Gemma 4 + native tools** | 199-biotech or conservative Nous YAML → HF processor path → factory + xstest eval → Jarvis if < 95% |
+| **Gemma 4 + native tools** | 199-biotech or conservative jim-plus YAML → HF processor path → factory + xstest eval → Jarvis if < 95% |
 | **CyberGym / pentest agent** | Heretic or OBLITERATUS `advanced` → `cybergym-subset` → OpenHands + vLLM |
 | **Quick local uncensored chat** | huihui Ollama tag — **do not** assume tool calling |
 | **Gemma agent, huihui broke tools** | SuperGemma 31B v2 or stock IT + Jarvis repair + eval gates |

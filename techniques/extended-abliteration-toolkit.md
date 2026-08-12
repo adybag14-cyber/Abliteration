@@ -16,7 +16,7 @@ Four community tools that complement the handbook default (**Heretic**). Use thi
 |------|-----------------|---------------------------|----------------------|------|
 | **Abliterix** | Automated Optuna TPE (multi-objective: refusals + KL). Direct steering, LoRA abliteration, MoE expert-granular, ORBA, SAE, and more. 150+ pre-built configs. Broad arch support. | [model-family-playbook.md](model-family-playbook.md) (MoE/hybrid/VL), [advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md) Track J, techniques/ as Heretic alternative/extension. **HonestAbliterationBench** for regression checks. | Strong automation + low-KL examples (e.g. Gemma-4-E4B: near-zero refusals, tiny KL per upstream reports). Derivative/extension of Heretic with extra techniques. Reported to break some defenses (Circuit Breakers, etc.) — treat as research signal, not deploy default. AGPL-3.0. | [github.com/wuwangzhang1216/abliterix](https://github.com/wuwangzhang1216/abliterix) |
 | **ErisForge** | Simple layer-range ablation via `AblationDecoderLayer` / `AdditionDecoderLayer` + built-in `ExpressionRefusalScorer`. Minimal config. | [layer-selective-abliteration.md](layer-selective-abliteration.md), [mean-difference-direction.md](mean-difference-direction.md), beginner quick experiments, [advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md) Track K. | Good capability preservation (avg GSM8K Δ **-0.28 pp** on benchmarked subset in arXiv:2512.13655). Lower model compatibility than Heretic. Research-oriented, dead-simple API. | [github.com/Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) |
-| **llm-abliteration** (NousResearch + forks: jim-plus, Orion-zhen) + **DECCP** | Manual/sharded direction measurement + ablation. Memory-efficient for large models. DECCP adds Chinese/multilingual prompt sets. | [low-vram-abliteration.md](../instructions/low-vram-abliteration.md) Path B, [projected-llm-abliteration.md](../methods/projected-llm-abliteration.md), [advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md) Track C. | Strong capability preservation (DECCP avg GSM8K Δ **-0.13 pp** on benchmarked subset). Best when full Heretic load OOMs — `sharded_ablate.py` never holds full weights in VRAM. | [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) · [jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) · [AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) |
+| **llm-abliteration** (jim-plus v1.2) | Manual/sharded direction measurement + ablation. Memory-efficient for large models. Multilingual topics via `measure.py --deccp`. | [low-vram-abliteration.md](../instructions/low-vram-abliteration.md) Path B, [projected-llm-abliteration.md](../methods/projected-llm-abliteration.md), [advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md) Track C. | Young’s “DECCP” GSM8K Δ **-0.13 pp** is this pipeline + deccp topics — **not** a peer CLI. Best when full Heretic load OOMs — `sharded_ablate.py` never holds full weights in VRAM. | [jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) · dataset [AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) · Nous fork frozen (~2025-11-27) |
 | **FailSpy/abliterator** | TransformerLens-based: activation caching, refusal direction computation, hook-based (temporary/permanent) ablation, layer whitelist/blacklist. | [beyond-single-direction.md](beyond-single-direction.md) mechanistic path, [mean-difference-direction.md](mean-difference-direction.md), [residual-hook-ablation.md](../methods/residual-hook-ablation.md). Complements SAE / multi-direction work. | Lowest compatibility in arXiv:2512.13655 matrix (TransformerLens arch limits). Excellent for notebooks, custom analysis, prototyping directions before baking with Heretic/Abliterix. | [github.com/FailSpy/abliterator](https://github.com/FailSpy/abliterator) |
 
 ---
@@ -60,15 +60,15 @@ cd ErisForge && pip install -e .
 
 ---
 
-## llm-abliteration + DECCP — low VRAM and multilingual measure
+## llm-abliteration + `--deccp` — low VRAM and multilingual measure
 
 **Fork choice:**
 
 | Fork | URL | Notes |
 |------|-----|-------|
 | **jim-plus** | [jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) | v1.2+ projected/norm-preserving flags; handbook Path B default |
-| **NousResearch** | [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Community maintenance; YAML per-layer control |
-| **Orion-zhen** | Search GitHub for active fork | Pin commit if using in production |
+| **NousResearch** | [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Frozen fork (last push 2025-11-27). Historical YAML only — not the manual path. |
+| **Orion-zhen** | Search GitHub for active fork | Ancestor fork; pin commit if using |
 
 **Sharded ablate** keeps peak memory at one layer matrix — critical for 20B+ on consumer hardware.
 
@@ -80,7 +80,7 @@ python sharded_ablate.py config.yaml --projected --normpreserve
 
 Full path → [../instructions/low-vram-abliteration.md](../instructions/low-vram-abliteration.md#path-b--llm-abliteration-4-bit-measure--sharded-ablate)
 
-**DECCP** ([AUGMXNT/deccp](https://github.com/AUGMXNT/deccp)): Chinese/multilingual harmful/harmless topic sets for direction estimation — use when English-only `harmful_behaviors` misaligns with refusal geometry on CJK or multilingual instruct models.
+**DECCP** ([AUGMXNT/deccp](https://github.com/AUGMXNT/deccp)): Qwen2 Instruct PoC + Chinese/multilingual topic sets. **Not** a peer CLI. Multilingual measure is `python measure.py --deccp` on **jim-plus** llm-abliteration.
 
 ---
 
@@ -106,10 +106,10 @@ Need automatic deploy + eval gates?
   └─ Heretic (default) OR Abliterix if MoE/VL/SSM + preset exists
 
 Heretic OOM or 20B+ on consumer GPU?
-  └─ llm-abliteration measure 4-bit + sharded_ablate (+ DECCP if non-English)
+  └─ jim-plus measure 4-bit + sharded_ablate (`--deccp` if non-English topics)
 
 GSM8K regression blocker on Heretic?
-  └─ Try ErisForge or DECCP single-pass — re-eval factory JSONL anyway
+  └─ Try ErisForge single-pass, or jim-plus `--projected --normpreserve` — re-eval factory JSONL anyway
 
 Research / direction prototyping only?
   └─ FailSpy/abliterator hooks → bake winner with Heretic or Abliterix

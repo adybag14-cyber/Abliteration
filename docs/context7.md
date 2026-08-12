@@ -50,6 +50,6 @@ node scripts/fetch-docs.mjs
 Or pull READMEs directly:
 
 ```bash
-curl -L https://raw.githubusercontent.com/p-e-w/heretic/master/README.md
-curl -L https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml
+curl -L https://raw.githubusercontent.com/p-e-w/heretic/v1.4.0/README.md
+curl -L https://raw.githubusercontent.com/p-e-w/heretic/v1.4.0/config.default.toml
 ```

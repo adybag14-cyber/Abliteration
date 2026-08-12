@@ -12,7 +12,7 @@ The beginner guide's Step 7 appendix now also points here for advanced tuning + 
 
 **Read first:** [../docs/research-landscape.md](../docs/research-landscape.md) · [../docs/advanced-techniques-catalog.md](../docs/advanced-techniques-catalog.md) · [../docs/refusal-research-beginners-guide.md](../docs/refusal-research-beginners-guide.md)
 
-**Track index:** A production · B diagnostics · C manual llm-abliteration · D multi-direction · E MoE · F adapter · G hooks prototype · H thinking · I factory eval · J Abliterix · K ErisForge · **L ORBA/COSMIC** · **M SVD/OBLITERATUS** · **N false-refusal / factory vector**
+**Track index:** A production · B diagnostics · C manual llm-abliteration · D multi-direction · E MoE · F adapter · G hooks prototype · H thinking · I factory eval · J Abliterix · K ErisForge · **L ORBA/COSMIC** · **M SVD/OBLITERATUS** · **N T38 Wang false-refusal**
 
 Curriculum: [../docs/complete-curriculum.md](../docs/complete-curriculum.md) · Cookbook: [method-cookbook.md](method-cookbook.md)
 
@@ -246,11 +246,20 @@ obliteratus obliterate <model> --method advanced --output-dir ./out
 
 ---
 
-## Track N — False-refusal only (factory)
+## Track N — False-refusal only (factory) — T38
 
 **Goal:** `wmic` / lab `nmap` without wiping the safety DIM.
 
-Point Heretic at `data/eval/factory-bad-prompts.txt` / `factory-good-prompts.txt` **or** estimate T25 vector and bake with `--alpha 0.5`. Hold out true-harmful prompts — refusal must not go to ~0.
+T38 is Wang et al., ICLR 2025 ([arXiv:2410.03415](https://arxiv.org/abs/2410.03415)) — **not** raw factory DIM and **not** T03 (project off the harmless mean).
+
+| Step | Action |
+|------|--------|
+| 1 | Estimate true-refusal **`v`**: harmful vs harmless DIM |
+| 2 | Estimate false-refusal **`w`**: factory-false / pseudo-harmful vs comply (`data/eval/factory-bad-prompts.txt` / `factory-good-prompts.txt`) |
+| 3 | Form **`w′ ← w − λ v` offline** (orthogonalize against **true refusal**, not `g`) |
+| 4 | Ablate `w′`. Sweep **`λ`** (paper calibration). Hold out true-harmful — refusal must not go to ~0 |
+
+Paper Table 1: ablating raw `w` lifts **both** harmful compliance and XSTest. That is the failure mode of “Heretic on factory `.txt`” or `estimate --mode dim` on factory-false vs comply. Neither CLI has a three-set Wang operator. Maskey et al. ([arXiv:2603.27518](https://arxiv.org/abs/2603.27518)): one factory vector can still be incomplete (task-conditioned over-refusal).
 
 → [../techniques/false-refusal-vector-ablation.md](../techniques/false-refusal-vector-ablation.md) · [../techniques/harm-vs-refusal-directions.md](../techniques/harm-vs-refusal-directions.md)
 
@@ -261,7 +270,7 @@ Point Heretic at `data/eval/factory-bad-prompts.txt` / `factory-good-prompts.txt
 | Layer | Tools |
 |-------|-------|
 | Surgery (auto) | Heretic, **Abliterix** (MoE/VL/SSM presets) |
-| Surgery (manual) | llm-abliteration + DECCP, **ErisForge** (layer band) |
+| Surgery (manual) | jim-plus llm-abliteration v1.2 (`measure.py --deccp` uses AUGMXNT topics), **ErisForge** (layer band) |
 | Prototyping | **FailSpy/abliterator**, TransformerLens hooks |
 | Quant | bitsandbytes, llama.cpp |
 | Adapters | PEFT, Unsloth, export script |

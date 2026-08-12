@@ -42,4 +42,4 @@ QCRI 2026 still applies: many directions may be **style**, one **volume** knob. 
 4. Ablate k=3–6 with [../methods/multi-direction-ablation.md](../methods/multi-direction-ablation.md) or `--mode subspace`.
 5. Eval factory JSONL **and** XSTest — SOM can increase over-refusal if neurons sit on the over-refusal tail.
 
-Related multi-D CLI: [senbonzakura](https://github.com/elementmerc/senbonzakura).
+**Official code:** [pralab/som-refusal-directions](https://github.com/pralab/som-refusal-directions). That trainer is **not** Abliterix and **not** [senbonzakura](https://github.com/elementmerc/senbonzakura) (a separate multi-direction CLI). Handbook `abliterate-cxx --mode svd` is a subspace proxy, not the paper SOM.

@@ -3,40 +3,45 @@
   "primary_repo": "https://github.com/p-e-w/heretic",
   "mirror_repo": "https://codeberg.org/p-e-w/heretic",
   "pypi_package": "heretic-llm",
+  "pypi_version": "1.4.0",
+  "pinned_git_ref": "v1.4.0",
+  "pinned_tree": "https://github.com/p-e-w/heretic/tree/v1.4.0",
+  "pinned_commit": "6ea3b8d778d047b4b3b7c5b843e21c5bea98ee8d",
   "default_branch": "master",
   "synced_at": "2026-06-13T22:55:16.004Z",
   "synced_by": "scripts/fetch-heretic-tools.mjs",
+  "pin_notes": "Handbook pin is heretic-llm 1.4.0 / git tag v1.4.0 (2026-06-14; tagged tree commit 6ea3b8d). Do not fetch master: post-1.4.0 master uses plugin scorer schema ([scorer.KeywordRate] keyword_markers) which breaks handbook factory/thinking profiles. Classic 1.3/1.4 keys still work on PyPI 1.4.0. Live docs: https://heretic-project.org/tutorial (Mintlify may be stale). sha256/bytes below are from the 2026-06-13 fetch (then-master, 1.3-compatible schema); next npm run fetch:heretic recomputes them from the v1.4.0 tag. This file was not rehashed on 2026-08-12 — do not invent hashes.",
   "pinned_files": {
     "config.default.toml": {
-      "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/config.default.toml",
+      "url": "https://raw.githubusercontent.com/p-e-w/heretic/v1.4.0/config.default.toml",
       "local": "sources/heretic-tools/config.default.toml",
       "sha256": "23498cbe624627f3a31892f12e6fe07d1734f81399aa5eed83c57b20a573f2bc",
       "bytes": 7057,
       "synced_at": "2026-06-13T22:55:16.004Z"
     },
     "pyproject.toml.reference": {
-      "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/pyproject.toml",
+      "url": "https://raw.githubusercontent.com/p-e-w/heretic/v1.4.0/pyproject.toml",
       "local": "sources/heretic-tools/pyproject.toml.reference",
       "sha256": "02d22654d7eba38bca882ef51fc3446a7ef40c5ea273a231590fcbc787f6cf4e",
       "bytes": 1980,
       "synced_at": "2026-06-13T22:55:16.004Z"
     },
     "uv.lock.reference": {
-      "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/uv.lock",
+      "url": "https://raw.githubusercontent.com/p-e-w/heretic/v1.4.0/uv.lock",
       "local": "sources/heretic-tools/uv.lock.reference",
       "sha256": "de9de8005ca55a17111e3e7f136e6ba00db1f7bc899d6696fd66fd613fd455e9",
       "bytes": 893328,
       "synced_at": "2026-06-13T22:55:16.004Z"
     },
     "config.noslop.toml": {
-      "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/config.noslop.toml",
+      "url": "https://raw.githubusercontent.com/p-e-w/heretic/v1.4.0/config.noslop.toml",
       "local": "sources/heretic-tools/config.noslop.toml",
       "sha256": "80a28290b9d34aa625cde3843e35a7e75b0e6ce984374e01ceaa1a391f704b3b",
       "bytes": 3457,
       "synced_at": "2026-06-13T22:55:16.004Z"
     },
     "config.nohumor.toml": {
-      "url": "https://raw.githubusercontent.com/p-e-w/heretic/master/config.nohumor.toml",
+      "url": "https://raw.githubusercontent.com/p-e-w/heretic/v1.4.0/config.nohumor.toml",
       "local": "sources/heretic-tools/config.nohumor.toml",
       "sha256": "479a62c098e51301129743d4f4734ca65cbb4393d5507a6e37355b3f8df24aa9",
       "bytes": 1374,
@@ -50,7 +55,7 @@
     "config.factory-qa.toml": "Maintained in-repo — factory good/bad .txt prompts"
   },
   "install": {
-    "pip": "pip install -U heretic-llm bitsandbytes accelerate",
-    "uv": "git clone https://github.com/p-e-w/heretic.git && cd heretic && uv run heretic --help"
+    "pip": "pip install heretic-llm==1.4.0 bitsandbytes accelerate",
+    "uv": "git clone --branch v1.4.0 https://github.com/p-e-w/heretic.git && cd heretic && uv run heretic --help"
   }
 }

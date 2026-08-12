@@ -21,11 +21,11 @@ Classic **mean-difference** estimator:
 r_ℓ = normalize( mean(H_harmful^ℓ) - mean(H_harmless^ℓ) )
 ```
 
-Where `H_harmful^ℓ` are residual vectors collected on prompts that trigger refusals, and `H_harmless^ℓ` are matched benign prompts.
+Where `H_harmful^ℓ` are residual vectors collected on prompts that trigger refusals, and `H_harmless^ℓ` are a **control pool** of benign prompts. Topic-matching that pool is an experiment, not the default — see below.
 
 **Practical tips:**
 
-- Use **paired** prompts (same topic, different framing) when possible
+- Do **not** default to paired same-topic prompts. Topic-matched harmful/harmless pairs can **cancel** the usable refusal component ([Petrov 2026, arXiv:2603.22061](https://arxiv.org/abs/2603.22061)). Usual starting design is a **general** harmless control pool; compare it to controlled designs on held-out interventions. Details: [../methods/contrast-set-design.md](../methods/contrast-set-design.md).
 - Collect activations at **specific hook points**: post-attention residual, post-MLP residual, or sublayer outputs
 - Average over **last token** or **prompt tokens** depending on recipe — be consistent
 - L2-normalize `r_ℓ` before applying to weights

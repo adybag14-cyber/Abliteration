@@ -121,4 +121,30 @@ if (!ev.includes('false_refusal')) {
   console.error('eval missing false_refusal');
   process.exit(1);
 }
-console.log(`smoke ok  lab=${lab}  root_unused=${root}`);
+
+// Hour-1: doctor+demo must work from a different cwd via the absolute exe path
+// (Windows argv[0] is often just the filename).
+const alien = mkdtempSync(join(tmpdir(), 'abliterate-alien-cwd-'));
+function runAbs(args) {
+  const cmd = wrap ? wrap.split(/\s+/).concat([exe, ...args]) : [exe, ...args];
+  console.log(`> (cwd=${alien})`, cmd.join(' '));
+  const r = spawnSync(cmd[0], cmd.slice(1), { cwd: alien, encoding: 'utf8' });
+  process.stdout.write(r.stdout || '');
+  process.stderr.write(r.stderr || '');
+  if (r.status !== 0) {
+    console.error(`smoke fail (foreign cwd): ${args.join(' ')} exit ${r.status}`);
+    process.exit(r.status ?? 1);
+  }
+  return r.stdout || '';
+}
+const doctorAbs = runAbs(['doctor']);
+if (!/examples/i.test(doctorAbs)) {
+  console.error('doctor from foreign cwd did not report examples/');
+  process.exit(1);
+}
+const demoAbs = runAbs(['demo']);
+if (!demoAbs.includes('estimate') || !demoAbs.includes('eval')) {
+  console.error('demo from foreign cwd did not print estimate/eval');
+  process.exit(1);
+}
+console.log(`smoke ok  lab=${lab}  alien=${alien}  root_unused=${root}`);

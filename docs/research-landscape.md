@@ -144,7 +144,7 @@ Start: need refusal reduction on aligned model
 |-----|---------|
 | [advanced-techniques-catalog.md](advanced-techniques-catalog.md) | Parameter & technique quick reference |
 | [../instructions/advanced-abliteration-workflow.md](../instructions/advanced-abliteration-workflow.md) | Step-by-step advanced pipelines |
-| [../techniques/README.md](../techniques/README.md) | Technique index (T01–T26) |
+| [../techniques/README.md](../techniques/README.md) | Technique index (T01–T39) |
 | [complete-curriculum.md](complete-curriculum.md) | All methods + setups + scripts |
 | [bleeding-edge.md](bleeding-edge.md) | ORBA / COSMIC / SOM / SVD / J-Wash |
 | [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) | Factory / XSTest eval gates |

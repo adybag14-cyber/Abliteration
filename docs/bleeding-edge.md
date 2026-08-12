@@ -16,7 +16,8 @@ Curriculum placement: [complete-curriculum.md](complete-curriculum.md) Stage 9. 
 | T35 | SOM multi-direction (AAAI 2026) | 2025/26 | [som-multi-directional-refusal](../techniques/som-multi-directional-refusal.md) | After single-`r` leftovers |
 | T37 | SVD / whitened SVD subspace (OBLITERATUS) | 2026 | [svd-whitened-obliteratus](../techniques/svd-whitened-obliteratus.md) | CoT / MoE precision |
 | T38 | False-refusal vector only (ICLR 2025) | 2024/25 | [false-refusal-vector-ablation](../techniques/false-refusal-vector-ablation.md) | Factory over-refusal |
-| T39 | Harmfulness ⊥ refusal (Zhao et al.) | 2025 | [harm-vs-refusal-directions](../techniques/harm-vs-refusal-directions.md) | Analysis + Latent Guard |
+| T39 | Harm ≠ refusal — distinct, not proven orthogonal (Zhao et al.) | 2025 | [harm-vs-refusal-directions](../techniques/harm-vs-refusal-directions.md) | Analysis + Latent Guard |
+| — | Harm detection vs refusal execution (Zhang & Sun) | 2025/26 | [arXiv:2511.06852](https://arxiv.org/abs/2511.06852) | Analysis (AAAI-26); not an attack recipe |
 | T05–T07 | Concept cones, RDO, SAE | 2025–26 | [beyond-single-direction](../techniques/beyond-single-direction.md) | Research |
 | — | QCRI 11-category + shared knob | 2026 | [multi-category-refusal-beginners-guide](../techniques/multi-category-refusal-beginners-guide.md) | Prompt-set design |
 | — | Cross-lingual refusal transfer | 2025 | [research-landscape.md](research-landscape.md) | Multilingual measure |
@@ -70,7 +71,8 @@ Handbook implementation of DIM / projected / Householder / subspace: `scripts/ab
 - **QCRI 2026:** 11 refusal *styles*, one **volume** knob — ablating any category direction mostly scales the same refuse↔comply trade-off.
 - **TUM cones:** you still need **representational independence**, not just `r₁ ⊥ r₂`.
 - **SOM (AAAI 2026):** SOMs generalize DIM; ablating several SOM neurons beat single-direction **and** some jailbreak baselines in their setup.
-- **Zhao 2025:** **harmfulness** and **refusal** are distinct axes. Abliterating refusal can leave the model still *judging* harm (or vice versa). Factory work should prefer the **false-refusal** axis (T38) when the goal is `wmic`/`nmap` compliance without flattening harm detection.
+- **Zhao 2025:** **harmfulness** and **refusal** are distinct axes (not proven orthogonal), at different token positions (`t_inst` vs `t_post-inst`). Abliterating refusal can leave the model still *judging* harm (or vice versa). Factory work should prefer the **false-refusal** axis (T38) when the goal is `wmic`/`nmap` compliance without flattening harm detection.
+- **Zhang & Sun 2025 (AAAI-26, [arXiv:2511.06852](https://arxiv.org/abs/2511.06852)):** same conceptual split as **harm detection** vs **refusal execution**.
 
 ---
 
