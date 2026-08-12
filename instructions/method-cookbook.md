@@ -11,8 +11,12 @@ The default helper path is **`abliterate-cxx`** (ISO C++26). See [../docs/cxx26-
 ```bash
 npm run cxx:build
 npm run cxx:test
-npm run cxx:self-check
+cxx/build/abliterate-cxx guide
+cxx/build/abliterate-cxx doctor
+cxx/build/abliterate-cxx demo
 ```
+
+Hand-holding: [../docs/cxx26-researcher-guide.md](../docs/cxx26-researcher-guide.md) · [../cxx/GETTING-STARTED.md](../cxx/GETTING-STARTED.md)
 
 | Job | Command |
 |-----|---------|

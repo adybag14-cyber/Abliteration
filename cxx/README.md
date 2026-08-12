@@ -20,10 +20,13 @@ cmake --build cxx/build
 ./cxx/build/abliterate-cxx-tests
 ```
 
+**First hour:** `abliterate-cxx guide` → `doctor` → `demo`. Walkthrough: [GETTING-STARTED.md](GETTING-STARTED.md) · [docs/cxx26-researcher-guide.md](../docs/cxx26-researcher-guide.md)
+
 ## Subcommands
 
 | Command | Operator |
 |---------|----------|
+| `guide` / `doctor` / `demo` / `recipes` / `why <mode>` | hand-holding UX |
 | `self-check` | planted-direction + bake + hook + marker eval |
 | `estimate --mode dim\|projected\|cosmic\|svd` | refusal direction |
 | `apply --mode arditi\|orba-directional\|orba-householder\|subspace` | weight wipe |

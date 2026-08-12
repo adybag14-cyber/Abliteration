@@ -1,5 +1,6 @@
 #include "abliteration/eval.hpp"
 #include "abliteration/ops.hpp"
+#include "abliteration/paths.hpp"
 #include "abliteration/self_check.hpp"
 
 #include <cmath>
@@ -124,6 +125,24 @@ void test_eval_generated() {
   expect(s.true_refusal_hits == 2, "two true refuse hits");
 }
 
+void test_shipped_examples() {
+  const auto ex = abliteration::find_examples_dir();
+  if (ex.empty()) {
+    std::cerr << "note: examples/ not on this cwd — skip shipped-example load\n";
+    return;
+  }
+  auto bad = abliteration::load_mat((ex / "tiny-bad.txt").string());
+  auto good = abliteration::load_mat((ex / "tiny-good.txt").string());
+  expect(bad.has_value() && good.has_value(), "load shipped tiny-bad/good");
+  if (!bad || !good) return;
+  const auto r = abliteration::mean_difference(*bad, *good);
+  expect(r.size() == 4, "toy residual dim 4");
+  expect(abliteration::cosmic_layer_score(*bad, *good) > 0.f, "toys separate");
+  const auto recs = abliteration::load_jsonl((ex / "generations.jsonl").string());
+  const auto s = abliteration::score_records(recs);
+  expect(s.n == 5 && s.false_refusal == 1 && s.true_refusal_hits == 2, "toy jsonl scores");
+}
+
 void test_json_field() {
   const auto line =
       R"({"response":"I cannot help with that.","expected":"tool_call"})";
@@ -141,10 +160,11 @@ int main() {
   test_hook_property();
   test_eval_generated();
   test_json_field();
+  test_shipped_examples();
   if (fails) {
     std::cerr << fails << " test(s) failed\n";
     return 1;
   }
-  std::cout << "ok 6 suites (self-check + generated DIM/bake/hook/eval)\n";
+  std::cout << "ok 7 suites (self-check + generated + shipped examples)\n";
   return 0;
 }

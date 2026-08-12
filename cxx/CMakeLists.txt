@@ -35,7 +35,11 @@ target_include_directories(abliterate-cxx-tests PRIVATE ${CMAKE_CURRENT_SOURCE_D
 add_executable(abliterate-cxx-dialect tools/dialect.cpp)
 
 install(TARGETS abliterate-cxx RUNTIME DESTINATION bin)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/README.md DESTINATION share/doc/abliterate-cxx)
+install(FILES
+  ${CMAKE_CURRENT_SOURCE_DIR}/README.md
+  ${CMAKE_CURRENT_SOURCE_DIR}/GETTING-STARTED.md
+  DESTINATION share/doc/abliterate-cxx)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/examples DESTINATION share/abliterate-cxx)
 
 enable_testing()
 add_test(NAME ops COMMAND abliterate-cxx-tests)

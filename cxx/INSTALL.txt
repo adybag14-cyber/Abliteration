@@ -1,0 +1,21 @@
+abliterate-cxx — no Python, no GPU for the first hour.
+
+1. Download a row from
+   https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly
+
+2. Unpack, cd into the folder (examples/ must sit next to the binary).
+
+3. Run, in this order:
+
+     abliterate-cxx guide
+     abliterate-cxx doctor
+     abliterate-cxx demo
+
+4. doctor must print  cplusplus=202400
+
+5. Then GETTING-STARTED.md  (same folder).
+
+Windows:  tar -xzf abliterate-cxx-windows-x64.tar.gz
+Linux:    tar -xzf abliterate-cxx-linux-x64.tar.gz && chmod +x …/abliterate-cxx
+macOS:    tar -xzf abliterate-cxx-macos-arm64.tar.gz
+          xattr -d com.apple.quarantine ./abliterate-cxx

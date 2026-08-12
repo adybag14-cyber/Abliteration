@@ -49,8 +49,17 @@ mkdirSync(pkgDir, { recursive: true });
 const exeName = cli.endsWith('.exe') ? 'abliterate-cxx.exe' : 'abliterate-cxx';
 copyFileSync(cli, join(pkgDir, exeName));
 copyFileSync(join(root, 'cxx', 'README.md'), join(pkgDir, 'README.md'));
+copyFileSync(join(root, 'cxx', 'GETTING-STARTED.md'), join(pkgDir, 'GETTING-STARTED.md'));
+copyFileSync(join(root, 'cxx', 'INSTALL.txt'), join(pkgDir, 'INSTALL.txt'));
 copyFileSync(join(root, 'LICENSE'), join(pkgDir, 'LICENSE'));
 copyFileSync(join(root, 'docs', 'cxx26-platform.md'), join(pkgDir, 'cxx26-platform.md'));
+copyFileSync(join(root, 'docs', 'cxx26-researcher-guide.md'), join(pkgDir, 'cxx26-researcher-guide.md'));
+const exSrc = join(root, 'cxx', 'examples');
+const exDst = join(pkgDir, 'examples');
+mkdirSync(exDst, { recursive: true });
+for (const name of readdirSync(exSrc)) {
+  copyFileSync(join(exSrc, name), join(exDst, name));
+}
 
 writeFileSync(
   join(pkgDir, 'BUILD.txt'),
@@ -61,8 +70,11 @@ writeFileSync(
     `source=${cli}`,
     `built=${new Date().toISOString()}`,
     '',
-    'Run: ./abliterate-cxx self-check',
-    'Requires ISO C++26 build (cplusplus=202400).',
+    'First hour:',
+    '  ./abliterate-cxx guide',
+    '  ./abliterate-cxx doctor',
+    '  ./abliterate-cxx demo',
+    'Requires ISO C++26 (cplusplus=202400).',
     '',
   ].join('\n'),
 );

@@ -22,8 +22,13 @@ else
   chmod +x "$DEST/abliterate-cxx"
 fi
 cp "$ROOT/cxx/README.md" "$DEST/README.md"
+cp "$ROOT/cxx/GETTING-STARTED.md" "$DEST/GETTING-STARTED.md"
+cp "$ROOT/cxx/INSTALL.txt" "$DEST/INSTALL.txt"
 cp "$ROOT/LICENSE" "$DEST/LICENSE"
 cp "$ROOT/docs/cxx26-platform.md" "$DEST/cxx26-platform.md"
+cp "$ROOT/docs/cxx26-researcher-guide.md" "$DEST/cxx26-researcher-guide.md"
+mkdir -p "$DEST/examples"
+cp "$ROOT/cxx/examples/"* "$DEST/examples/"
 {
   echo "package=abliterate-cxx-$TRIPLE"
   echo "compiler=$COMPILER"

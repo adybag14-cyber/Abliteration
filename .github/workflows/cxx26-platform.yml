@@ -276,10 +276,36 @@ jobs:
           gh release delete cxx-nightly --yes || true
           git tag -f cxx-nightly
           git push -f origin cxx-nightly
+          cat > /tmp/cxx-nightly-notes.md <<'MD'
+# abliterate-cxx nightly
+
+ISO C++26 lab for refusal-direction math. **No GPU, no Python** for the first hour.
+
+## 10 minutes
+
+```text
+abliterate-cxx guide
+abliterate-cxx doctor
+abliterate-cxx demo
+```
+
+Then open `GETTING-STARTED.md` in the archive (repo: `docs/cxx26-researcher-guide.md`).
+
+| Archive | Who |
+|---------|-----|
+| `*-linux-x64.tar.gz` | Linux x86_64 |
+| `*-linux-arm64.tar.gz` | Linux aarch64 |
+| `*-windows-x64.zip` | Windows x64 |
+| `*-windows-arm64.zip` | Windows ARM64 |
+| `*-macos-arm64.tar.gz` | Apple Silicon |
+| `*-macos-x64.tar.gz` | Intel Mac (Rosetta-tested) |
+
+`doctor` must print `cplusplus=202400`. Next: `recipes`, then Heretic for a real model.
+MD
           gh release create cxx-nightly release/* \
             --prerelease \
             --title "abliterate-cxx nightly (all platforms)" \
-            --notes "ISO C++26 CLI (estimate / apply / hook / eval). Artifacts: Linux x64/arm64 (GCC 15 + Clang 20), Windows x64 (Clang + MSVC), macOS arm64/x64 (LLVM). See docs/cxx26-platform.md."
+            --notes-file /tmp/cxx-nightly-notes.md
       - name: Publish version tag
         if: startsWith(github.ref, 'refs/tags/')
         env:

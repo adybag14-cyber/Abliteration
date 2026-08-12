@@ -2,6 +2,8 @@
 
 The handbook’s **technique helpers** — direction estimate, weight bake, inference ablation, marker scoring — ship as a **fully C++26** CLI. You do not need Python or `npm run abliterate:*` for those operators.
 
+**Hold your hand:** `abliterate-cxx guide` · [cxx26-researcher-guide.md](cxx26-researcher-guide.md) · [../cxx/GETTING-STARTED.md](../cxx/GETTING-STARTED.md)
+
 | Piece | Path |
 |-------|------|
 | Operators (same functions tests + CLI call) | [../cxx/include/abliteration/ops.hpp](../cxx/include/abliteration/ops.hpp) |

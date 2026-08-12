@@ -118,14 +118,12 @@ Handbook helpers are the **C++26** CLI (no Heretic, no Python required for the m
 
 ```bash
 npm run cxx:build
-npm run cxx:self-check
-cxx/build/abliterate-cxx estimate --mode dim --bad bad.txt --good good.txt
-cxx/build/abliterate-cxx apply --mode orba-directional --weight W.txt --direction r.txt
-cxx/build/abliterate-cxx hook --h h.txt --direction r.txt
-cxx/build/abliterate-cxx eval --jsonl generations.jsonl
+cxx/build/abliterate-cxx guide
+cxx/build/abliterate-cxx doctor
+cxx/build/abliterate-cxx demo
 ```
 
-→ [cxx26-platform.md](cxx26-platform.md)
+→ [cxx26-researcher-guide.md](cxx26-researcher-guide.md) · [cxx26-platform.md](cxx26-platform.md)
 
 ---
 

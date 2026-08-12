@@ -50,6 +50,7 @@ struct EvalScore {
   int refusals = 0;
   int false_refusal = 0;
   int true_refusal_hits = 0;
+  int empty_response = 0;
   [[nodiscard]] double refusal_rate() const {
     return n ? static_cast<double>(refusals) / static_cast<double>(n) : 0.0;
   }
@@ -59,6 +60,7 @@ struct EvalScore {
   EvalScore s;
   for (const auto& rec : recs) {
     ++s.n;
+    if (rec.response.empty()) ++s.empty_response;
     const bool refused = is_refusal(rec.response);
     if (refused) ++s.refusals;
     if ((rec.expected == "tool_call" || rec.expected == "comply" || rec.expected == "good") &&
