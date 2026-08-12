@@ -295,40 +295,10 @@ jobs:
           gh release delete cxx-nightly --yes || true
           git tag -f cxx-nightly
           git push -f origin cxx-nightly
-          cat > /tmp/cxx-nightly-notes.md <<'MD'
-# abliterate-cxx nightly
-
-ISO C++26 lab for refusal-direction math. **No GPU, no Python** for the first hour.
-
-## 10 minutes
-
-```text
-abliterate-cxx guide
-abliterate-cxx doctor
-abliterate-cxx demo
-```
-
-Then open `GETTING-STARTED.md` in the archive (repo: `docs/cxx26-researcher-guide.md`).
-
-| Archive | Who |
-|---------|-----|
-| `abliterate-cxx-linux-x64-gcc15.tar.gz` | Linux x86_64 (default) |
-| `abliterate-cxx-linux-x64-clang20.tar.gz` | Linux x86_64 Clang |
-| `abliterate-cxx-linux-arm64-gcc15.tar.gz` | Linux aarch64 |
-| `abliterate-cxx-windows-x64-msvc.zip` | Windows x64 (default) |
-| `abliterate-cxx-windows-x64-clang.zip` | Windows x64 Clang |
-| `abliterate-cxx-windows-arm64-msvc.zip` | Windows ARM64 |
-| `abliterate-cxx-macos-arm64-llvm.tar.gz` | Apple Silicon |
-| `abliterate-cxx-macos-x64-llvm.tar.gz` | Intel Mac |
-
-Also `SHA256SUMS`. Each archive was unpacked on the runner and `doctor` + `demo` + estimate/apply/eval were run **outside the git checkout**.
-
-`doctor` must print `cplusplus=202400`. Next: `recipes`, then Heretic for a real model.
-MD
           gh release create cxx-nightly release/* \
             --prerelease \
             --title "abliterate-cxx nightly (all platforms)" \
-            --notes-file /tmp/cxx-nightly-notes.md
+            --notes-file cxx/RELEASE-NOTES.md
       - name: Publish version tag
         if: startsWith(github.ref, 'refs/tags/')
         env:
