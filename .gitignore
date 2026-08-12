@@ -30,6 +30,9 @@ Thumbs.db
 .vscode/
 .idea/
 
+# C++26 platform build products
+cxx/build/
+
 # Logs
 *.log
 wandb/

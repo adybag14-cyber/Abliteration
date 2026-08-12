@@ -4,25 +4,28 @@ Copy-paste setups. Theory lives in [../docs/complete-curriculum.md](../docs/comp
 
 ---
 
-## 0. This repo (no extra clone)
+## 0. This repo — C++26 platform (no extra clone)
+
+The default helper path is **`abliterate-cxx`** (ISO C++26). See [../docs/cxx26-platform.md](../docs/cxx26-platform.md).
 
 ```bash
-python scripts/check_env.py
-npm run abliterate:estimate -- --self-test
-npm run abliterate:apply -- --self-test
-npm run abliterate:hook -- --self-test
-npm run abliterate:eval -- --self-test
+npm run cxx:build
+npm run cxx:test
+npm run cxx:self-check
 ```
 
 | Job | Command |
 |-----|---------|
-| Estimate `r` from caches | `python scripts/estimate-refusal-direction.py --mode projected --bad bad.pt --good good.pt --out r.pt` |
-| SVD subspace | `python scripts/estimate-refusal-direction.py --mode svd --rank 4 --bad bad.pt --good good.pt --out R.pt` |
-| Bake safetensors | `python scripts/apply-weight-abliteration.py --mode projected --weights ./base --direction r.pt --out ./abliterated` |
-| Householder A/B | `--mode orba-householder` |
-| Hook only | `python scripts/inference-hook-ablation.py --model ./base --direction r.pt --prompt "..."` |
-| Score generations | `python scripts/eval-refusal-rate.py --responses-jsonl outs.jsonl` |
-| ΔW → LoRA | `python scripts/export-abliteration-lora.py --base ./base --abliterated ./out --out ./adapter --rank 16` |
+| Shared self-check | `cxx/build/abliterate-cxx self-check` |
+| Estimate `r` (DIM / projected / COSMIC / SVD) | `cxx/build/abliterate-cxx estimate --mode projected --bad bad.txt --good good.txt --out r.txt` |
+| SVD subspace | `cxx/build/abliterate-cxx estimate --mode svd --rank 4 --bad bad.txt --good good.txt --out R.txt` |
+| Bake weights | `cxx/build/abliterate-cxx apply --mode orba-directional --weight W.txt --direction r.txt --out W2.txt` |
+| Householder A/B | `… apply --mode orba-householder …` |
+| Inference hook | `cxx/build/abliterate-cxx hook --h h.txt --direction r.txt` |
+| Score generations | `cxx/build/abliterate-cxx eval --jsonl outs.jsonl` |
+| ΔW → LoRA (Python, PEFT) | `python scripts/export-abliteration-lora.py --base ./base --abliterated ./out --out ./adapter --rank 16` |
+
+Optional Python twins: `scripts/estimate-refusal-direction.py` and siblings. They are not required for the operators above.
 
 ---
 

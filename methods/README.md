@@ -2,6 +2,8 @@
 
 **How** each abliteration family is implemented — formulas, target modules, pseudocode.
 
+Runnable operators (DIM / projected / COSMIC score / SVD / Arditi / ORBA / Householder / subspace / hook / marker eval): **C++26** `abliterate-cxx` — [../docs/cxx26-platform.md](../docs/cxx26-platform.md).
+
 | Method | Doc |
 |--------|-----|
 | MLP `down_proj` weight projection | [mlp-down-proj-abliteration.md](mlp-down-proj-abliteration.md) |

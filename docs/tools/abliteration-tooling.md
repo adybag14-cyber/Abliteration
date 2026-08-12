@@ -26,7 +26,7 @@ Tools for **weight surgery**, **4-bit measure**, **LoRA export**, **quantized in
 | **ablate-llm** | [AIAnytime/ablate](https://github.com/AIAnytime/ablate) | `pip install ablate-llm` KL search + Hub push | Not in Young matrix — eval locally |
 | **J-Wash** | [Extraltodeus/J-Wash](https://github.com/Extraltodeus/J-Wash) | Jacobian-lens manual alignment, exportable | Research / visualization |
 | **Blasphemer** | [sunkencity999/blasphemer](https://github.com/sunkencity999/blasphemer) | Heretic fork, macOS + LM Studio | Apple Silicon automation |
-| **Handbook CLIs** | [../../scripts/abliteration_math.py](../../scripts/abliteration_math.py) | DIM / ORBA / subspace / hooks / eval | `npm run abliterate:*` |
+| **Handbook C++26 CLI** | [../../cxx/README.md](../../cxx/README.md) | DIM / ORBA / subspace / hooks / eval | `npm run cxx:self-check` |
 
 **Master toolchain doc:** [../toolchain-safetensors-gguf-lora.md](../toolchain-safetensors-gguf-lora.md) · Safetensors: [../../methods/safetensor-abliteration-pipeline.md](../../methods/safetensor-abliteration-pipeline.md)
 

@@ -56,7 +56,7 @@
 | **vauban** | [github.com/teilomillet/vauban](https://github.com/teilomillet/vauban) | MLX-native steering / abliteration |
 | **senbonzakura** | [github.com/elementmerc/senbonzakura](https://github.com/elementmerc/senbonzakura) | Multi-direction refusal CLI |
 | **Awesome-Refusal-Suppression** | [github.com/ant-research/Awesome-Refusal-Suppression](https://github.com/ant-research/Awesome-Refusal-Suppression) | External catalog (cross-check, not a substitute) |
-| **Handbook CLIs** | [scripts/abliteration_math.py](scripts/abliteration_math.py) | `npm run abliterate:*` |
+| **Handbook C++26 CLI** | [cxx/README.md](cxx/README.md) | `npm run cxx:build` · `abliterate-cxx self-check` |
 | **GraySwan circuit-breakers** | [github.com/GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) | Defensive alignment (contrast) |
 
 Heretic also mirrors to [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/heretic).

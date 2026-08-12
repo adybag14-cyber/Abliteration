@@ -83,7 +83,7 @@ Configs: `sources/heretic-tools/config.low-vram.toml` · `config.production.toml
 |------|----------------|
 | Corpus counts | `npm run eval:stats` |
 | Factory / OSINT / CyberGym JSONL | [evaluation.md](evaluation.md) · [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) |
-| Marker-based refusal rate | `npm run abliterate:eval -- --jsonl data/eval/hardware-factory-prompts.jsonl --responses-jsonl <model-outs>` |
+| Marker-based refusal rate | `cxx/build/abliterate-cxx eval --jsonl <generations.jsonl>` |
 | Over-refusal | `data/eval/xstest-overrefusal-sample.jsonl` |
 | Capability | GSM8K / MMLU / HumanEval — see [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md) |
 | Runtime gate | `python scripts/hardware-tool-gate.py` |
@@ -98,12 +98,12 @@ Read [../methods/README.md](../methods/README.md) in this order:
 
 | # | Method | When |
 |---|--------|------|
-| 1 | [residual-hook-ablation](../methods/residual-hook-ablation.md) + `npm run abliterate:hook` | Reversible experiment |
+| 1 | [residual-hook-ablation](../methods/residual-hook-ablation.md) + `abliterate-cxx hook` | Reversible experiment |
 | 2 | [mlp-down-proj-abliteration](../methods/mlp-down-proj-abliteration.md) | Classic permanent edit |
 | 3 | [attention-o-proj-abliteration](../methods/attention-o-proj-abliteration.md) | Complementary to MLP |
 | 4 | [automated-heretic-search](../methods/automated-heretic-search.md) | Production default |
 | 5 | [manual-transformers-pipeline](../methods/manual-transformers-pipeline.md) | Full control |
-| 6 | [safetensor-abliteration-pipeline](../methods/safetensor-abliteration-pipeline.md) + `npm run abliterate:apply` | Bake without Heretic |
+| 6 | [safetensor-abliteration-pipeline](../methods/safetensor-abliteration-pipeline.md) + `abliterate-cxx apply` | Bake without Heretic |
 | 7 | [projected-llm-abliteration](../methods/projected-llm-abliteration.md) | T03 manual |
 | 8 | [orba-pipeline](../methods/orba-pipeline.md) | Householder vs directional rank-1 |
 | 9 | [cosmic-direction-id](../methods/cosmic-direction-id.md) | Output-independent `r` |
@@ -114,14 +114,18 @@ Read [../methods/README.md](../methods/README.md) in this order:
 | 14 | [lora-adapter-export](../methods/lora-adapter-export.md) | Ship ΔW as PEFT |
 | 15 | [gguf-export-notes](../methods/gguf-export-notes.md) | llama.cpp / Ollama |
 
-Handbook scripts (no Heretic required for the math):
+Handbook helpers are the **C++26** CLI (no Heretic, no Python required for the math):
 
 ```bash
-npm run abliterate:estimate -- --self-test
-npm run abliterate:apply -- --self-test
-npm run abliterate:hook -- --self-test
-npm run abliterate:eval -- --self-test
+npm run cxx:build
+npm run cxx:self-check
+cxx/build/abliterate-cxx estimate --mode dim --bad bad.txt --good good.txt
+cxx/build/abliterate-cxx apply --mode orba-directional --weight W.txt --direction r.txt
+cxx/build/abliterate-cxx hook --h h.txt --direction r.txt
+cxx/build/abliterate-cxx eval --jsonl generations.jsonl
 ```
+
+→ [cxx26-platform.md](cxx26-platform.md)
 
 ---
 

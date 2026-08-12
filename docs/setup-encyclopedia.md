@@ -83,7 +83,7 @@ Do **not** expect `bitsandbytes` 4-bit Heretic to match Linux CUDA.
 | **FailSpy abliterator** | clone `FailSpy/abliterator` | TransformerLens notebooks |
 | **ablate-llm** | `pip install ablate-llm` | KL-guided CLI + Hub push |
 | **DECCP topics** | clone `AUGMXNT/deccp` | `measure.py --deccp` |
-| **Handbook math** | this repo | `npm run abliterate:estimate -- --self-test` |
+| **Handbook math (C++26)** | this repo | `npm run cxx:self-check` · [cxx26-platform.md](cxx26-platform.md) |
 
 Pin Heretic configs from this repo instead of guessing: [tools/heretic-tools-reference.md](tools/heretic-tools-reference.md).
 
@@ -143,6 +143,6 @@ Point Heretic `[bad_prompts]` / `[good_prompts]` at custom `.txt` (one prompt pe
 [ ] 30+ GB free; original checkpoint copied
 [ ] heretic-llm or llm-abliteration imports
 [ ] npm run validate  (handbook integrity)
-[ ] npm run abliterate:estimate -- --self-test
+[ ] npm run cxx:build && npm run cxx:self-check
 [ ] Read docs/risks-and-ethics.md
 ```

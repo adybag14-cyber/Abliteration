@@ -4,7 +4,7 @@
 
 Living handbook for **LLM abliteration** (weight-level refusal-direction surgery) plus **agentic security** stacks for factory firmware QA, pentest labs, and [CyberGym](https://cybergym.io) evaluation.
 
-**Start here (full path):** [docs/complete-curriculum.md](docs/complete-curriculum.md) · **every OS/VRAM:** [docs/setup-encyclopedia.md](docs/setup-encyclopedia.md) · **frontier 2025–2026:** [docs/bleeding-edge.md](docs/bleeding-edge.md) · **copy-paste commands:** [instructions/method-cookbook.md](instructions/method-cookbook.md)
+**Start here (full path):** [docs/complete-curriculum.md](docs/complete-curriculum.md) · **C++26 helpers/CLI:** [docs/cxx26-platform.md](docs/cxx26-platform.md) · **every OS/VRAM:** [docs/setup-encyclopedia.md](docs/setup-encyclopedia.md) · **frontier 2025–2026:** [docs/bleeding-edge.md](docs/bleeding-edge.md) · **copy-paste commands:** [instructions/method-cookbook.md](instructions/method-cookbook.md)
 
 > **New to the subject?** Open the [interactive Abliteration Field Guide](https://adybag14-cyber.github.io/Abliteration/) for a visual route finder, six-step checklist, method spider diagram, searchable technique atlas, and evaluation-gate simulator.
 
@@ -29,6 +29,11 @@ Living handbook for **LLM abliteration** (weight-level refusal-direction surgery
 ```
 abliteration/
 ├── README.md
+├── cxx/                         # C++26 platform (estimate / apply / hook / eval)
+│   ├── include/abliteration/    # ops.hpp, eval.hpp — tests + CLI share these
+│   ├── src/main.cpp
+│   ├── tests/test_ops.cpp
+│   └── CMakeLists.txt           # CMAKE_CXX_STANDARD 26; -std=c++26
 ├── scripts/
 │   ├── fetch-docs.mjs              # 30+ GitHub/arXiv/HF static targets
 │   ├── fetch-research-papers.mjs   # 10 arXiv PDFs + README snapshots
@@ -94,24 +99,21 @@ abliteration/
 └── references.md
 ```
 
-## Handbook surgery scripts
+## Handbook surgery helpers (C++26 platform)
 
-No Heretic install required for the linear algebra:
+The estimate / bake / hook / eval operators ship as a **C++26** CLI (`cxx/`). Students and researchers do not need Python for those techniques.
 
 ```bash
-npm run abliterate:estimate -- --self-test
-npm run abliterate:apply -- --self-test
-npm run abliterate:hook -- --self-test
-npm run abliterate:eval -- --self-test
+npm run cxx:build
+npm run cxx:test
+npm run cxx:self-check
+# or: cxx/build/abliterate-cxx self-check
+#     cxx/build/abliterate-cxx estimate --mode projected --bad bad.txt --good good.txt
 ```
 
-| Script | Role |
-|--------|------|
-| `estimate-refusal-direction.py` | DIM / projected / COSMIC score / SVD `r` |
-| `apply-weight-abliteration.py` | Bake `r` into `down_proj` / `o_proj` (Arditi, ORBA, subspace) |
-| `inference-hook-ablation.py` | Reversible residual wipe |
-| `eval-refusal-rate.py` | Marker scorer for generation JSONL |
-| `export-abliteration-lora.py` | ΔW → PEFT adapter |
+Full reference: [docs/cxx26-platform.md](docs/cxx26-platform.md) · [cxx/README.md](cxx/README.md)
+
+Optional Python twins (`scripts/estimate-refusal-direction.py`, …) remain for notebooks. `export-abliteration-lora.py` is still Python (PEFT safetensors).
 
 ## Improve your local model (beginners)
 
@@ -150,6 +152,7 @@ The site uses shadcn-style local components, Radix primitives, CSS-variable them
 | **Entire curriculum (all methods)** | [docs/complete-curriculum.md](docs/complete-curriculum.md) |
 | **OS / VRAM / tool install matrix** | [docs/setup-encyclopedia.md](docs/setup-encyclopedia.md) |
 | **Bleeding-edge 2025–2026** | [docs/bleeding-edge.md](docs/bleeding-edge.md) |
+| **C++26 estimate / bake / hook / eval** | [docs/cxx26-platform.md](docs/cxx26-platform.md) |
 | **Copy-paste every tool** | [instructions/method-cookbook.md](instructions/method-cookbook.md) |
 | **First local model improvement** | [instructions/beginner-local-model-guide.md](instructions/beginner-local-model-guide.md) |
 | Abliterate a model (reference) | [instructions/heretic-workflow.md](instructions/heretic-workflow.md) |
@@ -202,8 +205,10 @@ npm run contrast:prepare -- <input.jsonl> --output-dir <run-dir>
 npm run eval:compare -- <before.jsonl> <after.jsonl> [frozen gates]
 npm run experiment:manifest -- create|verify ...
 npm run test:advanced-tools # leakage, gate-failure, byte-drift regressions
-npm run eval:refusal      # marker-based refusal rate on a JSONL dump
-npm run abliterate:estimate -- --self-test
+npm run cxx:build         # C++26 CLI + tests (-std=c++26)
+npm run cxx:test
+npm run cxx:self-check    # planted-direction / bake / hook / eval
+npm run eval:refusal      # optional Python twin of marker scoring
 npm run ralph:turn-end    # log turn + background daemon (blocks if backlog unfinished)
 npm run ralph:regress     # pre-commit gate for watch/headless/monitor output (validate + ralph-ci + evals + py_compile)
 npm run ralph:monitor     # one-shot: print status, seed if empty, auto-start watch; add -- --loop for continuous
