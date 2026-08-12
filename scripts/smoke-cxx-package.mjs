@@ -7,7 +7,7 @@
 import { spawnSync } from 'child_process';
 import { existsSync, mkdtempSync, readdirSync } from 'fs';
 import { tmpdir } from 'os';
-import { dirname, join } from 'path';
+import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -25,11 +25,48 @@ if (!archive || !existsSync(archive)) {
 
 const wrap = arg('--wrap', ''); // e.g. arch -x86_64
 const lab = mkdtempSync(join(tmpdir(), 'abliterate-lab-'));
-const tar = spawnSync('tar', ['-xzf', archive, '-C', lab], { encoding: 'utf8' });
-if (tar.status !== 0) {
-  process.stderr.write(tar.stderr || '');
+
+function windowsSystemTar() {
+  const p = join(process.env.SystemRoot || 'C:\\Windows', 'System32', 'tar.exe');
+  return existsSync(p) ? p : null;
+}
+
+/** MSYS/Git-Bash GNU tar treats `C:\...` as an escaped relative path. */
+function posixify(p) {
+  const abs = resolve(p);
+  if (process.platform !== 'win32') return abs;
+  const m = abs.match(/^([A-Za-z]):[\\/](.*)$/);
+  if (!m) return abs.replace(/\\/g, '/');
+  return `/${m[1].toLowerCase()}/${m[2].replace(/\\/g, '/')}`;
+}
+
+function extractTarGz(archivePath, destDir) {
+  const attempts = [];
+  const sysTar = process.platform === 'win32' ? windowsSystemTar() : null;
+  if (sysTar) {
+    attempts.push({ bin: sysTar, archive: archivePath, dest: destDir });
+  }
+  attempts.push({ bin: 'tar', archive: posixify(archivePath), dest: posixify(destDir) });
+  attempts.push({ bin: 'tar', archive: archivePath, dest: destDir });
+
+  const errors = [];
+  for (const a of attempts) {
+    const r = spawnSync(a.bin, ['-xzf', a.archive, '-C', a.dest], {
+      encoding: 'utf8',
+      windowsHide: true,
+    });
+    if (r.status === 0) {
+      console.log(`extracted with ${a.bin} -C ${a.dest}`);
+      return;
+    }
+    const msg = `${a.bin} -xzf ${a.archive} -C ${a.dest} -> ${r.status}\n${r.stderr || r.stdout || ''}`;
+    errors.push(msg.trim());
+  }
+  process.stderr.write(errors.join('\n') + '\n');
   process.exit(1);
 }
+
+extractTarGz(archive, lab);
 
 function findExe(dir) {
   for (const name of readdirSync(dir, { withFileTypes: true })) {
