@@ -195,7 +195,44 @@ jobs:
 
       - name: Install Ninja (Windows/macOS)
         if: runner.os != 'Linux'
-        uses: seanmiddleditch/gha-setup-ninja@v5
+        run: |
+          set -euo pipefail
+          if command -v ninja >/dev/null 2>&1; then
+            ninja --version
+            exit 0
+          fi
+          if [[ "${{ runner.os }}" == "macOS" ]]; then
+            brew install ninja
+            ninja --version
+            exit 0
+          fi
+          # Hosted Windows images often already have ninja; do not depend on
+          # gha-setup-ninja (Node 20 + unretried github.com download).
+          CANDIDATES=(
+            "/c/ProgramData/Chocolatey/bin/ninja.exe"
+            "/c/Tools/Ninja/ninja.exe"
+            "/c/Program Files/Microsoft Visual Studio/18/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe"
+            "/c/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe"
+          )
+          for n in "${CANDIDATES[@]}"; do
+            if [[ -x "$n" ]]; then
+              echo "$(dirname "$n")" >> "$GITHUB_PATH"
+              "$n" --version
+              exit 0
+            fi
+          done
+          DEST="${GITHUB_WORKSPACE}/ninja-build"
+          mkdir -p "$DEST"
+          case "${{ runner.arch }}" in
+            ARM64) ZIP=ninja-winarm64.zip ;;
+            *) ZIP=ninja-win.zip ;;
+          esac
+          URL="https://github.com/ninja-build/ninja/releases/download/v1.12.1/${ZIP}"
+          echo "downloading ${URL}"
+          curl -fsSL --retry 8 --retry-all-errors --retry-delay 2 -o "$DEST/ninja.zip" "$URL"
+          unzip -o "$DEST/ninja.zip" -d "$DEST"
+          echo "$DEST" >> "$GITHUB_PATH"
+          "$DEST/ninja.exe" --version
 
       - name: MSVC developer environment
         if: matrix.compiler == 'cl'
