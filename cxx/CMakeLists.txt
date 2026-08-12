@@ -1,14 +1,15 @@
 cmake_minimum_required(VERSION 3.20)
 project(abliterate-cxx VERSION 1.0.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 26)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# ISO C++26 only. MSVC needs /Zc:__cplusplus or the header static_assert sees 199711L.
+# ISO C++26 only. CMake's CXX26 feature table does not know MSVC yet, so we
+# pass /std:c++latest ourselves. Headers still static_assert __cplusplus >= 202400L.
 if(MSVC)
   add_compile_options(/std:c++latest /Zc:__cplusplus /permissive- /W4)
 else()
+  set(CMAKE_CXX_STANDARD 26)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
   add_compile_options(-std=c++26 -Wall -Wextra -Wpedantic)
 endif()
 
