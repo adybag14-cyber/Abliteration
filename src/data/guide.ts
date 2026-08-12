@@ -90,8 +90,9 @@ export type Technique = {
 };
 
 export const techniques: Technique[] = [
+  { id: "T00", title: "C++26 toy-matrix lab", tier: "Start here", summary: "No GPU. Download a unique cxx-nightly archive and run guide → doctor → demo on 4-D toy tensors.", when: "Hour 0, before any checkpoint", tags: ["C++26", "lab", "nightly", "no GPU"], doc: "docs/cxx26-researcher-guide.md" },
   { id: "T02", title: "Reversible hook ablation", tier: "Start here", summary: "Subtract the direction during inference while leaving weights untouched.", when: "Your first causal test", tags: ["reversible", "low risk"], doc: "techniques/inference-directional-ablation.md" },
-  { id: "T01", title: "Mean-difference direction", tier: "Start here", summary: "Estimate a candidate direction from target and control activations.", when: "A simple, interpretable baseline", tags: ["foundation", "fast"], doc: "techniques/mean-difference-direction.md" },
+  { id: "T01", title: "Mean-difference DIM (Arditi)", tier: "Start here", summary: "Estimate a candidate direction from target and control activations: r = mean(bad) − mean(good).", when: "A simple, interpretable baseline", tags: ["foundation", "fast", "DIM", "Arditi"], doc: "techniques/mean-difference-direction.md" },
   { id: "T03", title: "Projected + norm-preserving", tier: "Production", summary: "Protect useful activation structure while removing the measured component.", when: "The default permanent edit", tags: ["recommended", "weights"], doc: "techniques/projected-norm-preserving-abliteration.md" },
   { id: "T09", title: "Layer-selective editing", tier: "Production", summary: "Edit only the depth band with a held-out causal effect.", when: "You want lower capability drift", tags: ["precise", "efficient"], doc: "techniques/layer-selective-abliteration.md" },
   { id: "T17", title: "Eval-driven prompts", tier: "Production", summary: "Align measurement prompts with the real deployment domain and gates.", when: "Moving from research to a use case", tags: ["evaluation", "domain"], doc: "techniques/eval-driven-abliteration.md" },
@@ -102,6 +103,10 @@ export const techniques: Technique[] = [
   { id: "T30", title: "Quantization-aware surgery", tier: "Frontier", summary: "Separate surgery damage from quantization damage with a floating reference candidate.", when: "Shipping 4-bit or GGUF outputs", tags: ["quantization", "advanced"], doc: "techniques/advanced-experimental-methods.md" },
   { id: "T31", title: "Router-weighted MoE", tier: "Frontier", summary: "Measure expert utilization and routing shift around per-expert edits.", when: "Working with routed expert models", tags: ["MoE", "routing"], doc: "techniques/advanced-experimental-methods.md" },
   { id: "T32", title: "Pareto checkpoint selection", tier: "Frontier", summary: "Keep refusal, capability, KL, degeneration, latency, and size as separate objectives.", when: "A single score hides trade-offs", tags: ["multi-objective", "selection"], doc: "techniques/advanced-experimental-methods.md" },
+  { id: "T34", title: "ORBA directional rank-1", tier: "Frontier", summary: "Orthogonal reflection / directional ablation. Prefer directional (α=0) over a full Householder flip.", when: "A rank-1 bake after DIM or projected", tags: ["ORBA", "Householder", "weights"], doc: "techniques/orba-orthogonal-reflection.md" },
+  { id: "T36", title: "COSMIC direction ID", tier: "Frontier", summary: "Score layers by cosine separation so you are not hunting an “I cannot” template.", when: "Marker lists fail on hedges or thinking models", tags: ["COSMIC", "direction ID"], doc: "techniques/cosmic-refusal-direction.md" },
+  { id: "T38", title: "False-refusal / over-refusal", tier: "Production", summary: "Factory DIM: stop refusing authorized lab commands without wiping the true-harm hold-out.", when: "wmic / nmap / firmware prompts are blocked", tags: ["false-refusal", "over-refusal", "factory", "XSTest"], doc: "techniques/false-refusal-vector-ablation.md" },
+  { id: "T39", title: "Harm ≠ refusal", tier: "Frontier", summary: "Harm judgment and refusal template are different axes. Do not flatten both.", when: "Safety hold-out collapses or Latent Guard work", tags: ["harm", "refusal", "Zhao", "analysis"], doc: "techniques/harm-vs-refusal-directions.md" },
 ];
 
 export type MethodProfile = {

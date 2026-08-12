@@ -4,11 +4,13 @@
 
 Living handbook for **LLM abliteration** (weight-level refusal-direction surgery) plus **agentic security** stacks for factory firmware QA, pentest labs, and [CyberGym](https://cybergym.io) evaluation.
 
-**Start here (full path):** [docs/complete-curriculum.md](docs/complete-curriculum.md) · **C++26 helpers/CLI:** [docs/cxx26-researcher-guide.md](docs/cxx26-researcher-guide.md) · `abliterate-cxx guide` · [nightly binaries](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) · **every OS/VRAM:** [docs/setup-encyclopedia.md](docs/setup-encyclopedia.md) · **frontier 2025–2026:** [docs/bleeding-edge.md](docs/bleeding-edge.md) · **copy-paste commands:** [instructions/method-cookbook.md](instructions/method-cookbook.md)
+**First hour (no GPU):** download one unique [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) archive — Windows `abliterate-cxx-windows-x64-msvc.zip`, Linux `abliterate-cxx-linux-x64-gcc15.tar.gz`, macOS `abliterate-cxx-macos-arm64-llvm.tar.gz` — then `abliterate-cxx guide` → `doctor` → `demo`. Walkthrough: [docs/cxx26-researcher-guide.md](docs/cxx26-researcher-guide.md). Paper word → chapter: [docs/paper-term-map.md](docs/paper-term-map.md).
+
+**Then:** [docs/complete-curriculum.md](docs/complete-curriculum.md) · [docs/setup-encyclopedia.md](docs/setup-encyclopedia.md) · [docs/bleeding-edge.md](docs/bleeding-edge.md) · [instructions/method-cookbook.md](instructions/method-cookbook.md)
 
 [![C++26 platform](https://github.com/adybag14-cyber/Abliteration/actions/workflows/cxx26-platform.yml/badge.svg)](https://github.com/adybag14-cyber/Abliteration/actions/workflows/cxx26-platform.yml)
 
-> **New to the subject?** Open the [interactive Abliteration Field Guide](https://adybag14-cyber.github.io/Abliteration/) for a visual route finder, six-step checklist, method spider diagram, searchable technique atlas, and evaluation-gate simulator.
+> **New to the subject?** Open the [interactive Abliteration Field Guide](https://adybag14-cyber.github.io/Abliteration/) — it starts on the C++26 toy lab (`#lab`) with the same unique nightly filenames, then the six-step checklist, method spider diagram, searchable atlas (DIM / ORBA / COSMIC), and evaluation-gate simulator.
 
 ## What is abliteration?
 

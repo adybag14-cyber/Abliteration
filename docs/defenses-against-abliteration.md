@@ -20,6 +20,8 @@ You abliterate models to **reduce false refusals** on authorized factory/CyberGy
 
 Always compare against **your** base checkpoint with the same eval prompts.
 
+**DeepRefusal** ([arXiv:2509.15202](https://arxiv.org/abs/2509.15202), EMNLP 2025 Findings) is also a **defense**: it probabilistically ablates the refusal direction *during fine-tuning* so the model rebuilds a deeper refusal circuit. It is not an Abliterix bake mode.
+
 ---
 
 ## 1. Extended-refusal fine-tuning (Shairah et al., 2025)

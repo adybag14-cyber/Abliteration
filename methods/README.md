@@ -24,6 +24,8 @@ Runnable operators (DIM / projected / COSMIC score / SVD / Arditi / ORBA / House
 | ORBA / directional rank-1 | [orba-pipeline.md](orba-pipeline.md) |
 | COSMIC direction ID | [cosmic-direction-id.md](cosmic-direction-id.md) |
 | SVD refusal subspace | [svd-refusal-subspace.md](svd-refusal-subspace.md) |
+| False-refusal / over-refusal (T38) | [../techniques/false-refusal-vector-ablation.md](../techniques/false-refusal-vector-ablation.md) |
+| Harm ≠ refusal (T39) | [../techniques/harm-vs-refusal-directions.md](../techniques/harm-vs-refusal-directions.md) |
 
 ## Method selection guide
 

@@ -101,6 +101,7 @@ function validateRequiredFiles() {
     'docs/bleeding-edge.md',
     'docs/cxx26-platform.md',
     'docs/cxx26-researcher-guide.md',
+    'docs/paper-term-map.md',
     'cxx/GETTING-STARTED.md',
     'cxx/examples/tiny-bad.txt',
     'cxx/CMakeLists.txt',
@@ -207,6 +208,34 @@ function validateCxx26Workflow() {
   ];
   for (const token of required) {
     if (!y.includes(token)) err(`cxx26-platform.yml missing ${token}`);
+  }
+}
+
+function validateCxxArchiveNames() {
+  const stale = [
+    'abliterate-cxx-windows-x64.tar.gz',
+    'abliterate-cxx-linux-x64.tar.gz',
+    'abliterate-cxx-macos-arm64.tar.gz',
+    'abliterate-cxx-macos-x64.tar.gz',
+  ];
+  const files = [
+    'docs/cxx26-researcher-guide.md',
+    'cxx/GETTING-STARTED.md',
+    'cxx/INSTALL.txt',
+    'cxx/RELEASE-NOTES.md',
+    'src/lib/utils.ts',
+    'src/components/path-finder.tsx',
+    'README.md',
+  ];
+  for (const rel of files) {
+    const text = readFileSync(join(root, rel), 'utf8');
+    for (const name of stale) {
+      if (text.includes(name)) err(`${rel} still uses colliding archive name ${name}`);
+    }
+  }
+  const guide = readFileSync(join(root, 'docs/cxx26-researcher-guide.md'), 'utf8');
+  for (const need of ['windows-x64-msvc', 'linux-x64-gcc15', 'macos-arm64-llvm']) {
+    if (!guide.includes(need)) err(`cxx26-researcher-guide.md missing ${need}`);
   }
 }
 
@@ -342,6 +371,7 @@ function main() {
 
   validateRequiredFiles();
   validateCxx26Workflow();
+  validateCxxArchiveNames();
   validatePackageScripts();
   validateUpstreamJson();
   validateProjectSkills();

@@ -15,7 +15,7 @@ abliterate-cxx — no Python, no GPU for the first hour.
 
 5. Then GETTING-STARTED.md  (same folder).
 
-Windows:  tar -xzf abliterate-cxx-windows-x64-msvc.tar.gz
+Windows:  Expand-Archive abliterate-cxx-windows-x64-msvc.zip
 Linux:    tar -xzf abliterate-cxx-linux-x64-gcc15.tar.gz && chmod +x …/abliterate-cxx
 macOS:    tar -xzf abliterate-cxx-macos-arm64-llvm.tar.gz
           xattr -d com.apple.quarantine ./abliterate-cxx

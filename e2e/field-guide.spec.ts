@@ -87,6 +87,14 @@ test("renders the complete responsive guide without browser errors or horizontal
 test("route finder, learning progress, radar, and technique atlas remain interactive", async ({ page }, testInfo) => {
   await openGuide(page);
 
+  await expect(page.locator("#lab").getByRole("heading", { level: 3, name: "C++26 toy-matrix lab" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /abliterate-cxx-linux-x64-gcc15\.tar\.gz/ })).toHaveAttribute(
+    "href",
+    /releases\/download\/cxx-nightly\/abliterate-cxx-linux-x64-gcc15\.tar\.gz$/,
+  );
+  await expect(page.getByRole("link", { name: /abliterate-cxx-windows-x64-msvc\.zip/ })).toBeVisible();
+  await expect(page.locator('a[href$="abliterate-cxx-windows-x64.tar.gz"]')).toHaveCount(0);
+
   await page.getByRole("button", { name: /24 GB\+/ }).click();
   await page.getByRole("button", { name: "MoE Routed experts" }).click();
   await page.getByRole("button", { name: "Create a candidate" }).click();

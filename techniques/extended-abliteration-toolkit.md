@@ -26,10 +26,10 @@ Four community tools that complement the handbook default (**Heretic**). Use thi
 **Use when:** MoE/hybrid/VL/SSM families need expert-granular or architecture-specific configs; you want multi-objective Optuna (refusal rate + KL) with 150+ upstream presets; or you need LoRA abliteration / steering / ORBA / SAE paths in one CLI.
 
 ```bash
-git clone https://github.com/wuwangzhang1216/abliterix.git
-cd abliterix && pip install -e .
-# Pick a preset from configs/ — verify model id matches your checkpoint revision
-abliterix run --config configs/<model-family>.yaml
+pip install -U abliterix
+abliterix --model Qwen/Qwen3-4B-Instruct-2507
+# 4-bit: --model.quant-method bnb_4bit
+# Windows: python scripts/run_abliterix.py --model …
 ```
 
 **HonestAbliterationBench:** upstream benchmark spec at `benchmarks/SPEC.md` in the Abliterix repo. Pair with handbook corpora (`data/eval/*.jsonl`) — upstream numbers are not a substitute for factory/CyberGym gates.

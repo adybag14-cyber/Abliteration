@@ -1,6 +1,6 @@
 # Techniques catalog
 
-Conceptual **what-you-can-do** list. Implementation details live in [../methods/README.md](../methods/README.md).
+Conceptual **what-you-can-do** list. Implementation details live in [../methods/README.md](../methods/README.md). Paper word → chapter: [../docs/paper-term-map.md](../docs/paper-term-map.md).
 
 ## 1. Mean-difference refusal direction
 

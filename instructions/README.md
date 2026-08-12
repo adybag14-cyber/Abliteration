@@ -26,6 +26,9 @@ Step-by-step workflows. **Start here if you are improving a local model for the 
 
 | I want to… | Start here |
 |------------|------------|
+| Learn the operators without a GPU | [../docs/cxx26-researcher-guide.md](../docs/cxx26-researcher-guide.md) · [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) |
+| Look up DIM / ORBA / COSMIC / T38 | [../docs/paper-term-map.md](../docs/paper-term-map.md) |
+| Certify a candidate | [../docs/evaluation.md](../docs/evaluation.md) |
 | Fix refusals on my Ollama model | [beginner-local-model-guide.md](beginner-local-model-guide.md) |
 | Only have 8 GB GPU | [low-vram-abliteration.md](low-vram-abliteration.md) after Step 1–2 above |
 | Test idea without saving weights | [quickstart.md](quickstart.md) |

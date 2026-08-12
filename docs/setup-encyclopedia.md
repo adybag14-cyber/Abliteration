@@ -76,9 +76,9 @@ Do **not** expect `bitsandbytes` 4-bit Heretic to match Linux CUDA.
 | **Heretic** | `pip install -U heretic-llm` | `heretic Qwen/Qwen3-4B-Instruct-2507` |
 | **Heretic + plots** | `pip install -U "heretic-llm[research]"` | `heretic <m> --print-residual-geometry` |
 | **llm-abliteration** | `git clone https://github.com/jim-plus/llm-abliteration` | `python measure.py -m <m> -o directions.pt --quant 4bit --projected` |
-| **Abliterix** | `git clone https://github.com/wuwangzhang1216/abliterix && pip install -e .` | `abliterix run --config configs/<family>.yaml` |
+| **Abliterix** | `pip install -U abliterix` | `abliterix --model Qwen/Qwen3-4B-Instruct-2507` |
 | **ErisForge** | `git clone https://github.com/Tsadoq/ErisForge && pip install -e .` | Layer-band API — see cookbook |
-| **OBLITERATUS** | `pip install "obliteratus[full]"` or clone `elder-plinius/OBLITERATUS` | `obliteratus obliterate <m> --method advanced` |
+| **OBLITERATUS** | clone `elder-plinius/OBLITERATUS` then `pip install -e ".[spaces]"` (PyPI `obliteratus` 0.0.1 is a stub; there is no `[full]` extra) | `obliteratus obliterate <m> --method advanced` |
 | **COSMIC** | clone `wang-research-lab/COSMIC` | Direction ID without output templates |
 | **FailSpy abliterator** | clone `FailSpy/abliterator` | TransformerLens notebooks |
 | **ablate-llm** | `pip install ablate-llm` | KL-guided CLI + Hub push |

@@ -16,7 +16,8 @@ Single-direction abliteration is rank-1. **OBLITERATUS** ([elder-plinius/OBLITER
 | `surgical` | ~8 | SAE, head surgery, layer-adaptive, MoE-aware, CoT | R1 / thinking / MoE |
 
 ```bash
-pip install "obliteratus[full]"
+git clone https://github.com/elder-plinius/OBLITERATUS.git
+cd OBLITERATUS && pip install -e ".[spaces]"
 obliteratus obliterate Qwen/Qwen2.5-1.5B-Instruct --method advanced --output-dir ./out
 ```
 

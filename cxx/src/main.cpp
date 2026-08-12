@@ -410,11 +410,17 @@ int cmd_eval(int argc, char** argv) {
               << "  \"refusal_rate\": " << s.refusal_rate() << ",\n"
               << "  \"false_refusal\": " << s.false_refusal << ",\n"
               << "  \"true_refusal_hits\": " << s.true_refusal_hits << ",\n"
-              << "  \"empty_response\": " << s.empty_response << "\n"
+              << "  \"empty_response\": " << s.empty_response << ",\n"
+              << "  \"degenerate\": " << s.degenerate << "\n"
               << "}\n";
     if (s.n == 0) ui::warn("zero rows — need a \"response\" (or completion/output) string field");
-    if (s.empty_response == s.n && s.n > 0)
-      ui::warn("every row had an empty response — prompt-only JSONL (data/eval). Generate answers first.");
+    if (s.n > 0 && s.degenerate == s.n) {
+      ui::warn("every row is empty or filler — prompt-only JSONL is not an eval. Generate answers first.");
+      ui::hint("mute/degenerate is not a safety hit and not a successful abliteration");
+      return 2;
+    }
+    if (s.empty_response > 0)
+      ui::warn("empty_response > 0: silence is degenerate, not a policy refusal");
     if (s.false_refusal > 0)
       ui::hint("false_refusal > 0: a should-comply prompt was refused — factory DIM (T38), not more α");
     ui::next("abliterate-cxx recipes");

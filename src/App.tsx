@@ -66,7 +66,8 @@ export function App() {
                 Understand the idea, choose the right experiment, and follow every step with evidence—without losing the model you started with.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <Button size="lg" asChild><a href="#path">Find my path <ArrowRight aria-hidden="true" /></a></Button>
+                <Button size="lg" asChild><a href="#lab">10-minute toy lab <ArrowRight aria-hidden="true" /></a></Button>
+                <Button size="lg" variant="secondary" asChild><a href="#path">Find my path</a></Button>
                 <Button size="lg" variant="secondary" asChild><a href="#steps"><Workflow aria-hidden="true" /> See the six steps</a></Button>
               </div>
               <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-xs font-semibold text-muted-foreground">
@@ -105,7 +106,7 @@ export function App() {
 
         <section id="path" className="scroll-mt-28 py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal><SectionHeading eyebrow="Interactive route finder" title="Start where you actually are" description="Three choices turn the whole handbook into one practical next step. You can change the answers at any time." /></Reveal>
+            <Reveal><SectionHeading eyebrow="Interactive route finder" title="Start where you actually are" description="Default is the C++26 toy lab: no GPU, unique nightly archives, guide → doctor → demo. Change the answers when you have a real checkpoint." /></Reveal>
             <Reveal className="mt-10"><PathFinder /></Reveal>
           </div>
         </section>
@@ -126,7 +127,7 @@ export function App() {
 
         <section id="techniques" className="scroll-mt-28 border-y border-border bg-card/45 py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal><SectionHeading eyebrow="Technique atlas" title="Go deeper without getting lost" description="The full handbook has T01–T33. This curated atlas surfaces the techniques that change your next decision." /></Reveal>
+            <Reveal><SectionHeading eyebrow="Technique atlas" title="Go deeper without getting lost" description="The full handbook has T01–T39. Search DIM, ORBA, COSMIC, or a T-ID. This atlas surfaces the techniques that change your next decision." /></Reveal>
             <Reveal className="mt-10"><TechniqueExplorer /></Reveal>
           </div>
         </section>

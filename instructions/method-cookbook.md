@@ -64,12 +64,13 @@ Nous fork: [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-a
 ## 3. Abliterix
 
 ```bash
-git clone https://github.com/wuwangzhang1216/abliterix.git
-cd abliterix && pip install -e .
-abliterix run --config configs/<model-family>.yaml
+pip install -U abliterix
+abliterix --model Qwen/Qwen3-4B-Instruct-2507
+# 4-bit: --model.quant-method bnb_4bit
+# replay: --reproduce reproduce/reproduce.json
 ```
 
-AGPL-3.0. Presets cover MoE / VL / SSM / ORBA / SAE. Pair with HonestAbliterationBench **and** `data/eval/*.jsonl`.
+AGPL-3.0. Presets are **TOML** (`configs/*.toml`, `python scripts/generate_configs.py`). There is no `abliterix run --config …yaml`. Pair with HonestAbliterationBench **and** `data/eval/*.jsonl`.
 
 ---
 
@@ -87,9 +88,11 @@ Use after `heretic --print-residual-geometry` picks `L_peak ± 4`. See [../techn
 ## 5. OBLITERATUS (SVD presets)
 
 ```bash
-pip install "obliteratus[full]"
+git clone https://github.com/elder-plinius/OBLITERATUS.git
+cd OBLITERATUS && pip install -e ".[spaces]"
 obliteratus obliterate <model> --method advanced --output-dir ./out
 # reasoning / MoE: --method surgical
+# PyPI `obliteratus` 0.0.1 is a stub; there is no [full] extra
 ```
 
 [../techniques/svd-whitened-obliteratus.md](../techniques/svd-whitened-obliteratus.md). Confirm `--help` on your installed version.

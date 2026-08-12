@@ -2,7 +2,9 @@
 
 The single path through **every method, setup, and script** in this handbook. Goal: this repo is the most complete abliteration reference on the internet — papers, tools, math, hardware, and runnable code.
 
-If you only want a working local model today, skip to [Stage 2](#stage-2--first-successful-run-heretic). Come back here when you need the rest.
+**Hour 0 (no GPU):** [Stage 0.5](#stage-05--toy-lab-10-min-no-gpu) (`guide` → `doctor` → `demo`). If you only want a working local **checkpoint** today, skip to [Stage 2](#stage-2--first-successful-run-heretic) after that. Come back here when you need the rest.
+
+Paper word → chapter: [paper-term-map.md](paper-term-map.md).
 
 **Ethics first:** [risks-and-ethics.md](risks-and-ethics.md). This handbook is for authorized factory QA, lab pentest, and research. Abliteration removes a refusal **direction**; it does not add skills and it does not authorize misuse.
 
@@ -37,6 +39,18 @@ Read [overview.md](overview.md) then [theory.md](theory.md).
 | Norm-preserving | Restore row norms after the edit (Heretic `row_normalization = full`) |
 | ORBA / Householder | Reflection-based rank-1 edit; directional ablation (`α=0`) is the stable special case |
 | Over-refusal | Model refuses **benign** security/hardware prompts (`wmic`, `nmap` lab) |
+
+---
+
+## Stage 0.5 — Toy lab (10 min, no GPU)
+
+Do this **before** Heretic. The operators are the same math you will later apply to a checkpoint.
+
+1. Download one unique file from [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly): `abliterate-cxx-windows-x64-msvc.zip` · `abliterate-cxx-linux-x64-gcc15.tar.gz` · `abliterate-cxx-macos-arm64-llvm.tar.gz`.
+2. Unpack so `examples/` sits next to the binary.
+3. `abliterate-cxx guide` then `doctor` then `demo`. `doctor` must print `cplusplus=202400`.
+
+Full path: [cxx26-researcher-guide.md](cxx26-researcher-guide.md). This CLI is **not** a Heretic/GGUF substitute.
 
 ---
 

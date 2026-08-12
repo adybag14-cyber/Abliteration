@@ -20,12 +20,22 @@ If you skip to a 32B GGUF you will debug tooling for weeks and learn no geometry
 
 ## Day 0 — install (pick one)
 
+Pick **one unique filename**. GCC and Clang no longer share a name.
+
+| You have | Download from [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) |
+|----------|------------------------------------------------------------------------------------------------------|
+| Windows x64 | `abliterate-cxx-windows-x64-msvc.zip` |
+| Linux x64 | `abliterate-cxx-linux-x64-gcc15.tar.gz` |
+| Linux arm64 | `abliterate-cxx-linux-arm64-gcc15.tar.gz` |
+| macOS Apple Silicon | `abliterate-cxx-macos-arm64-llvm.tar.gz` |
+| macOS Intel | `abliterate-cxx-macos-x64-llvm.tar.gz` |
+
 **Windows x64**
 
 ```powershell
 # from https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly
-tar -xzf abliterate-cxx-windows-x64.tar.gz
-cd abliterate-cxx-windows-x64
+Expand-Archive abliterate-cxx-windows-x64-msvc.zip
+cd abliterate-cxx-windows-x64-msvc
 .\abliterate-cxx.exe guide
 .\abliterate-cxx.exe doctor
 .\abliterate-cxx.exe demo
@@ -34,16 +44,16 @@ cd abliterate-cxx-windows-x64
 **Linux x64 / arm64**
 
 ```bash
-tar -xzf abliterate-cxx-linux-x64.tar.gz
-cd abliterate-cxx-linux-x64
+tar -xzf abliterate-cxx-linux-x64-gcc15.tar.gz
+cd abliterate-cxx-linux-x64-gcc15
 ./abliterate-cxx doctor && ./abliterate-cxx demo
 ```
 
 **macOS arm64 / x64**
 
 ```bash
-tar -xzf abliterate-cxx-macos-arm64.tar.gz
-cd abliterate-cxx-macos-arm64
+tar -xzf abliterate-cxx-macos-arm64-llvm.tar.gz
+cd abliterate-cxx-macos-arm64-llvm
 xattr -d com.apple.quarantine ./abliterate-cxx 2>/dev/null || true
 ./abliterate-cxx doctor && ./abliterate-cxx demo
 ```
@@ -111,6 +121,8 @@ abliterate-cxx eval --jsonl examples/generations.jsonl
 
 Factory goal: **false_refusal → 0**, **true_refusal_hits** not collapsed. If both collapse you estimated the safety DIM, not the false-refusal DIM.
 
+`empty_response` / `degenerate` (whitespace, `...`) is **not** a safety hit and **not** a successful abliteration. All-empty JSONL exits non-zero — generate answers first. Keyword rates are a learning loop, not a deploy gate.
+
 This is a **keyword judge**. It is for learning the loop. Deploy gates live in `docs/evaluation.md` and `data/eval/*.jsonl`.
 
 ---
@@ -132,6 +144,6 @@ This is a **keyword judge**. It is for learning the loop. Deploy gates live in `
 
 You are not behind if you stay in `abliterate-cxx` for a day. You are behind if you skip it.
 
-Obscure 2025–2026 pointers (`abliterate-cxx recipes`): DeepRefusal 2509.15202, OT 2603.04355, RFM-AGOP 2607.02396, code-LLM 2606.05396, task-conditioned over-refuse 2603.27518. Those are **next-step GPU/Abliterix**, not extra flags here.
+Obscure 2025–2026 pointers (`abliterate-cxx recipes`): OT 2603.04355 and RFM-AGOP 2607.02396 are **reported estimators** (GPU). DeepRefusal 2509.15202 is a **defense** (train-time probabilistic ablation) — [defenses-against-abliteration.md](defenses-against-abliteration.md), not an Abliterix bake. Task-conditioned over-refuse 2603.27518 is why one factory DIM may not be enough.
 
 Ethics: `docs/risks-and-ethics.md`. Authorized lab / factory / research only.

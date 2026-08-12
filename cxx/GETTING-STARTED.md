@@ -3,6 +3,16 @@
 You do **not** need a GPU, Hugging Face, or Python for this first loop.
 Download a nightly binary or build, then run the commands in order.
 
+Pick one archive from [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) (names do not collide):
+
+| OS | File |
+|----|------|
+| Windows x64 | `abliterate-cxx-windows-x64-msvc.zip` |
+| Linux x64 | `abliterate-cxx-linux-x64-gcc15.tar.gz` |
+| macOS Apple Silicon | `abliterate-cxx-macos-arm64-llvm.tar.gz` |
+
+Verify `SHA256SUMS`. Then `guide` → `doctor` → `demo`.
+
 ## 0. Prove the binary
 
 ```text

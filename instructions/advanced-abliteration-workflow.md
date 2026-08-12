@@ -188,9 +188,8 @@ Always 4-bit + CPU offload for MoE on consumer GPUs.
 | 5 | Label checkpoint; note AGPL-3.0 if redistributing |
 
 ```bash
-git clone https://github.com/wuwangzhang1216/abliterix.git
-cd abliterix && pip install -e .
-abliterix run --config configs/<family>.yaml   # verify model id
+pip install -U abliterix
+abliterix --model <id> --non-interactive --non-interactive-output-dir ./out
 ```
 
 → [../techniques/extended-abliteration-toolkit.md](../techniques/extended-abliteration-toolkit.md) · [../techniques/model-family-playbook.md](../techniques/model-family-playbook.md)

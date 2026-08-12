@@ -6,6 +6,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { REPOSITORY_URL } from "@/lib/utils";
 
 const navigation = [
+  ["Lab", "#lab"],
   ["Path", "#path"],
   ["Steps", "#steps"],
   ["Compare", "#compare"],
