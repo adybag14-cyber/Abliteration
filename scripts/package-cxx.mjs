@@ -20,7 +20,7 @@ const buildDir = arg('--build-dir', join(root, 'cxx', 'build'));
 const triple = arg('--triple', 'unknown');
 const compiler = arg('--compiler', '');
 const distRoot = join(root, 'cxx', 'dist');
-const pkgName = `abliterate-cxx-${triple}`;
+const pkgName = `abliterate-cxx-${compiler || triple}`;
 const pkgDir = join(distRoot, pkgName);
 
 function findBinary(dir, base) {

@@ -15,7 +15,9 @@ abliterate-cxx — no Python, no GPU for the first hour.
 
 5. Then GETTING-STARTED.md  (same folder).
 
-Windows:  tar -xzf abliterate-cxx-windows-x64.tar.gz
-Linux:    tar -xzf abliterate-cxx-linux-x64.tar.gz && chmod +x …/abliterate-cxx
-macOS:    tar -xzf abliterate-cxx-macos-arm64.tar.gz
+Windows:  tar -xzf abliterate-cxx-windows-x64-msvc.tar.gz
+Linux:    tar -xzf abliterate-cxx-linux-x64-gcc15.tar.gz && chmod +x …/abliterate-cxx
+macOS:    tar -xzf abliterate-cxx-macos-arm64-llvm.tar.gz
           xattr -d com.apple.quarantine ./abliterate-cxx
+
+Each compiler/OS pair has its own filename. See SHA256SUMS on the release.

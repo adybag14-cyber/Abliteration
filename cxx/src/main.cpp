@@ -288,8 +288,12 @@ int cmd_estimate(int argc, char** argv) {
     } else {
       std::cout << "wrote " << out_p << "  1x" << r.size() << "  mode=" << mode << '\n';
     }
-    ui::next(std::string("abliterate-cxx apply --mode orba-directional --weight examples/tiny-W.txt --direction ") +
-             std::string(out_p));
+    {
+      const auto ex = abliteration::find_examples_dir();
+      const auto w = ex.empty() ? std::string("examples/tiny-W.txt") : (ex / "tiny-W.txt").string();
+      ui::next(std::string("abliterate-cxx apply --mode orba-directional --weight ") + w +
+               " --direction " + std::string(out_p));
+    }
     return 0;
   }
   if (mode == "svd") {
@@ -425,6 +429,7 @@ int cmd_eval(int argc, char** argv) {
 }  // namespace
 
 int main(int argc, char** argv) {
+  if (argc > 0) abliteration::set_argv0(argv[0]);
   ui::enable_windows_vt();
   if (argc < 2) {
     usage();

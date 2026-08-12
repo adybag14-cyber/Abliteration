@@ -65,7 +65,11 @@ A target that cannot prove `cplusplus=202400` **fails**. There is no C++20 fallb
 **Download:** Actions run artifacts (30 days) and the rolling GitHub Release [`cxx-nightly`](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) on every `main` push. Version tags `v*` publish a full release.
 
 ```bash
-# after download
-tar -xzf abliterate-cxx-linux-x64.tar.gz
-./abliterate-cxx-linux-x64/abliterate-cxx self-check
+tar -xzf abliterate-cxx-linux-x64-gcc15.tar.gz
+cd abliterate-cxx-linux-x64-gcc15
+./abliterate-cxx doctor
+./abliterate-cxx demo
+sha256sum -c SHA256SUMS   # from the release root
 ```
+
+Archives are named `abliterate-cxx-<os>-<arch>-<compiler>` so GCC and Clang never overwrite each other. `examples/` sits next to the binary (`doctor` finds them without `cd` if you keep that layout).

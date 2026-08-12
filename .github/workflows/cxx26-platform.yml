@@ -7,11 +7,12 @@ name: C++26 platform — multi-target build, test, deploy
 on:
   push:
     branches: [main]
-    tags: ["v*", "cxx-*"]
+    tags: ["v*"]
     paths:
       - "cxx/**"
       - "scripts/build-cxx.mjs"
       - "scripts/package-cxx.mjs"
+      - "scripts/smoke-cxx-package.mjs"
       - "scripts/run-cxx-*.mjs"
       - ".github/workflows/cxx26-platform.yml"
   pull_request:
@@ -20,6 +21,7 @@ on:
       - "cxx/**"
       - "scripts/build-cxx.mjs"
       - "scripts/package-cxx.mjs"
+      - "scripts/smoke-cxx-package.mjs"
       - "scripts/run-cxx-*.mjs"
       - ".github/workflows/cxx26-platform.yml"
   workflow_dispatch:
@@ -85,10 +87,12 @@ jobs:
           else
             bash cxx/package.sh cxx/ci-build ${{ matrix.triple }} ${{ matrix.name }}
           fi
+      - name: Smoke — unpack archive away from the repo and run first hour
+        run: node scripts/smoke-cxx-package.mjs --archive cxx/dist/abliterate-cxx-${{ matrix.name }}.tar.gz
       - uses: actions/upload-artifact@v4
         with:
           name: abliterate-cxx-${{ matrix.name }}
-          path: cxx/dist/abliterate-cxx-${{ matrix.triple }}*
+          path: cxx/dist/abliterate-cxx-${{ matrix.name }}*
           if-no-files-found: error
           retention-days: 30
 
@@ -242,10 +246,16 @@ jobs:
       - name: Package
         run: node scripts/package-cxx.mjs --build-dir cxx/ci-build --triple ${{ matrix.triple }} --compiler ${{ matrix.name }}
 
+      - name: Smoke — unpack archive away from the repo and run first hour
+        run: |
+          WRAP=()
+          if [[ "${{ matrix.osx_arch }}" == "x86_64" ]]; then WRAP=(--wrap "arch -x86_64"); fi
+          node scripts/smoke-cxx-package.mjs --archive cxx/dist/abliterate-cxx-${{ matrix.name }}.tar.gz "${WRAP[@]}"
+
       - uses: actions/upload-artifact@v4
         with:
           name: abliterate-cxx-${{ matrix.name }}
-          path: cxx/dist/abliterate-cxx-${{ matrix.triple }}*
+          path: cxx/dist/abliterate-cxx-${{ matrix.name }}*
           if-no-files-found: error
           retention-days: 30
 
@@ -262,12 +272,21 @@ jobs:
         with:
           path: collected
           pattern: abliterate-cxx-*
-      - name: Flatten release directory
+      - name: Flatten release directory (fail on name collisions)
         run: |
           mkdir -p release
-          find collected -type f \( -name '*.tar.gz' -o -name '*.zip' \) -exec cp -v {} release/ \;
+          while IFS= read -r f; do
+            base="$(basename "$f")"
+            if [[ -e "release/$base" ]]; then
+              echo "collision: $base already in release/" >&2
+              exit 1
+            fi
+            cp -v "$f" "release/$base"
+          done < <(find collected -type f \( -name '*.tar.gz' -o -name '*.zip' \))
           ls -la release
-          test "$(find release -type f | wc -l)" -ge 4
+          test "$(find release -type f | wc -l)" -ge 8
+          (cd release && sha256sum * | tee SHA256SUMS)
+          test -s release/SHA256SUMS
       - name: Publish rolling cxx-nightly (main)
         if: github.ref == 'refs/heads/main'
         env:
@@ -293,12 +312,16 @@ Then open `GETTING-STARTED.md` in the archive (repo: `docs/cxx26-researcher-guid
 
 | Archive | Who |
 |---------|-----|
-| `*-linux-x64.tar.gz` | Linux x86_64 |
-| `*-linux-arm64.tar.gz` | Linux aarch64 |
-| `*-windows-x64.zip` | Windows x64 |
-| `*-windows-arm64.zip` | Windows ARM64 |
-| `*-macos-arm64.tar.gz` | Apple Silicon |
-| `*-macos-x64.tar.gz` | Intel Mac (Rosetta-tested) |
+| `abliterate-cxx-linux-x64-gcc15.tar.gz` | Linux x86_64 (default) |
+| `abliterate-cxx-linux-x64-clang20.tar.gz` | Linux x86_64 Clang |
+| `abliterate-cxx-linux-arm64-gcc15.tar.gz` | Linux aarch64 |
+| `abliterate-cxx-windows-x64-msvc.zip` | Windows x64 (default) |
+| `abliterate-cxx-windows-x64-clang.zip` | Windows x64 Clang |
+| `abliterate-cxx-windows-arm64-msvc.zip` | Windows ARM64 |
+| `abliterate-cxx-macos-arm64-llvm.tar.gz` | Apple Silicon |
+| `abliterate-cxx-macos-x64-llvm.tar.gz` | Intel Mac |
+
+Also `SHA256SUMS`. Each archive was unpacked on the runner and `doctor` + `demo` + estimate/apply/eval were run **outside the git checkout**.
 
 `doctor` must print `cplusplus=202400`. Next: `recipes`, then Heretic for a real model.
 MD

@@ -108,6 +108,7 @@ function validateRequiredFiles() {
     'cxx/include/abliteration/ops.hpp',
     '.github/workflows/cxx26-platform.yml',
     'scripts/package-cxx.mjs',
+    'scripts/smoke-cxx-package.mjs',
     'instructions/method-cookbook.md',
     'scripts/ralph-validate.mjs',
     'scripts/ralph-loop.mjs',
@@ -189,6 +190,9 @@ function validateCxx26Workflow() {
   const y = readFileSync(p, 'utf8');
   const required = [
     'linux-x64-gcc15',
+    'abliterate-cxx-${{ matrix.name }}',
+    'SHA256SUMS',
+    'smoke-cxx-package.mjs',
     'linux-x64-clang20',
     'linux-arm64-gcc15',
     'linux-arm64-clang20',

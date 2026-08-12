@@ -45,6 +45,7 @@
     "cxx:build": "node scripts/build-cxx.mjs",
     "cxx:test": "node scripts/run-cxx-tests.mjs",
     "cxx:self-check": "node scripts/run-cxx-self-check.mjs",
+    "cxx:smoke": "node scripts/smoke-cxx-package.mjs",
     "ralph:continue:on": "node scripts/ralph-continue-on.mjs",
     "ralph:continue:off": "node scripts/ralph-continue-off.mjs",
     "ralph:continue:status": "node scripts/ralph-continue-status.mjs",
