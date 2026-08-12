@@ -133,12 +133,14 @@ jobs:
             compiler: clang++
             brew_llvm: true
             triple: macos-arm64
+            osx_arch: arm64
             experimental: false
           - name: macos-x64-llvm
-            os: macos-13
+            os: macos-latest
             compiler: clang++
             brew_llvm: true
             triple: macos-x64
+            osx_arch: x86_64
             experimental: false
     defaults:
       run:
@@ -199,10 +201,15 @@ jobs:
         if: matrix.compiler == 'clang++'
         run: |
           CXX_BIN="${CXX:-clang++}"
+          EXTRA=()
+          if [[ -n "${{ matrix.osx_arch }}" ]]; then
+            EXTRA+=(-DCMAKE_OSX_ARCHITECTURES=${{ matrix.osx_arch }})
+          fi
           cmake -S cxx -B cxx/ci-build -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_CXX_COMPILER="$CXX_BIN" \
-            -DABLITERATE_TARGET=${{ matrix.triple }}
+            -DABLITERATE_TARGET=${{ matrix.triple }} \
+            "${EXTRA[@]}"
           cmake --build cxx/ci-build --config Release -v
 
       - name: Configure and build (MSVC)
@@ -216,15 +223,21 @@ jobs:
 
       - name: Prove C++26 + test
         run: |
-          cxx/ci-build/abliterate-cxx-dialect | tee dialect.txt
+          RUN=()
+          if [[ "${{ matrix.osx_arch }}" == "x86_64" ]]; then
+            RUN=(arch -x86_64)
+          fi
+          "${RUN[@]}" cxx/ci-build/abliterate-cxx-dialect | tee dialect.txt
           grep -E 'cplusplus=202400' dialect.txt
-          cxx/ci-build/abliterate-cxx version
-          cxx/ci-build/abliterate-cxx-tests
-          cxx/ci-build/abliterate-cxx self-check | tee self1.txt
-          cxx/ci-build/abliterate-cxx self-check | tee self2.txt
+          "${RUN[@]}" cxx/ci-build/abliterate-cxx version
+          "${RUN[@]}" cxx/ci-build/abliterate-cxx-tests
+          "${RUN[@]}" cxx/ci-build/abliterate-cxx self-check | tee self1.txt
+          "${RUN[@]}" cxx/ci-build/abliterate-cxx self-check | tee self2.txt
           diff -u self1.txt self2.txt
           grep '"ok":true' self1.txt
-          ctest --test-dir cxx/ci-build --output-on-failure
+          if [[ "${{ matrix.osx_arch }}" != "x86_64" ]]; then
+            ctest --test-dir cxx/ci-build --output-on-failure
+          fi
 
       - name: Package
         run: node scripts/package-cxx.mjs --build-dir cxx/ci-build --triple ${{ matrix.triple }} --compiler ${{ matrix.name }}

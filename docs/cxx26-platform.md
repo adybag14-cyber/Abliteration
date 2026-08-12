@@ -56,7 +56,7 @@ On every `cxx/**` change (and on `main`), Actions **builds, dialect-checks (`cpl
 | `windows-x64-msvc` | `windows-latest` | MSVC `/std:c++latest` + `/Zc:__cplusplus` |
 | `windows-arm64-msvc` | `windows-11-arm` | MSVC (experimental runner) |
 | `macos-arm64-llvm` | `macos-latest` | Homebrew LLVM |
-| `macos-x64-llvm` | `macos-13` | Homebrew LLVM |
+| `macos-x64-llvm` | `macos-latest` + `-arch x86_64` (Rosetta test) | Homebrew LLVM |
 
 A target that cannot prove `cplusplus=202400` **fails**. There is no C++20 fallback.
 
