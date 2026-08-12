@@ -39,3 +39,31 @@ Matrix files: first line `rows cols`, then row-major floats.
 Python twins under `scripts/` remain for notebooks; they are **not** required for the operators above.
 
 Cookbook: [../instructions/method-cookbook.md](../instructions/method-cookbook.md) §0.
+
+## GitHub Actions — every platform
+
+Workflow: [../.github/workflows/cxx26-platform.yml](../.github/workflows/cxx26-platform.yml)
+
+On every `cxx/**` change (and on `main`), Actions **builds, dialect-checks (`cplusplus=202400`), tests, self-checks twice, and packages** these targets:
+
+| Artifact prefix | Runner | Compiler |
+|-----------------|--------|----------|
+| `linux-x64-gcc15` | `ubuntu-24.04` + `gcc:15` | GCC 15, `-std=c++26` |
+| `linux-x64-clang20` | `ubuntu-24.04` | LLVM 20 clang++ |
+| `linux-arm64-gcc15` | `ubuntu-24.04-arm` + `gcc:15` | GCC 15 |
+| `linux-arm64-clang20` | `ubuntu-24.04-arm` | LLVM 20 |
+| `windows-x64-clang` | `windows-latest` | LLVM 20 |
+| `windows-x64-msvc` | `windows-latest` | MSVC `/std:c++latest` + `/Zc:__cplusplus` |
+| `windows-arm64-msvc` | `windows-11-arm` | MSVC (experimental runner) |
+| `macos-arm64-llvm` | `macos-latest` | Homebrew LLVM |
+| `macos-x64-llvm` | `macos-13` | Homebrew LLVM |
+
+A target that cannot prove `cplusplus=202400` **fails**. There is no C++20 fallback.
+
+**Download:** Actions run artifacts (30 days) and the rolling GitHub Release [`cxx-nightly`](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) on every `main` push. Version tags `v*` publish a full release.
+
+```bash
+# after download
+tar -xzf abliterate-cxx-linux-x64.tar.gz
+./abliterate-cxx-linux-x64/abliterate-cxx self-check
+```

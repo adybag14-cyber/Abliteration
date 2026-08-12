@@ -204,6 +204,18 @@ int main(int argc, char** argv) {
     usage();
     return 0;
   }
+  if (cmd == "version" || cmd == "--version") {
+    std::cout << "abliterate-cxx"
+#ifdef ABLITERATE_VERSION
+              << " " << ABLITERATE_VERSION
+#endif
+              << '\n';
+    std::cout << "cplusplus=" << __cplusplus << '\n';
+#ifdef ABLITERATE_TARGET
+    std::cout << "target=" << ABLITERATE_TARGET << '\n';
+#endif
+    return (__cplusplus >= 202400L) ? 0 : 1;
+  }
   if (cmd == "self-check") return cmd_self_check();
   if (cmd == "estimate") return cmd_estimate(argc, argv);
   if (cmd == "apply") return cmd_apply(argc, argv);

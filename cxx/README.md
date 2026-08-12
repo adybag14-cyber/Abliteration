@@ -34,4 +34,6 @@ Matrix files: first line `rows cols`, then row-major floats.
 
 Python `scripts/abliterate:*` remain as an optional twin. The operators live in `cxx/include/abliteration/ops.hpp` — tests and the CLI call the same functions.
 
+Prebuilt binaries for Linux (x64/arm64), Windows (x64/arm64), and macOS (arm64/x64) come from GitHub Actions: [cxx-nightly release](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) · workflow [cxx26-platform.yml](../.github/workflows/cxx26-platform.yml).
+
 See [../docs/cxx26-platform.md](../docs/cxx26-platform.md).

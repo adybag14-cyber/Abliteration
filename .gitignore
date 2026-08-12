@@ -32,6 +32,8 @@ Thumbs.db
 
 # C++26 platform build products
 cxx/build/
+cxx/ci-build/
+cxx/dist/
 
 # Logs
 *.log

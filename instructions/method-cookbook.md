@@ -6,7 +6,7 @@ Copy-paste setups. Theory lives in [../docs/complete-curriculum.md](../docs/comp
 
 ## 0. This repo — C++26 platform (no extra clone)
 
-The default helper path is **`abliterate-cxx`** (ISO C++26). See [../docs/cxx26-platform.md](../docs/cxx26-platform.md).
+The default helper path is **`abliterate-cxx`** (ISO C++26). See [../docs/cxx26-platform.md](../docs/cxx26-platform.md). Prebuilt Linux/Windows/macOS (x64 + arm64) archives: [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly).
 
 ```bash
 npm run cxx:build

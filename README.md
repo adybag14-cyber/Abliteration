@@ -4,7 +4,9 @@
 
 Living handbook for **LLM abliteration** (weight-level refusal-direction surgery) plus **agentic security** stacks for factory firmware QA, pentest labs, and [CyberGym](https://cybergym.io) evaluation.
 
-**Start here (full path):** [docs/complete-curriculum.md](docs/complete-curriculum.md) · **C++26 helpers/CLI:** [docs/cxx26-platform.md](docs/cxx26-platform.md) · **every OS/VRAM:** [docs/setup-encyclopedia.md](docs/setup-encyclopedia.md) · **frontier 2025–2026:** [docs/bleeding-edge.md](docs/bleeding-edge.md) · **copy-paste commands:** [instructions/method-cookbook.md](instructions/method-cookbook.md)
+**Start here (full path):** [docs/complete-curriculum.md](docs/complete-curriculum.md) · **C++26 helpers/CLI:** [docs/cxx26-platform.md](docs/cxx26-platform.md) ([multi-platform binaries](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly)) · **every OS/VRAM:** [docs/setup-encyclopedia.md](docs/setup-encyclopedia.md) · **frontier 2025–2026:** [docs/bleeding-edge.md](docs/bleeding-edge.md) · **copy-paste commands:** [instructions/method-cookbook.md](instructions/method-cookbook.md)
+
+[![C++26 platform](https://github.com/adybag14-cyber/Abliteration/actions/workflows/cxx26-platform.yml/badge.svg)](https://github.com/adybag14-cyber/Abliteration/actions/workflows/cxx26-platform.yml)
 
 > **New to the subject?** Open the [interactive Abliteration Field Guide](https://adybag14-cyber.github.io/Abliteration/) for a visual route finder, six-step checklist, method spider diagram, searchable technique atlas, and evaluation-gate simulator.
 

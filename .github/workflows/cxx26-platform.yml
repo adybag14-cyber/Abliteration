@@ -1,0 +1,249 @@
+name: C++26 platform — multi-target build, test, deploy
+
+# Native ISO C++26 binaries. A target that cannot compile -std=c++26 fails.
+# Linux x64/arm64 (GCC 15 + Clang 20), Windows x64 (Clang + MSVC), Windows arm64
+# (MSVC, experimental runner), macOS arm64 + x64 (Homebrew LLVM).
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*", "cxx-*"]
+    paths:
+      - "cxx/**"
+      - "scripts/build-cxx.mjs"
+      - "scripts/package-cxx.mjs"
+      - "scripts/run-cxx-*.mjs"
+      - ".github/workflows/cxx26-platform.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "cxx/**"
+      - "scripts/build-cxx.mjs"
+      - "scripts/package-cxx.mjs"
+      - "scripts/run-cxx-*.mjs"
+      - ".github/workflows/cxx26-platform.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cxx26-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CMAKE_BUILD_TYPE: Release
+
+jobs:
+  linux-gcc:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    container: gcc:15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: linux-x64-gcc15
+            os: ubuntu-24.04
+            triple: linux-x64
+          - name: linux-arm64-gcc15
+            os: ubuntu-24.04-arm
+            triple: linux-arm64
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends cmake ninja-build ca-certificates git nodejs
+          g++ --version
+          node --version
+      - name: Configure and build
+        run: |
+          cmake -S cxx -B cxx/ci-build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_CXX_COMPILER=g++ \
+            -DABLITERATE_TARGET=${{ matrix.triple }}
+          cmake --build cxx/ci-build --config Release -v
+      - name: Prove C++26 + test
+        run: |
+          cxx/ci-build/abliterate-cxx-dialect | tee dialect.txt
+          grep -E 'cplusplus=202400' dialect.txt
+          cxx/ci-build/abliterate-cxx version
+          cxx/ci-build/abliterate-cxx-tests
+          cxx/ci-build/abliterate-cxx self-check | tee self1.txt
+          cxx/ci-build/abliterate-cxx self-check | tee self2.txt
+          diff -u self1.txt self2.txt
+          grep '"ok":true' self1.txt
+          ctest --test-dir cxx/ci-build --output-on-failure
+      - name: Package
+        run: |
+          if command -v node >/dev/null 2>&1; then
+            node scripts/package-cxx.mjs --build-dir cxx/ci-build --triple ${{ matrix.triple }} --compiler ${{ matrix.name }}
+          else
+            bash cxx/package.sh cxx/ci-build ${{ matrix.triple }} ${{ matrix.name }}
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: abliterate-cxx-${{ matrix.name }}
+          path: cxx/dist/abliterate-cxx-${{ matrix.triple }}*
+          if-no-files-found: error
+          retention-days: 30
+
+  hosted:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: linux-x64-clang20
+            os: ubuntu-24.04
+            compiler: clang++
+            llvm: "20"
+            triple: linux-x64
+            experimental: false
+          - name: linux-arm64-clang20
+            os: ubuntu-24.04-arm
+            compiler: clang++
+            llvm: "20"
+            triple: linux-arm64
+            experimental: false
+          - name: windows-x64-clang
+            os: windows-latest
+            compiler: clang++
+            llvm: "20"
+            triple: windows-x64
+            experimental: false
+          - name: windows-x64-msvc
+            os: windows-latest
+            compiler: cl
+            triple: windows-x64
+            experimental: false
+          - name: windows-arm64-msvc
+            os: windows-11-arm
+            compiler: cl
+            triple: windows-arm64
+            experimental: true
+          - name: macos-arm64-llvm
+            os: macos-latest
+            compiler: clang++
+            brew_llvm: true
+            triple: macos-arm64
+            experimental: false
+          - name: macos-x64-llvm
+            os: macos-13
+            compiler: clang++
+            brew_llvm: true
+            triple: macos-x64
+            experimental: false
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install LLVM
+        if: matrix.llvm
+        uses: KyleMayes/install-llvm-action@v2
+        with:
+          version: ${{ matrix.llvm }}
+
+      - name: Install Homebrew LLVM
+        if: matrix.brew_llvm
+        run: |
+          brew update
+          brew install llvm
+          echo "$(brew --prefix llvm)/bin" >> "$GITHUB_PATH"
+          echo "CC=$(brew --prefix llvm)/bin/clang" >> "$GITHUB_ENV"
+          echo "CXX=$(brew --prefix llvm)/bin/clang++" >> "$GITHUB_ENV"
+
+      - uses: seanmiddleditch/gha-setup-ninja@v5
+
+      - name: MSVC developer environment
+        if: matrix.compiler == 'cl'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure and build (Clang)
+        if: matrix.compiler == 'clang++'
+        run: |
+          CXX_BIN="${CXX:-clang++}"
+          cmake -S cxx -B cxx/ci-build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_CXX_COMPILER="$CXX_BIN" \
+            -DABLITERATE_TARGET=${{ matrix.triple }}
+          cmake --build cxx/ci-build --config Release -v
+
+      - name: Configure and build (MSVC)
+        if: matrix.compiler == 'cl'
+        run: |
+          cmake -S cxx -B cxx/ci-build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_CXX_COMPILER=cl \
+            -DABLITERATE_TARGET=${{ matrix.triple }}
+          cmake --build cxx/ci-build --config Release -v
+
+      - name: Prove C++26 + test
+        run: |
+          cxx/ci-build/abliterate-cxx-dialect | tee dialect.txt
+          grep -E 'cplusplus=202400' dialect.txt
+          cxx/ci-build/abliterate-cxx version
+          cxx/ci-build/abliterate-cxx-tests
+          cxx/ci-build/abliterate-cxx self-check | tee self1.txt
+          cxx/ci-build/abliterate-cxx self-check | tee self2.txt
+          diff -u self1.txt self2.txt
+          grep '"ok":true' self1.txt
+          ctest --test-dir cxx/ci-build --output-on-failure
+
+      - name: Package
+        run: node scripts/package-cxx.mjs --build-dir cxx/ci-build --triple ${{ matrix.triple }} --compiler ${{ matrix.name }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: abliterate-cxx-${{ matrix.name }}
+          path: cxx/dist/abliterate-cxx-${{ matrix.triple }}*
+          if-no-files-found: error
+          retention-days: 30
+
+  publish:
+    name: Deploy multi-platform packages
+    needs: [linux-gcc, hosted]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: collected
+          pattern: abliterate-cxx-*
+      - name: Flatten release directory
+        run: |
+          mkdir -p release
+          find collected -type f \( -name '*.tar.gz' -o -name '*.zip' \) -exec cp -v {} release/ \;
+          ls -la release
+          test "$(find release -type f | wc -l)" -ge 4
+      - name: Publish rolling cxx-nightly (main)
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete cxx-nightly --yes || true
+          git tag -f cxx-nightly
+          git push -f origin cxx-nightly
+          gh release create cxx-nightly release/* \
+            --prerelease \
+            --title "abliterate-cxx nightly (all platforms)" \
+            --notes "ISO C++26 CLI (estimate / apply / hook / eval). Artifacts: Linux x64/arm64 (GCC 15 + Clang 20), Windows x64 (Clang + MSVC), macOS arm64/x64 (LLVM). See docs/cxx26-platform.md."
+      - name: Publish version tag
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" release/* \
+            --title "abliterate-cxx ${GITHUB_REF_NAME}" \
+            --notes "Multi-platform ISO C++26 abliterate-cxx. docs/cxx26-platform.md"

@@ -24,7 +24,8 @@ function walkMd(dir, out = []) {
   for (const e of readdirSync(dir, { withFileTypes: true })) {
     const p = join(dir, e.name);
     if (e.isDirectory()) {
-      if (['node_modules', '.git', 'sources/zig-canonical'].some((x) => p.includes(x))) continue;
+      const norm = p.replace(/\\/g, '/');
+      if (['node_modules', '.git', 'sources/zig-canonical', 'cxx/dist', 'cxx/build', 'cxx/ci-build'].some((x) => norm.includes(x))) continue;
       walkMd(p, out);
     } else if (e.name.endsWith('.md')) out.push(p);
   }
@@ -102,6 +103,8 @@ function validateRequiredFiles() {
     'cxx/CMakeLists.txt',
     'cxx/src/main.cpp',
     'cxx/include/abliteration/ops.hpp',
+    '.github/workflows/cxx26-platform.yml',
+    'scripts/package-cxx.mjs',
     'instructions/method-cookbook.md',
     'scripts/ralph-validate.mjs',
     'scripts/ralph-loop.mjs',
@@ -171,6 +174,32 @@ function validateUpstreamJson() {
     const local = join(root, meta.local);
     if (!existsSync(local)) err(`UPSTREAM pin missing on disk: ${meta.local}`);
     if (!meta.sha256) warn(`UPSTREAM pin ${key} has no sha256 — run npm run fetch:heretic`);
+  }
+}
+
+function validateCxx26Workflow() {
+  const p = join(root, '.github/workflows/cxx26-platform.yml');
+  if (!existsSync(p)) {
+    err('missing C++26 workflow');
+    return;
+  }
+  const y = readFileSync(p, 'utf8');
+  const required = [
+    'linux-x64-gcc15',
+    'linux-x64-clang20',
+    'linux-arm64-gcc15',
+    'linux-arm64-clang20',
+    'windows-x64-clang',
+    'windows-x64-msvc',
+    'windows-arm64-msvc',
+    'macos-arm64-llvm',
+    'macos-x64-llvm',
+    'cplusplus=202400',
+    'cxx-nightly',
+    '-std=c++26',
+  ];
+  for (const token of required) {
+    if (!y.includes(token)) err(`cxx26-platform.yml missing ${token}`);
   }
 }
 
@@ -305,6 +334,7 @@ function main() {
   console.log(`  markdown: ${links.mdFiles} files, ${links.broken} broken links`);
 
   validateRequiredFiles();
+  validateCxx26Workflow();
   validatePackageScripts();
   validateUpstreamJson();
   validateProjectSkills();
