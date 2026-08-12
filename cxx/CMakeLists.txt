@@ -13,8 +13,10 @@ else()
   add_compile_options(-std=c++26 -Wall -Wextra -Wpedantic)
 endif()
 
-if(NOT MSVC)
-  # Portable binaries on glibc hosts (Linux/MinGW).
+if(UNIX AND NOT APPLE)
+  # Portable binaries on glibc. Apple Clang/LLVM rejects -static-libgcc.
+  add_link_options(-static-libstdc++ -static-libgcc)
+elseif(MINGW)
   add_link_options(-static-libstdc++ -static-libgcc)
 endif()
 
