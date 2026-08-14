@@ -13,6 +13,7 @@ npm run cxx:build
 npm run cxx:test
 cxx/build/abliterate-cxx guide
 cxx/build/abliterate-cxx doctor
+cxx/build/abliterate-cxx self-check
 cxx/build/abliterate-cxx demo
 ```
 

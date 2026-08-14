@@ -90,7 +90,7 @@ export type Technique = {
 };
 
 export const techniques: Technique[] = [
-  { id: "T00", title: "C++26 toy-matrix lab", tier: "Start here", summary: "No GPU. Download a unique cxx-nightly archive and run guide → doctor → demo on 4-D toy tensors.", when: "Hour 0, before any checkpoint", tags: ["C++26", "lab", "nightly", "no GPU"], doc: "docs/cxx26-researcher-guide.md" },
+  { id: "T00", title: "C++26 toy-matrix lab", tier: "Start here", summary: "No GPU. Download a unique cxx-nightly archive and run guide → doctor → self-check → demo on 4-D toy tensors.", when: "Hour 0, before any checkpoint", tags: ["C++26", "lab", "nightly", "no GPU"], doc: "docs/cxx26-researcher-guide.md" },
   { id: "T02", title: "Reversible hook ablation", tier: "Start here", summary: "Subtract the direction during inference while leaving weights untouched.", when: "Your first causal test", tags: ["reversible", "low risk"], doc: "techniques/inference-directional-ablation.md" },
   { id: "T01", title: "Mean-difference DIM (Arditi)", tier: "Start here", summary: "Estimate a candidate direction from target and control activations: r = mean(bad) − mean(good).", when: "A simple, interpretable baseline", tags: ["foundation", "fast", "DIM", "Arditi"], doc: "techniques/mean-difference-direction.md" },
   { id: "T03", title: "Projected + norm-preserving", tier: "Production", summary: "Protect useful activation structure while removing the measured component.", when: "The default permanent edit", tags: ["recommended", "weights"], doc: "techniques/projected-norm-preserving-abliteration.md" },
@@ -105,7 +105,7 @@ export const techniques: Technique[] = [
   { id: "T32", title: "Pareto checkpoint selection", tier: "Frontier", summary: "Keep refusal, capability, KL, degeneration, latency, and size as separate objectives.", when: "A single score hides trade-offs", tags: ["multi-objective", "selection"], doc: "techniques/advanced-experimental-methods.md" },
   { id: "T34", title: "ORBA directional rank-1", tier: "Frontier", summary: "Orthogonal reflection / directional ablation. Prefer directional (α=0) over a full Householder flip.", when: "A rank-1 bake after DIM or projected", tags: ["ORBA", "Householder", "weights"], doc: "techniques/orba-orthogonal-reflection.md" },
   { id: "T36", title: "COSMIC direction ID", tier: "Frontier", summary: "Score layers by cosine separation so you are not hunting an “I cannot” template.", when: "Marker lists fail on hedges or thinking models", tags: ["COSMIC", "direction ID"], doc: "techniques/cosmic-refusal-direction.md" },
-  { id: "T38", title: "False-refusal / over-refusal", tier: "Production", summary: "Wang w′ ← w − λ v: ablate over-refusal orthogonalized against true refusal. Not factory DIM, not T03.", when: "wmic / nmap / firmware prompts are blocked", tags: ["false-refusal", "over-refusal", "factory", "XSTest"], doc: "techniques/false-refusal-vector-ablation.md" },
+  { id: "T38", title: "False-refusal / over-refusal", tier: "Production", summary: "Wang w′ ← w − λ v_true: ablate over-refusal orthogonalized against true refusal. Not factory T01, not T03.", when: "wmic / nmap / firmware prompts are blocked", tags: ["false-refusal", "over-refusal", "factory", "XSTest"], doc: "techniques/false-refusal-vector-ablation.md" },
   { id: "T39", title: "Harm ≠ refusal", tier: "Frontier", summary: "Harm judgment and refusal template are different axes. Do not flatten both.", when: "Safety hold-out collapses or Latent Guard work", tags: ["harm", "refusal", "Zhao", "analysis"], doc: "techniques/harm-vs-refusal-directions.md" },
 ];
 
@@ -130,7 +130,7 @@ export const troubleshooting = [
   { question: "The model still refuses after the edit", answer: "Pause before increasing strength. Check that the prompt category appears in your contrast set, verify the chat template and token position, then run a held-out layer sweep. A defense-trained model may need a different method rather than a stronger edit." },
   { question: "The candidate becomes incoherent or loses capability", answer: "Restore the pristine base and reduce scope: lower alpha, narrow the layer band, use projected plus norm-preserving edits, or protect a measured capability subspace. Do not tune around degeneration." },
   { question: "I only have an 8 GB GPU", answer: "Choose a small dense model and the low-VRAM Heretic profile with 4-bit measurement and CPU offload. Keep permanent weight editing separate from quantization, and expect longer runs." },
-  { question: "I have no GPU", answer: "Use the learning path and evaluate an existing community checkpoint, or rent a GPU for one reproducible run. CPU-only local inference is possible; practical model surgery usually is not." },
+  { question: "I have no GPU", answer: "Hour 0 is the C++26 toy-matrix lab: download one unique cxx-nightly archive (abliterate-cxx-windows-x64-msvc.zip, abliterate-cxx-linux-x64-gcc15.tar.gz, or abliterate-cxx-macos-arm64-llvm.tar.gz), unpack it, and run guide → doctor → self-check → demo. Renting a GPU or evaluating a community checkpoint is a later path, not Hour 0." },
   { question: "The floating candidate passes but GGUF fails", answer: "Treat this as quantization damage. Recheck the conversion, compare the floating candidate to the quantized one, inspect clipping and row norms, and try a less aggressive quantization level." },
 ];
 

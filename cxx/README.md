@@ -20,7 +20,7 @@ cmake --build cxx/build
 ./cxx/build/abliterate-cxx-tests
 ```
 
-**First hour:** `abliterate-cxx guide` → `doctor` → `demo`. Walkthrough: [GETTING-STARTED.md](GETTING-STARTED.md) · [docs/cxx26-researcher-guide.md](../docs/cxx26-researcher-guide.md)
+**First hour:** Hour 0 is `abliterate-cxx guide` → `doctor` → `self-check` → `demo`. Hour 0.5: `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`. Walkthrough: [GETTING-STARTED.md](GETTING-STARTED.md) · [docs/cxx26-researcher-guide.md](../docs/cxx26-researcher-guide.md)
 
 ## Subcommands
 

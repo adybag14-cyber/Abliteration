@@ -7,8 +7,11 @@ ISO C++26 lab for refusal-direction math. **No GPU, no Python** for the first ho
 ```text
 abliterate-cxx guide
 abliterate-cxx doctor
+abliterate-cxx self-check
 abliterate-cxx demo
 ```
+
+Hour 0.5 (after demo): `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`.
 
 Then open `GETTING-STARTED.md` in the archive (repo: [docs/cxx26-researcher-guide.md](https://github.com/adybag14-cyber/Abliteration/blob/main/docs/cxx26-researcher-guide.md)).
 
@@ -26,8 +29,8 @@ Then open `GETTING-STARTED.md` in the archive (repo: [docs/cxx26-researcher-guid
 | [abliterate-cxx-macos-arm64-llvm.tar.gz](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-macos-arm64-llvm.tar.gz) | Apple Silicon |
 | [abliterate-cxx-macos-x64-llvm.tar.gz](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-macos-x64-llvm.tar.gz) | Intel Mac |
 
-Verify with `SHA256SUMS` on the release. Each archive was **unpacked on the runner** and `doctor` + `demo` + estimate/apply/eval ran **outside the git checkout**.
+Verify with `SHA256SUMS` on the release. Each archive was **unpacked on the runner** and `guide` + `doctor` + `self-check` + `demo` + estimate/apply/eval ran **outside the git checkout**.
 
-`doctor` must print `cplusplus=202400`. Next: `recipes`, then Heretic for a real model.
+`doctor` must print `cplusplus=202400`. After Hour 0, do Hour 0.5 (`estimate dim` → `apply orba-directional` → `eval` toys → `recipes`), then Heretic for a real model.
 
 This is a **toy-matrix lab**, not a Heretic/GGUF substitute.

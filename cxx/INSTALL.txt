@@ -3,21 +3,36 @@ abliterate-cxx — no Python, no GPU for the first hour.
 1. Download a row from
    https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly
 
-2. Unpack, cd into the folder (examples/ must sit next to the binary).
+2. Unpack so GETTING-STARTED.md sits next to the binary (flattened archive
+   root). examples/ must sit next to the exe.
 
-3. Run, in this order:
+   Windows — zip contents are at archive root (exe next to GETTING-STARTED.md):
+
+     Expand-Archive -Force -Path abliterate-cxx-windows-x64-msvc.zip -DestinationPath .
+     .\abliterate-cxx.exe guide
+     .\abliterate-cxx.exe doctor
+     .\abliterate-cxx.exe self-check
+     .\abliterate-cxx.exe demo
+
+   If you used Expand-Archive without -DestinationPath, cd into the zip-stem
+   folder (abliterate-cxx-windows-x64-msvc). The exe is immediately there —
+   no extra nested folder. Then run the same four commands.
+
+   Linux:    tar -xzf abliterate-cxx-linux-x64-gcc15.tar.gz && chmod +x …/abliterate-cxx
+   macOS:    tar -xzf abliterate-cxx-macos-arm64-llvm.tar.gz
+             xattr -d com.apple.quarantine ./abliterate-cxx
+
+3. Run, in this order (Hour 0):
 
      abliterate-cxx guide
      abliterate-cxx doctor
+     abliterate-cxx self-check
      abliterate-cxx demo
+
+   Hour 0.5: estimate dim → apply orba-directional → eval toys → recipes.
 
 4. doctor must print  cplusplus=202400
 
 5. Then GETTING-STARTED.md  (same folder).
-
-Windows:  Expand-Archive abliterate-cxx-windows-x64-msvc.zip
-Linux:    tar -xzf abliterate-cxx-linux-x64-gcc15.tar.gz && chmod +x …/abliterate-cxx
-macOS:    tar -xzf abliterate-cxx-macos-arm64-llvm.tar.gz
-          xattr -d com.apple.quarantine ./abliterate-cxx
 
 Each compiler/OS pair has its own filename. See SHA256SUMS on the release.

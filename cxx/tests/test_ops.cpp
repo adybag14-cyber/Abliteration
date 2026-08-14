@@ -154,6 +154,35 @@ void test_eval_empty_is_not_safety() {
   expect(s.false_refusal == 0, "comply row was not refused");
 }
 
+void test_resolve_eval_jsonl_via_examples() {
+  namespace fs = std::filesystem;
+  const auto here = fs::current_path();
+  std::error_code ec;
+  const auto tmp = fs::temp_directory_path() / "abliterate-ops-eval-cwd";
+  fs::create_directories(tmp, ec);
+  if (ec) {
+    std::cerr << "note: cannot mkdir for resolve_eval_jsonl test\n";
+    return;
+  }
+  fs::current_path(tmp, ec);
+  if (ec) {
+    std::cerr << "note: cannot chdir for resolve_eval_jsonl test\n";
+    return;
+  }
+  const auto ex = abliteration::find_examples_dir();
+  const auto resolved = abliteration::resolve_eval_jsonl("generations.jsonl");
+  fs::current_path(here, ec);
+  if (ex.empty()) {
+    std::cerr << "note: examples/ not next to exe — skip resolve_eval_jsonl\n";
+    return;
+  }
+  expect(resolved.is_absolute(), "resolve_eval_jsonl returns absolute");
+  expect(resolved.filename() == "generations.jsonl", "resolve_eval_jsonl filename");
+  expect(fs::exists(resolved), "resolve_eval_jsonl finds generations.jsonl from a foreign cwd");
+  expect(fs::equivalent(resolved, ex / "generations.jsonl", ec),
+         "resolve_eval_jsonl uses find_examples_dir");
+}
+
 void test_find_examples_dir_via_exe() {
   namespace fs = std::filesystem;
   const auto here = fs::current_path();
@@ -217,11 +246,12 @@ int main(int argc, char** argv) {
   test_eval_empty_is_not_safety();
   test_json_field();
   test_find_examples_dir_via_exe();
+  test_resolve_eval_jsonl_via_examples();
   test_shipped_examples();
   if (fails) {
     std::cerr << fails << " test(s) failed\n";
     return 1;
   }
-  std::cout << "ok 9 suites (self-check + generated + empty-eval + shipped examples + exe paths)\n";
+  std::cout << "ok 10 suites (self-check + generated + empty-eval + shipped examples + exe paths + resolve_eval_jsonl)\n";
   return 0;
 }

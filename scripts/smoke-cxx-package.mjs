@@ -7,7 +7,7 @@
 import { spawnSync } from 'child_process';
 import { existsSync, mkdtempSync, readdirSync } from 'fs';
 import { tmpdir } from 'os';
-import { dirname, join, resolve } from 'path';
+import { dirname, join, relative, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -104,6 +104,16 @@ if (!exe) {
   console.error('no abliterate-cxx in archive');
   process.exit(1);
 }
+if (archive.toLowerCase().endsWith('.zip')) {
+  const rel = relative(lab, exe);
+  const parts = rel.split(/[/\\]/).filter((p) => p && p !== '.');
+  if (parts.length > 1) {
+    console.error(
+      `smoke fail: zip nested layout ${rel} (exe must sit at extract root, e.g. ${join(lab, 'abliterate-cxx.exe')})`,
+    );
+    process.exit(1);
+  }
+}
 const cwd = dirname(exe);
 
 function run(args) {
@@ -164,6 +174,15 @@ if (!/examples/i.test(doctorAbs)) {
 const demoAbs = runAbs(['demo']);
 if (!demoAbs.includes('estimate') || !demoAbs.includes('eval')) {
   console.error('demo from foreign cwd did not print estimate/eval');
+  process.exit(1);
+}
+const evAbs = runAbs(['eval', '--jsonl', 'examples/generations.jsonl']);
+if (!evAbs.includes('"n": 5') && !evAbs.includes('"n":5')) {
+  console.error('eval from foreign cwd n != 5');
+  process.exit(1);
+}
+if (!evAbs.includes('false_refusal')) {
+  console.error('eval from foreign cwd missing false_refusal');
   process.exit(1);
 }
 console.log(`smoke ok  lab=${lab}  alien=${alien}  root_unused=${root}`);

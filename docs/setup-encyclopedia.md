@@ -82,7 +82,7 @@ Do **not** expect `bitsandbytes` 4-bit Heretic to match Linux CUDA.
 | **COSMIC** | clone `wang-research-lab/COSMIC` | Direction ID without output templates |
 | **FailSpy abliterator** | clone `FailSpy/abliterator` | TransformerLens notebooks |
 | **ablate-llm** | `pip install ablate-llm` | KL-guided CLI + Hub push |
-| **DECCP topics** | clone `AUGMXNT/deccp` | `measure.py --deccp` |
+| **DECCP** (AUGMXNT topics/dataset, Qwen2 PoC — **not** a peer CLI) | optional clone of [AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) for the topic files; measurement tool is jim-plus llm-abliteration v1.2. Young’s “DECCP” GSM8K cell is that pipeline + topics — not a fourth bake CLI | on jim-plus: `python measure.py --deccp` |
 | **Handbook math (C++26)** | this repo | `npm run cxx:self-check` · [cxx26-platform.md](cxx26-platform.md) |
 
 Pin Heretic configs from this repo instead of guessing: [tools/heretic-tools-reference.md](tools/heretic-tools-reference.md).

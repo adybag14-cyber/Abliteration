@@ -7,13 +7,20 @@ import { techniques, type Technique } from "@/data/guide";
 import { cn, handbookUrl } from "@/lib/utils";
 
 const tiers: Array<Technique["tier"] | "All"> = ["All", "Start here", "Production", "Frontier"];
+const METHOD_TOKEN = /^(dim|orba|cosmic|t\d{2})$/i;
+
+function techniqueMatches(item: Technique, normalized: string) {
+  const identity = `${item.id} ${item.title} ${item.tags.join(" ")}`.toLowerCase();
+  if (METHOD_TOKEN.test(normalized)) return identity.includes(normalized);
+  return `${identity} ${item.summary}`.toLowerCase().includes(normalized);
+}
 
 export function TechniqueExplorer() {
   const [tier, setTier] = useState<(typeof tiers)[number]>("All");
   const [query, setQuery] = useState("");
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
-    return techniques.filter((item) => (tier === "All" || item.tier === tier) && (!normalized || `${item.id} ${item.title} ${item.summary} ${item.tags.join(" ")}`.toLowerCase().includes(normalized)));
+    return techniques.filter((item) => (tier === "All" || item.tier === tier) && (!normalized || techniqueMatches(item, normalized)));
   }, [query, tier]);
 
   return (

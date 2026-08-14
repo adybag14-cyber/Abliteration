@@ -1,14 +1,14 @@
-import { ArrowDown, ArrowRight, CheckCircle2, FileSearch, FlaskConical, Gauge, Layers3, Save, ShieldCheck } from "lucide-react";
+import { ArrowDown, ArrowRight, CheckCircle2, FileSearch, FlaskConical, Layers3, Save, ShieldCheck, Terminal } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 
 const stages = [
+  { label: "Hour 0", detail: "C++26 toy lab · unique nightlies", icon: Terminal },
   { label: "Scope", detail: "one model · one goal", icon: ShieldCheck },
   { label: "Preserve", detail: "immutable base", icon: Save },
   { label: "Contrast", detail: "clean prompt splits", icon: FileSearch },
   { label: "Probe", detail: "reversible hooks", icon: FlaskConical },
   { label: "Edit", detail: "smallest intervention", icon: Layers3 },
-  { label: "Evaluate", detail: "paired gates", icon: Gauge },
-  { label: "Certify", detail: "verified manifest", icon: CheckCircle2 },
+  { label: "Compare and certify", detail: "paired gates · verified manifest", icon: CheckCircle2 },
 ];
 
 export function JourneyMap() {

@@ -91,6 +91,7 @@ writeFileSync(
     'First hour:',
     '  ./abliterate-cxx guide',
     '  ./abliterate-cxx doctor',
+    '  ./abliterate-cxx self-check',
     '  ./abliterate-cxx demo',
     'Requires ISO C++26 (cplusplus=202400).',
     '',
@@ -111,13 +112,21 @@ console.log(`wrote ${join(distRoot, archive)}`);
 
 if (triple.startsWith('windows')) {
   const zip = `${pkgName}.zip`;
-  const zippered = spawnSync('powershell', ['-NoProfile', '-Command', `Compress-Archive -Force -Path '${pkgDir}' -DestinationPath '${join(distRoot, zip)}'`], {
-    encoding: 'utf8',
-  });
-  if (zippered.status === 0) console.log(`wrote ${join(distRoot, zip)}`);
+  const zipPath = join(distRoot, zip);
+  // Zip *contents* of pkgDir so Expand-Archive; cd zip-stem finds the exe at the zip root.
+  const zippered = spawnSync(
+    'powershell',
+    [
+      '-NoProfile',
+      '-Command',
+      `Compress-Archive -Force -Path (Join-Path '${pkgDir}' '*') -DestinationPath '${zipPath}'`,
+    ],
+    { encoding: 'utf8' },
+  );
+  if (zippered.status === 0) console.log(`wrote ${zipPath}`);
   else {
-    const zip2 = spawnSync('zip', ['-r', zip, pkgName], { cwd: distRoot, encoding: 'utf8' });
-    if (zip2.status === 0) console.log(`wrote ${join(distRoot, zip)}`);
+    const zip2 = spawnSync('zip', ['-r', zipPath, '.'], { cwd: pkgDir, encoding: 'utf8' });
+    if (zip2.status === 0) console.log(`wrote ${zipPath}`);
     else {
       process.stderr.write((zippered.stderr || '') + (zip2.stderr || ''));
       throw new Error('Windows package requires a .zip (Day 0 artifact). Compress-Archive and zip both failed.');

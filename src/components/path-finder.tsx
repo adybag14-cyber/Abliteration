@@ -3,7 +3,7 @@ import { ArrowRight, Cpu, Eye, Gauge, Layers3, Sparkles, Terminal, Undo2 } from 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { CXX_NIGHTLY_TAG, cn, cxxDefaultArchives, cxxDownload, handbookUrl } from "@/lib/utils";
+import { cn, handbookUrl } from "@/lib/utils";
 
 type Hardware = "none" | "8" | "16" | "24";
 type Architecture = "dense" | "thinking" | "moe" | "vision";
@@ -40,7 +40,7 @@ export function PathFinder() {
   const [commitment, setCommitment] = useState<Commitment>("reversible");
 
   const recommendation = useMemo(() => {
-    if (hardware === "none") return { title: "C++26 toy-matrix lab", reason: "Ten minutes. No GPU, no Python. Unpack one unique nightly archive and run guide → doctor → demo. This is the geometry lab — not a real-model edit.", profile: "Hour 0 · no GPU", doc: "docs/cxx26-researcher-guide.md", icon: Terminal, lab: true };
+    if (hardware === "none") return { title: "C++26 toy-matrix lab", reason: "Ten minutes. No GPU, no Python. Downloads live in the Lab strip (#lab). Unpack one unique nightly and run guide → doctor → self-check → demo. This is the geometry lab — not a real-model edit.", profile: "Hour 0 · no GPU", doc: "docs/cxx26-researcher-guide.md", icon: Terminal };
     if (commitment === "reversible") return { title: "Residual-hook prototype", reason: "Validate the direction and layer causally before you let any tool modify a checkpoint.", profile: "T02 · reversible", doc: "instructions/inference-only-prototype.md", icon: Undo2 };
     if (architecture === "thinking") return { title: "Thinking-model profile", reason: "Score the final answer separately from chain-of-thought and increase the response window.", profile: "Track H · CoT aware", doc: "instructions/thinking-models-guide.md", icon: Sparkles };
     if (architecture === "moe") return { title: "Router-aware MoE path", reason: "Measure per-expert effects and routing shift; use 4-bit loading and CPU offload on consumer GPUs.", profile: "T08 + T31 · advanced", doc: "techniques/moe-hybrid-abliteration.md", icon: Layers3 };
@@ -50,7 +50,7 @@ export function PathFinder() {
   }, [architecture, commitment, hardware]);
 
   return (
-    <Card id="lab" className="overflow-hidden">
+    <Card className="overflow-hidden">
       <div className="grid lg:grid-cols-[1.15fr_.85fr]">
         <div className="space-y-7 p-6 sm:p-8">
           <ChoiceGroup label="1. What hardware do you have?" value={hardware} onChange={(value) => setHardware(value as Hardware)} items={choices.hardware} />
@@ -71,21 +71,10 @@ export function PathFinder() {
             <recommendation.icon className="mt-8 size-9" aria-hidden="true" />
             <h3 className="mt-5 font-display text-3xl font-semibold tracking-tight">{recommendation.title}</h3>
             <p className="mt-4 max-w-md text-sm leading-6 text-background/70">{recommendation.reason}</p>
-            {"lab" in recommendation && recommendation.lab && (
-              <div className="mt-6 space-y-3">
-                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-background/45">Pick one archive</p>
-                <ul className="space-y-2">
-                  {cxxDefaultArchives.map((archive) => (
-                    <li key={archive.file}>
-                      <a className="block rounded-xl border border-background/15 bg-background/10 px-3 py-2 text-sm font-bold text-background outline-none transition-colors hover:bg-background/20 focus-visible:ring-2 focus-visible:ring-background" href={cxxDownload(archive.file)}>
-                        {archive.label}
-                        <span className="mt-0.5 block font-mono text-[11px] font-medium text-background/55">{archive.file}</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                <p className="font-mono text-[11px] leading-5 text-background/55">Then: <span className="text-background">guide → doctor → demo</span>. Verify <a className="underline decoration-background/30 underline-offset-2 hover:text-background" href={`${CXX_NIGHTLY_TAG}`}>SHA256SUMS</a>.</p>
-              </div>
+            {hardware !== "none" && (
+              <a className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-background/80 underline decoration-background/30 underline-offset-4 outline-none hover:text-background focus-visible:ring-2 focus-visible:ring-background" href="#lab">
+                Back to C++26 toy lab
+              </a>
             )}
           </div>
           <div className="relative mt-10 flex flex-wrap items-center justify-between gap-4">

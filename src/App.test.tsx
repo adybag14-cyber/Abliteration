@@ -1,7 +1,31 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axe from "axe-core";
 import { App } from "@/App";
+
+const nightlyArchives = [
+  {
+    file: "abliterate-cxx-windows-x64-msvc.zip",
+    href: "https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-windows-x64-msvc.zip",
+  },
+  {
+    file: "abliterate-cxx-linux-x64-gcc15.tar.gz",
+    href: "https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-linux-x64-gcc15.tar.gz",
+  },
+  {
+    file: "abliterate-cxx-macos-arm64-llvm.tar.gz",
+    href: "https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-macos-arm64-llvm.tar.gz",
+  },
+] as const;
+
+function expectNightlyArchives(container: HTMLElement = document.body) {
+  const view = within(container);
+  for (const { file, href } of nightlyArchives) {
+    expect(view.getByRole("link", { name: new RegExp(file.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i") })).toHaveAttribute("href", href);
+  }
+  expect(container.querySelectorAll('a[href$="abliterate-cxx-windows-x64.tar.gz"]')).toHaveLength(0);
+  expect(view.queryByRole("link", { name: /abliterate-cxx-windows-x64\.tar\.gz$/i })).not.toBeInTheDocument();
+}
 
 describe("Abliteration Field Guide", () => {
   beforeEach(() => {
@@ -12,25 +36,38 @@ describe("Abliteration Field Guide", () => {
   it("renders the beginner-first information architecture", () => {
     render(<App />);
     expect(screen.getByRole("heading", { level: 1, name: /Abliteration.*without the fog/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /10-minute toy lab/i })).toHaveAttribute("href", "#lab");
+    expect(screen.getByRole("link", { name: /C\+\+26.*toy[-\s]?lab|toy[-\s]?lab.*C\+\+26/i })).toHaveAttribute("href", "#lab");
     expect(screen.getByRole("link", { name: /Find my path/i })).toHaveAttribute("href", "#path");
     expect(screen.getByRole("heading", { name: /Six steps/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /Compare the shape/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /A checkpoint passes all gates/i })).toBeInTheDocument();
+    expect(screen.getAllByText(/guide\s*→\s*doctor\s*→\s*self-check\s*→\s*demo/).length).toBeGreaterThanOrEqual(1);
+
+    const journey = document.querySelector("ol");
+    expect(journey?.querySelector("li")?.textContent).toMatch(/Hour 0/);
+    expect(journey?.querySelector("li")?.textContent).toMatch(/C\+\+26|toy[-\s]?lab/i);
+
+    const lab = document.getElementById("lab");
+    expect(lab).not.toBeNull();
+    const labMargin = Number.parseFloat(getComputedStyle(lab!).scrollMarginTop || "0");
+    expect(lab!.className.includes("scroll-mt-36") || labMargin >= 144).toBe(true);
   });
 
   it("changes the recommended path from beginner choices", async () => {
     const user = userEvent.setup();
     render(<App />);
-    expect(screen.getAllByRole("heading", { name: "C++26 toy-matrix lab" }).length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByRole("link", { name: /abliterate-cxx-windows-x64-msvc\.zip/i })).toHaveAttribute(
-      "href",
-      "https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-windows-x64-msvc.zip",
-    );
-    expect(screen.getByRole("link", { name: /abliterate-cxx-linux-x64-gcc15\.tar\.gz/i })).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: /abliterate-cxx-windows-x64\.tar\.gz$/i })).not.toBeInTheDocument();
+    expect(within(document.getElementById("path")!).getByRole("heading", { name: "C++26 toy-matrix lab" })).toBeInTheDocument();
+    expectNightlyArchives(document.getElementById("lab")!);
+
     await user.click(screen.getByRole("button", { name: /12–16 GB/i }));
     expect(screen.getByRole("heading", { name: "Residual-hook prototype" })).toBeInTheDocument();
+    expectNightlyArchives(document.getElementById("lab")!);
+
+    await user.click(screen.getByRole("button", { name: /24 GB\+/i }));
+    await user.click(screen.getByRole("button", { name: /MoE\s*Routed experts/i }));
+    await user.click(screen.getByRole("button", { name: "Create a candidate" }));
+    expect(screen.getByRole("heading", { name: "Router-aware MoE path" })).toBeInTheDocument();
+    expectNightlyArchives(document.getElementById("lab")!);
   });
 
   it("stores step completion and exposes a reset", async () => {
@@ -55,13 +92,41 @@ describe("Abliteration Field Guide", () => {
   it("filters the technique atlas", async () => {
     const user = userEvent.setup();
     render(<App />);
-    await user.type(screen.getByRole("textbox", { name: "Search techniques" }), "router");
-    expect(screen.getByRole("heading", { name: "Router-weighted MoE" })).toBeInTheDocument();
-    expect(screen.queryByRole("heading", { name: /Mean-difference DIM/ })).not.toBeInTheDocument();
-    await user.clear(screen.getByRole("textbox", { name: "Search techniques" }));
-    await user.type(screen.getByRole("textbox", { name: "Search techniques" }), "DIM");
-    expect(screen.getByRole("heading", { name: /Mean-difference DIM/ })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "C++26 toy-matrix lab" })).toBeInTheDocument(); // PathFinder default, not the atlas card
+    const atlas = within(document.getElementById("techniques")!);
+    const search = screen.getByRole("textbox", { name: "Search techniques" });
+
+    await user.type(search, "router");
+    expect(atlas.getByRole("heading", { name: "Router-weighted MoE" })).toBeInTheDocument();
+    expect(atlas.queryByRole("heading", { name: /Mean-difference DIM/ })).not.toBeInTheDocument();
+
+    await user.clear(search);
+    await user.type(search, "DIM");
+    expect(atlas.getByRole("heading", { name: /Mean-difference DIM/ })).toBeInTheDocument();
+    expect(atlas.queryByRole("heading", { name: /False-refusal/ })).not.toBeInTheDocument();
+    expect(atlas.queryByText("T38")).not.toBeInTheDocument();
+    expect(within(document.getElementById("path")!).getByRole("heading", { name: "C++26 toy-matrix lab" })).toBeInTheDocument();
+
+    await user.clear(search);
+    await user.type(search, "ORBA");
+    expect(atlas.getByRole("heading", { name: /ORBA/ })).toBeInTheDocument();
+    expect(atlas.getByText("T34")).toBeInTheDocument();
+    expect(atlas.queryByText("T36")).not.toBeInTheDocument();
+    expect(atlas.queryByRole("heading", { name: /COSMIC/ })).not.toBeInTheDocument();
+
+    await user.clear(search);
+    await user.type(search, "COSMIC");
+    expect(atlas.getByRole("heading", { name: /COSMIC/ })).toBeInTheDocument();
+    expect(atlas.getByText("T36")).toBeInTheDocument();
+    expect(atlas.queryByText("T34")).not.toBeInTheDocument();
+  });
+
+  it("expands the no-GPU FAQ toward the C++26 toy lab", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    const trigger = screen.getByRole("button", { name: "I have no GPU" });
+    await user.click(trigger);
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(trigger.closest("[data-slot='accordion-item']")).toHaveTextContent(/C\+\+26|cxx-nightly|toy[-\s]?lab/i);
   });
 
   it("switches themes and remembers the choice", async () => {

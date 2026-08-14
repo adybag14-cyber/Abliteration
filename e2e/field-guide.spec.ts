@@ -4,6 +4,14 @@ import { expect, test, type Locator, type Page, type TestInfo } from "@playwrigh
 
 const captureDirectory = path.resolve("artifacts/playwright/captures");
 
+const nightlyArchives = [
+  "abliterate-cxx-windows-x64-msvc.zip",
+  "abliterate-cxx-linux-x64-gcc15.tar.gz",
+  "abliterate-cxx-macos-arm64-llvm.tar.gz",
+] as const;
+
+const hourZeroCommand = /guide\s*→\s*doctor\s*→\s*self-check\s*→\s*demo/;
+
 async function openGuide(page: Page) {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("./", { waitUntil: "networkidle" });
@@ -43,6 +51,29 @@ async function capture(target: Page | Locator, testInfo: TestInfo, label: string
   await testInfo.attach(label, { path: screenshotPath, contentType: "image/png" });
 }
 
+async function expectNightlyArchives(scope: Page | Locator) {
+  for (const file of nightlyArchives) {
+    const link = scope.locator(`a[href*="releases/download/cxx-nightly/"][href$="${file}"]`);
+    await expect(link).toHaveCount(1);
+    await expect(link).toBeVisible();
+    await expect(scope.getByRole("link", { name: new RegExp(file.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")) })).toBeVisible();
+  }
+}
+
+async function expectLabClearsStickyHeader(page: Page) {
+  const lab = page.locator("#lab");
+  await expect(lab).toBeAttached();
+  const metrics = await lab.evaluate((el) => {
+    const className = el instanceof SVGElement ? "" : el.className.toString();
+    const scrollMarginTop = Number.parseFloat(getComputedStyle(el).scrollMarginTop || "0");
+    return { className, scrollMarginTop };
+  });
+  expect(
+    metrics.className.split(/\s+/).includes("scroll-mt-36") || metrics.scrollMarginTop >= 144,
+    `expected #lab to clear the sticky header (scroll-mt-36 or ≥144px), got class="${metrics.className}" scroll-margin-top=${metrics.scrollMarginTop}`,
+  ).toBe(true);
+}
+
 test("renders the complete responsive guide without browser errors or horizontal overflow", async ({ page }, testInfo) => {
   const browserErrors: string[] = [];
   page.on("console", (message) => {
@@ -55,6 +86,14 @@ test("renders the complete responsive guide without browser errors or horizontal
   await expect(page.getByRole("heading", { level: 1, name: /Abliteration,/ })).toBeVisible();
   await expect(page.getByRole("img", { name: /measured direction being isolated/ })).toBeVisible();
   await expect(page.getByRole("img", { name: /Method profile for Heretic projected/ })).toBeVisible();
+
+  await expect(page.getByRole("link", { name: /C\+\+26.*toy[-\s]?lab|toy[-\s]?lab.*C\+\+26/ })).toHaveAttribute("href", "#lab");
+  await expect(page.getByRole("link", { name: /Find my path/ })).toHaveAttribute("href", "#path");
+
+  const firstJourneyStage = page.locator("ol").filter({ hasText: /Hour 0/ }).locator("li").first();
+  await expect(firstJourneyStage).toContainText(/Hour 0/);
+  await expect(firstJourneyStage).toContainText(/C\+\+26|toy[-\s]?lab/);
+  await expect(page.getByText(hourZeroCommand).first()).toBeVisible();
 
   const hasHorizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
@@ -87,18 +126,22 @@ test("renders the complete responsive guide without browser errors or horizontal
 test("route finder, learning progress, radar, and technique atlas remain interactive", async ({ page }, testInfo) => {
   await openGuide(page);
 
-  await expect(page.locator("#lab").getByRole("heading", { level: 3, name: "C++26 toy-matrix lab" })).toBeVisible();
-  await expect(page.getByRole("link", { name: /abliterate-cxx-linux-x64-gcc15\.tar\.gz/ })).toHaveAttribute(
-    "href",
-    /releases\/download\/cxx-nightly\/abliterate-cxx-linux-x64-gcc15\.tar\.gz$/,
-  );
-  await expect(page.getByRole("link", { name: /abliterate-cxx-windows-x64-msvc\.zip/ })).toBeVisible();
+  const lab = page.locator("#lab");
+  await expect(page.locator("#path").getByRole("heading", { level: 3, name: "C++26 toy-matrix lab" })).toBeVisible();
+  await expect(lab.getByRole("heading", { level: 3, name: "C++26 toy-matrix lab" })).toBeVisible();
+  await expectNightlyArchives(lab);
   await expect(page.locator('a[href$="abliterate-cxx-windows-x64.tar.gz"]')).toHaveCount(0);
+  await expectLabClearsStickyHeader(page);
+  await expect(lab.getByText(hourZeroCommand).first()).toBeVisible();
+
+  await capture(lab, testInfo, "default-lab", false);
 
   await page.getByRole("button", { name: /24 GB\+/ }).click();
-  await page.getByRole("button", { name: "MoE Routed experts" }).click();
+  await page.getByRole("button", { name: /MoE\s*Routed experts/ }).click();
   await page.getByRole("button", { name: "Create a candidate" }).click();
-  await expect(page.getByRole("heading", { level: 3, name: "Router-aware MoE path" })).toBeVisible();
+  await expect(page.locator("#path").getByRole("heading", { level: 3, name: "Router-aware MoE path" })).toBeVisible();
+  await expectNightlyArchives(lab);
+  await expect(page.locator('a[href$="abliterate-cxx-windows-x64.tar.gz"]')).toHaveCount(0);
   await capture(page.locator("#path"), testInfo, "route-finder", false);
 
   await page.getByRole("button", { name: "Mark Set the boundary complete" }).click();
@@ -111,10 +154,32 @@ test("route finder, learning progress, radar, and technique atlas remain interac
   await expect(page.getByRole("radio", { name: /Protected subspace/ })).toBeChecked();
   await expect(page.getByRole("img", { name: /Method profile for Protected subspace/ })).toBeVisible();
 
-  await page.getByRole("textbox", { name: "Search techniques" }).fill("T31");
+  const atlas = page.locator("#techniques");
+  const atlasSearch = page.getByRole("textbox", { name: "Search techniques" });
+
+  await atlasSearch.fill("DIM");
+  await expect(atlas.getByRole("heading", { name: /Mean-difference DIM/ })).toBeVisible();
+  await expect(atlas.getByRole("heading", { name: /False-refusal/ })).toHaveCount(0);
+  await expect(atlas.getByText("T38", { exact: true })).toHaveCount(0);
+
+  await atlasSearch.fill("ORBA");
+  await expect(atlas.getByRole("heading", { name: /ORBA/ })).toBeVisible();
+  await expect(atlas.getByText("T34", { exact: true })).toBeVisible();
+  await expect(atlas.getByText(/^T\d{2}$/)).toHaveCount(1);
+
+  await atlasSearch.fill("COSMIC");
+  await expect(atlas.getByRole("heading", { name: /COSMIC/ })).toBeVisible();
+  await expect(atlas.getByText("T36", { exact: true })).toBeVisible();
+  await expect(atlas.getByText(/^T\d{2}$/)).toHaveCount(1);
+
+  await atlasSearch.fill("T31");
   await expect(page.getByText("Router-weighted MoE", { exact: true })).toBeVisible();
   await expect(page.getByText("Reversible hook ablation", { exact: true })).toBeHidden();
 
+  const noGpu = page.getByRole("button", { name: "I have no GPU" });
+  await noGpu.click();
+  await expect(noGpu).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator("[data-slot='accordion-item']").filter({ has: noGpu })).toContainText(/C\+\+26|cxx-nightly|toy[-\s]?lab/);
 });
 
 test("evaluation gates and theme communicate state changes clearly", async ({ page }, testInfo) => {

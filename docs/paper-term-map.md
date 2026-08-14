@@ -11,7 +11,7 @@ Type the word from the paper. Open one chapter. Authorized factory QA / research
 | **false-refusal** / over-refusal | Wang et al. 2410.03415 · T38 | [techniques/false-refusal-vector-ablation.md](../techniques/false-refusal-vector-ablation.md) | Paper: `w′ ← w − λ v` against **true** refusal (need a harmful set for `v`). Not factory DIM, not T03 (project off `g`). Table 1: raw `w` lifts harmful **and** XSTest. C++: two `estimate --mode dim`, form `w′` offline — no Wang flag. Maskey 2603.27518: one factory vector may still be incomplete |
 | **harm ≠ refusal** | Zhao et al. 2507.11878 · T39 | [techniques/harm-vs-refusal-directions.md](../techniques/harm-vs-refusal-directions.md) | Analysis / Latent Guard; do not flatten both axes |
 | **Heretic** | p-e-w/heretic | [instructions/heretic-workflow.md](../instructions/heretic-workflow.md) | Day 1 real checkpoint |
-| **C++26 lab** | this repo | [cxx26-researcher-guide.md](cxx26-researcher-guide.md) | `guide` → `doctor` → `demo` on [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) |
+| **C++26 lab** | this repo | [cxx26-researcher-guide.md](cxx26-researcher-guide.md) | `guide` → `doctor` → `self-check` → `demo` on [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) |
 | **eval gates** | handbook contract | [evaluation.md](evaluation.md) · [instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) | Empty / mute ≠ safety. Keyword judge ≠ deploy truth. |
 
 T-IDs in this table follow [advanced-techniques-catalog.md](advanced-techniques-catalog.md) (T34 ORBA, T38 false-refusal, T39 harm≠refusal).

@@ -60,9 +60,9 @@ export function SiteHeader() {
         </div>
       </div>
       <Progress value={scroll} className="h-0.5 rounded-none bg-transparent" aria-label="Page reading progress" />
-      <nav aria-label="Guide sections mobile" className="scrollbar-none flex gap-1 overflow-x-auto border-t border-border/40 px-3 py-2 lg:hidden">
+      <nav aria-label="Guide sections mobile" className="scrollbar-none flex gap-1 overflow-x-auto border-t border-border/40 px-3 py-2.5 lg:hidden">
         {navigation.map(([label, href]) => (
-          <Button key={href} variant="ghost" size="sm" asChild><a href={href}>{label}</a></Button>
+          <Button key={href} variant="ghost" size="sm" className="shrink-0" asChild><a href={href}>{label}</a></Button>
         ))}
       </nav>
     </header>

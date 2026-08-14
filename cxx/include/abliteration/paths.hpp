@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <filesystem>
 #include <string>
+#include <string_view>
 #include <vector>
 
 #if defined(_WIN32)
@@ -120,6 +121,48 @@ inline std::filesystem::path find_examples_dir() {
     if (is_examples(c)) return std::filesystem::absolute(c);
   }
   return {};
+}
+
+// Shipped docs next to a nightly/exe: exe dir, then parent, then cwd.
+// Returns empty if not found — callers print the basename only (never repo cxx/ or docs/ prefixes).
+inline std::filesystem::path find_shipped_file(std::string_view name) {
+  const std::filesystem::path n{name};
+  if (n.empty()) return {};
+  ensure_exe_parent();
+  const auto exe = exe_parent();
+  std::vector<std::filesystem::path> cands;
+  if (!exe.empty()) {
+    cands.push_back(exe / n);
+    cands.push_back(exe.parent_path() / n);
+  }
+  {
+    std::error_code ec;
+    const auto cwd = std::filesystem::current_path(ec);
+    if (!ec) cands.push_back(cwd / n);
+  }
+  for (const auto& c : cands) {
+    std::error_code ec;
+    if (std::filesystem::is_regular_file(c, ec)) return std::filesystem::absolute(c);
+  }
+  return {};
+}
+
+// --jsonl: use the path if it exists, else the same filename / relative path under examples/.
+// Missing files are returned unchanged so load_jsonl can throw.
+inline std::filesystem::path resolve_eval_jsonl(std::string_view given) {
+  std::filesystem::path p{given};
+  std::error_code ec;
+  if (!p.empty() && std::filesystem::exists(p, ec)) return std::filesystem::absolute(p);
+  const auto ex = find_examples_dir();
+  if (!ex.empty()) {
+    if (!p.filename().empty()) {
+      const auto by_name = ex / p.filename();
+      if (std::filesystem::exists(by_name, ec)) return std::filesystem::absolute(by_name);
+    }
+    const auto by_rel = ex / p;
+    if (std::filesystem::exists(by_rel, ec)) return std::filesystem::absolute(by_rel);
+  }
+  return p;
 }
 
 }  // namespace abliteration

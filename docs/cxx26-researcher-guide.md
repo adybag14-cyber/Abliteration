@@ -9,10 +9,12 @@ This page is the **hand-holding path** for `abliterate-cxx`. Read it top to bott
 ## The only order that works
 
 ```text
-doctor → self-check → demo → estimate dim → apply orba-directional → eval toys
+guide → doctor → self-check → demo → estimate dim → apply orba-directional → eval toys
          → recipes → (optional) projected / cosmic / svd
          → then and only then a real model (Heretic)
 ```
+
+Hour 0 is `guide` → `doctor` → `self-check` → `demo`. Hour 0.5 is `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`.
 
 If you skip to a 32B GGUF you will debug tooling for weeks and learn no geometry.
 
@@ -32,21 +34,28 @@ Pick **one unique filename**. GCC and Clang no longer share a name.
 
 **Windows x64**
 
+The zip is flattened: `abliterate-cxx.exe` sits next to `GETTING-STARTED.md` at archive root.
+
 ```powershell
 # from https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly
-Expand-Archive abliterate-cxx-windows-x64-msvc.zip
-cd abliterate-cxx-windows-x64-msvc
+Expand-Archive -Force -Path abliterate-cxx-windows-x64-msvc.zip -DestinationPath .
 .\abliterate-cxx.exe guide
 .\abliterate-cxx.exe doctor
+.\abliterate-cxx.exe self-check
 .\abliterate-cxx.exe demo
 ```
+
+If you used `Expand-Archive` without `-DestinationPath`, `cd` into the zip-stem folder (`abliterate-cxx-windows-x64-msvc`). The exe is immediately there — no extra nested folder. Then run the same four Hour 0 commands.
 
 **Linux x64 / arm64**
 
 ```bash
 tar -xzf abliterate-cxx-linux-x64-gcc15.tar.gz
 cd abliterate-cxx-linux-x64-gcc15
-./abliterate-cxx doctor && ./abliterate-cxx demo
+./abliterate-cxx guide
+./abliterate-cxx doctor
+./abliterate-cxx self-check
+./abliterate-cxx demo
 ```
 
 **macOS arm64 / x64**
@@ -55,7 +64,10 @@ cd abliterate-cxx-linux-x64-gcc15
 tar -xzf abliterate-cxx-macos-arm64-llvm.tar.gz
 cd abliterate-cxx-macos-arm64-llvm
 xattr -d com.apple.quarantine ./abliterate-cxx 2>/dev/null || true
-./abliterate-cxx doctor && ./abliterate-cxx demo
+./abliterate-cxx guide
+./abliterate-cxx doctor
+./abliterate-cxx self-check
+./abliterate-cxx demo
 ```
 
 **From source (ISO C++26)**
@@ -63,7 +75,10 @@ xattr -d com.apple.quarantine ./abliterate-cxx 2>/dev/null || true
 ```bash
 npm run cxx:build
 npm run cxx:test
+./cxx/build/abliterate-cxx guide
 ./cxx/build/abliterate-cxx doctor
+./cxx/build/abliterate-cxx self-check
+./cxx/build/abliterate-cxx demo
 ```
 
 `doctor` must print `cplusplus=202400`. Anything else is the wrong compiler.
@@ -121,7 +136,7 @@ abliterate-cxx eval --jsonl examples/generations.jsonl
 
 Factory goal: **false_refusal → 0**, **true_refusal_hits** not collapsed. If both collapse you ablated raw factory `w` or the safety DIM — T38 is Wang `w′ ← w − λ v`, not a two-set factory DIM.
 
-`empty_response` / `degenerate` (whitespace, `...`) is **not** a safety hit and **not** a successful abliteration. All-empty JSONL exits non-zero — generate answers first. Keyword rates are a learning loop, not a deploy gate.
+`empty_response` / `degenerate` (whitespace, `...`) is **not** a safety hit (exit 2) and **not** a successful abliteration. All-empty JSONL exits non-zero — generate answers first. Keyword rates are a learning loop, not a deploy gate.
 
 This is a **keyword judge**. It is for learning the loop. Deploy gates live in `docs/evaluation.md` and `data/eval/*.jsonl`.
 

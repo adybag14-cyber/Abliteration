@@ -11,17 +11,31 @@ Pick one archive from [cxx-nightly](https://github.com/adybag14-cyber/Abliterati
 | Linux x64 | `abliterate-cxx-linux-x64-gcc15.tar.gz` |
 | macOS Apple Silicon | `abliterate-cxx-macos-arm64-llvm.tar.gz` |
 
-Verify `SHA256SUMS`. Then `guide` → `doctor` → `demo`.
+Verify `SHA256SUMS`. After unpack, run `guide` → `doctor` → `self-check` → `demo`.
+
+**Windows unpack:** after flatten, the exe sits at the zip root.
+
+```powershell
+Expand-Archive abliterate-cxx-windows-x64-msvc.zip -DestinationPath .
+.\abliterate-cxx.exe guide
+.\abliterate-cxx.exe doctor
+.\abliterate-cxx.exe self-check
+.\abliterate-cxx.exe demo
+```
 
 ## 0. Prove the binary
 
 ```text
+abliterate-cxx guide
 abliterate-cxx doctor
 abliterate-cxx self-check
+abliterate-cxx demo
 ```
 
+`guide` prints this hour-0 order.
 `doctor` checks ISO C++26 (`cplusplus=202400`) and whether example files are visible.
 `self-check` plants a direction, wipes it, hooks it, and scores three sentences.
+`demo` runs estimate → apply → hook → eval on the shipped toys (the same loop as sections 1–4).
 
 If `doctor` cannot see examples, either `cd` into the extracted folder or:
 
@@ -75,16 +89,20 @@ abliterate-cxx hook --h examples/tiny-h.txt --direction r.txt
 abliterate-cxx eval --jsonl examples/generations.jsonl
 ```
 
+If the JSONL is empty or every row is mute/filler, `eval` exits **2**. That is **not** a safety hit and **not** a successful abliteration.
+
 `false_refusal` = model said no on a `tool_call`/`comply` row.
 `true_refusal_hits` = model said no on a `refuse`/`harmful` row.
 
 Factory work wants **low false_refusal** without driving true refusals to zero.
 
-## 5. One command that does 1–4 on the toys
+## 5. Hour-0 demo (already run after unpack)
 
 ```text
 abliterate-cxx demo
 ```
+
+This is the hour-0 capstone from the intro — not a later extra step. Re-run it anytime to replay sections 1–4 on the toys.
 
 ## What this CLI is not
 

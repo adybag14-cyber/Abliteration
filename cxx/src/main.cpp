@@ -31,6 +31,7 @@ void usage() {
       << ui::bold() << "Start here" << ui::reset() << "  (no GPU, no Python)\n"
       << "  abliterate-cxx " << ui::cyan() << "guide" << ui::reset() << "         10-minute path\n"
       << "  abliterate-cxx " << ui::cyan() << "doctor" << ui::reset() << "        binary + examples check\n"
+      << "  abliterate-cxx " << ui::cyan() << "self-check" << ui::reset() << "    planted-direction unit test\n"
       << "  abliterate-cxx " << ui::cyan() << "demo" << ui::reset() << "          run toys: estimate → apply → hook → eval\n"
       << "  abliterate-cxx " << ui::cyan() << "recipes" << ui::reset() << "       paper → --mode map (2024–2026)\n"
       << "  abliterate-cxx " << ui::cyan() << "why <mode>" << ui::reset() << "     one screen per operator\n"
@@ -41,7 +42,6 @@ void usage() {
       << "           --weight W.txt --direction r.txt [--alpha 1] [--out W2.txt]\n"
       << "  hook     --h H.txt --direction r.txt [--alpha 1]\n"
       << "  eval     --jsonl generations.jsonl\n"
-      << "  self-check              planted-direction unit test (also CI)\n"
       << "  version\n"
       << '\n'
       << ui::dim()
@@ -53,6 +53,8 @@ void usage() {
 
 int cmd_guide() {
   ui::banner();
+  const auto walk = abliteration::find_shipped_file("GETTING-STARTED.md");
+  const auto hand = abliteration::find_shipped_file("cxx26-researcher-guide.md");
   std::cout
       << '\n'
       << ui::bold() << "10 minutes — hold this order" << ui::reset() << "\n\n"
@@ -69,8 +71,8 @@ int cmd_guide() {
       << ui::dim() << "             only then pick a 2025–2026 mode" << ui::reset() << "\n\n"
       << ui::bold() << "Do not" << ui::reset() << " start on a 32B GGUF. This CLI is the lab notebook.\n"
       << "Real checkpoints: Heretic / llm-abliteration after step 6.\n\n"
-      << "Shipped walkthrough: cxx/GETTING-STARTED.md\n"
-      << "Handbook: docs/cxx26-researcher-guide.md\n";
+      << "Shipped walkthrough: " << (walk.empty() ? "GETTING-STARTED.md" : walk.string()) << '\n'
+      << "Handbook: " << (hand.empty() ? "cxx26-researcher-guide.md" : hand.string()) << '\n';
   ui::next("abliterate-cxx doctor");
   return 0;
 }
@@ -100,7 +102,6 @@ int cmd_doctor() {
   }
   if (rc == 0) {
     ui::next("abliterate-cxx self-check");
-    ui::next("abliterate-cxx demo");
   } else {
     ui::next("abliterate-cxx guide");
   }
@@ -408,7 +409,7 @@ int cmd_eval(int argc, char** argv) {
     return 2;
   }
   try {
-    const auto recs = abliteration::load_jsonl(jp);
+    const auto recs = abliteration::load_jsonl(abliteration::resolve_eval_jsonl(jp).string());
     const auto s = abliteration::score_records(recs);
     std::cout << "{\n"
               << "  \"n\": " << s.n << ",\n"

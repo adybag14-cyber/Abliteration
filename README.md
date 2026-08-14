@@ -4,7 +4,7 @@
 
 Living handbook for **LLM abliteration** (weight-level refusal-direction surgery) plus **agentic security** stacks for factory firmware QA, pentest labs, and [CyberGym](https://cybergym.io) evaluation.
 
-**First hour (no GPU):** download one unique [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) archive — Windows `abliterate-cxx-windows-x64-msvc.zip`, Linux `abliterate-cxx-linux-x64-gcc15.tar.gz`, macOS `abliterate-cxx-macos-arm64-llvm.tar.gz` — then `abliterate-cxx guide` → `doctor` → `demo`. Walkthrough: [docs/cxx26-researcher-guide.md](docs/cxx26-researcher-guide.md). Paper word → chapter: [docs/paper-term-map.md](docs/paper-term-map.md).
+**First hour (no GPU):** download one unique [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) archive — Windows `abliterate-cxx-windows-x64-msvc.zip`, Linux `abliterate-cxx-linux-x64-gcc15.tar.gz`, macOS `abliterate-cxx-macos-arm64-llvm.tar.gz` — then Hour 0: `abliterate-cxx guide` → `doctor` → `self-check` → `demo`. Hour 0.5: `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`. Walkthrough: [docs/cxx26-researcher-guide.md](docs/cxx26-researcher-guide.md). Paper word → chapter: [docs/paper-term-map.md](docs/paper-term-map.md).
 
 **Then:** [docs/complete-curriculum.md](docs/complete-curriculum.md) · [docs/setup-encyclopedia.md](docs/setup-encyclopedia.md) · [docs/bleeding-edge.md](docs/bleeding-edge.md) · [instructions/method-cookbook.md](instructions/method-cookbook.md)
 

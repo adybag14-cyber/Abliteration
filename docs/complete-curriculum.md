@@ -2,7 +2,7 @@
 
 The single path through **every method, setup, and script** in this handbook. Goal: this repo is the most complete abliteration reference on the internet — papers, tools, math, hardware, and runnable code.
 
-**Hour 0 (no GPU):** [Stage 0.5](#stage-05--toy-lab-10-min-no-gpu) (`guide` → `doctor` → `demo`). If you only want a working local **checkpoint** today, skip to [Stage 2](#stage-2--first-successful-run-heretic) after that. Come back here when you need the rest.
+**Hour 0 (no GPU):** [Stage 0.5](#stage-05--toy-lab-10-min-no-gpu) (`guide` → `doctor` → `self-check` → `demo`). If you only want a working local **checkpoint** today, skip to [Stage 2](#stage-2--first-successful-run-heretic) after that. Come back here when you need the rest.
 
 Paper word → chapter: [paper-term-map.md](paper-term-map.md).
 
@@ -48,7 +48,7 @@ Do this **before** Heretic. The operators are the same math you will later apply
 
 1. Download one unique file from [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly): `abliterate-cxx-windows-x64-msvc.zip` · `abliterate-cxx-linux-x64-gcc15.tar.gz` · `abliterate-cxx-macos-arm64-llvm.tar.gz`.
 2. Unpack so `examples/` sits next to the binary.
-3. `abliterate-cxx guide` then `doctor` then `demo`. `doctor` must print `cplusplus=202400`.
+3. `abliterate-cxx guide` then `doctor` then `self-check` then `demo`. `doctor` must print `cplusplus=202400`.
 
 Full path: [cxx26-researcher-guide.md](cxx26-researcher-guide.md). This CLI is **not** a Heretic/GGUF substitute.
 
@@ -64,7 +64,7 @@ Pick **one** row. Full matrices: [setup-encyclopedia.md](setup-encyclopedia.md) 
 | Windows + NVIDIA, 24 GB+ | Native or WSL; `config.production.toml` |
 | Linux + NVIDIA | Native Heretic; best path |
 | Apple Silicon | Cloud/WSL surgery **or** MLX / Blasphemer / 199-biotech Gemma recipes; infer with `mlx-lm` / llama.cpp Metal |
-| No GPU | Download an already-abliterated GGUF **or** run surgery on a rented GPU, then import |
+| No GPU | Hour 0 is the C++26 toy lab (Stage 0.5). A real checkpoint still needs a rented GPU or an already-abliterated GGUF — CPU-only surgery is not the first hour |
 | 20B+ / MoE on 24 GB | `llm-abliteration` 4-bit measure + `sharded_ablate.py` |
 
 ```powershell

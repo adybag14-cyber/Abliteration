@@ -67,9 +67,13 @@ A target that cannot prove `cplusplus=202400` **fails**. There is no C++20 fallb
 ```bash
 tar -xzf abliterate-cxx-linux-x64-gcc15.tar.gz
 cd abliterate-cxx-linux-x64-gcc15
+./abliterate-cxx guide
 ./abliterate-cxx doctor
+./abliterate-cxx self-check
 ./abliterate-cxx demo
 sha256sum -c SHA256SUMS   # from the release root
 ```
+
+Hour 0 is `guide` → `doctor` → `self-check` → `demo`. Hour 0.5: `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`.
 
 Archives are named `abliterate-cxx-<os>-<arch>-<compiler>` so GCC and Clang never overwrite each other. `examples/` sits next to the binary (`doctor` finds them without `cd` if you keep that layout). The **MSVC** Windows nightly (`windows-x64-msvc`) is `/MT` (static CRT, no VC++ redistributable). The Clang Windows zip may still need the Universal CRT. `doctor` locates `examples/` from the real executable path.
