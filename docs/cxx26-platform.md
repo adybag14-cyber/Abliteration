@@ -64,14 +64,28 @@ A target that cannot prove `cplusplus=202400` **fails**. There is no C++20 fallb
 
 **Download:** Actions run artifacts (30 days) and the rolling GitHub Release [`cxx-nightly`](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) on every `main` push. Version tags `v*` publish a full release.
 
-```bash
+```text
+SHA256SUMS is on the cxx-nightly release, not inside the archive.
+Verify the download before you unpack (sha256sum / Get-FileHash).
+
+# Linux
 tar -xzf abliterate-cxx-linux-x64-gcc15.tar.gz
 cd abliterate-cxx-linux-x64-gcc15
+
+# macOS
+tar -xzf abliterate-cxx-macos-arm64-llvm.tar.gz
+cd abliterate-cxx-macos-arm64-llvm
+
+# Windows — dest .
+Expand-Archive -Force -Path abliterate-cxx-windows-x64-msvc.zip -DestinationPath .
+
+# Windows — no dest: cd into the zip-stem folder
+# (abliterate-cxx-windows-x64-msvc). The exe is immediately there.
+
 ./abliterate-cxx guide
 ./abliterate-cxx doctor
 ./abliterate-cxx self-check
 ./abliterate-cxx demo
-sha256sum -c SHA256SUMS   # from the release root
 ```
 
 Hour 0 is `guide` → `doctor` → `self-check` → `demo`. Hour 0.5: `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`.

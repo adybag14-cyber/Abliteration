@@ -135,7 +135,7 @@ export function App() {
 
         <section id="techniques" className="scroll-mt-28 border-y border-border bg-card/45 py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal><SectionHeading eyebrow="Technique atlas" title="Go deeper without getting lost" description="The full handbook has T00–T39. Search DIM, ORBA, COSMIC, or a T-ID. This atlas surfaces the techniques that change your next decision." /></Reveal>
+            <Reveal><SectionHeading eyebrow="Technique atlas" title="Go deeper without getting lost" description="This atlas is a decision subset, not the T01–T39 catalog. Search DIM, ORBA, COSMIC, or a T-ID shown on a card." /></Reveal>
             <Reveal className="mt-10"><TechniqueExplorer /></Reveal>
           </div>
         </section>

@@ -115,6 +115,32 @@ if (archive.toLowerCase().endsWith('.zip')) {
   }
 }
 const cwd = dirname(exe);
+const gettingStarted = join(cwd, 'GETTING-STARTED.md');
+
+function slashes(s) {
+  return String(s).replace(/\\/g, '/');
+}
+
+function assertGuide(out) {
+  if (!slashes(out).includes(slashes(gettingStarted))) {
+    console.error(`guide did not print absolute GETTING-STARTED.md (${gettingStarted})`);
+    process.exit(1);
+  }
+}
+
+function assertDoctor(out) {
+  if (!out.includes('cplusplus=202400')) {
+    console.error('doctor missing cplusplus=202400');
+    process.exit(1);
+  }
+}
+
+function assertSelfCheck(out) {
+  if (!out.includes('self-check ok') || !out.includes('"ok":true')) {
+    console.error('self-check missing self-check ok / "ok":true');
+    process.exit(1);
+  }
+}
 
 function run(args) {
   const cmd = wrap ? wrap.split(/\s+/).concat([exe, ...args]) : [exe, ...args];
@@ -129,7 +155,14 @@ function run(args) {
   return r.stdout || '';
 }
 
-run(['doctor']);
+// Hour 0 (guide → doctor → self-check → demo).
+if (!existsSync(gettingStarted)) {
+  console.error('GETTING-STARTED.md missing next to exe');
+  process.exit(1);
+}
+assertGuide(run(['guide']));
+assertDoctor(run(['doctor']));
+assertSelfCheck(run(['self-check']));
 const demo = run(['demo']);
 if (!demo.includes('estimate') || !demo.includes('eval')) {
   console.error('demo did not print estimate/eval');
@@ -166,11 +199,14 @@ function runAbs(args) {
   }
   return r.stdout || '';
 }
+assertGuide(runAbs(['guide']));
 const doctorAbs = runAbs(['doctor']);
+assertDoctor(doctorAbs);
 if (!/examples/i.test(doctorAbs)) {
   console.error('doctor from foreign cwd did not report examples/');
   process.exit(1);
 }
+assertSelfCheck(runAbs(['self-check']));
 const demoAbs = runAbs(['demo']);
 if (!demoAbs.includes('estimate') || !demoAbs.includes('eval')) {
   console.error('demo from foreign cwd did not print estimate/eval');

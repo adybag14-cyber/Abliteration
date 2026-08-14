@@ -171,7 +171,12 @@ void test_resolve_eval_jsonl_via_examples() {
   }
   const auto ex = abliteration::find_examples_dir();
   const auto resolved = abliteration::resolve_eval_jsonl("generations.jsonl");
+  const auto nested = abliteration::resolve_eval_jsonl("no-such-dir/generations.jsonl");
+  const auto prefixed = abliteration::resolve_eval_jsonl("examples/generations.jsonl");
   fs::current_path(here, ec);
+  expect(!fs::exists(nested), "no-such-dir/generations.jsonl does not exist");
+  expect(nested.parent_path().filename() == "no-such-dir",
+         "no-such-dir/generations.jsonl keeps parent no-such-dir");
   if (ex.empty()) {
     std::cerr << "note: examples/ not next to exe — skip resolve_eval_jsonl\n";
     return;
@@ -181,6 +186,42 @@ void test_resolve_eval_jsonl_via_examples() {
   expect(fs::exists(resolved), "resolve_eval_jsonl finds generations.jsonl from a foreign cwd");
   expect(fs::equivalent(resolved, ex / "generations.jsonl", ec),
          "resolve_eval_jsonl uses find_examples_dir");
+  expect(prefixed.is_absolute(), "examples/generations.jsonl resolve is absolute");
+  expect(fs::exists(prefixed), "examples/generations.jsonl from a foreign cwd finds the toy");
+  expect(fs::equivalent(prefixed, ex / "generations.jsonl", ec),
+         "examples/generations.jsonl strips to find_examples_dir");
+}
+
+void test_find_shipped_file() {
+  namespace fs = std::filesystem;
+  if (abliteration::find_examples_dir().empty()) {
+    std::cerr << "note: examples/ not next to exe — skip find_shipped_file\n";
+    return;
+  }
+  const auto here = fs::current_path();
+  std::error_code ec;
+  const auto tmp = fs::temp_directory_path() / "abliterate-ops-shipped-cwd";
+  fs::create_directories(tmp, ec);
+  if (ec) {
+    std::cerr << "note: cannot mkdir for find_shipped_file test\n";
+    return;
+  }
+  fs::current_path(tmp, ec);
+  if (ec) {
+    std::cerr << "note: cannot chdir for find_shipped_file test\n";
+    return;
+  }
+  const auto gs = abliteration::find_shipped_file("GETTING-STARTED.md");
+  const auto guide = abliteration::find_shipped_file("cxx26-researcher-guide.md");
+  const auto exe = abliteration::exe_parent();
+  fs::current_path(here, ec);
+  expect(!gs.empty() && fs::is_regular_file(gs), "GETTING-STARTED.md exists via find_shipped_file");
+  expect(!guide.empty() && fs::is_regular_file(guide),
+         "cxx26-researcher-guide.md exists via find_shipped_file");
+  const bool in_docs = guide.parent_path().filename() == "docs";
+  bool next_to_exe = false;
+  if (!exe.empty() && !guide.empty()) next_to_exe = fs::equivalent(guide.parent_path(), exe, ec);
+  expect(in_docs || next_to_exe, "cxx26-researcher-guide.md parent is docs or file is next to exe");
 }
 
 void test_find_examples_dir_via_exe() {
@@ -247,11 +288,12 @@ int main(int argc, char** argv) {
   test_json_field();
   test_find_examples_dir_via_exe();
   test_resolve_eval_jsonl_via_examples();
+  test_find_shipped_file();
   test_shipped_examples();
   if (fails) {
     std::cerr << fails << " test(s) failed\n";
     return 1;
   }
-  std::cout << "ok 10 suites (self-check + generated + empty-eval + shipped examples + exe paths + resolve_eval_jsonl)\n";
+  std::cout << "ok 11 suites (self-check + generated + empty-eval + shipped examples + exe paths + resolve_eval_jsonl + find_shipped_file)\n";
   return 0;
 }

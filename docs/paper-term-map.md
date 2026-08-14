@@ -13,5 +13,10 @@ Type the word from the paper. Open one chapter. Authorized factory QA / research
 | **Heretic** | p-e-w/heretic | [instructions/heretic-workflow.md](../instructions/heretic-workflow.md) | Day 1 real checkpoint |
 | **C++26 lab** | this repo | [cxx26-researcher-guide.md](cxx26-researcher-guide.md) | `guide` → `doctor` → `self-check` → `demo` on [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) |
 | **eval gates** | handbook contract | [evaluation.md](evaluation.md) · [instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) | Empty / mute ≠ safety. Keyword judge ≠ deploy truth. |
+| **SOM** / T35 | 2511.08379 | [techniques/som-multi-directional-refusal.md](../techniques/som-multi-directional-refusal.md) | `svd` proxy; official trainer pralab (not Abliterix, not this bin) |
+| **SVD** / OBLITERATUS / T37 | elder-plinius OBLITERATUS | [techniques/svd-whitened-obliteratus.md](../techniques/svd-whitened-obliteratus.md) · [methods/svd-refusal-subspace.md](../methods/svd-refusal-subspace.md) | `estimate --mode svd --rank 2` then `apply --mode subspace`. Cousin of OBLITERATUS — not the full CLI |
+| **DeepRefusal** | 2509.15202 | [defenses-against-abliteration.md](defenses-against-abliteration.md) | defense, not a bake / not this bin |
+| **OT** | 2603.04355 Nanfack | [cxx26-researcher-guide.md](cxx26-researcher-guide.md) | not this binary, not Abliterix, no `--mode ot` |
+| **RFM-AGOP** | 2607.02396 Winninger | [cxx26-researcher-guide.md](cxx26-researcher-guide.md) | not this binary; `svd` is not RFM |
 
-T-IDs in this table follow [advanced-techniques-catalog.md](advanced-techniques-catalog.md) (T34 ORBA, T38 false-refusal, T39 harm≠refusal).
+T-IDs in this table follow [advanced-techniques-catalog.md](advanced-techniques-catalog.md) (T34 ORBA, T35 SOM, T37 SVD/OBLITERATUS, T38 false-refusal, T39 harm≠refusal).

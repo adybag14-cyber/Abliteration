@@ -123,8 +123,9 @@ inline std::filesystem::path find_examples_dir() {
   return {};
 }
 
-// Shipped docs next to a nightly/exe: exe dir, then parent, then cwd.
-// Returns empty if not found — callers print the basename only (never repo cxx/ or docs/ prefixes).
+// Nightly: exe/n, exe.parent/n. Then exe/docs/n. Then up to 3 parents
+// (dir/n and dir/docs/n) so a repo build finds cxx/GETTING-STARTED.md and
+// docs/cxx26-researcher-guide.md. Then cwd/n. Empty → caller prints basename.
 inline std::filesystem::path find_shipped_file(std::string_view name) {
   const std::filesystem::path n{name};
   if (n.empty()) return {};
@@ -134,6 +135,15 @@ inline std::filesystem::path find_shipped_file(std::string_view name) {
   if (!exe.empty()) {
     cands.push_back(exe / n);
     cands.push_back(exe.parent_path() / n);
+    cands.push_back(exe / "docs" / n);
+    auto dir = exe;
+    for (int i = 0; i < 3; ++i) {
+      const auto parent = dir.parent_path();
+      if (parent.empty() || parent == dir) break;
+      dir = parent;
+      cands.push_back(dir / n);
+      cands.push_back(dir / "docs" / n);
+    }
   }
   {
     std::error_code ec;
@@ -147,20 +157,31 @@ inline std::filesystem::path find_shipped_file(std::string_view name) {
   return {};
 }
 
-// --jsonl: use the path if it exists, else the same filename / relative path under examples/.
-// Missing files are returned unchanged so load_jsonl can throw.
+// --jsonl: existing path; else examples/given; else strip a leading "examples/"
+// (alien cwd still finds the toy); basename steal only when given has no parent.
+// Otherwise return given unchanged so load_jsonl throws — do not score the toy
+// for eval --jsonl no-such-dir/generations.jsonl.
 inline std::filesystem::path resolve_eval_jsonl(std::string_view given) {
   std::filesystem::path p{given};
   std::error_code ec;
   if (!p.empty() && std::filesystem::exists(p, ec)) return std::filesystem::absolute(p);
   const auto ex = find_examples_dir();
   if (!ex.empty()) {
-    if (!p.filename().empty()) {
+    const auto by_rel = ex / p;
+    if (std::filesystem::exists(by_rel, ec)) return std::filesystem::absolute(by_rel);
+    auto it = p.begin();
+    if (it != p.end() && *it == std::filesystem::path("examples")) {
+      std::filesystem::path rest;
+      for (++it; it != p.end(); ++it) rest /= *it;
+      if (!rest.empty()) {
+        const auto stripped = ex / rest;
+        if (std::filesystem::exists(stripped, ec)) return std::filesystem::absolute(stripped);
+      }
+    }
+    if (!p.has_parent_path() && !p.filename().empty()) {
       const auto by_name = ex / p.filename();
       if (std::filesystem::exists(by_name, ec)) return std::filesystem::absolute(by_name);
     }
-    const auto by_rel = ex / p;
-    if (std::filesystem::exists(by_rel, ec)) return std::filesystem::absolute(by_rel);
   }
   return p;
 }

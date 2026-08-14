@@ -60,7 +60,7 @@ export function TechniqueExplorer() {
           </Card>
         ))}
       </div>
-      {filtered.length === 0 && <div className="rounded-3xl border border-dashed border-border p-12 text-center text-sm text-muted-foreground">No technique matches that search. Try “DIM”, “ORBA”, “COSMIC”, or a T-ID.</div>}
+      {filtered.length === 0 && <div className="rounded-3xl border border-dashed border-border p-12 text-center text-sm text-muted-foreground">No card matches that search. Try “DIM”, “ORBA”, “COSMIC”, or a T-ID shown on a card.</div>}
     </div>
   );
 }

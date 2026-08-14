@@ -113,6 +113,7 @@ console.log(`wrote ${join(distRoot, archive)}`);
 if (triple.startsWith('windows')) {
   const zip = `${pkgName}.zip`;
   const zipPath = join(distRoot, zip);
+  // Flatten means dest . needs no cd; no-dest still cds zip-stem.
   // Zip *contents* of pkgDir so Expand-Archive; cd zip-stem finds the exe at the zip root.
   const zippered = spawnSync(
     'powershell',

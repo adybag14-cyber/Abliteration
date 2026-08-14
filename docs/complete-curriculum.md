@@ -134,6 +134,7 @@ Handbook helpers are the **C++26** CLI (no Heretic, no Python required for the m
 npm run cxx:build
 cxx/build/abliterate-cxx guide
 cxx/build/abliterate-cxx doctor
+cxx/build/abliterate-cxx self-check
 cxx/build/abliterate-cxx demo
 ```
 
@@ -214,7 +215,7 @@ Compare numbers, not vibes: [comparative-abliteration-benchmarks.md](comparative
 ```text
 Need a local model that stops false-refusing factory/lab tools?
 ├─ First time, 8–24 GB NVIDIA → Heretic + handbook config (Stage 2)
-├─ No GPU → GGUF import or rent a GPU for surgery
+├─ No GPU → Hour 0 Stage 0.5, then GGUF import or rent a GPU for surgery
 ├─ 20B+ / OOM → llm-abliteration 4-bit + sharded ablate
 ├─ MoE / Gemma 4 / VL preset exists → Abliterix Track J
 ├─ Want reversible only → inference hook (Stage 4.1)

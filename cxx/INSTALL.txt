@@ -18,9 +18,25 @@ abliterate-cxx — no Python, no GPU for the first hour.
    folder (abliterate-cxx-windows-x64-msvc). The exe is immediately there —
    no extra nested folder. Then run the same four commands.
 
-   Linux:    tar -xzf abliterate-cxx-linux-x64-gcc15.tar.gz && chmod +x …/abliterate-cxx
-   macOS:    tar -xzf abliterate-cxx-macos-arm64-llvm.tar.gz
-             xattr -d com.apple.quarantine ./abliterate-cxx
+   Linux — tar, then cd into the wrapper folder:
+
+     tar -xzf abliterate-cxx-linux-x64-gcc15.tar.gz
+     cd abliterate-cxx-linux-x64-gcc15
+     chmod +x ./abliterate-cxx
+     ./abliterate-cxx guide
+     ./abliterate-cxx doctor
+     ./abliterate-cxx self-check
+     ./abliterate-cxx demo
+
+   macOS — tar, then cd into the wrapper folder:
+
+     tar -xzf abliterate-cxx-macos-arm64-llvm.tar.gz
+     cd abliterate-cxx-macos-arm64-llvm
+     xattr -d com.apple.quarantine ./abliterate-cxx
+     ./abliterate-cxx guide
+     ./abliterate-cxx doctor
+     ./abliterate-cxx self-check
+     ./abliterate-cxx demo
 
 3. Run, in this order (Hour 0):
 

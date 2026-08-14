@@ -228,7 +228,7 @@ flowchart TD
   Q2 -->|Reasoning / CoT model| R1[OBLITERATUS --method surgical]
   R1 --> EVAL
 
-  Q2 -->|MoE Mixtral / DeepSeek-MoE| M1[OBLITERATUS --method nuclear OR moe-hybrid technique]
+  Q2 -->|MoE Mixtral / DeepSeek-MoE| M1[OBLITERATUS --method surgical OR moe-hybrid technique]
   M1 --> EVAL
 
   Q2 -->|General instruct 7B–14B| H1{Heretic KL acceptable on pilot?}
@@ -342,7 +342,7 @@ Full matrices: [../evaluation.md](../evaluation.md) · Workflow: [../../instruct
 | 8 | **SuperGemma works, your Heretic run doesn't** | SuperGemma includes agent fine-tune + mild surgery | Add Jarvis QLoRA after your abliteration; or start from SuperGemma base for Gemma agents |
 | 9 | **Confirm / permission loops** in agent harness | Residual policy narration; weak abliteration on agentic prompts | Stronger projected abliteration; CyberGym confirm-loop metric; eval on `cybergym-subset-sample.jsonl` |
 | 10 | **CoT / thinking model tool accuracy drop** | Refusal direction entangled with reasoning | OBLITERATUS `--method surgical`; Heretic `chain_of_thought_skips`; CoT-aware orthogonalization |
-| 11 | **MoE model uneven tool behavior** | Per-expert refusal directions differ | [moe-hybrid-abliteration.md](../../techniques/moe-hybrid-abliteration.md); OBLITERATUS `nuclear` |
+| 11 | **MoE model uneven tool behavior** | Per-expert refusal directions differ | [moe-hybrid-abliteration.md](../../techniques/moe-hybrid-abliteration.md); OBLITERATUS `surgical` |
 | 12 | **KL looks good, tools still bad** | KL on harmless prose ≠ tool-call subspace | Always run factory JSONL + jarvis-safe — KL is necessary not sufficient |
 | 13 | **Perplexity spike > 15%** after OBLITERATUS/Heretic | Over-ablation | Reduce `n_directions`, increase regularization, fewer layers, `basic` method |
 | 14 | **Refusal persists > 10%** after single pass | Rotated residual directions (Ouroboros) | OBLITERATUS refinement passes; iterative re-probe; `aggressive` only on 3B+ after `advanced` fails |

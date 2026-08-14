@@ -15,7 +15,7 @@ One page for **OS × GPU × VRAM × tool**. Pair with [complete-curriculum.md](c
 | **16–24 GB** | 8B–14B FP16 / 4-bit 20B+ sharded | `config.production.toml` |
 | **48–80 GB** | 32B dense / small MoE native | production + higher `n_trials` |
 | **Apple 16–36 GB unified** | Infer GGUF/MLX; surgery often off-box | [Apple Silicon](#apple-silicon) |
-| **CPU only** | Infer Q4 GGUF; no comfortable Heretic | Track C beginner (download) or rent GPU |
+| **CPU only** | Infer Q4 GGUF; no comfortable Heretic | Hour 0 Stage 0.5, then Track C beginner (download) or rent GPU |
 
 ```powershell
 python scripts/check_env.py

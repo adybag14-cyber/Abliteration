@@ -56,18 +56,24 @@ describe("Abliteration Field Guide", () => {
   it("changes the recommended path from beginner choices", async () => {
     const user = userEvent.setup();
     render(<App />);
-    expect(within(document.getElementById("path")!).getByRole("heading", { name: "C++26 toy-matrix lab" })).toBeInTheDocument();
-    expectNightlyArchives(document.getElementById("lab")!);
+    const lab = document.getElementById("lab")!;
+    const path = document.getElementById("path")!;
+    expect(within(lab).getByRole("heading", { name: "C++26 toy-matrix lab" })).toBeInTheDocument();
+    expect(within(path).getByRole("heading", { name: "Hour 0 · C++26 start" })).toBeInTheDocument();
+    expectNightlyArchives(lab);
 
     await user.click(screen.getByRole("button", { name: /12–16 GB/i }));
     expect(screen.getByRole("heading", { name: "Residual-hook prototype" })).toBeInTheDocument();
-    expectNightlyArchives(document.getElementById("lab")!);
+    expect(within(lab).getByRole("heading", { name: "C++26 toy-matrix lab" })).toBeInTheDocument();
+    expectNightlyArchives(lab);
 
     await user.click(screen.getByRole("button", { name: /24 GB\+/i }));
     await user.click(screen.getByRole("button", { name: /MoE\s*Routed experts/i }));
     await user.click(screen.getByRole("button", { name: "Create a candidate" }));
-    expect(screen.getByRole("heading", { name: "Router-aware MoE path" })).toBeInTheDocument();
-    expectNightlyArchives(document.getElementById("lab")!);
+    expect(within(path).getByRole("heading", { name: "Router-aware MoE path" })).toBeInTheDocument();
+    expect(path).toHaveTextContent("T08 + T31");
+    expect(within(lab).getByRole("heading", { name: "C++26 toy-matrix lab" })).toBeInTheDocument();
+    expectNightlyArchives(lab);
   });
 
   it("stores step completion and exposes a reset", async () => {
@@ -96,15 +102,17 @@ describe("Abliteration Field Guide", () => {
     const search = screen.getByRole("textbox", { name: "Search techniques" });
 
     await user.type(search, "router");
-    expect(atlas.getByRole("heading", { name: "Router-weighted MoE" })).toBeInTheDocument();
+    expect(atlas.getByRole("heading", { name: "Router-weighted MoE diagnostics" })).toBeInTheDocument();
     expect(atlas.queryByRole("heading", { name: /Mean-difference DIM/ })).not.toBeInTheDocument();
+    expect(atlas.queryByText("T08")).not.toBeInTheDocument();
 
     await user.clear(search);
     await user.type(search, "DIM");
     expect(atlas.getByRole("heading", { name: /Mean-difference DIM/ })).toBeInTheDocument();
     expect(atlas.queryByRole("heading", { name: /False-refusal/ })).not.toBeInTheDocument();
     expect(atlas.queryByText("T38")).not.toBeInTheDocument();
-    expect(within(document.getElementById("path")!).getByRole("heading", { name: "C++26 toy-matrix lab" })).toBeInTheDocument();
+    expect(within(document.getElementById("path")!).getByRole("heading", { name: "Hour 0 · C++26 start" })).toBeInTheDocument();
+    expect(within(document.getElementById("lab")!).getByRole("heading", { name: "C++26 toy-matrix lab" })).toBeInTheDocument();
 
     await user.clear(search);
     await user.type(search, "ORBA");
@@ -118,6 +126,25 @@ describe("Abliteration Field Guide", () => {
     expect(atlas.getByRole("heading", { name: /COSMIC/ })).toBeInTheDocument();
     expect(atlas.getByText("T36")).toBeInTheDocument();
     expect(atlas.queryByText("T34")).not.toBeInTheDocument();
+
+    await user.clear(search);
+    await user.type(search, "T08");
+    expect(atlas.getByRole("heading", { name: "MoE per-expert edit" })).toBeInTheDocument();
+    expect(atlas.getByText("T08")).toBeInTheDocument();
+    expect(atlas.queryByText("T31")).not.toBeInTheDocument();
+    expect(atlas.queryByRole("heading", { name: "Router-weighted MoE diagnostics" })).not.toBeInTheDocument();
+
+    await user.clear(search);
+    await user.type(search, "T31");
+    expect(atlas.getByRole("heading", { name: "Router-weighted MoE diagnostics" })).toBeInTheDocument();
+    expect(atlas.getByText("T31")).toBeInTheDocument();
+    expect(atlas.queryByText("T08")).not.toBeInTheDocument();
+    expect(atlas.queryByRole("heading", { name: "MoE per-expert edit" })).not.toBeInTheDocument();
+
+    await user.clear(search);
+    await user.type(search, "T04");
+    expect(atlas.queryByText(/^T\d{2}$/)).not.toBeInTheDocument();
+    expect(atlas.getByText(/No card matches|Try .{0,80}T-ID shown on a card/)).toBeInTheDocument();
   });
 
   it("expands the no-GPU FAQ toward the C++26 toy lab", async () => {

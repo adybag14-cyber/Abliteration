@@ -127,8 +127,8 @@ int cmd_recipes() {
       << "  2026  Young tools 2512.13655        Heretic vs ErisForge; Young DECCP = jim-plus --deccp topics\n"
       << "  2025  extended-refusal 2505.19056   if dim_align high but behavior unchanged → defense\n"
       << "  2025  DeepRefusal 2509.15202        defense (train-time PAA); not a bake / not this bin\n"
-      << "  2026  OT transport 2603.04355       Abliterix; not in this bin\n"
-      << "  2026  RFM-AGOP 2607.02396           fast multi-D subspace; GPU next-step\n"
+      << "  2026  OT transport 2603.04355       Nanfack PCA-OT; reported GPU estimator; not this bin\n"
+      << "  2026  RFM-AGOP 2607.02396           Winninger RFM; reported GPU estimator; not this bin\n"
       << "  2026  Code LLMs 2606.05396          removes *won't*, not *can't*\n"
       << "  2026  Task over-refuse 2603.27518   over-refuse is task-local — factory DIM not safety DIM\n\n"
       << ui::bold() << "Stay in this binary" << ui::reset() << " until demo + eval on toys is boring.\n"
@@ -248,7 +248,6 @@ int cmd_demo() {
             << "  cosmic_sep > 0  → the two clouds separate; DIM is not noise.\n"
             << "  false_refusal=1 on the toy file → one should-comply bench command was refused (eval, not T38).\n"
             << "  true_hits should stay > 0 on a real harmful hold-out.\n";
-  ui::next("abliterate-cxx recipes");
   ui::next("abliterate-cxx estimate --mode dim --bad " + (ex / "tiny-bad.txt").string() +
            " --good " + (ex / "tiny-good.txt").string());
   return 0;

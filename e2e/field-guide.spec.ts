@@ -127,8 +127,9 @@ test("route finder, learning progress, radar, and technique atlas remain interac
   await openGuide(page);
 
   const lab = page.locator("#lab");
-  await expect(page.locator("#path").getByRole("heading", { level: 3, name: "C++26 toy-matrix lab" })).toBeVisible();
+  const path = page.locator("#path");
   await expect(lab.getByRole("heading", { level: 3, name: "C++26 toy-matrix lab" })).toBeVisible();
+  await expect(path.getByRole("heading", { level: 3, name: "Hour 0 · C++26 start" })).toBeVisible();
   await expectNightlyArchives(lab);
   await expect(page.locator('a[href$="abliterate-cxx-windows-x64.tar.gz"]')).toHaveCount(0);
   await expectLabClearsStickyHeader(page);
@@ -139,10 +140,12 @@ test("route finder, learning progress, radar, and technique atlas remain interac
   await page.getByRole("button", { name: /24 GB\+/ }).click();
   await page.getByRole("button", { name: /MoE\s*Routed experts/ }).click();
   await page.getByRole("button", { name: "Create a candidate" }).click();
-  await expect(page.locator("#path").getByRole("heading", { level: 3, name: "Router-aware MoE path" })).toBeVisible();
+  await expect(path.getByRole("heading", { level: 3, name: "Router-aware MoE path" })).toBeVisible();
+  await expect(path).toContainText("T08 + T31");
+  await expect(lab.getByRole("heading", { level: 3, name: "C++26 toy-matrix lab" })).toBeVisible();
   await expectNightlyArchives(lab);
   await expect(page.locator('a[href$="abliterate-cxx-windows-x64.tar.gz"]')).toHaveCount(0);
-  await capture(page.locator("#path"), testInfo, "route-finder", false);
+  await capture(path, testInfo, "route-finder", false);
 
   await page.getByRole("button", { name: "Mark Set the boundary complete" }).click();
   await expect(page.getByText("1/6 complete")).toBeVisible();
@@ -172,14 +175,63 @@ test("route finder, learning progress, radar, and technique atlas remain interac
   await expect(atlas.getByText("T36", { exact: true })).toBeVisible();
   await expect(atlas.getByText(/^T\d{2}$/)).toHaveCount(1);
 
+  await atlasSearch.fill("T08");
+  await expect(atlas.getByRole("heading", { name: "MoE per-expert edit" })).toBeVisible();
+  await expect(atlas.getByText("T08", { exact: true })).toBeVisible();
+  await expect(atlas.getByText("T31", { exact: true })).toHaveCount(0);
+  await expect(atlas.getByRole("heading", { name: "Router-weighted MoE diagnostics" })).toHaveCount(0);
+  await expect(atlas.getByText(/^T\d{2}$/)).toHaveCount(1);
+
   await atlasSearch.fill("T31");
-  await expect(page.getByText("Router-weighted MoE", { exact: true })).toBeVisible();
-  await expect(page.getByText("Reversible hook ablation", { exact: true })).toBeHidden();
+  await expect(atlas.getByRole("heading", { name: "Router-weighted MoE diagnostics" })).toBeVisible();
+  await expect(atlas.getByText("T31", { exact: true })).toBeVisible();
+  await expect(atlas.getByText("T08", { exact: true })).toHaveCount(0);
+  await expect(atlas.getByRole("heading", { name: "MoE per-expert edit" })).toHaveCount(0);
+  await expect(atlas.getByText(/^T\d{2}$/)).toHaveCount(1);
+
+  await atlasSearch.fill("T04");
+  await expect(atlas.getByText(/^T\d{2}$/)).toHaveCount(0);
+  await expect(atlas.getByText(/No card matches/).or(atlas.getByText(/Try .{0,80}T-ID shown on a card/))).toBeVisible();
+
+  await atlasSearch.fill("router");
+  await expect(atlas.getByRole("heading", { name: "Router-weighted MoE diagnostics" })).toBeVisible();
+  await expect(atlas.getByText("T31", { exact: true })).toBeVisible();
 
   const noGpu = page.getByRole("button", { name: "I have no GPU" });
   await noGpu.click();
   await expect(noGpu).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("[data-slot='accordion-item']").filter({ has: noGpu })).toContainText(/C\+\+26|cxx-nightly|toy[-\s]?lab/);
+});
+
+test("header Lab click reveals Hour 0 nightlies below the sticky header", async ({ page }, testInfo) => {
+  await openGuide(page);
+
+  const mobileNavigation = page.getByRole("navigation", { name: "Guide sections mobile" });
+  const desktopNavigation = page.getByRole("navigation", { name: "Guide sections", exact: true });
+  const navigation = testInfo.project.name.startsWith("mobile") ? mobileNavigation : desktopNavigation;
+  if (testInfo.project.name.startsWith("mobile")) {
+    await expect(mobileNavigation).toBeVisible();
+    await expect(desktopNavigation).toBeHidden();
+  } else {
+    await expect(desktopNavigation).toBeVisible();
+    await expect(mobileNavigation).toBeHidden();
+  }
+
+  await navigation.getByRole("link", { name: "Lab", exact: true }).click();
+  const labHeading = page.locator("#lab").getByRole("heading", { level: 2, name: "C++26 Hour 0 — unique nightlies" });
+  await expect(labHeading).toBeVisible();
+  await expect
+    .poll(async () => {
+      const { h2Top, headerBottom } = await labHeading.evaluate((h2) => {
+        const header = document.querySelector("header");
+        return {
+          h2Top: h2.getBoundingClientRect().top,
+          headerBottom: header?.getBoundingClientRect().bottom ?? Number.POSITIVE_INFINITY,
+        };
+      });
+      return h2Top - (headerBottom - 1);
+    })
+    .toBeGreaterThanOrEqual(0);
 });
 
 test("evaluation gates and theme communicate state changes clearly", async ({ page }, testInfo) => {

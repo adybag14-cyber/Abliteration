@@ -40,7 +40,7 @@ export function PathFinder() {
   const [commitment, setCommitment] = useState<Commitment>("reversible");
 
   const recommendation = useMemo(() => {
-    if (hardware === "none") return { title: "C++26 toy-matrix lab", reason: "Ten minutes. No GPU, no Python. Downloads live in the Lab strip (#lab). Unpack one unique nightly and run guide → doctor → self-check → demo. This is the geometry lab — not a real-model edit.", profile: "Hour 0 · no GPU", doc: "docs/cxx26-researcher-guide.md", icon: Terminal };
+    if (hardware === "none") return { title: "Hour 0 · C++26 start", reason: "Ten minutes. No GPU, no Python. Downloads live in the Lab strip (#lab). Unpack one unique nightly and run guide → doctor → self-check → demo. This is the geometry lab — not a real-model edit.", profile: "Hour 0 · no GPU", doc: "docs/cxx26-researcher-guide.md", icon: Terminal };
     if (commitment === "reversible") return { title: "Residual-hook prototype", reason: "Validate the direction and layer causally before you let any tool modify a checkpoint.", profile: "T02 · reversible", doc: "instructions/inference-only-prototype.md", icon: Undo2 };
     if (architecture === "thinking") return { title: "Thinking-model profile", reason: "Score the final answer separately from chain-of-thought and increase the response window.", profile: "Track H · CoT aware", doc: "instructions/thinking-models-guide.md", icon: Sparkles };
     if (architecture === "moe") return { title: "Router-aware MoE path", reason: "Measure per-expert effects and routing shift; use 4-bit loading and CPU offload on consumer GPUs.", profile: "T08 + T31 · advanced", doc: "techniques/moe-hybrid-abliteration.md", icon: Layers3 };
