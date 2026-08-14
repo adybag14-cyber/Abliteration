@@ -5,7 +5,7 @@
  *   node scripts/smoke-cxx-package.mjs --archive cxx/dist/abliterate-cxx-windows-x64-msvc.tar.gz
  */
 import { spawnSync } from 'child_process';
-import { existsSync, mkdtempSync, readdirSync } from 'fs';
+import { existsSync, mkdtempSync, readdirSync, realpathSync } from 'fs';
 import { tmpdir } from 'os';
 import { dirname, join, relative, resolve } from 'path';
 import { fileURLToPath } from 'url';
@@ -118,11 +118,22 @@ const cwd = dirname(exe);
 const gettingStarted = join(cwd, 'GETTING-STARTED.md');
 
 function slashes(s) {
-  return String(s).replace(/\\/g, '/');
+  return String(s).replace(/\\/g, '/').toLowerCase();
 }
 
 function assertGuide(out) {
-  if (!slashes(out).includes(slashes(gettingStarted))) {
+  const candidates = [gettingStarted];
+  try {
+    candidates.push(realpathSync(gettingStarted));
+  } catch {
+    /* keep join() path */
+  }
+  const hay = slashes(out);
+  const hit = candidates.some((p) => hay.includes(slashes(p)));
+  // Windows 8.3 (RUNNER~1) vs long name (runneradmin): require a drive/root
+  // prefix, not the basename-only fallback from find_shipped_file.
+  const absoluteName = /(?:[a-z]:[\\/]|\/).+GETTING-STARTED\.md/i.test(out);
+  if (!hit && !absoluteName) {
     console.error(`guide did not print absolute GETTING-STARTED.md (${gettingStarted})`);
     process.exit(1);
   }
@@ -184,7 +195,7 @@ if (!ev.includes('false_refusal')) {
   process.exit(1);
 }
 
-// Hour-1: doctor+demo must work from a different cwd via the absolute exe path
+// Hour 0 + eval from a foreign cwd via the absolute exe path
 // (Windows argv[0] is often just the filename).
 const alien = mkdtempSync(join(tmpdir(), 'abliterate-alien-cwd-'));
 function runAbs(args) {
