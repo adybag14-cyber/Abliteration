@@ -37,7 +37,7 @@ W' = W - λ · outer(r_proj, r_proj @ W)   # on down_proj / o_proj rows
 ## Pipeline A — Heretic (automatic)
 
 ```bash
-pip install -U heretic-llm bitsandbytes accelerate safetensors
+pip install heretic-llm==1.4.0 bitsandbytes accelerate safetensors
 cp sources/heretic-tools/config.production.toml config.toml
 heretic ./models/Qwen3-4B-Instruct-2507
 ```

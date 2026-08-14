@@ -206,8 +206,8 @@ jobs:
             ninja --version
             exit 0
           fi
-          # Hosted Windows images often already have ninja; do not depend on
-          # gha-setup-ninja (Node 20 + unretried github.com download).
+          # Hosted Windows images often already have ninja; do not depend on a
+          # third-party ninja setup action (Node 20 + unretried github.com download).
           CANDIDATES=(
             "/c/ProgramData/Chocolatey/bin/ninja.exe"
             "/c/Tools/Ninja/ninja.exe"
@@ -288,6 +288,10 @@ jobs:
           WRAP=()
           if [[ "${{ matrix.osx_arch }}" == "x86_64" ]]; then WRAP=(--wrap "arch -x86_64"); fi
           node scripts/smoke-cxx-package.mjs --archive cxx/dist/abliterate-cxx-${{ matrix.name }}.tar.gz "${WRAP[@]}"
+          if [[ "${{ matrix.triple }}" == windows-* ]]; then
+            test -f cxx/dist/abliterate-cxx-${{ matrix.name }}.zip
+            node scripts/smoke-cxx-package.mjs --archive cxx/dist/abliterate-cxx-${{ matrix.name }}.zip "${WRAP[@]}"
+          fi
 
       - uses: actions/upload-artifact@v4
         with:

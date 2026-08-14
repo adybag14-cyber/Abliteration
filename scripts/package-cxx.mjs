@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * Pack abliterate-cxx + README + LICENSE for a CI target triple.
+ * Pack abliterate-cxx + README + LICENSE for a CI compiler identity.
+ * --compiler is required (matrix.name). Never fall back to --triple.
  *
  *   node scripts/package-cxx.mjs --build-dir cxx/ci-build --triple linux-x64 --compiler linux-x64-gcc15
  */
@@ -11,6 +12,18 @@ import { fileURLToPath } from 'url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
+const COMPILER_EXAMPLES = [
+  'windows-x64-msvc',
+  'windows-x64-clang',
+  'windows-arm64-msvc',
+  'linux-x64-gcc15',
+  'linux-x64-clang20',
+  'linux-arm64-gcc15',
+  'linux-arm64-clang20',
+  'macos-arm64-llvm',
+  'macos-x64-llvm',
+];
+
 function arg(flag, def) {
   const i = process.argv.indexOf(flag);
   return i >= 0 && process.argv[i + 1] ? process.argv[i + 1] : def;
@@ -18,9 +31,14 @@ function arg(flag, def) {
 
 const buildDir = arg('--build-dir', join(root, 'cxx', 'build'));
 const triple = arg('--triple', 'unknown');
-const compiler = arg('--compiler', '');
+const compiler = String(arg('--compiler', '')).trim();
+if (!compiler) {
+  console.error('package-cxx: --compiler NAME is required (non-empty). Do not fall back to --triple.');
+  console.error(`Example compiler names: ${COMPILER_EXAMPLES.join(', ')}`);
+  process.exit(2);
+}
 const distRoot = join(root, 'cxx', 'dist');
-const pkgName = `abliterate-cxx-${compiler || triple}`;
+const pkgName = `abliterate-cxx-${compiler}`;
 const pkgDir = join(distRoot, pkgName);
 
 function findBinary(dir, base) {
@@ -100,6 +118,9 @@ if (triple.startsWith('windows')) {
   else {
     const zip2 = spawnSync('zip', ['-r', zip, pkgName], { cwd: distRoot, encoding: 'utf8' });
     if (zip2.status === 0) console.log(`wrote ${join(distRoot, zip)}`);
-    else console.warn('zip optional; tar.gz is the release artifact');
+    else {
+      process.stderr.write((zippered.stderr || '') + (zip2.stderr || ''));
+      throw new Error('Windows package requires a .zip (Day 0 artifact). Compress-Archive and zip both failed.');
+    }
   }
 }

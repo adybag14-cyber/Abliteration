@@ -81,7 +81,7 @@ python3.11 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
 pip install torch --index-url https://download.pytorch.org/whl/cu124
-pip install -U heretic-llm bitsandbytes accelerate huggingface_hub
+pip install heretic-llm==1.4.0 bitsandbytes accelerate huggingface_hub
 ```
 
 ### 3.3 Access Windows files
@@ -102,7 +102,7 @@ sudo apt install -y python3-venv python3-pip git build-essential cmake
 python3 -m venv ~/local-ai-abliterate/.venv
 source ~/local-ai-abliterate/.venv/bin/activate
 pip install torch --index-url https://download.pytorch.org/whl/cu124
-pip install -U heretic-llm bitsandbytes accelerate huggingface_hub
+pip install heretic-llm==1.4.0 bitsandbytes accelerate huggingface_hub
 python -c "import torch; print(torch.cuda.is_available())"
 ```
 

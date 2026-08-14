@@ -11,7 +11,7 @@ Run abliteration on **8–12 GB GPUs**, **16 GB system RAM laptops**, or **Apple
 | # | Action | Command / file |
 |---|--------|----------------|
 | 1 | Activate venv | `.\.venv\Scripts\Activate.ps1` or `source .venv/bin/activate` |
-| 2 | Install deps | `pip install -U heretic-llm bitsandbytes accelerate` |
+| 2 | Install deps | `pip install heretic-llm==1.4.0 bitsandbytes accelerate` |
 | 3 | Download small model | `huggingface-cli download Qwen/Qwen2.5-1.5B-Instruct --local-dir ./models/qwen-1.5b` |
 | 4 | Backup original | Copy folder to `qwen-1.5b-ORIGINAL` |
 | 5 | Copy config | `cp sources/heretic-tools/config.low-vram.toml config.toml` (from abliteration repo) |
@@ -93,7 +93,7 @@ max_batch_size = 32
 ### 2. Run
 
 ```bash
-pip install -U heretic-llm bitsandbytes accelerate
+pip install heretic-llm==1.4.0 bitsandbytes accelerate
 heretic Qwen/Qwen2.5-1.5B-Instruct
 # or with config file in cwd:
 heretic ./models/Qwen3-4B-Instruct-2507
@@ -130,7 +130,7 @@ See:
 
 Best when Heretic OOMs but you have **CPU RAM** for layer-wise surgery. **Peak VRAM stays low** because `sharded_ablate.py` edits one layer matrix at a time — the full model never loads into GPU memory during ablation.
 
-**Forks:** [jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) (handbook default, v1.2+ projected/normpreserve) · [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) (community YAML) · pin commit for production.
+**Manual path:** [jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) **v1.2** (projected/normpreserve). [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) last push ~2025-11-27 — frozen; historical YAML only, **not** production-pinnable.
 
 ```bash
 git clone https://github.com/jim-plus/llm-abliteration.git tools/llm-abliteration
@@ -148,7 +148,7 @@ python measure.py -m <model_path> -o directions.pt --quant 4bit \
 python measure.py -m <model_path> -o directions.pt --quant 4bit --deccp
 ```
 
-**DECCP** ([AUGMXNT/deccp](https://github.com/AUGMXNT/deccp)): use when English-only harmful/harmless sets misalign refusal geometry on CJK or multilingual instruct models. DECCP showed the **lowest avg GSM8K drop** (-0.13 pp) on the arXiv:2512.13655 subset — still run factory JSONL gates.
+**DECCP** ([AUGMXNT/deccp](https://github.com/AUGMXNT/deccp)) is a topics/dataset (Qwen2 PoC), **not** a peer CLI. Multilingual measure is `python measure.py --deccp` on jim-plus. Young’s “DECCP” GSM8K Δ **-0.13 pp** is that pipeline + deccp topics — still run factory JSONL gates.
 
 ### 2. Analyze (CPU OK)
 

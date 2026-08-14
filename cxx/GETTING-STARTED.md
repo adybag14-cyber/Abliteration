@@ -92,7 +92,7 @@ It does **not** download Qwen, run Optuna, or edit GGUF. After the math is clear
 
 1. Measure real activations with Heretic / llm-abliteration (GPU).
 2. Export last-token residuals as `rows cols` text (or keep using this CLI on dumped matrices).
-3. Eval on `data/eval/*.jsonl` in the handbook, not only three toy lines.
+3. Generate answers first. Handbook `data/eval/*.jsonl` is prompts only — not `eval --jsonl` input. Score the generation dump; deploy gates live in `docs/evaluation.md`.
 
 ```text
 abliterate-cxx recipes

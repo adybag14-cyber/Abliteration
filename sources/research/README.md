@@ -28,6 +28,10 @@ Pinned PDFs, text extracts, and GitHub README snapshots for handbook citations.
 | [2507.11878](https://arxiv.org/abs/2507.11878) | Harmfulness ≠ refusal (Zhao) | [arxiv-2507.11878.pdf](papers/arxiv-2507.11878.pdf) | [arxiv-2507.11878.txt](papers/arxiv-2507.11878.txt) |
 | [2511.08379](https://arxiv.org/abs/2511.08379) | SOM multi-direction (AAAI 2026) | [arxiv-2511.08379.pdf](papers/arxiv-2511.08379.pdf) | [arxiv-2511.08379.txt](papers/arxiv-2511.08379.txt) |
 | [2603.27518](https://arxiv.org/abs/2603.27518) | Task-conditioned refusal | [arxiv-2603.27518.pdf](papers/arxiv-2603.27518.pdf) | [arxiv-2603.27518.txt](papers/arxiv-2603.27518.txt) |
+| [2509.15202](https://arxiv.org/abs/2509.15202) | DeepRefusal (defense — train-time probabilistic ablation) | [arxiv-2509.15202.pdf](papers/arxiv-2509.15202.pdf) | [arxiv-2509.15202.txt](papers/arxiv-2509.15202.txt) |
+| [2511.06852](https://arxiv.org/abs/2511.06852) | Differentiated Directional Intervention (Zhang — analysis only, no attack recipe) | [arxiv-2511.06852.pdf](papers/arxiv-2511.06852.pdf) | [arxiv-2511.06852.txt](papers/arxiv-2511.06852.txt) |
+| [2603.04355](https://arxiv.org/abs/2603.04355) | Efficient refusal ablation via optimal transport | [arxiv-2603.04355.pdf](papers/arxiv-2603.04355.pdf) | [arxiv-2603.04355.txt](papers/arxiv-2603.04355.txt) |
+| [2607.02396](https://arxiv.org/abs/2607.02396) | Fast multi-dimensional refusal subspaces (RFM-AGOP) | [arxiv-2607.02396.pdf](papers/arxiv-2607.02396.pdf) | [arxiv-2607.02396.txt](papers/arxiv-2607.02396.txt) |
 
 Machine manifest: [manifest.json](manifest.json)
 
@@ -52,12 +56,3 @@ Listed in `scripts/fetch-docs.mjs`. Offline files `sources/fetched/grimjim-proje
 |-------|-----|
 | Projected abliteration | [grimjim/projected-abliteration](https://huggingface.co/blog/grimjim/projected-abliteration) |
 | Norm-preserving biprojected | [grimjim/norm-preserving-biprojected-abliteration](https://huggingface.co/blog/grimjim/norm-preserving-biprojected-abliteration) |
-
-## Listed in `fetch-research-papers.mjs` (not in `papers/` until a successful fetch)
-
-| arXiv | Title |
-|-------|-------|
-| [2509.15202](https://arxiv.org/abs/2509.15202) | DeepRefusal (defense — train-time probabilistic ablation) |
-| [2511.06852](https://arxiv.org/abs/2511.06852) | Differentiated Directional Intervention (Zhang) |
-| [2603.04355](https://arxiv.org/abs/2603.04355) | Efficient refusal ablation via optimal transport |
-| [2607.02396](https://arxiv.org/abs/2607.02396) | Fast multi-dimensional refusal subspaces (RFM-AGOP) |

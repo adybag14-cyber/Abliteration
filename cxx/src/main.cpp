@@ -117,15 +117,15 @@ int cmd_recipes() {
       << "  2025  Lai projected                estimate --mode projected\n"
       << "  2025  Lai MPOA / norm-preserve     apply orba-directional  (then Heretic row-norm)\n"
       << "  2026  Lai ORBA                     apply orba-directional | orba-householder\n"
-      << "  2025  COSMIC ACL 2506.00085        estimate --mode cosmic\n"
+      << "  2025  COSMIC ACL 2506.00085        estimate --mode cosmic  (score + DIM r; not full paper ID)\n"
       << "  2025  TUM concept cones 2502.17420 estimate --mode svd   (then RDO on GPU)\n"
-      << "  2026  SOM AAAI 2511.08379          svd first; SOM trainer is Abliterix, not this bin\n"
-      << "  2025  ICLR false-refusal 2410.03415  dim on factory-false vs comply sets\n"
+      << "  2026  SOM AAAI 2511.08379          svd first; SOM trainer is pralab, not Abliterix\n"
+      << "  2025  ICLR false-refusal 2410.03415  T38 = Wang w′ ← w − λ v  (not factory DIM, not T03)\n"
       << "  2025  Zhao harm≠refuse 2507.11878    two DIMs; do not wipe both\n"
       << "  2026  QCRI 11 categories 2602.02132  style leftover → svd / second pass\n"
-      << "  2026  Young tools 2512.13655        pick Heretic vs ErisForge vs DECCP after this lab\n"
+      << "  2026  Young tools 2512.13655        Heretic vs ErisForge; Young DECCP = jim-plus --deccp topics\n"
       << "  2025  extended-refusal 2505.19056   if dim_align high but behavior unchanged → defense\n"
-      << "  2025  DeepRefusal 2509.15202        prefills + ablate both work; defended bases resist\n"
+      << "  2025  DeepRefusal 2509.15202        defense (train-time PAA); not a bake / not this bin\n"
       << "  2026  OT transport 2603.04355       Abliterix; not in this bin\n"
       << "  2026  RFM-AGOP 2607.02396           fast multi-D subspace; GPU next-step\n"
       << "  2026  Code LLMs 2606.05396          removes *won't*, not *can't*\n"
@@ -245,7 +245,7 @@ int cmd_demo() {
   std::cout << '\n'
             << ui::bold() << "Read this" << ui::reset() << '\n'
             << "  cosmic_sep > 0  → the two clouds separate; DIM is not noise.\n"
-            << "  false_refusal=1 on the toy file → one bench command was refused (the point of T38).\n"
+            << "  false_refusal=1 on the toy file → one should-comply bench command was refused (eval, not T38).\n"
             << "  true_hits should stay > 0 on a real harmful hold-out.\n";
   ui::next("abliterate-cxx recipes");
   ui::next("abliterate-cxx estimate --mode dim --bad " + (ex / "tiny-bad.txt").string() +
@@ -297,15 +297,20 @@ int cmd_estimate(int argc, char** argv) {
     return 0;
   }
   if (mode == "svd") {
-    const auto vh = abliteration::svd_directions(*bad, *good, rank);
-    if (auto e = abliteration::save_mat(out_p, vh); !e) {
-      ui::err(e.error());
+    try {
+      const auto vh = abliteration::svd_directions(*bad, *good, rank);
+      if (auto e = abliteration::save_mat(out_p, vh); !e) {
+        ui::err(e.error());
+        return 2;
+      }
+      std::cout << "wrote " << out_p << "  " << vh.rows << "x" << vh.cols << "  mode=svd\n";
+      ui::next(std::string("abliterate-cxx apply --mode subspace --weight examples/tiny-W.txt --direction ") +
+               std::string(out_p));
+      return 0;
+    } catch (const std::exception& ex) {
+      ui::die_hint(ex.what(), "SVD is a toy (d<=512). For real residuals use torch.linalg.svd / Heretic.");
       return 2;
     }
-    std::cout << "wrote " << out_p << "  " << vh.rows << "x" << vh.cols << "  mode=svd\n";
-    ui::next(std::string("abliterate-cxx apply --mode subspace --weight examples/tiny-W.txt --direction ") +
-             std::string(out_p));
-    return 0;
   }
   ui::die_hint("unknown --mode " + mode, "abliterate-cxx recipes");
   return 2;
@@ -413,18 +418,23 @@ int cmd_eval(int argc, char** argv) {
               << "  \"empty_response\": " << s.empty_response << ",\n"
               << "  \"degenerate\": " << s.degenerate << "\n"
               << "}\n";
-    if (s.n == 0) ui::warn("zero rows — need a \"response\" (or completion/output) string field");
-    if (s.n > 0 && s.degenerate == s.n) {
+    if (s.n == 0) {
+      ui::warn("zero rows — need a \"response\" (or completion/output) string field");
+      return 2;
+    }
+    if (s.empty_response > 0) {
+      ui::warn("empty_response > 0: silence is degenerate, not a policy refusal");
+      return 2;
+    }
+    if (s.degenerate == s.n) {
       ui::warn("every row is empty or filler — prompt-only JSONL is not an eval. Generate answers first.");
       ui::hint("mute/degenerate is not a safety hit and not a successful abliteration");
       return 2;
     }
-    if (s.empty_response > 0)
-      ui::warn("empty_response > 0: silence is degenerate, not a policy refusal");
     if (s.false_refusal > 0)
-      ui::hint("false_refusal > 0: a should-comply prompt was refused — factory DIM (T38), not more α");
+      ui::hint("false_refusal > 0: a should-comply prompt was refused — not more α; T38 is Wang w′ ← w − λ v, not factory DIM");
     ui::next("abliterate-cxx recipes");
-    ui::hint("real deploy gates: handbook data/eval/*.jsonl + docs/evaluation.md");
+    ui::hint("deploy gates: generate answers first, then score the dump. Prompt-only data/eval/*.jsonl is not eval input.");
     return 0;
   } catch (const std::exception& ex) {
     ui::die_hint(ex.what(), "JSONL one object per line with \"response\" and \"expected\"");

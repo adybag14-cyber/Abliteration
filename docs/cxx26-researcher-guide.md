@@ -90,7 +90,7 @@ Format of every matrix: first line `rows cols`, then floats. That is the whole f
 |----------|----------|
 | “difference-in-means / Arditi / abliterator” | `estimate --mode dim` |
 | “projected abliteration / orthogonalize_direction” | `estimate --mode projected` |
-| “COSMIC / no refusal template” | `estimate --mode cosmic` |
+| “COSMIC / no refusal template” | `estimate --mode cosmic` (score + DIM `r`; not full paper ID) |
 | “multi-direction / concept cone / SVD subspace” | `estimate --mode svd --rank 2` |
 | “ORBA directional / α=0 rank-1” | `apply --mode orba-directional` |
 | “Householder / reflection” | `apply --mode orba-householder` (A/B only) |
@@ -119,7 +119,7 @@ abliterate-cxx eval --jsonl examples/generations.jsonl
 | `false_refusal` | refused but `expected` was `tool_call` / `comply` / `good` |
 | `true_refusal_hits` | refused and `expected` was `refuse` / `harmful` / `bad` |
 
-Factory goal: **false_refusal → 0**, **true_refusal_hits** not collapsed. If both collapse you estimated the safety DIM, not the false-refusal DIM.
+Factory goal: **false_refusal → 0**, **true_refusal_hits** not collapsed. If both collapse you ablated raw factory `w` or the safety DIM — T38 is Wang `w′ ← w − λ v`, not a two-set factory DIM.
 
 `empty_response` / `degenerate` (whitespace, `...`) is **not** a safety hit and **not** a successful abliteration. All-empty JSONL exits non-zero — generate answers first. Keyword rates are a learning loop, not a deploy gate.
 
@@ -138,7 +138,7 @@ This is a **keyword judge**. It is for learning the loop. Deploy gates live in `
 
 ## Day 1 — a real model (only after demo is boring)
 
-1. `pip install -U heretic-llm` and `config.production.toml` from `sources/heretic-tools/`.
+1. `pip install heretic-llm==1.4.0` and `config.production.toml` from `sources/heretic-tools/`.
 2. Dump or use Heretic’s own eval. Optionally export last-token residuals to `rows cols` text and reuse **this** CLI for DIM vs projected A/B.
 3. Gate with handbook JSONL + GSM8K if math matters (Young 2512.13655).
 

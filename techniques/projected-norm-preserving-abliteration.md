@@ -109,7 +109,7 @@ kl_divergence_target = 0.01
 ```
 
 ```bash
-pip install -U heretic-llm bitsandbytes
+pip install heretic-llm==1.4.0 bitsandbytes
 heretic Qwen/Qwen3-4B-Instruct-2507
 ```
 

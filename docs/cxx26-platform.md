@@ -72,4 +72,4 @@ cd abliterate-cxx-linux-x64-gcc15
 sha256sum -c SHA256SUMS   # from the release root
 ```
 
-Archives are named `abliterate-cxx-<os>-<arch>-<compiler>` so GCC and Clang never overwrite each other. `examples/` sits next to the binary (`doctor` finds them without `cd` if you keep that layout). Windows nightly is `/MT` (static MSVC CRT, no VC++ redistributable) and `doctor` locates `examples/` from the real executable path, not `argv[0]` or the current working directory.
+Archives are named `abliterate-cxx-<os>-<arch>-<compiler>` so GCC and Clang never overwrite each other. `examples/` sits next to the binary (`doctor` finds them without `cd` if you keep that layout). The **MSVC** Windows nightly (`windows-x64-msvc`) is `/MT` (static CRT, no VC++ redistributable). The Clang Windows zip may still need the Universal CRT. `doctor` locates `examples/` from the real executable path.

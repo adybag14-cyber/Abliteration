@@ -37,7 +37,7 @@ Only proceed to GGUF export / Ollama deploy / agent integration when both refusa
 
 ## Tool selection via comparative benchmarks
 
-Abliteration backend choice (Heretic Optuna, ErisForge single-pass, DECCP, llm-abliteration projected, etc.) is **not neutral** for agentic reliability. Per cross-architecture eval research, GSM8K/math and tool-calling regressions differ measurably by tool + model family. A pipeline that looks good on KL alone can still degrade command compliance on factory or CyberGym-style tasks.
+Abliteration backend choice (Heretic Optuna, ErisForge single-pass, jim-plus llm-abliteration with optional `measure.py --deccp` topics, etc.) is **not neutral** for agentic reliability. Per cross-architecture eval research, GSM8K/math and tool-calling regressions differ measurably by tool + model family. A pipeline that looks good on KL alone can still degrade command compliance on factory or CyberGym-style tasks.
 
 **Before locking a recipe for any agentic deployment:**
 
@@ -56,9 +56,9 @@ See also the full agentic stack in [../instructions/agentic-security-stack.md](.
 - **Silent degradation**: KL drift or MMLU/GSM8K drops that only appear under load or on edge prompts; agents produce plausible-but-wrong command sequences.
 - **Scope creep**: Applying the same recipe outside authorized benches (e.g. consumer chat or production user-facing) can surface retained harmful capabilities or remove useful guardrails in unintended domains.
 - **Eval gaming**: Relying solely on Heretic KL without the JSONL acceptance tests or capability slices lets low-quality ablations ship.
-- **Tool selection risk (cross-architecture)**: Different abliteration implementations (Heretic Optuna vs single-pass DECCP/ErisForge) show measurable differences in GSM8K/MMLU regression on the same models per arXiv:2512.13655. A tool that excels at KL on one architecture may silently degrade reasoning/tool-calling on another. Always consult the comparative evidence before locking a recipe for agentic workloads.
+- **Tool selection risk (cross-architecture)**: Different abliteration implementations (Heretic Optuna vs ErisForge single-pass vs jim-plus `measure.py --deccp` topics — Young’s “DECCP” is that pipeline, **not** a peer CLI) show measurable differences in GSM8K/MMLU regression on the same models per arXiv:2512.13655. A tool that excels at KL on one architecture may silently degrade reasoning/tool-calling on another. Always consult the comparative evidence before locking a recipe for agentic workloads.
 
-Mitigate by cross-referencing the full [comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md) when choosing between Heretic, ErisForge, DECCP, or llm-abliteration for your target model family. For agentic deployments, gate the chosen pipeline against the exact use-case corpora (factory, pentest, CyberGym proxy) via the eval-driven workflow.
+Mitigate by cross-referencing the full [comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md) when choosing between Heretic, ErisForge, or jim-plus llm-abliteration (`measure.py --deccp` for AUGMXNT topics) for your target model family. For agentic deployments, gate the chosen pipeline against the exact use-case corpora (factory, pentest, CyberGym proxy) via the eval-driven workflow.
 
 Mitigations are built into this handbook:
 - Always run `npm run eval:stats`, the factory good/bad pairs, jarvis-safe filter, and cybergym stub before/after.

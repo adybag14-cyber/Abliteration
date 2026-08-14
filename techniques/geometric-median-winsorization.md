@@ -73,7 +73,7 @@ row_normalization = "full"
 Run geometry table:
 
 ```bash
-pip install -U "heretic-llm[research]"
+pip install "heretic-llm[research]==1.4.0"
 heretic <model> --print-residual-geometry
 ```
 

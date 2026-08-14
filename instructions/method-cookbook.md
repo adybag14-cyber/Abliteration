@@ -36,7 +36,7 @@ Optional Python twins: `scripts/estimate-refusal-direction.py` and siblings. The
 ## 1. Heretic (production default)
 
 ```bash
-pip install -U heretic-llm bitsandbytes accelerate
+pip install heretic-llm==1.4.0 bitsandbytes accelerate
 cp sources/heretic-tools/config.production.toml config.toml
 # 8 GB: cp sources/heretic-tools/config.low-vram.toml config.toml
 heretic Qwen/Qwen3-4B-Instruct-2507
@@ -57,7 +57,7 @@ python measure.py -m <model> -o directions.pt --quant 4bit --deccp   # multiling
 python sharded_ablate.py config.yaml --projected --normpreserve
 ```
 
-Nous fork: [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration). DECCP topics: [AUGMXNT/deccp](https://github.com/AUGMXNT/deccp).
+Handbook path is jim-plus **v1.2**. [NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) last push ~2025-11-27 — frozen; not production-pinnable. [AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) is topics/dataset, not a peer CLI — `python measure.py --deccp` on jim-plus.
 
 ---
 
@@ -155,9 +155,9 @@ Analysis / Latent Guard — not a factory uncensor script. [../techniques/harm-v
 | Blasphemer (macOS Heretic fork) | `git clone https://github.com/sunkencity999/blasphemer` |
 | J-Wash | `git clone https://github.com/Extraltodeus/J-Wash` |
 | vauban (MLX) | `git clone https://github.com/teilomillet/vauban` |
-| senbonzakura (multi-D) | `git clone https://github.com/elementmerc/senbonzakura` |
+| senbonzakura (multi-D CLI; **not** official SOM) | `git clone https://github.com/elementmerc/senbonzakura` |
 
-None of these replace Stage 3 eval gates.
+None of these replace Stage 3 eval gates. Official SOM trainer is [pralab/som-refusal-directions](https://github.com/pralab/som-refusal-directions), not senbonzakura.
 
 ---
 

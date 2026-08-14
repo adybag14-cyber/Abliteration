@@ -24,7 +24,7 @@ Restart the IDE after saving.
 | Library | Context7 search term | Use for |
 |---------|---------------------|---------|
 | Heretic | `heretic-llm` or GitHub `p-e-w/heretic` | CLI flags, `config.default.toml`, install |
-| llm-abliteration | `NousResearch/llm-abliteration` | `sharded_ablate.py`, YAML layer configs |
+| llm-abliteration | `jim-plus/llm-abliteration` | `sharded_ablate.py`, YAML layer configs (v1.2 handbook path; not the frozen Nous fork) |
 | PEFT / LoRA | `huggingface/peft` | Adapter load, merge, 4-bit inference |
 | TransformerLens | `transformer_lens` | Hook names, `HookedTransformer` |
 | Optuna | `optuna` | Heretic's TPE optimizer internals |
@@ -35,7 +35,7 @@ Restart the IDE after saving.
 
 ```
 1. resolve-library-id("heretic automatic abliteration")
-2. query-docs(libraryId, "installation pip install heretic-llm CLI options")
+2. query-docs(libraryId, "installation pip install heretic-llm==1.4.0 CLI options")
 3. query-docs(libraryId, "quantization bnb_4bit config.default.toml")
 ```
 

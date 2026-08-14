@@ -1,4 +1,4 @@
-# fetched: 2026-06-13T23:44:14.843Z
+# fetched: 2026-08-14T18:44:12.884Z
 # url: https://raw.githubusercontent.com/andyrdt/refusal_direction/main/README.md
 
 # Refusal in Language Models Is Mediated by a Single Direction
@@ -45,11 +45,11 @@ The pipeline performs the following steps:
     - Artifacts will be saved in `pipeline/runs/{model_alias}/loss_evals`
 
 For convenience, we have included pipeline artifacts for the smallest model in each model family:
-- `qwen/qwen-1_8b-chat` — see `pipeline/runs/qwen-1_8b-chat/` in repo
-- `google/gemma-2b-it` — see `pipeline/runs/gemma-2b-it/` in repo
-- `01-ai/yi-6b-chat` — see `pipeline/runs/yi-6b-chat/` in repo
-- `meta-llama/llama-2-7b-chat-hf` — see `pipeline/runs/llama-2-7b-chat-hf/` in repo
-- `meta-llama/meta-llama-3-8b-instruct` — see `pipeline/runs/meta-llama-3-8b-instruct/` in repo
+- [`qwen/qwen-1_8b-chat`](https://github.com/andyrdt/refusal_direction/tree/main/pipeline/runs/qwen-1_8b-chat/)
+- [`google/gemma-2b-it`](https://github.com/andyrdt/refusal_direction/tree/main/pipeline/runs/gemma-2b-it/)
+- [`01-ai/yi-6b-chat`](https://github.com/andyrdt/refusal_direction/tree/main/pipeline/runs/yi-6b-chat/)
+- [`meta-llama/llama-2-7b-chat-hf`](https://github.com/andyrdt/refusal_direction/tree/main/pipeline/runs/llama-2-7b-chat-hf/)
+- [`meta-llama/meta-llama-3-8b-instruct`](https://github.com/andyrdt/refusal_direction/tree/main/pipeline/runs/meta-llama-3-8b-instruct/)
 
 ## Minimal demo Colab
 

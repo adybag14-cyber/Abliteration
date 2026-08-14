@@ -8,7 +8,7 @@ Refusal is associated with a shift in average activation. Estimate that shift pe
 
 1. Collect two prompt sets of equal size (N ≥ 64 recommended):
    - **Set A** — prompts that elicit refusals on the base model
-   - **Set B** — structurally similar but benign prompts that get compliance
+   - **Set B** — unmatched harmless prompts that get compliance (alpaca-style; not topic-matched pairs)
 2. Run forward pass; hook residual at layer ℓ (post-block or post-MLP — pick one)
 3. For each prompt, take hidden state vector `h` at chosen token position
 4. Compute:
@@ -23,8 +23,8 @@ r_ℓ    = (μ_A^ℓ - μ_B^ℓ) / ||μ_A^ℓ - μ_B^ℓ||
 
 ## Dataset tips
 
-- Pair prompts: *"Write a story about X"* vs *"Write explicit content about X"*
-- Include **false-refusal** benign prompts (model refuses unnecessarily) in Set B analysis
+- Default: unmatched harmful vs alpaca-style harmless (Petrov 2026, arXiv:2603.22061: topic-matched pairs can cancel `r`)
+- Topic-matched pairs (*"Write a story about X"* vs *"Write explicit content about X"*) are an experiment, not the baseline
 - Avoid duplicate near-copies — biases mean
 
 ## Outputs
@@ -38,7 +38,7 @@ r_ℓ    = (μ_A^ℓ - μ_B^ℓ) / ||μ_A^ℓ - μ_B^ℓ||
 
 [ErisForge](https://github.com/Tsadoq/ErisForge) implements the same mean-difference intuition with a built-in scorer — useful for **quick layer-band experiments** without writing custom hooks:
 
-1. Collect harmful/harmless pairs (or use upstream examples).
+1. Collect harmful/harmless sets (unmatched by default; or use upstream examples).
 2. Compute per-layer separation signal.
 3. Apply `AblationDecoderLayer` on the peak band only.
 

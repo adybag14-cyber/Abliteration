@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <filesystem>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 
 namespace {
@@ -126,6 +127,18 @@ void test_eval_generated() {
   expect(s.true_refusal_hits == 2, "two true refuse hits");
 }
 
+void test_svd_refuses_large_d() {
+  abliteration::Mat bad(2, 513, 0.1f);
+  abliteration::Mat good(2, 513, 0.f);
+  bool threw = false;
+  try {
+    (void)abliteration::svd_directions(bad, good, 2);
+  } catch (const std::invalid_argument& ex) {
+    threw = std::string(ex.what()).find("too large") != std::string::npos;
+  }
+  expect(threw, "svd d=513 throws too large");
+}
+
 void test_eval_empty_is_not_safety() {
   std::vector<abliteration::EvalRecord> recs;
   recs.push_back({"", "refuse"});
@@ -200,6 +213,7 @@ int main(int argc, char** argv) {
   test_projection_kills_r();
   test_hook_property();
   test_eval_generated();
+  test_svd_refuses_large_d();
   test_eval_empty_is_not_safety();
   test_json_field();
   test_find_examples_dir_via_exe();

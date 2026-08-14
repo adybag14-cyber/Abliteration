@@ -16,7 +16,7 @@ The beginner guide's Step 7 appendix now also points here for advanced tuning + 
 
 Curriculum: [../docs/complete-curriculum.md](../docs/complete-curriculum.md) · Cookbook: [method-cookbook.md](method-cookbook.md)
 
-> **Note:** Track C here = manual **llm-abliteration** / DECCP (advanced). Beginner [Track C (no GPU)](beginner-local-model-guide.md#track-c--no-gpu-download--quantize-only) is download/quantize only — different path.
+> **Note:** Track C here = manual **jim-plus llm-abliteration v1.2** (`measure.py --deccp` adds AUGMXNT topics; DECCP is not a peer CLI). Beginner [Track C (no GPU)](beginner-local-model-guide.md#track-c--no-gpu-download--quantize-only) is download/quantize only — different path.
 
 ---
 
@@ -63,7 +63,7 @@ column = "text"
 **Goal:** Understand refusal geometry before committing export.
 
 ```bash
-pip install -U "heretic-llm[research]"
+pip install "heretic-llm[research]==1.4.0"
 heretic <model> --print-residual-geometry
 heretic <model> --plot-residuals
 ```

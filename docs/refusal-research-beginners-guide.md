@@ -13,7 +13,7 @@ Plain-language map of the papers and tools that matter for this handbook. Every 
 ```text
 1. Arditi 2024        — why abliteration exists (one direction)
 2. Jim Lai blogs      — projected + norm-preserving (production default)
-3. Young 2025/26      — which tool to pick (Heretic vs DECCP vs ErisForge)
+3. Young 2025/26      — Heretic vs ErisForge vs jim-plus (`--deccp` topics)
 4. QCRI 2026          — eleven refusal types, one volume knob
 5. Defenses section   — what can block abliteration (extended-refusal)
 6. Bleeding-edge map  — ORBA, COSMIC, SOM, SVD, harm≠refusal
@@ -65,8 +65,8 @@ Frontier write-ups: [bleeding-edge.md](bleeding-edge.md) · [complete-curriculum
 |--|--|
 | **One sentence** | Same 16 models, four tools — **no universal winner**; math (GSM8K) is the most sensitive capability. |
 | **Models** | 16 instruction-tuned, 7B–14B |
-| **Tools** | Heretic, DECCP, ErisForge, FailSpy/abliterator |
-| **Key numbers** | Heretic: **16/16 compatibility**; DECCP avg GSM8K Δ **−0.13 pp**; ErisForge **−0.28 pp**; Heretic KL **0.043–1.646**; GSM8K swing up to **−18.81 pp** |
+| **Tools** | Heretic, ErisForge, FailSpy/abliterator; Young’s “DECCP” = jim-plus + deccp topics (**not** a peer CLI) |
+| **Key numbers** | Heretic: **16/16 compatibility**; Young’s “DECCP” (jim-plus + deccp topics) avg GSM8K Δ **−0.13 pp**; ErisForge **−0.28 pp**; Heretic KL **0.043–1.646**; GSM8K swing up to **−18.81 pp** |
 | **Repo** | [github.com/ricyoung/abliteration-comparison](https://github.com/ricyoung/abliteration-comparison) |
 | **Repo PDF** | [sources/research/papers/arxiv-2512.13655.pdf](../sources/research/papers/arxiv-2512.13655.pdf) |
 | **Handbook** | [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md) |
@@ -76,7 +76,7 @@ Frontier write-ups: [bleeding-edge.md](bleeding-edge.md) · [complete-curriculum
 | Your priority | Start with |
 |---------------|------------|
 | Automatic + broad arch support | **Heretic** |
-| Lowest math regression on benchmarked subset | **DECCP** or **ErisForge** |
+| Lowest math regression on benchmarked subset | **ErisForge** or **jim-plus** (`measure.py --deccp` topics; Young’s “DECCP” label) |
 | Notebook / direction prototyping | **FailSpy** → bake with Heretic |
 
 ---
@@ -176,7 +176,7 @@ Frontier write-ups: [bleeding-edge.md](bleeding-edge.md) · [complete-curriculum
 |------|----------|----------|
 | **Heretic** | Default automatic deploy | [../instructions/heretic-workflow.md](../instructions/heretic-workflow.md) |
 | **Abliterix** | MoE/VL/SSM presets, multi-objective | [../techniques/extended-abliteration-toolkit.md](../techniques/extended-abliteration-toolkit.md) |
-| **llm-abliteration + DECCP** | Sharded 20B+, multilingual measure | [../instructions/low-vram-abliteration.md](../instructions/low-vram-abliteration.md) |
+| **jim-plus** + `--deccp` | Sharded 20B+, AUGMXNT/deccp topics (not a peer CLI) | [../instructions/low-vram-abliteration.md](../instructions/low-vram-abliteration.md) |
 | **ErisForge** | Quick layer-band prototype | [../techniques/layer-selective-abliteration.md](../techniques/layer-selective-abliteration.md) |
 | **FailSpy/abliterator** | TransformerLens notebooks | [../techniques/beyond-single-direction.md](../techniques/beyond-single-direction.md) §6 |
 | **COSMIC** | Output-independent direction ID | This page §6 |

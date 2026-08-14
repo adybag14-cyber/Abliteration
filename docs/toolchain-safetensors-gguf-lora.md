@@ -25,7 +25,7 @@ This is **weight surgery** on Hugging Face–format checkpoints — not prompt j
 Have HF instruct safetensors?
 │
 ├─ Want automatic + best KL/refusal trade-off?
-│   └─ Heretic (pip install heretic-llm) → safetensors out
+│   └─ Heretic (pip install heretic-llm==1.4.0) → safetensors out
 │
 ├─ Want YAML layer control / sharded 70B on one GPU?
 │   └─ llm-abliteration v1.2: measure → analyze → sharded_ablate.py
@@ -43,11 +43,11 @@ Have HF instruct safetensors?
 
 ## Path 1 — Heretic → safetensors (recommended)
 
-**Tool:** [p-e-w/heretic](https://github.com/p-e-w/heretic) · PyPI `heretic-llm` · Docs [mintlify](https://p-e-w-heretic.mintlify.app/)
+**Tool:** [p-e-w/heretic](https://github.com/p-e-w/heretic) · PyPI `heretic-llm==1.4.0` · Docs [mintlify](https://p-e-w-heretic.mintlify.app/)
 
 | Step | Command / config |
 |------|------------------|
-| Install | `pip install -U heretic-llm bitsandbytes accelerate safetensors` |
+| Install | `pip install heretic-llm==1.4.0 bitsandbytes accelerate safetensors` |
 | Config | `cp sources/heretic-tools/config.production.toml config.toml` |
 | 8 GB | `config.low-vram.toml` → `quantization = "bnb_4bit"` |
 | Run | `heretic Qwen/Qwen3-4B-Instruct-2507` |
@@ -61,7 +61,7 @@ Have HF instruct safetensors?
 
 - 4000+ community models tagged `heretic` on Hugging Face
 - Supports dense, many VLMs, MoE (Qwen3-MoE), Qwen3.5 hybrid, gpt-oss (PyTorch 2.6+ for MXFP4)
-- Community **Heretic 1.2** reports ~70% lower VRAM — keep `pip install -U heretic-llm` current
+- Community **Heretic 1.2** reports ~70% lower VRAM — pin `pip install heretic-llm==1.4.0` (do not float to master)
 - Pins: [tools/heretic-tools-reference.md](tools/heretic-tools-reference.md)
 
 ---

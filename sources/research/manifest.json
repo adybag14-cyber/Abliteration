@@ -1,110 +1,174 @@
 {
-  "fetched": "2026-06-13T23:44:14.843Z",
+  "fetched": "2026-08-14T18:44:12.884Z",
   "papers": [
     {
       "id": "2406.11717",
       "url": "https://arxiv.org/pdf/2406.11717",
-      "pdf": "sources/research/papers\\arxiv-2406.11717.pdf",
-      "txt": "sources/research/papers\\arxiv-2406.11717.txt",
+      "pdf": "sources/research/papers/arxiv-2406.11717.pdf",
+      "txt": "sources/research/papers/arxiv-2406.11717.txt",
       "pdf_bytes": 1107843,
       "txt_chars": 123681
     },
     {
       "id": "2502.17420",
       "url": "https://arxiv.org/pdf/2502.17420",
-      "pdf": "sources/research/papers\\arxiv-2502.17420.pdf",
-      "txt": "sources/research/papers\\arxiv-2502.17420.txt",
+      "pdf": "sources/research/papers/arxiv-2502.17420.pdf",
+      "txt": "sources/research/papers/arxiv-2502.17420.txt",
       "pdf_bytes": 3261118,
       "txt_chars": 74434
     },
     {
       "id": "2505.19056",
       "url": "https://arxiv.org/pdf/2505.19056",
-      "pdf": "sources/research/papers\\arxiv-2505.19056.pdf",
-      "txt": "sources/research/papers\\arxiv-2505.19056.txt",
+      "pdf": "sources/research/papers/arxiv-2505.19056.pdf",
+      "txt": "sources/research/papers/arxiv-2505.19056.txt",
       "pdf_bytes": 781340,
       "txt_chars": 55583
     },
     {
       "id": "2506.00085",
       "url": "https://arxiv.org/pdf/2506.00085",
-      "pdf": "sources/research/papers\\arxiv-2506.00085.pdf",
-      "txt": "sources/research/papers\\arxiv-2506.00085.txt",
+      "pdf": "sources/research/papers/arxiv-2506.00085.pdf",
+      "txt": "sources/research/papers/arxiv-2506.00085.txt",
       "pdf_bytes": 2399941,
       "txt_chars": 83867
     },
     {
       "id": "2510.02768",
       "url": "https://arxiv.org/pdf/2510.02768",
-      "pdf": "sources/research/papers\\arxiv-2510.02768.pdf",
-      "txt": "sources/research/papers\\arxiv-2510.02768.txt",
+      "pdf": "sources/research/papers/arxiv-2510.02768.pdf",
+      "txt": "sources/research/papers/arxiv-2510.02768.txt",
       "pdf_bytes": 2991878,
       "txt_chars": 61334
     },
     {
       "id": "2512.13655",
       "url": "https://arxiv.org/pdf/2512.13655",
-      "pdf": "sources/research/papers\\arxiv-2512.13655.pdf",
-      "txt": "sources/research/papers\\arxiv-2512.13655.txt",
+      "pdf": "sources/research/papers/arxiv-2512.13655.pdf",
+      "txt": "sources/research/papers/arxiv-2512.13655.txt",
       "pdf_bytes": 599000,
       "txt_chars": 55830
     },
     {
       "id": "2602.02132",
       "url": "https://arxiv.org/pdf/2602.02132",
-      "pdf": "sources/research/papers\\arxiv-2602.02132.pdf",
-      "txt": "sources/research/papers\\arxiv-2602.02132.txt",
+      "pdf": "sources/research/papers/arxiv-2602.02132.pdf",
+      "txt": "sources/research/papers/arxiv-2602.02132.txt",
       "pdf_bytes": 727456,
       "txt_chars": 84719
     },
     {
       "id": "2603.22061",
       "url": "https://arxiv.org/pdf/2603.22061",
-      "pdf": "sources/research/papers\\arxiv-2603.22061.pdf",
-      "txt": "sources/research/papers\\arxiv-2603.22061.txt",
+      "pdf": "sources/research/papers/arxiv-2603.22061.pdf",
+      "txt": "sources/research/papers/arxiv-2603.22061.txt",
       "pdf_bytes": 315302,
       "txt_chars": 24383
     },
     {
       "id": "2605.26526",
       "url": "https://arxiv.org/pdf/2605.26526",
-      "pdf": "sources/research/papers\\arxiv-2605.26526.pdf",
-      "txt": "sources/research/papers\\arxiv-2605.26526.txt",
+      "pdf": "sources/research/papers/arxiv-2605.26526.pdf",
+      "txt": "sources/research/papers/arxiv-2605.26526.txt",
       "pdf_bytes": 2998316,
       "txt_chars": 43147
     },
     {
       "id": "2606.05396",
       "url": "https://arxiv.org/pdf/2606.05396",
-      "pdf": "sources/research/papers\\arxiv-2606.05396.pdf",
-      "txt": "sources/research/papers\\arxiv-2606.05396.txt",
+      "pdf": "sources/research/papers/arxiv-2606.05396.pdf",
+      "txt": "sources/research/papers/arxiv-2606.05396.txt",
       "pdf_bytes": 505505,
       "txt_chars": 61236
+    },
+    {
+      "id": "2410.03415",
+      "url": "https://arxiv.org/pdf/2410.03415",
+      "pdf": "sources/research/papers/arxiv-2410.03415.pdf",
+      "txt": "sources/research/papers/arxiv-2410.03415.txt",
+      "pdf_bytes": 645400,
+      "txt_chars": 76915
+    },
+    {
+      "id": "2507.11878",
+      "url": "https://arxiv.org/pdf/2507.11878",
+      "pdf": "sources/research/papers/arxiv-2507.11878.pdf",
+      "txt": "sources/research/papers/arxiv-2507.11878.txt",
+      "pdf_bytes": 1994731,
+      "txt_chars": 100219
+    },
+    {
+      "id": "2511.08379",
+      "url": "https://arxiv.org/pdf/2511.08379",
+      "pdf": "sources/research/papers/arxiv-2511.08379.pdf",
+      "txt": "sources/research/papers/arxiv-2511.08379.txt",
+      "pdf_bytes": 11323564,
+      "txt_chars": 85197
+    },
+    {
+      "id": "2603.27518",
+      "url": "https://arxiv.org/pdf/2603.27518",
+      "pdf": "sources/research/papers/arxiv-2603.27518.pdf",
+      "txt": "sources/research/papers/arxiv-2603.27518.txt",
+      "pdf_bytes": 4040504,
+      "txt_chars": 53700
+    },
+    {
+      "id": "2509.15202",
+      "url": "https://arxiv.org/pdf/2509.15202",
+      "pdf": "sources/research/papers/arxiv-2509.15202.pdf",
+      "txt": "sources/research/papers/arxiv-2509.15202.txt",
+      "pdf_bytes": 1125656,
+      "txt_chars": 56216
+    },
+    {
+      "id": "2603.04355",
+      "url": "https://arxiv.org/pdf/2603.04355",
+      "pdf": "sources/research/papers/arxiv-2603.04355.pdf",
+      "txt": "sources/research/papers/arxiv-2603.04355.txt",
+      "pdf_bytes": 582401,
+      "txt_chars": 80569
+    },
+    {
+      "id": "2607.02396",
+      "url": "https://arxiv.org/pdf/2607.02396",
+      "pdf": "sources/research/papers/arxiv-2607.02396.pdf",
+      "txt": "sources/research/papers/arxiv-2607.02396.txt",
+      "pdf_bytes": 490315,
+      "txt_chars": 46145
+    },
+    {
+      "id": "2511.06852",
+      "url": "https://arxiv.org/pdf/2511.06852",
+      "pdf": "sources/research/papers/arxiv-2511.06852.pdf",
+      "txt": "sources/research/papers/arxiv-2511.06852.txt",
+      "pdf_bytes": 1772500,
+      "txt_chars": 51316
     }
   ],
   "readmes": [
     {
       "id": "refusal-direction-readme",
       "url": "https://raw.githubusercontent.com/andyrdt/refusal_direction/main/README.md",
-      "out": "sources/research/readmes\\refusal-direction-readme.md",
-      "bytes": 4210
+      "out": "sources/research/readmes/refusal-direction-readme.md",
+      "bytes": 4480
     },
     {
       "id": "cosmic-readme",
       "url": "https://raw.githubusercontent.com/wang-research-lab/COSMIC/main/README.md",
-      "out": "sources/research/readmes\\cosmic-readme.md",
+      "out": "sources/research/readmes/cosmic-readme.md",
       "bytes": 3025
     },
     {
       "id": "abliteration-comparison-readme",
       "url": "https://raw.githubusercontent.com/ricyoung/abliteration-comparison/main/README.md",
-      "out": "sources/research/readmes\\abliteration-comparison-readme.md",
+      "out": "sources/research/readmes/abliteration-comparison-readme.md",
       "bytes": 3948
     },
     {
       "id": "safety-pretraining-readme",
       "url": "https://raw.githubusercontent.com/shashankskagnihotri/safety_pretraining/main/README.md",
-      "out": "sources/research/readmes\\safety-pretraining-readme.md",
+      "out": "sources/research/readmes/safety-pretraining-readme.md",
       "bytes": 15038
     }
   ]

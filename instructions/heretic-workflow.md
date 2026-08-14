@@ -116,8 +116,6 @@ Accept `--evaluate-model` if offered — record refusal count and KL.
 pip install heretic-llm==1.4.0
 ```
 
-Unpinned `pip install -U heretic-llm` currently resolves to 1.4.0, but pin the version so a later release does not surprise you.
-
 ### Reproducible (GitHub **tag** + uv)
 
 Do **not** clone `master` and `uv run` it as a drop-in for this handbook. Git master after v1.4.0 uses a plugin scorer schema (`[scorer.KeywordRate]`, `keyword_markers`) that is **not** compatible with the handbook factory/thinking TOML profiles.

@@ -34,7 +34,7 @@ Disk: **30 GB** minimum (4B path **50 GB**). Backup the **original** checkpoint 
 | Python 3.11–3.12 | Installer: **Add python.exe to PATH** |
 | Git | `winget install Git.Git` |
 | CUDA PyTorch | `pip install torch --index-url https://download.pytorch.org/whl/cu124` |
-| Heretic | `pip install -U heretic-llm accelerate` |
+| Heretic | `pip install heretic-llm==1.4.0 accelerate` |
 | **bitsandbytes** | Often **broken** on native Windows — prefer WSL2 for `bnb_4bit` |
 
 Full walkthrough: [../instructions/setup-environment.md](../instructions/setup-environment.md) Step 2.
@@ -45,13 +45,13 @@ Full walkthrough: [../instructions/setup-environment.md](../instructions/setup-e
 wsl --install -d Ubuntu-22.04
 ```
 
-Inside Ubuntu: Python venv + `pip install -U heretic-llm bitsandbytes accelerate`. NVIDIA CUDA in WSL requires a recent Windows NVIDIA driver (no extra Linux driver).
+Inside Ubuntu: Python venv + `pip install heretic-llm==1.4.0 bitsandbytes accelerate`. NVIDIA CUDA in WSL requires a recent Windows NVIDIA driver (no extra Linux driver).
 
 ### Linux (best path)
 
 ```bash
 python3.11 -m venv .venv && source .venv/bin/activate
-pip install -U torch heretic-llm bitsandbytes accelerate
+pip install -U torch heretic-llm==1.4.0 bitsandbytes accelerate
 python scripts/check_env.py
 ```
 
@@ -73,8 +73,8 @@ Do **not** expect `bitsandbytes` 4-bit Heretic to match Linux CUDA.
 
 | Tool | Install | First command |
 |------|---------|----------------|
-| **Heretic** | `pip install -U heretic-llm` | `heretic Qwen/Qwen3-4B-Instruct-2507` |
-| **Heretic + plots** | `pip install -U "heretic-llm[research]"` | `heretic <m> --print-residual-geometry` |
+| **Heretic** | `pip install heretic-llm==1.4.0` | `heretic Qwen/Qwen3-4B-Instruct-2507` |
+| **Heretic + plots** | `pip install "heretic-llm[research]==1.4.0"` | `heretic <m> --print-residual-geometry` |
 | **llm-abliteration** | `git clone https://github.com/jim-plus/llm-abliteration` | `python measure.py -m <m> -o directions.pt --quant 4bit --projected` |
 | **Abliterix** | `pip install -U abliterix` | `abliterix --model Qwen/Qwen3-4B-Instruct-2507` |
 | **ErisForge** | `git clone https://github.com/Tsadoq/ErisForge && pip install -e .` | Layer-band API — see cookbook |

@@ -21,7 +21,7 @@
 | **Code LLMs — refusal vs capability** (2026) | [arXiv:2606.05396](https://arxiv.org/abs/2606.05396) | [PDF](sources/research/papers/arxiv-2606.05396.pdf) | — |
 | **False-refusal single vector** (Wang, ICLR 2025) | [arXiv:2410.03415](https://arxiv.org/abs/2410.03415) | [PDF](sources/research/papers/arxiv-2410.03415.pdf) · [False-Refusal-Mitigation](https://github.com/mainlp/False-Refusal-Mitigation) · [T38](techniques/false-refusal-vector-ablation.md) |
 | **Harmfulness ≠ refusal** (Zhao, NeurIPS 2025) | [arXiv:2507.11878](https://arxiv.org/abs/2507.11878) | [PDF](sources/research/papers/arxiv-2507.11878.pdf) · [CHATS-lab code](https://github.com/CHATS-lab/LLMs_Encode_Harmfulness_Refusal_Separately) · [T39](techniques/harm-vs-refusal-directions.md) |
-| **DDI harm-detect vs refuse-execute** (Zhang & Sun, AAAI-26) | [arXiv:2511.06852](https://arxiv.org/abs/2511.06852) | Analysis companion to T39 — queued in `scripts/fetch-research-papers.mjs` |
+| **DDI harm-detect vs refuse-execute** (Zhang & Sun, AAAI-26) | [arXiv:2511.06852](https://arxiv.org/abs/2511.06852) | [PDF](sources/research/papers/arxiv-2511.06852.pdf) · Analysis only (no attack recipe) · [T39](techniques/harm-vs-refusal-directions.md) |
 | **SOM multi-direction** (Piras, AAAI 2026) | [arXiv:2511.08379](https://arxiv.org/abs/2511.08379) | [PDF](sources/research/papers/arxiv-2511.08379.pdf) · [pralab/som-refusal-directions](https://github.com/pralab/som-refusal-directions) · [T35](techniques/som-multi-directional-refusal.md) |
 | **ORBA** (Lai 2026) | [HF blog](https://huggingface.co/blog/grimjim/orthogonal-reflection-bounded-ablation) | [T34](techniques/orba-orthogonal-reflection.md) · [orba-pipeline](methods/orba-pipeline.md) |
 | **Task-conditioned refusal** (2026) | [arXiv:2603.27518](https://arxiv.org/abs/2603.27518) | [PDF](sources/research/papers/arxiv-2603.27518.pdf) |
@@ -36,17 +36,17 @@
 | Project | URL | Role |
 |---------|-----|------|
 | **Heretic** | [github.com/p-e-w/heretic](https://github.com/p-e-w/heretic) | Fully automatic abliteration + Optuna search |
-| **llm-abliteration** | [github.com/jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) | measure.py → analyze.py → sharded_ablate.py |
+| **llm-abliteration** | [github.com/jim-plus/llm-abliteration](https://github.com/jim-plus/llm-abliteration) | v1.2 handbook/manual path: measure.py → analyze.py → sharded_ablate.py |
 | **refusal_direction** | [github.com/andyrdt/refusal_direction](https://github.com/andyrdt/refusal_direction) | Paper pipeline, `direction.pt` artifacts |
 | **TransformerLens** | [github.com/TransformerLensOrg/TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) | Hooks, residual analysis |
 | **FailSpy/abliterator** | [github.com/FailSpy/abliterator](https://github.com/FailSpy/abliterator) | TransformerLens hooks; mechanistic prototyping |
 | **remove-refusals-with-transformers** | [github.com/Sumandora/remove-refusals-with-transformers](https://github.com/Sumandora/remove-refusals-with-transformers) | Pure Transformers, no TransformerLens |
 | **wassname/abliterator** | [github.com/wassname/abliterator](https://github.com/wassname/abliterator) | Community implementation |
 | **ErisForge** | [github.com/Tsadoq/ErisForge](https://github.com/Tsadoq/ErisForge) | Layer-band single-pass; ExpressionRefusalScorer |
-| **NousResearch/llm-abliteration** | [github.com/NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Sharded manual pipeline; `--deccp` measure |
+| **NousResearch/llm-abliteration** | [github.com/NousResearch/llm-abliteration](https://github.com/NousResearch/llm-abliteration) | Frozen fork (~2025-11-27); historical YAML only — **not** the handbook path |
 | **abliterate.cpp** | [github.com/kabachuha/abliterate.cpp](https://github.com/kabachuha/abliterate.cpp) | GGUF measure → llm-abliteration (WIP) |
 | **Abliterix** | [github.com/wuwangzhang1216/abliterix](https://github.com/wuwangzhang1216/abliterix) | Optuna multi-objective; 150+ configs; HonestAbliterationBench |
-| **DECCP** | [github.com/AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) | Multilingual deccp topics for `measure.py --deccp` |
+| **DECCP** (AUGMXNT) | [github.com/AUGMXNT/deccp](https://github.com/AUGMXNT/deccp) | Topics/dataset (Qwen2 PoC), **not** a peer CLI. Measure: `python measure.py --deccp` on jim-plus |
 | **COSMIC** | [github.com/wang-research-lab/COSMIC](https://github.com/wang-research-lab/COSMIC) | Cosine-similarity refusal direction ID (ACL 2025) |
 | **abliteration-comparison** | [github.com/ricyoung/abliteration-comparison](https://github.com/ricyoung/abliteration-comparison) | Young arXiv:2512.13655 reproduction assets |
 | **spkgyk/abliteration** | [github.com/spkgyk/abliteration](https://github.com/spkgyk/abliteration) | Pure PyTorch hooks (no TransformerLens) |
@@ -55,7 +55,7 @@
 | **J-Wash** | [github.com/Extraltodeus/J-Wash](https://github.com/Extraltodeus/J-Wash) | Jacobian-lens manual alignment |
 | **Blasphemer** | [github.com/sunkencity999/blasphemer](https://github.com/sunkencity999/blasphemer) | Heretic fork for macOS / LM Studio |
 | **vauban** | [github.com/teilomillet/vauban](https://github.com/teilomillet/vauban) | MLX-native steering / abliteration |
-| **senbonzakura** | [github.com/elementmerc/senbonzakura](https://github.com/elementmerc/senbonzakura) | Multi-direction refusal CLI |
+| **senbonzakura** | [github.com/elementmerc/senbonzakura](https://github.com/elementmerc/senbonzakura) | Multi-direction refusal CLI; **not** official SOM ([pralab/som-refusal-directions](https://github.com/pralab/som-refusal-directions)) |
 | **Awesome-Refusal-Suppression** | [github.com/ant-research/Awesome-Refusal-Suppression](https://github.com/ant-research/Awesome-Refusal-Suppression) | External catalog (cross-check, not a substitute) |
 | **Handbook C++26 CLI** | [cxx/README.md](cxx/README.md) | `npm run cxx:build` · `abliterate-cxx self-check` |
 | **GraySwan circuit-breakers** | [github.com/GraySwanAI/circuit-breakers](https://github.com/GraySwanAI/circuit-breakers) | Defensive alignment (contrast) |
@@ -69,8 +69,10 @@ Heretic also mirrors to [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/
 pip install erisforge   # verify package name on github.com/Tsadoq/ErisForge README
 git clone https://github.com/Tsadoq/ErisForge.git && cd ErisForge && pip install -e .
 
-# DECCP — deccp topics + single-pass (see repo for model-specific usage)
-git clone https://github.com/AUGMXNT/deccp.git && cd deccp && pip install -r requirements.txt
+# DECCP — AUGMXNT topics/dataset, not a peer CLI. Measure on jim-plus:
+# python measure.py --deccp
+# optional topic checkout:
+git clone https://github.com/AUGMXNT/deccp.git
 ```
 
 → [docs/comparative-abliteration-benchmarks.md](docs/comparative-abliteration-benchmarks.md) · [techniques/extended-abliteration-toolkit.md](techniques/extended-abliteration-toolkit.md)
@@ -128,12 +130,12 @@ Guides: [docs/toolchain-safetensors-gguf-lora.md](docs/toolchain-safetensors-ggu
 
 ```bash
 # Heretic — PyPI package built from GitHub
-pip install -U heretic-llm bitsandbytes accelerate
+pip install heretic-llm==1.4.0 bitsandbytes accelerate
 heretic Qwen/Qwen3-4B-Instruct-2507
 # Low VRAM: quantization = "bnb_4bit" in config.toml
 
 # Or clone for reproducible uv.lock
-git clone https://github.com/p-e-w/heretic.git
+git clone --branch v1.4.0 https://github.com/p-e-w/heretic.git
 cd heretic && uv run heretic <model>
 
 # Manual pipeline (4-bit measure)

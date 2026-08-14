@@ -367,7 +367,7 @@ Full matrices: [../evaluation.md](../evaluation.md) · Workflow: [../../instruct
 
 ```bash
 # Full Heretic + quant stack
-pip install -U heretic-llm bitsandbytes accelerate safetensors
+pip install heretic-llm==1.4.0 bitsandbytes accelerate safetensors
 
 # Manual pipeline + 4-bit measure
 pip install torch transformers bitsandbytes peft
@@ -376,7 +376,7 @@ pip install torch transformers bitsandbytes peft
 pip install peft safetensors
 
 # Research plots
-pip install -U "heretic-llm[research]"
+pip install "heretic-llm[research]==1.4.0"
 
 # GGUF toolchain
 git clone https://github.com/ggml-org/llama.cpp.git tools/llama.cpp

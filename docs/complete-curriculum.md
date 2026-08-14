@@ -155,10 +155,10 @@ Numbered T-ids: [advanced-techniques-catalog.md](advanced-techniques-catalog.md)
 | Single `r` not enough | T05/T06/T07 · T35 SOM · T34 ORBA |
 | Weakly aligned / no “I cannot” | T36 COSMIC |
 | Need subspace not a line | T37 SVD / OBLITERATUS |
-| Factory false-refusal only | T38 false-refusal vector (keep safety `r`) |
+| Factory false-refusal only | T38 Wang `w′ ← w − λ v` (not factory DIM, not T03) |
 | Jailbreaks vs over-refusal disagree | T39 harm vs refusal (Zhao 2025) |
 | Gemma 4 / VL / SSM presets | Abliterix Track J |
-| GSM8K collapse on Heretic | ErisForge / DECCP Track K |
+| GSM8K collapse on Heretic | ErisForge Track K; or jim-plus `--projected --normpreserve` |
 
 ---
 
@@ -167,7 +167,7 @@ Numbered T-ids: [advanced-techniques-catalog.md](advanced-techniques-catalog.md)
 | Default | Alternative | Research only |
 |---------|-------------|---------------|
 | **Heretic** (`heretic-llm`) | Abliterix (AGPL, 150+ presets) | FailSpy / TransformerLens |
-| jim-plus **llm-abliteration** | Nous fork + DECCP | J-Wash (Jacobian lens) |
+| jim-plus **llm-abliteration** v1.2 | `measure.py --deccp` (AUGMXNT topics, not a peer CLI) | J-Wash; Nous fork frozen ~2025-11-27 |
 | Handbook `scripts/abliteration_math.py` | ErisForge layer-band | OBLITERATUS `surgical` / SAE |
 | `export-abliteration-lora.py` | grimjim LoRA adapters | ablate-llm (`pip install ablate-llm`) |
 
@@ -197,7 +197,7 @@ Compare numbers, not vibes: [comparative-abliteration-benchmarks.md](comparative
 | Gibberish | Over-ablation — lower `max_weight`, enable T03 |
 | Factory still refuses | Domain `[bad_prompts]`, not more global `α` |
 | Tools break, chat works | Tool-call eval; SuperGemma / Jarvis repair, not more surgery |
-| Math scores crater | ErisForge / DECCP / narrower kernel |
+| Math scores crater | ErisForge / jim-plus `--deccp` topics / narrower kernel |
 
 ---
 
@@ -219,7 +219,7 @@ Need a local model that stops false-refusing factory/lab tools?
 ├─ MoE / Gemma 4 / VL preset exists → Abliterix Track J
 ├─ Want reversible only → inference hook (Stage 4.1)
 ├─ Heretic leaves refusals → multi-D / SOM / RDO / domain pass
-├─ Heretic tanks GSM8K → ErisForge or DECCP, then re-eval
+├─ Heretic tanks GSM8K → ErisForge or jim-plus (`--deccp` topics), then re-eval
 ├─ No refusal template in outputs → COSMIC
 ├─ Need adapter not full weights → export-abliteration-lora.py
 └─ Still refusing after surgery → defenses doc (not more α)

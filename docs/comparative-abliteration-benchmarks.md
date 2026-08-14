@@ -15,7 +15,7 @@ The benchmark matrix and handbook interpretation of capability deltas integrate 
 | Tool | Type | Notes from paper / upstream |
 |------|------|----------------------------|
 | **Heretic** | Bayesian Optuna + projected abliteration | **16/16 model compatibility** (paper); variable KL (0.043–1.646); model-dependent capability impact |
-| **DECCP** | Single-pass + deccp topics | Avg GSM8K Δ **-0.13 pp** on benchmarked subset |
+| **DECCP** (Young label) | jim-plus `measure.py --deccp` + AUGMXNT topics (**not** a peer CLI) | Avg GSM8K Δ **-0.13 pp** on benchmarked subset |
 | **ErisForge** | Single-pass toolkit | Avg GSM8K Δ **-0.28 pp** on benchmarked subset |
 | **FailSpy/abliterator** | TransformerLens hook ablation | **Lowest compatibility** in 16-model matrix (research/notebook); best for prototyping |
 | **Abliterix** | Optuna TPE multi-objective (refusals + KL); Heretic-lineage extension | Not in arXiv:2512.13655 matrix — upstream **HonestAbliterationBench** + low-KL Gemma-4-E4B examples; verify per model |
@@ -31,11 +31,11 @@ The benchmark matrix and handbook interpretation of capability deltas integrate 
 | Finding | Implication for deploy |
 |---------|------------------------|
 | **GSM8K most sensitive** | Math/reasoning drops -0.13 to **-18.81 pp** (-26.5% relative) depending on tool + architecture |
-| Single-pass (ErisForge, DECCP) | Better **capability preservation** on benchmarked math subset vs some Heretic runs |
+| Single-pass (ErisForge; Young’s “DECCP” = jim-plus + deccp topics) | Better **capability preservation** on benchmarked math subset vs some Heretic runs |
 | Heretic Optuna | Better **refusal/KL co-optimization** when tuned — KL varies widely by model |
 | Not one-size-fits-all | Pick tool per architecture; always eval GSM8K/MMLU on your target model |
 
-**This handbook default:** Heretic for automatic deploy + mandatory eval gates ([eval-driven-workflow.md](../instructions/eval-driven-workflow.md)). Use **llm-abliteration** / **DECCP** / **ErisForge** when Heretic KL or GSM8K regression is poor on a specific architecture. Use **Abliterix** when MoE/hybrid/VL/SSM needs upstream presets or multi-technique automation (always re-run handbook eval gates). Use **FailSpy/abliterator** for mechanistic direction work only — bake winners with Heretic or Abliterix.
+**This handbook default:** Heretic for automatic deploy + mandatory eval gates ([eval-driven-workflow.md](../instructions/eval-driven-workflow.md)). Use **jim-plus llm-abliteration** (`measure.py --deccp` for AUGMXNT topics) or **ErisForge** when Heretic KL or GSM8K regression is poor on a specific architecture. Use **Abliterix** when MoE/hybrid/VL/SSM needs upstream presets or multi-technique automation (always re-run handbook eval gates). Use **FailSpy/abliterator** for mechanistic direction work only — bake winners with Heretic or Abliterix.
 
 Capability preservation is not optional — different tools carry different regression profiles on reasoning and tool-calling. All selections must be gated by the mandatory sanity checks, labeling, and authorized-scope rules in [../docs/risks-and-ethics.md](../docs/risks-and-ethics.md). For agentic security, factory, and research deployments, align prompt sets and pass/fail criteria to the specific use-case corpora and workflows.
 
@@ -84,4 +84,4 @@ Tool selection from this benchmark data **must** be paired with the handbook's r
 - [research-landscape.md](research-landscape.md)
 - [toolchain-safetensors-gguf-lora.md](toolchain-safetensors-gguf-lora.md)
 - [tools/abliteration-tooling.md](tools/abliteration-tooling.md) — agent/tool-calling picker, failure matrix, decision flowcharts (Nous, huihui, OBLITERATUS, SuperGemma)
-- [../techniques/extended-abliteration-toolkit.md](../techniques/extended-abliteration-toolkit.md) — Abliterix, ErisForge, Nous/DECCP, FailSpy placement + commands
+- [../techniques/extended-abliteration-toolkit.md](../techniques/extended-abliteration-toolkit.md) — Abliterix, ErisForge, jim-plus/`--deccp`, FailSpy placement + commands

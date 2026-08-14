@@ -15,7 +15,7 @@ Curriculum placement: [complete-curriculum.md](complete-curriculum.md) Stage 9. 
 | T36 | COSMIC — cosine direction ID, no output templates | 2025 ACL | [cosmic-refusal-direction](../techniques/cosmic-refusal-direction.md) | When markers fail |
 | T35 | SOM multi-direction (AAAI 2026) | 2025/26 | [som-multi-directional-refusal](../techniques/som-multi-directional-refusal.md) | After single-`r` leftovers |
 | T37 | SVD / whitened SVD subspace (OBLITERATUS) | 2026 | [svd-whitened-obliteratus](../techniques/svd-whitened-obliteratus.md) | CoT / MoE precision |
-| T38 | False-refusal vector only (ICLR 2025) | 2024/25 | [false-refusal-vector-ablation](../techniques/false-refusal-vector-ablation.md) | Factory over-refusal |
+| T38 | Wang `w′ ← w − λ v` (not factory DIM, not T03) | 2024/25 | [false-refusal-vector-ablation](../techniques/false-refusal-vector-ablation.md) | Factory over-refusal |
 | T39 | Harm ≠ refusal — distinct, not proven orthogonal (Zhao et al.) | 2025 | [harm-vs-refusal-directions](../techniques/harm-vs-refusal-directions.md) | Analysis + Latent Guard |
 | — | Harm detection vs refusal execution (Zhang & Sun) | 2025/26 | [arXiv:2511.06852](https://arxiv.org/abs/2511.06852) | Analysis (AAAI-26); not an attack recipe |
 | T05–T07 | Concept cones, RDO, SAE | 2025–26 | [beyond-single-direction](../techniques/beyond-single-direction.md) | Research |
@@ -86,10 +86,10 @@ Handbook implementation of DIM / projected / Householder / subspace: `scripts/ab
 | **J-Wash** | Anthropic Jacobian lens; exportable manual alignment |
 | **Blasphemer** | Heretic fork aimed at macOS + LM Studio |
 | **vauban** | MLX-native steering / abliteration research |
-| **senbonzakura** | Multi-direction refusal CLI |
+| **senbonzakura** | Multi-direction refusal CLI; **not** official SOM ([pralab/som-refusal-directions](https://github.com/pralab/som-refusal-directions)) |
 | **heretic-grimoire** | Reproducibility archive for Heretic runs |
 
-Compatibility and GSM8K still come from [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md) (Heretic / DECCP / ErisForge / FailSpy). Newer CLIs are **not** in that matrix — treat their README numbers as unverified until you run `data/eval/*.jsonl`.
+Compatibility and GSM8K still come from [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md) (Heretic / ErisForge / FailSpy; Young’s “DECCP” = jim-plus + deccp topics). Newer CLIs are **not** in that matrix — treat their README numbers as unverified until you run `data/eval/*.jsonl`.
 
 ---
 

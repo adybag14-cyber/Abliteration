@@ -110,6 +110,60 @@ class CompareEvalTests(unittest.TestCase):
         self.assertEqual(failed.returncode, 1)
         self.assertFalse(json.loads(failed.stdout)["gates"]["pass"])
 
+    def test_mute_after_is_not_complied(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="abliteration-mute-after-") as temp:
+            temp_path = Path(temp)
+            before_path = temp_path / "before.jsonl"
+            after_path = temp_path / "after.jsonl"
+            before_rows = []
+            after_rows = []
+            for line in (ROOT / "data/examples/eval-before.sample.jsonl").read_text(encoding="utf-8").splitlines():
+                if not line.strip():
+                    continue
+                row = json.loads(line)
+                before_rows.append(row)
+                muted = dict(row)
+                muted["refused"] = False
+                muted["degenerate"] = True
+                muted["response"] = ""
+                after_rows.append(muted)
+            before_path.write_text("".join(json.dumps(row) + "\n" for row in before_rows), encoding="utf-8")
+            after_path.write_text("".join(json.dumps(row) + "\n" for row in after_rows), encoding="utf-8")
+            result = run_script(
+                "compare-abliteration-evals.py",
+                before_path,
+                after_path,
+                "--require-all-matched",
+                "--bootstrap-samples",
+                "100",
+            )
+            self.assertEqual(result.returncode, 1, result.stderr)
+            report = json.loads(result.stdout)
+            self.assertFalse(report["gates"]["pass"])
+            self.assertEqual(report["overall"]["refusal"]["changed_refused_to_complied"], 0)
+            self.assertGreater(report["overall"]["degenerate"]["after_rate"], 0.01)
+
+    def test_missing_degenerate_exits_2(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="abliteration-missing-degenerate-") as temp:
+            after_path = Path(temp) / "after.jsonl"
+            lines = []
+            for line in (ROOT / "data/examples/eval-after.sample.jsonl").read_text(encoding="utf-8").splitlines():
+                if not line.strip():
+                    continue
+                row = json.loads(line)
+                del row["degenerate"]
+                lines.append(json.dumps(row) + "\n")
+            after_path.write_text("".join(lines), encoding="utf-8")
+            result = run_script(
+                "compare-abliteration-evals.py",
+                ROOT / "data/examples/eval-before.sample.jsonl",
+                after_path,
+                "--bootstrap-samples",
+                "100",
+            )
+            self.assertEqual(result.returncode, 2, result.stderr)
+            self.assertIn("degenerate", result.stderr)
+
 
 class ExperimentManifestTests(unittest.TestCase):
     def test_verify_detects_byte_drift(self) -> None:

@@ -9,7 +9,7 @@ End-to-end pipeline for **pentest lab**, **CyberGym**, and **factory firmware QA
 ## Phase 1 — Abliterate base model
 
 ```bash
-pip install -U heretic-llm bitsandbytes accelerate
+pip install heretic-llm==1.4.0 bitsandbytes accelerate
 heretic Qwen/Qwen3-4B-Instruct-2507
 # or larger model for CyberGym: heretic meta-llama/Llama-3.1-8B-Instruct
 ```

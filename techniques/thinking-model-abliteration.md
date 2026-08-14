@@ -85,7 +85,7 @@ Long CoT increases activation memory during the measure pass — lower `max_batc
 ## Research mode
 
 ```bash
-pip install -U "heretic-llm[research]"
+pip install "heretic-llm[research]==1.4.0"
 heretic <model> --print-residual-geometry
 ```
 

@@ -1,4 +1,4 @@
-# fetched: 2026-06-13T23:44:14.843Z
+# fetched: 2026-08-14T18:44:12.884Z
 # url: https://raw.githubusercontent.com/wang-research-lab/COSMIC/main/README.md
 
 # COSMIC: Generalized Refusal Direction Identification in LLM Activations

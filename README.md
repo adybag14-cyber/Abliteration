@@ -10,7 +10,7 @@ Living handbook for **LLM abliteration** (weight-level refusal-direction surgery
 
 [![C++26 platform](https://github.com/adybag14-cyber/Abliteration/actions/workflows/cxx26-platform.yml/badge.svg)](https://github.com/adybag14-cyber/Abliteration/actions/workflows/cxx26-platform.yml)
 
-> **New to the subject?** Open the [interactive Abliteration Field Guide](https://adybag14-cyber.github.io/Abliteration/) — it starts on the C++26 toy lab (`#lab`) with the same unique nightly filenames, then the six-step checklist, method spider diagram, searchable atlas (DIM / ORBA / COSMIC), and evaluation-gate simulator.
+> **New to the subject?** Open the [interactive Abliteration Field Guide](https://adybag14-cyber.github.io/Abliteration/#lab) — PathFinder defaults to the C++26 toy lab with the same unique nightly filenames. Then the six-step checklist, method spider diagram, searchable atlas (DIM / ORBA / COSMIC), and evaluation-gate simulator.
 
 ## What is abliteration?
 

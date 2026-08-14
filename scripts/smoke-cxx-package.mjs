@@ -2,7 +2,7 @@
 /**
  * Extract a packaged archive into a temp dir (no repo cwd) and run the first-hour loop.
  *
- *   node scripts/smoke-cxx-package.mjs --archive cxx/dist/abliterate-cxx-windows-x64-gcc15.tar.gz
+ *   node scripts/smoke-cxx-package.mjs --archive cxx/dist/abliterate-cxx-windows-x64-msvc.tar.gz
  */
 import { spawnSync } from 'child_process';
 import { existsSync, mkdtempSync, readdirSync } from 'fs';
@@ -66,7 +66,26 @@ function extractTarGz(archivePath, destDir) {
   process.exit(1);
 }
 
-extractTarGz(archive, lab);
+function extractArchive(archivePath, destDir) {
+  if (archivePath.toLowerCase().endsWith('.zip')) {
+    const dest = destDir.replace(/'/g, "''");
+    const src = resolve(archivePath).replace(/'/g, "''");
+    const r = spawnSync(
+      'powershell',
+      ['-NoProfile', '-Command', `Expand-Archive -Force -Path '${src}' -DestinationPath '${dest}'`],
+      { encoding: 'utf8', windowsHide: true },
+    );
+    if (r.status !== 0) {
+      process.stderr.write(r.stderr || r.stdout || '');
+      process.exit(1);
+    }
+    console.log(`extracted zip with Expand-Archive -C ${destDir}`);
+    return;
+  }
+  extractTarGz(archivePath, destDir);
+}
+
+extractArchive(archive, lab);
 
 function findExe(dir) {
   for (const name of readdirSync(dir, { withFileTypes: true })) {

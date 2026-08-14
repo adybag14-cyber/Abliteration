@@ -7,9 +7,10 @@ Pinned copies of **upstream Heretic** configuration and lockfiles for offline/do
 
 | Artifact | URL |
 |----------|-----|
-| Repository | [github.com/p-e-w/heretic](https://github.com/p-e-w/heretic) (`master`) |
+| Repository | [github.com/p-e-w/heretic](https://github.com/p-e-w/heretic) (`v1.4.0`) |
 | Mirror | [codeberg.org/p-e-w/heretic](https://codeberg.org/p-e-w/heretic) |
-| PyPI | `heretic-llm` |
+| PyPI | `heretic-llm==1.4.0` |
+| Clone | `git clone --branch v1.4.0 https://github.com/p-e-w/heretic.git` |
 | Live docs | [p-e-w-heretic.mintlify.app](https://p-e-w-heretic.mintlify.app/) |
 
 ## Files in this folder

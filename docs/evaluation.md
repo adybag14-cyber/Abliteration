@@ -9,8 +9,8 @@ Always evaluate **before and after** abliteration. Keep the original checkpoint.
 ## Paired statistical comparison
 
 Store frozen baseline and candidate results with the same stable IDs. Each row
-must include `id`, `cohort` (`target_refusal`, `benign`, or `capability`), and a
-boolean `refused`. Add `degenerate` and a numeric `task_score` when available.
+must include `id`, `cohort` (`target_refusal`, `benign`, or `capability`), and
+boolean `refused` and `degenerate`. Add a numeric `task_score` when available.
 
 ```json
 {"id":"prompt-0042","cohort":"benign","refused":false,"degenerate":false,"task_score":0.8}
@@ -34,7 +34,10 @@ The JSON report includes paired rate deltas, prompt-level bootstrap 95%
 intervals, changed-refused-to-complied and changed-complied-to-refused counts,
 an exact two-sided McNemar p-value, per-cohort task-score changes, unmatched
 IDs, and machine-readable gate results. A failed requested gate returns exit 1;
-invalid or incomparable input returns exit 2.
+invalid or incomparable input returns exit 2. Keyword eval (`abliterate-cxx eval`
+and `scripts/eval-refusal-rate.py`) exits non-zero if any `empty_response`; the
+comparator requires boolean `degenerate` on every row and does not treat mute as
+complied.
 
 Confidence intervals quantify sampling uncertainty; they do not repair biased
 prompt selection. Freeze decoding, model revision, chat template, scoring code,

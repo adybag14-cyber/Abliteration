@@ -218,7 +218,7 @@ Whitened SVD, `advanced` / `surgical` presets.
 
 ## 33. False-refusal vector only (T38)
 
-ICLR 2025 single-vector over-refusal ablation — factory `wmic` without flattening safety DIM.
+Wang ICLR 2025: ablate `w′ ← w − λ v` (over-refusal orthogonalized against true refusal). Not factory DIM, not T03.
 
 → [false-refusal-vector-ablation.md](false-refusal-vector-ablation.md)
 
@@ -272,11 +272,11 @@ Zhao 2025 (NeurIPS): harm and refusal are **distinct** (different token position
 
 **Research beginners hub (2024–2026 papers + repo PDFs):** [../docs/refusal-research-beginners-guide.md](../docs/refusal-research-beginners-guide.md) · [../sources/research/README.md](../sources/research/README.md)
 
-Cross-architecture benchmark (Heretic vs DECCP vs ErisForge vs FailSpy, GSM8K sensitivity): [../docs/comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md) · [arXiv:2512.13655](https://arxiv.org/abs/2512.13655)
+Cross-architecture benchmark (Heretic vs jim-plus `measure.py --deccp` vs ErisForge vs FailSpy, GSM8K sensitivity): [../docs/comparative-abliteration-benchmarks.md](../docs/comparative-abliteration-benchmarks.md) · [arXiv:2512.13655](https://arxiv.org/abs/2512.13655)
 
 Defenses against abliteration (extended-refusal, ART): [../docs/defenses-against-abliteration.md](../docs/defenses-against-abliteration.md)
 
-Extended toolkit (Abliterix, ErisForge, Nous/DECCP, FailSpy — placement + commands): [extended-abliteration-toolkit.md](extended-abliteration-toolkit.md)
+Extended toolkit (Abliterix, ErisForge, jim-plus/`--deccp`, FailSpy — placement + commands): [extended-abliteration-toolkit.md](extended-abliteration-toolkit.md)
 
 Safety guardrail removal methodology (weight-level refusal direction): [safety-guardrail-abliteration-methodology.md](safety-guardrail-abliteration-methodology.md) · [../instructions/beginner-reproduction-methodology.md](../instructions/beginner-reproduction-methodology.md)
 

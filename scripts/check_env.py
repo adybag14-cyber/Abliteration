@@ -38,7 +38,7 @@ try:
 
     print("heretic-llm: OK")
 except ImportError:
-    print("heretic-llm: missing — pip install -U heretic-llm")
+    print("heretic-llm: missing — pip install heretic-llm==1.4.0")
 
 print()
 print("Next: instructions/beginner-local-model-guide.md")

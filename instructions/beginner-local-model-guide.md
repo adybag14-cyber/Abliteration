@@ -98,7 +98,7 @@ pip install --upgrade pip
 
 ```bash
 pip install torch --index-url https://download.pytorch.org/whl/cu124
-pip install -U heretic-llm bitsandbytes accelerate huggingface_hub
+pip install heretic-llm==1.4.0 bitsandbytes accelerate huggingface_hub
 ```
 
 Verify GPU is visible to PyTorch:
@@ -254,7 +254,7 @@ When Heretic offers evaluation, accept — note **refusal count** and **KL diver
 
 ## Track C — No GPU (download + quantize only)
 
-> **Not** [Advanced Track C](advanced-abliteration-workflow.md#track-c--manual-projected--norm-preserving) (manual llm-abliteration / DECCP). This section is for CPU-only download and quantize workflows.
+> **Not** [Advanced Track C](advanced-abliteration-workflow.md#track-c--manual-projected--norm-preserving) (manual jim-plus llm-abliteration v1.2). This section is for CPU-only download and quantize workflows.
 
 You **cannot** run Heretic surgery on CPU in reasonable time. Options:
 

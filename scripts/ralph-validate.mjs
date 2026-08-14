@@ -209,6 +209,13 @@ function validateCxx26Workflow() {
   for (const token of required) {
     if (!y.includes(token)) err(`cxx26-platform.yml missing ${token}`);
   }
+  if (y.includes('gha-setup-ninja')) err('cxx26-platform.yml contains gha-setup-ninja');
+}
+
+function isForbiddenStringCheck(line) {
+  return /stale|forbidden|collid|must not|never (?:use|emit|name)|queryByRole|not\.toBeInTheDocument|href\$=|except as forbidden/.test(
+    line,
+  );
 }
 
 function validateCxxArchiveNames() {
@@ -226,16 +233,72 @@ function validateCxxArchiveNames() {
     'src/lib/utils.ts',
     'src/components/path-finder.tsx',
     'README.md',
+    'scripts/package-cxx.mjs',
+    'cxx/package.sh',
+    'docs/complete-curriculum.md',
+    'src/App.tsx',
+    'scripts/smoke-cxx-package.mjs',
   ];
   for (const rel of files) {
-    const text = readFileSync(join(root, rel), 'utf8');
-    for (const name of stale) {
-      if (text.includes(name)) err(`${rel} still uses colliding archive name ${name}`);
+    const p = join(root, rel);
+    if (!existsSync(p)) {
+      err(`missing file for cxx archive-name scan: ${rel}`);
+      continue;
+    }
+    const lines = readFileSync(p, 'utf8').split(/\r?\n/);
+    for (const [i, line] of lines.entries()) {
+      if (isForbiddenStringCheck(line)) continue;
+      for (const name of stale) {
+        if (line.includes(name)) err(`${rel}:${i + 1} still uses colliding archive name ${name}`);
+      }
     }
   }
   const guide = readFileSync(join(root, 'docs/cxx26-researcher-guide.md'), 'utf8');
   for (const need of ['windows-x64-msvc', 'linux-x64-gcc15', 'macos-arm64-llvm']) {
     if (!guide.includes(need)) err(`cxx26-researcher-guide.md missing ${need}`);
+  }
+
+  const packJs = readFileSync(join(root, 'scripts/package-cxx.mjs'), 'utf8');
+  if (packJs.includes('compiler || triple')) {
+    err('package-cxx.mjs still has `compiler || triple` fallback');
+  }
+  const packSh = readFileSync(join(root, 'cxx/package.sh'), 'utf8');
+  if (/NAME=(\$\{3:-\$TRIPLE\}|\$TRIPLE)/.test(packSh) || packSh.includes('NAME=$TRIPLE')) {
+    err('cxx/package.sh still falls back NAME to TRIPLE');
+  }
+
+  const emitNeedles = ['abliterate-cxx-${triple}', 'abliterate-cxx-$TRIPLE', 'abliterate-cxx-${TRIPLE}'];
+  for (const rel of ['scripts/package-cxx.mjs', 'cxx/package.sh']) {
+    const text = readFileSync(join(root, rel), 'utf8');
+    for (const needle of emitNeedles) {
+      if (text.includes(needle)) err(`${rel} emits triple-only archive name via ${needle}`);
+    }
+  }
+}
+
+function validateHereticFetchUrls() {
+  const rel = 'scripts/fetch-heretic-tools.mjs';
+  const text = readFileSync(join(root, rel), 'utf8');
+  const code = text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  const urlRe = /https?:\/\/[^\s'"`]+/g;
+  let m;
+  while ((m = urlRe.exec(code))) {
+    if (m[0].includes('/master/') && /heretic|config/i.test(m[0])) {
+      err(`${rel} raw URL contains /master/ for heretic config: ${m[0]}`);
+    }
+  }
+  if (/raw\.githubusercontent\.com\/(?:p-e-w\/heretic|\$\{REPO\})\/master\//.test(code)) {
+    err(`${rel} raw URLs contain /master/ for heretic config`);
+  }
+}
+
+function validateResearchPaperPdfs() {
+  const src = readFileSync(join(root, 'scripts/fetch-research-papers.mjs'), 'utf8');
+  const ids = [...src.matchAll(/id:\s*'(\d{4}\.\d{5})'/g)].map((match) => match[1]);
+  if (!ids.length) err('fetch-research-papers.mjs has no PAPERS ids');
+  for (const id of ids) {
+    const pdf = `sources/research/papers/arxiv-${id}.pdf`;
+    if (!existsSync(join(root, pdf))) err(`missing ${pdf} for PAPERS id ${id}`);
   }
 }
 
@@ -372,6 +435,8 @@ function main() {
   validateRequiredFiles();
   validateCxx26Workflow();
   validateCxxArchiveNames();
+  validateHereticFetchUrls();
+  validateResearchPaperPdfs();
   validatePackageScripts();
   validateUpstreamJson();
   validateProjectSkills();

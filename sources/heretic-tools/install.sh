@@ -4,7 +4,7 @@
 set -euo pipefail
 
 pip install --upgrade pip
-pip install -U heretic-llm bitsandbytes accelerate huggingface_hub
+pip install heretic-llm==1.4.0 bitsandbytes accelerate huggingface_hub
 
 echo ""
 echo "Verify:"

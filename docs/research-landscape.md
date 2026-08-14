@@ -25,11 +25,11 @@ Taxonomy of **papers**, **open-source tools**, and **when each method applies**.
 | 2025 | [Shairah — extended-refusal defense](https://arxiv.org/abs/2505.19056) | Abliteration drops refusal ≤10% vs 70–80% on defended models |
 | 2025 | [Siu — COSMIC](https://arxiv.org/abs/2506.00085) | Output-independent refusal direction ID (ACL Findings) |
 | 2025 | [Agnihotri — safety pretraining](https://arxiv.org/abs/2510.02768) | Checkpoint-level robustness under abliteration |
-| 2026 | [Young — comparative abliteration](https://arxiv.org/abs/2512.13655) | Heretic 16/16 compat; DECCP/ErisForge GSM8K; FailSpy research |
+| 2026 | [Young — comparative abliteration](https://arxiv.org/abs/2512.13655) | Heretic 16/16 compat; ErisForge + Young’s “DECCP” (jim-plus + deccp topics) GSM8K; FailSpy research |
 | 2026 | [Petrov — contrast baselines](https://arxiv.org/abs/2603.22061) | Topic-matched harmful/harmless pairs can fail |
 | 2026 | [Kuo — defenses vs abliteration](https://arxiv.org/abs/2605.26526) | TAR/SEAM vulnerable; ART mitigation |
 | 2026 | [Carleo — code LLM abliteration](https://arxiv.org/abs/2606.05396) | Refusal vs capability separation |
-| 2024/25 | [Wang — false-refusal vector](https://arxiv.org/abs/2410.03415) | Over-refusal DIM; keep true-safety refusals (ICLR 2025) |
+| 2024/25 | [Wang — false-refusal vector](https://arxiv.org/abs/2410.03415) | T38: `w′ ← w − λ v` (not factory DIM, not T03); keep true-safety refusals (ICLR 2025) |
 | 2025 | [Zhao — harm ≠ refusal](https://arxiv.org/abs/2507.11878) | Separate harmfulness axis; Latent Guard |
 | 2025 | [Piras — SOM multi-direction](https://arxiv.org/abs/2511.08379) | SOMs generalize DIM (AAAI 2026) |
 | 2026 | [Lai — ORBA](https://huggingface.co/blog/grimjim/orthogonal-reflection-bounded-ablation) | Householder vs directional rank-1 |
@@ -39,7 +39,7 @@ Taxonomy of **papers**, **open-source tools**, and **when each method applies**.
 
 ## Comparative benchmarks matrix
 
-The empirical tool comparison (Heretic vs DECCP vs ErisForge vs FailSpy) lives in [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md). It supplies the GSM8K sensitivity matrix and KL ranges that inform capability-aware choices in the decision tree and production toolchain below. Always cross-reference the benchmark matrix when GSM8K/MMLU regression risk is a blocker for your architecture. The Young arXiv paper and handbook interpretation together guide per-architecture tool selection that is also reflected in the MoE/hybrid paths.
+The empirical tool comparison (Heretic vs ErisForge vs FailSpy; Young’s “DECCP” = jim-plus + deccp topics, **not** a peer CLI) lives in [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md). It supplies the GSM8K sensitivity matrix and KL ranges that inform capability-aware choices in the decision tree and production toolchain below. Always cross-reference the benchmark matrix when GSM8K/MMLU regression risk is a blocker for your architecture. The Young arXiv paper and handbook interpretation together guide per-architecture tool selection that is also reflected in the MoE/hybrid paths.
 
 ## Production toolchain (Jun 2026)
 
@@ -149,7 +149,7 @@ Start: need refusal reduction on aligned model
 | [bleeding-edge.md](bleeding-edge.md) | ORBA / COSMIC / SOM / SVD / J-Wash |
 | [../instructions/eval-driven-workflow.md](../instructions/eval-driven-workflow.md) | Factory / XSTest eval gates |
 | [../instructions/troubleshooting-encyclopedia.md](../instructions/troubleshooting-encyclopedia.md) | Symptom → fix |
-| [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md) | Benchmark matrix (arXiv:2512.13655) — Heretic/DECCP/ErisForge GSM8K & KL |
+| [comparative-abliteration-benchmarks.md](comparative-abliteration-benchmarks.md) | Benchmark matrix (arXiv:2512.13655) — Heretic/ErisForge GSM8K & KL; Young’s “DECCP” = jim-plus + deccp topics |
 | [ralph-loop.md](ralph-loop.md) | Validate → refresh agent loop |
 | [agent-development-loop.md](agent-development-loop.md) | Backlog-driven multi-turn dev |
 | [../references.md](../references.md) | URLs & install commands |

@@ -5,7 +5,7 @@ $ErrorActionPreference = "Stop"
 
 Write-Host "Installing heretic-llm + deps (PyPI)..."
 python -m pip install --upgrade pip
-python -m pip install -U heretic-llm bitsandbytes accelerate huggingface_hub
+python -m pip install heretic-llm==1.4.0 bitsandbytes accelerate huggingface_hub
 
 Write-Host ""
 Write-Host "Verify:"

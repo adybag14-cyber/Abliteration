@@ -127,7 +127,7 @@ When a single DIM pass leaves refusals ([beyond-single-direction.md](beyond-sing
 | Constraint | Prefer |
 |------------|--------|
 | First reproduction, 8 GB | Heretic + `config.low-vram.toml` |
-| GSM8K regression on Heretic | ErisForge or DECCP single-pass |
+| GSM8K regression on Heretic | ErisForge or jim-plus `measure.py --deccp` (Young’s “DECCP” is not a peer CLI) |
 | MoE / VL / Gemma 4 preset | Abliterix (verify eval gates) |
 | Prototype direction only | FailSpy/abliterator hooks → bake with Heretic |
 | 20B+ OOM | llm-abliteration sharded + 4-bit measure |

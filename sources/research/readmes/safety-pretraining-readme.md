@@ -1,4 +1,4 @@
-# fetched: 2026-06-13T23:44:14.843Z
+# fetched: 2026-08-14T18:44:12.884Z
 # url: https://raw.githubusercontent.com/shashankskagnihotri/safety_pretraining/main/README.md
 
 # [A Granular Study of Safety Pretraining under Model Abliteration](https://arxiv.org/pdf/2510.02768?)
