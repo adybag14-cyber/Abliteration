@@ -171,18 +171,33 @@ jobs:
           echo "CC=clang-${{ matrix.llvm }}" >> "$GITHUB_ENV"
           clang++-${{ matrix.llvm }} --version
 
-      - name: Install verified LLVM 22.1.8 (Windows)
+      - name: Cache verified LLVM 22.1.8 archive (Windows)
+        if: runner.os == 'Windows' && matrix.llvm
+        uses: actions/cache@v5
+        with:
+          path: .ci-cache/LLVM-22.1.8-win64.exe
+          key: llvm-22.1.8-win64-16e5709785fef73c
+
+      - name: Extract verified LLVM 22.1.8 (Windows)
         if: runner.os == 'Windows' && matrix.llvm
         run: |
           set -euo pipefail
           URL=https://github.com/llvm/llvm-project/releases/download/llvmorg-22.1.8/LLVM-22.1.8-win64.exe
           SHA256=16e5709785fef73c854646241c4a92c5cd574318d1b33c63330dd7721903e55c
-          curl -fsSL --retry 8 --retry-all-errors --retry-delay 2 -o llvm-installer.exe "$URL"
-          echo "$SHA256 *llvm-installer.exe" | sha256sum -c -
-          ./llvm-installer.exe /S
-          echo "/c/Program Files/LLVM/bin" >> "$GITHUB_PATH"
-          echo "CXX=/c/Program Files/LLVM/bin/clang++.exe" >> "$GITHUB_ENV"
-          "/c/Program Files/LLVM/bin/clang++.exe" --version
+          ARCHIVE="$GITHUB_WORKSPACE/.ci-cache/LLVM-22.1.8-win64.exe"
+          LLVM_ROOT="$RUNNER_TEMP/llvm-22.1.8"
+          mkdir -p "$(dirname "$ARCHIVE")" "$LLVM_ROOT"
+          if [[ ! -f "$ARCHIVE" ]]; then
+            curl -fsSL --retry 8 --retry-all-errors --retry-delay 2 -o "$ARCHIVE" "$URL"
+          fi
+          echo "$SHA256 *$ARCHIVE" | sha256sum -c -
+          # The official installer is an NSIS archive. Extracting it avoids
+          # mutating or colliding with the runner image's preinstalled LLVM.
+          7z x -y "$ARCHIVE" "-o${LLVM_ROOT}" '-x!Uninstall.exe' '-x!$PLUGINSDIR\*'
+          test -x "$LLVM_ROOT/bin/clang++.exe"
+          echo "$LLVM_ROOT/bin" >> "$GITHUB_PATH"
+          echo "CXX=$LLVM_ROOT/bin/clang++.exe" >> "$GITHUB_ENV"
+          "$LLVM_ROOT/bin/clang++.exe" --version
 
       - name: Install Homebrew LLVM
         if: matrix.brew_llvm
