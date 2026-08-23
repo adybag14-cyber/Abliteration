@@ -2,7 +2,9 @@
 
 > **Source policy:** GitHub repos and arXiv first. Hugging Face is listed for weights and the heretic/abliterated model registry. Refresh with `npm run fetch:all` (or `fetch:heretic` / `fetch:docs` / `fetch:research-papers` / `fetch:hf-models:firefox`).
 
-**Offline research corpus (PDFs + text):** [sources/research/README.md](sources/research/README.md) · **Beginner map:** [docs/refusal-research-beginners-guide.md](docs/refusal-research-beginners-guide.md)
+**2026 primary-source update:** [50-paper reading map](docs/research-2026-update.md) · [machine catalog](sources/research/catalog-2026.json) · **Offline research corpus (PDFs + text):** [sources/research/README.md](sources/research/README.md) · **Beginner map:** [docs/refusal-research-beginners-guide.md](docs/refusal-research-beginners-guide.md)
+
+The 50-paper update is a dated discovery snapshot (23 August 2026) covering refusal geometry, activation steering, abliteration, safety recovery, over-refusal, attack surfaces, and representation-level evaluation. Inclusion records relevance; it does not claim independent replication.
 
 ## Primary papers
 

@@ -8,19 +8,66 @@ Pick one archive from [cxx-nightly](https://github.com/adybag14-cyber/Abliterati
 | OS | File |
 |----|------|
 | Windows x64 | `abliterate-cxx-windows-x64-msvc.zip` |
-| Linux x64 | `abliterate-cxx-linux-x64-gcc15.tar.gz` |
+| Linux x64 | `abliterate-cxx-linux-x64-gcc16.tar.gz` |
 | macOS Apple Silicon | `abliterate-cxx-macos-arm64-llvm.tar.gz` |
 
-Verify `SHA256SUMS`. After unpack, run `guide` → `doctor` → `self-check` → `demo`.
+Verify `SHA256SUMS` **before extraction**. These copy-ready paths download into the current directory and refuse an existing destination instead of overwriting it.
 
-**Windows unpack:** after flatten, the exe sits at the zip root.
+**Windows x64 — PowerShell**
 
 ```powershell
-Expand-Archive abliterate-cxx-windows-x64-msvc.zip -DestinationPath .
+$base = "https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly"
+$archive = "abliterate-cxx-windows-x64-msvc.zip"
+$destination = "abliterate-cxx-1.1.0"
+Invoke-WebRequest "$base/SHA256SUMS" -OutFile SHA256SUMS
+Invoke-WebRequest "$base/$archive" -OutFile $archive
+$expected = ((Select-String -Path SHA256SUMS -Pattern "  $archive$").Line -split "\s+")[0]
+$actual = (Get-FileHash -Algorithm SHA256 $archive).Hash.ToLowerInvariant()
+if (!$expected -or $actual -ne $expected) { throw "SHA-256 verification failed" }
+if (Test-Path $destination) { throw "$destination already exists; choose a clean destination" }
+Expand-Archive $archive -DestinationPath $destination
+Set-Location $destination
 .\abliterate-cxx.exe guide
 .\abliterate-cxx.exe doctor
+.\abliterate-cxx.exe limits
 .\abliterate-cxx.exe self-check
 .\abliterate-cxx.exe demo
+```
+
+**Linux x64 — shell**
+
+```bash
+base="https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly"
+archive="abliterate-cxx-linux-x64-gcc16.tar.gz"
+destination="abliterate-cxx-1.1.0"
+curl --fail --location --remote-name "$base/SHA256SUMS"
+curl --fail --location --remote-name "$base/$archive"
+grep "  $archive$" SHA256SUMS | sha256sum --check --strict -
+mkdir "$destination" && tar -xzf "$archive" -C "$destination"
+cd "$destination"
+./abliterate-cxx guide
+./abliterate-cxx doctor
+./abliterate-cxx limits
+./abliterate-cxx self-check
+./abliterate-cxx demo
+```
+
+**macOS Apple Silicon — shell**
+
+```bash
+base="https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly"
+archive="abliterate-cxx-macos-arm64-llvm.tar.gz"
+destination="abliterate-cxx-1.1.0"
+curl --fail --location --remote-name "$base/SHA256SUMS"
+curl --fail --location --remote-name "$base/$archive"
+grep "  $archive$" SHA256SUMS | shasum -a 256 --check -
+mkdir "$destination" && tar -xzf "$archive" -C "$destination"
+cd "$destination"
+./abliterate-cxx guide
+./abliterate-cxx doctor
+./abliterate-cxx limits
+./abliterate-cxx self-check
+./abliterate-cxx demo
 ```
 
 ## 0. Prove the binary
@@ -28,20 +75,25 @@ Expand-Archive abliterate-cxx-windows-x64-msvc.zip -DestinationPath .
 ```text
 abliterate-cxx guide
 abliterate-cxx doctor
+abliterate-cxx limits
 abliterate-cxx self-check
 abliterate-cxx demo
 ```
 
 `guide` prints this hour-0 order.
 `doctor` checks ISO C++26 (`cplusplus=202400`) and whether example files are visible.
+`limits` prints the allocation, JSONL, rank, and edit-strength guardrails enforced before work begins.
 `self-check` plants a direction, wipes it, hooks it, and scores three sentences.
 `demo` runs estimate → apply → hook → eval on the shipped toys (the same loop as sections 1–4).
 
 If `doctor` cannot see examples, either `cd` into the extracted folder or:
 
-```text
-set ABLITERATE_EXAMPLES=path/to/examples     # Windows
-export ABLITERATE_EXAMPLES=path/to/examples  # Unix
+```powershell
+$env:ABLITERATE_EXAMPLES = 'C:\path\to\examples' # PowerShell
+```
+
+```bash
+export ABLITERATE_EXAMPLES=/path/to/examples      # bash/zsh
 ```
 
 ## 1. Estimate a refusal direction (Arditi 2024 DIM)

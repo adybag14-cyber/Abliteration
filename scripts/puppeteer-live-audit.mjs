@@ -14,6 +14,7 @@ function readArgument(name, fallback) {
 
 const targetUrl = new URL(readArgument("--url", defaultUrl)).href;
 const outputDirectory = path.resolve(readArgument("--out", defaultOutput));
+const expectedBuildSha = readArgument("--expected-sha", process.env.EXPECTED_BUILD_SHA ?? "");
 const headed = process.argv.includes("--headed");
 
 const viewports = [
@@ -94,6 +95,12 @@ async function auditViewport(browser, viewport) {
     await page.reload({ waitUntil: "networkidle2", timeout: 45_000 });
     await revealWholePage(page);
 
+    const deploymentManifest = await page.evaluate(async () => {
+      const response = await fetch(new URL("deployment-manifest.json", document.baseURI));
+      if (!response.ok) throw new Error(`deployment manifest returned HTTP ${response.status}`);
+      return response.json();
+    });
+
     const initial = await page.evaluate(() => {
       const visible = (selector) => {
         const element = document.querySelector(selector);
@@ -115,6 +122,18 @@ async function auditViewport(browser, viewport) {
           .map((label) => label.textContent),
         mobileNavigationVisible: visible('nav[aria-label="Guide sections mobile"]'),
         desktopNavigationVisible: visible('nav[aria-label="Guide sections"]'),
+        buildSha: document.querySelector('meta[name="abliteration-build"]')?.getAttribute("content"),
+        contentSecurityPolicy: document.querySelector('meta[http-equiv="Content-Security-Policy"]')?.getAttribute("content"),
+        researchStatus: document.querySelector('#research [role="status"]')?.textContent?.replace(/\s+/g, " ").trim(),
+        performance: (() => {
+          const navigation = performance.getEntriesByType("navigation")[0];
+          return navigation ? {
+            duration: Math.round(navigation.duration),
+            domContentLoaded: Math.round(navigation.domContentLoadedEventEnd),
+            transferSize: navigation.transferSize,
+            resourceCount: performance.getEntriesByType("resource").length,
+          } : null;
+        })(),
       };
     });
 
@@ -126,6 +145,16 @@ async function auditViewport(browser, viewport) {
     assert.deepEqual(initial.clippedRadarLabels, [], `${viewport.name} radar labels are clipped`);
     assert.equal(initial.mobileNavigationVisible, viewport.isMobile);
     assert.equal(initial.desktopNavigationVisible, !viewport.isMobile);
+    assert.match(initial.contentSecurityPolicy ?? "", /default-src 'self'/);
+    assert.match(initial.researchStatus ?? "", /50 papers match/);
+    assert.equal(deploymentManifest.schemaVersion, 1);
+    assert.equal(deploymentManifest.commit, initial.buildSha, "manifest and document build SHAs differ");
+    if (expectedBuildSha) {
+      assert.equal(initial.buildSha, expectedBuildSha, `live page is not the expected commit ${expectedBuildSha}`);
+      assert.equal(deploymentManifest.commit, expectedBuildSha, `live manifest is not the expected commit ${expectedBuildSha}`);
+    }
+    assert(deploymentManifest.sizes.javascriptGzipBytes <= deploymentManifest.budgets.javascriptGzipBytes, "deployed JavaScript budget exceeded");
+    assert(deploymentManifest.sizes.cssGzipBytes <= deploymentManifest.budgets.cssGzipBytes, "deployed CSS budget exceeded");
 
     screenshots.full = path.join(outputDirectory, `${viewport.name}-full.png`);
     await page.screenshot({ path: screenshots.full, type: "png", fullPage: true });
@@ -157,6 +186,16 @@ async function auditViewport(browser, viewport) {
       () => document.body.textContent?.includes("Router-weighted MoE") && !document.body.textContent?.includes("Reversible hook ablation"),
       { timeout: 8_000 },
     );
+
+    const paperSearch = await page.$('#research input[aria-invalid], #research input[type="text"], #research input:not([type])');
+    assert(paperSearch, "research search input is missing");
+    await paperSearch.type("2604.18901");
+    await page.waitForFunction(
+      () => document.querySelector("#research")?.textContent?.includes("Harmful Intent as a Geometrically Recoverable Feature"),
+      { timeout: 8_000 },
+    );
+    screenshots.research = path.join(outputDirectory, `${viewport.name}-research.png`);
+    await screenshotElement(page, "#research", screenshots.research);
 
     await clickButton(page, "Stress the gates");
     await page.waitForFunction(
@@ -191,6 +230,7 @@ async function auditViewport(browser, viewport) {
         route: "Router-aware MoE path",
         radar: "Protected subspace",
         technique: "T31 Router-weighted MoE",
+        research: "arXiv:2604.18901",
         gates: "Ready to export",
         theme: "dark",
         persistedProgress: "1/6 complete",
@@ -216,6 +256,7 @@ await writeFile(
   `${JSON.stringify({
     schemaVersion: 1,
     targetUrl,
+    expectedBuildSha: expectedBuildSha || null,
     executablePath,
     platform: process.platform,
     architecture: process.arch,

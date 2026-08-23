@@ -85,6 +85,9 @@ function validateJsonl(dir) {
 function validateRequiredFiles() {
   const required = [
     'README.md',
+    'SECURITY.md',
+    'CONTRIBUTING.md',
+    'CITATION.cff',
     'package.json',
     'sources/heretic-tools/config.default.toml',
     'sources/heretic-tools/config.low-vram.toml',
@@ -102,14 +105,21 @@ function validateRequiredFiles() {
     'docs/cxx26-platform.md',
     'docs/cxx26-researcher-guide.md',
     'docs/paper-term-map.md',
+    'docs/research-2026-update.md',
+    'sources/research/catalog-2026.json',
     'cxx/GETTING-STARTED.md',
     'cxx/examples/tiny-bad.txt',
     'cxx/CMakeLists.txt',
     'cxx/src/main.cpp',
     'cxx/include/abliteration/ops.hpp',
     '.github/workflows/cxx26-platform.yml',
+    '.github/workflows/codeql.yml',
+    '.github/workflows/dependency-review.yml',
+    '.github/dependabot.yml',
     'scripts/package-cxx.mjs',
     'scripts/smoke-cxx-package.mjs',
+    'scripts/run-cxx-sanitizers.mjs',
+    'scripts/lib/windows-vs-env.mjs',
     'instructions/method-cookbook.md',
     'scripts/ralph-validate.mjs',
     'scripts/ralph-loop.mjs',
@@ -151,6 +161,13 @@ function validateRequiredFiles() {
     '.github/workflows/guide-ci.yml',
     'public/.nojekyll',
     'public/favicon.svg',
+    'public/site.webmanifest',
+    'public/sitemap.xml',
+    'public/llms.txt',
+    'public/.well-known/security.txt',
+    'scripts/audit-site-artifact.mjs',
+    'scripts/render-og-card.mjs',
+    'public/og-card.png',
   ];
   for (const rel of required) {
     if (!existsSync(join(root, rel))) err(`missing required file: ${rel}`);
@@ -190,19 +207,24 @@ function validateCxx26Workflow() {
   }
   const y = readFileSync(p, 'utf8');
   const required = [
-    'linux-x64-gcc15',
+    'linux-x64-gcc16',
     'abliterate-cxx-${{ matrix.name }}',
     'SHA256SUMS',
     'smoke-cxx-package.mjs',
-    'linux-x64-clang20',
-    'linux-arm64-gcc15',
-    'linux-arm64-clang20',
-    'windows-x64-clang',
+    'linux-x64-clang22',
+    'linux-arm64-gcc16',
+    'linux-arm64-clang22',
+    'windows-x64-clang22',
     'windows-x64-msvc',
     'windows-arm64-msvc',
     'macos-arm64-llvm',
     'macos-x64-llvm',
     'cplusplus=202400',
+    'gcc:16.2',
+    'LLVM-22.1.8-win64.exe',
+    'windows-2025-vs2026',
+    'cxx:sanitize',
+    'attest-build-provenance@v3',
     'cxx-nightly',
     '-std=c++26',
   ];
@@ -254,7 +276,7 @@ function validateCxxArchiveNames() {
     }
   }
   const guide = readFileSync(join(root, 'docs/cxx26-researcher-guide.md'), 'utf8');
-  for (const need of ['windows-x64-msvc', 'linux-x64-gcc15', 'macos-arm64-llvm']) {
+  for (const need of ['windows-x64-msvc', 'linux-x64-gcc16', 'macos-arm64-llvm']) {
     if (!guide.includes(need)) err(`cxx26-researcher-guide.md missing ${need}`);
   }
 
@@ -415,6 +437,53 @@ function validateAdvancedToolTests() {
   if (result.status !== 0) err(`advanced tool regression tests failed — ${result.stderr || result.stdout}`);
 }
 
+function validateResearch2026Catalog() {
+  const rel = 'sources/research/catalog-2026.json';
+  let catalog;
+  try {
+    catalog = JSON.parse(readFileSync(join(root, rel), 'utf8'));
+  } catch (error) {
+    err(`${rel} is not valid JSON — ${error.message}`);
+    return;
+  }
+  const papers = Array.isArray(catalog.papers) ? catalog.papers : [];
+  if (catalog.snapshot_date !== '2026-08-23' || catalog.source !== 'arXiv API')
+    err(`${rel} must preserve its dated arXiv API authority metadata`);
+  if (catalog.count !== 50 || papers.length !== 50)
+    err(`${rel} must declare and contain exactly 50 papers`);
+  const ids = new Set();
+  const existingPaperSource = readFileSync(join(root, 'scripts/fetch-research-papers.mjs'), 'utf8');
+  const existingIds = new Set([...existingPaperSource.matchAll(/id:\s*'(\d{4}\.\d{5})'/g)].map((match) => match[1]));
+  const areas = new Set(['Mechanism', 'Intervention', 'Defense', 'Evaluation', 'Attack']);
+  const human = readFileSync(join(root, 'docs/research-2026-update.md'), 'utf8');
+  for (const [index, paper] of papers.entries()) {
+    const at = `${rel} paper ${index + 1}`;
+    if (!/^\d{4}\.\d{4,5}$/.test(paper.id || '')) err(`${at} has invalid arXiv id`);
+    if (ids.has(paper.id)) err(`${at} duplicates ${paper.id}`);
+    ids.add(paper.id);
+    if (existingIds.has(paper.id)) err(`${at} is not new: ${paper.id} already exists in the pinned corpus`);
+    if (paper.url !== `https://arxiv.org/abs/${paper.id}`) err(`${at} must use its canonical arXiv HTTPS URL`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(paper.published || '')) err(`${at} has invalid published date`);
+    if (!paper.title || !Array.isArray(paper.authors) || paper.authors.length === 0)
+      err(`${at} needs a title and at least one author`);
+    if (!areas.has(paper.area)) err(`${at} has unsupported area ${paper.area}`);
+    if (!human.includes(`[${paper.id}](${paper.url})`))
+      err(`docs/research-2026-update.md is missing ${paper.id}`);
+  }
+}
+
+function validatePagesDeployment() {
+  const workflow = readFileSync(join(root, '.github/workflows/pages.yml'), 'utf8');
+  for (const token of ['audit:site-artifact', 'EXPECTED_BUILD_SHA', 'audit:live:puppeteer', 'upload-pages-artifact@v5'])
+    if (!workflow.includes(token)) err(`pages.yml missing ${token}`);
+  const html = readFileSync(join(root, 'index.html'), 'utf8');
+  for (const token of ['Content-Security-Policy', 'rel="canonical"', 'site.webmanifest', 'application/ld+json', '__ABLITERATION_BUILD_SHA__'])
+    if (!html.includes(token)) err(`index.html missing ${token}`);
+  const packageJson = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
+  if (!String(packageJson.scripts?.build || '').includes('audit-site-artifact.mjs'))
+    err('package build must enforce the Pages artifact audit');
+}
+
 function validateEvalTxt() {
   for (const f of ['factory-bad-prompts.txt', 'factory-good-prompts.txt']) {
     const p = join(root, 'data/eval', f);
@@ -437,6 +506,8 @@ function main() {
   validateCxxArchiveNames();
   validateHereticFetchUrls();
   validateResearchPaperPdfs();
+  validateResearch2026Catalog();
+  validatePagesDeployment();
   validatePackageScripts();
   validateUpstreamJson();
   validateProjectSkills();

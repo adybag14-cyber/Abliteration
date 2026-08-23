@@ -3,9 +3,20 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { fileURLToPath, URL } from "node:url";
 
+const buildSha = process.env.VITE_BUILD_SHA || "local";
+
 export default defineConfig({
   base: process.env.GITHUB_ACTIONS ? "/Abliteration/" : "/",
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    {
+      name: "commit-bound-html",
+      transformIndexHtml(html: string) {
+        return html.replaceAll("__ABLITERATION_BUILD_SHA__", buildSha);
+      },
+    },
+    react(),
+    tailwindcss(),
+  ],
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -13,7 +24,7 @@ export default defineConfig({
   },
   build: {
     target: "es2022",
-    sourcemap: true,
+    sourcemap: false,
   },
   test: {
     globals: true,

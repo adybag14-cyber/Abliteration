@@ -90,7 +90,7 @@ export type Technique = {
 };
 
 export const techniques: Technique[] = [
-  { id: "T00", title: "Hour 0 toy-matrix lab", tier: "Start here", summary: "No GPU. Download a unique cxx-nightly archive and run guide → doctor → self-check → demo on 4-D toy tensors.", when: "Hour 0, before any checkpoint", tags: ["C++26", "lab", "nightly", "no GPU"], doc: "docs/cxx26-researcher-guide.md" },
+  { id: "T00", title: "Hour 0 toy-matrix lab", tier: "Start here", summary: "No GPU. Download a unique cxx-nightly archive and run guide → doctor → limits → self-check → demo on 4-D toy tensors.", when: "Hour 0, before any checkpoint", tags: ["C++26", "lab", "nightly", "no GPU"], doc: "docs/cxx26-researcher-guide.md" },
   { id: "T02", title: "Reversible hook ablation", tier: "Start here", summary: "Subtract the direction during inference while leaving weights untouched.", when: "Your first causal test", tags: ["reversible", "low risk"], doc: "techniques/inference-directional-ablation.md" },
   { id: "T01", title: "Mean-difference DIM (Arditi)", tier: "Start here", summary: "Estimate a candidate direction from target and control activations: r = mean(bad) − mean(good).", when: "A simple, interpretable baseline", tags: ["foundation", "fast", "DIM", "Arditi"], doc: "techniques/mean-difference-direction.md" },
   { id: "T03", title: "Projected + norm-preserving", tier: "Production", summary: "Protect useful activation structure while removing the measured component.", when: "The default permanent edit", tags: ["recommended", "weights"], doc: "techniques/projected-norm-preserving-abliteration.md" },
@@ -131,7 +131,7 @@ export const troubleshooting = [
   { question: "The model still refuses after the edit", answer: "Pause before increasing strength. Check that the prompt category appears in your contrast set, verify the chat template and token position, then run a held-out layer sweep. A defense-trained model may need a different method rather than a stronger edit." },
   { question: "The candidate becomes incoherent or loses capability", answer: "Restore the pristine base and reduce scope: lower alpha, narrow the layer band, use projected plus norm-preserving edits, or protect a measured capability subspace. Do not tune around degeneration." },
   { question: "I only have an 8 GB GPU", answer: "Choose a small dense model and the low-VRAM Heretic profile with 4-bit measurement and CPU offload. Keep permanent weight editing separate from quantization, and expect longer runs." },
-  { question: "I have no GPU", answer: "Hour 0 is the C++26 toy-matrix lab: download one unique cxx-nightly archive (abliterate-cxx-windows-x64-msvc.zip, abliterate-cxx-linux-x64-gcc15.tar.gz, or abliterate-cxx-macos-arm64-llvm.tar.gz), unpack it, and run guide → doctor → self-check → demo. Renting a GPU or evaluating a community checkpoint is a later path, not Hour 0." },
+  { question: "I have no GPU", answer: "Hour 0 is the C++26 toy-matrix lab: download one unique cxx-nightly archive (abliterate-cxx-windows-x64-msvc.zip, abliterate-cxx-linux-x64-gcc16.tar.gz, or abliterate-cxx-macos-arm64-llvm.tar.gz), unpack it, and run guide → doctor → limits → self-check → demo. Renting a GPU or evaluating a community checkpoint is a later path, not Hour 0." },
   { question: "The floating candidate passes but GGUF fails", answer: "Treat this as quantization damage. Recheck the conversion, compare the floating candidate to the quantized one, inspect clipping and row norms, and try a less aggressive quantization level." },
 ];
 

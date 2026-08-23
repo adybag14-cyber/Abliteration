@@ -1,0 +1,5 @@
+Contact: https://github.com/adybag14-cyber/Abliteration/security/advisories/new
+Expires: 2027-08-23T23:59:59Z
+Preferred-Languages: en
+Canonical: https://adybag14-cyber.github.io/Abliteration/.well-known/security.txt
+Policy: https://github.com/adybag14-cyber/Abliteration/security/policy

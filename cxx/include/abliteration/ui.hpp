@@ -1,6 +1,7 @@
 #pragma once
 
-#include <cstdlib>
+#include "abliteration/environment.hpp"
+
 #include <iostream>
 #include <string>
 #include <string_view>
@@ -26,10 +27,10 @@ inline bool stdout_tty() {
 }
 
 inline bool color_enabled() {
-  if (std::getenv("NO_COLOR") != nullptr) return false;
-  if (std::getenv("ABLITERATE_PLAIN") != nullptr) return false;
-  if (std::getenv("CI") != nullptr) return false;
-  if (const char* t = std::getenv("TERM"); t && std::string_view(t) == "dumb") return false;
+  if (environment_set("NO_COLOR")) return false;
+  if (environment_set("ABLITERATE_PLAIN")) return false;
+  if (environment_set("CI")) return false;
+  if (const auto term = environment_value("TERM"); term && *term == "dumb") return false;
   return stdout_tty();
 }
 

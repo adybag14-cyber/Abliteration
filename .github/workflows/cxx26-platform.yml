@@ -1,8 +1,8 @@
 name: C++26 platform — multi-target build, test, deploy
 
 # Native ISO C++26 binaries. A target that cannot compile -std=c++26 fails.
-# Linux x64/arm64 (GCC 15 + Clang 20), Windows x64 (Clang + MSVC), Windows arm64
-# (MSVC, experimental runner), macOS arm64 + x64 (Homebrew LLVM).
+# Linux x64/arm64 (GCC 16.2 + Clang 22), Windows x64 (Clang 22 + MSVC 14.51),
+# Windows arm64 (VS 2026 MSVC, preview runner), macOS arm64 + x64 (Homebrew LLVM 22).
 
 on:
   push:
@@ -40,27 +40,28 @@ jobs:
   linux-gcc:
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
-    container: gcc:15
+    container: gcc:16.2
     strategy:
       fail-fast: false
       matrix:
         include:
-          - name: linux-x64-gcc15
+          - name: linux-x64-gcc16
             os: ubuntu-24.04
             triple: linux-x64
-          - name: linux-arm64-gcc15
+          - name: linux-arm64-gcc16
             os: ubuntu-24.04-arm
             triple: linux-arm64
     defaults:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Toolchain
         run: |
           apt-get update
           apt-get install -y --no-install-recommends cmake ninja-build ca-certificates git nodejs
           g++ --version
+          test "$(g++ -dumpfullversion -dumpversion | cut -d. -f1)" = 16
           node --version
       - name: Configure and build
         run: |
@@ -89,7 +90,7 @@ jobs:
           fi
       - name: Smoke — unpack archive away from the repo and run first hour
         run: node scripts/smoke-cxx-package.mjs --archive cxx/dist/abliterate-cxx-${{ matrix.name }}.tar.gz
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: abliterate-cxx-${{ matrix.name }}
           path: cxx/dist/abliterate-cxx-${{ matrix.name }}*
@@ -104,33 +105,35 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: linux-x64-clang20
+          - name: linux-x64-clang22
             os: ubuntu-24.04
             compiler: clang++
-            llvm: "20"
+            llvm: "22"
             triple: linux-x64
             experimental: false
-          - name: linux-arm64-clang20
+          - name: linux-arm64-clang22
             os: ubuntu-24.04-arm
             compiler: clang++
-            llvm: "20"
+            llvm: "22"
             triple: linux-arm64
             experimental: false
-          - name: windows-x64-clang
-            os: windows-latest
+          - name: windows-x64-clang22
+            os: windows-2025-vs2026
             compiler: clang++
-            llvm: "20"
+            llvm: "22"
             triple: windows-x64
             experimental: false
           - name: windows-x64-msvc
-            os: windows-latest
+            os: windows-2025-vs2026
             compiler: cl
             triple: windows-x64
+            msvc_arch: x64
             experimental: false
           - name: windows-arm64-msvc
-            os: windows-11-arm
+            os: windows-11-vs2026-arm
             compiler: cl
             triple: windows-arm64
+            msvc_arch: amd64_arm64
             experimental: true
           - name: macos-arm64-llvm
             os: macos-latest
@@ -150,14 +153,14 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install LLVM (Linux)
         if: runner.os == 'Linux' && matrix.llvm
         run: |
           set -euo pipefail
-          if command -v "clang-${{ matrix.llvm }}" >/dev/null 2>&1; then
-            echo "CXX=clang-${{ matrix.llvm }}" >> "$GITHUB_ENV"
+          if command -v "clang++-${{ matrix.llvm }}" >/dev/null 2>&1; then
+            echo "CXX=clang++-${{ matrix.llvm }}" >> "$GITHUB_ENV"
             echo "CC=clang-${{ matrix.llvm }}" >> "$GITHUB_ENV"
             exit 0
           fi
@@ -168,17 +171,33 @@ jobs:
           echo "CC=clang-${{ matrix.llvm }}" >> "$GITHUB_ENV"
           clang++-${{ matrix.llvm }} --version
 
-      - name: Use preinstalled LLVM (Windows)
+      - name: Cache verified LLVM 22.1.8 archive (Windows)
+        if: runner.os == 'Windows' && matrix.llvm
+        uses: actions/cache@v5
+        with:
+          path: .ci-cache/LLVM-22.1.8-win64.exe
+          key: llvm-22.1.8-win64-16e5709785fef73c
+
+      - name: Extract verified LLVM 22.1.8 (Windows)
         if: runner.os == 'Windows' && matrix.llvm
         run: |
-          if [[ -x "/c/Program Files/LLVM/bin/clang++.exe" ]]; then
-            echo "/c/Program Files/LLVM/bin" >> "$GITHUB_PATH"
-            echo "CXX=clang++" >> "$GITHUB_ENV"
-            "/c/Program Files/LLVM/bin/clang++.exe" --version
-          else
-            echo "LLVM not preinstalled" >&2
-            exit 1
+          set -euo pipefail
+          URL=https://github.com/llvm/llvm-project/releases/download/llvmorg-22.1.8/LLVM-22.1.8-win64.exe
+          SHA256=16e5709785fef73c854646241c4a92c5cd574318d1b33c63330dd7721903e55c
+          ARCHIVE="$GITHUB_WORKSPACE/.ci-cache/LLVM-22.1.8-win64.exe"
+          LLVM_ROOT="$RUNNER_TEMP/llvm-22.1.8"
+          mkdir -p "$(dirname "$ARCHIVE")" "$LLVM_ROOT"
+          if [[ ! -f "$ARCHIVE" ]]; then
+            curl -fsSL --retry 8 --retry-all-errors --retry-delay 2 -o "$ARCHIVE" "$URL"
           fi
+          echo "$SHA256 *$ARCHIVE" | sha256sum -c -
+          # The official installer is an NSIS archive. Extracting it avoids
+          # mutating or colliding with the runner image's preinstalled LLVM.
+          7z x -y "$ARCHIVE" "-o${LLVM_ROOT}" '-x!Uninstall.exe' '-x!$PLUGINSDIR\*'
+          test -x "$LLVM_ROOT/bin/clang++.exe"
+          echo "$LLVM_ROOT/bin" >> "$GITHUB_PATH"
+          echo "CXX=$LLVM_ROOT/bin/clang++.exe" >> "$GITHUB_ENV"
+          "$LLVM_ROOT/bin/clang++.exe" --version
 
       - name: Install Homebrew LLVM
         if: matrix.brew_llvm
@@ -237,6 +256,18 @@ jobs:
       - name: MSVC developer environment
         if: matrix.compiler == 'cl'
         uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.msvc_arch }}
+
+      - name: Prove current compiler generation
+        run: |
+          if [[ "${{ matrix.compiler }}" == "cl" ]]; then
+            cl 2>&1 | tee compiler.txt || true
+            grep -E 'Version 19\.5[1-9]' compiler.txt
+          else
+            "${CXX:-clang++}" --version | tee compiler.txt
+            grep -E 'clang version 22\.' compiler.txt
+          fi
 
       - name: Configure and build (Clang)
         if: matrix.compiler == 'clang++'
@@ -293,23 +324,47 @@ jobs:
             node scripts/smoke-cxx-package.mjs --archive cxx/dist/abliterate-cxx-${{ matrix.name }}.zip "${WRAP[@]}"
           fi
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: abliterate-cxx-${{ matrix.name }}
           path: cxx/dist/abliterate-cxx-${{ matrix.name }}*
           if-no-files-found: error
           retention-days: 30
 
+  sanitizers:
+    name: linux-x64-clang22-asan-ubsan
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Install LLVM 22 and Ninja
+        run: |
+          curl -fsSL https://apt.llvm.org/llvm.sh -o llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 22 all
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+          clang++-22 --version | tee compiler.txt
+          grep -E 'clang version 22\.' compiler.txt
+      - name: Run hostile-input suites under ASan and UBSan
+        env:
+          CXX: clang++-22
+        run: npm run cxx:sanitize
+
   publish:
     name: Deploy multi-platform packages
-    needs: [linux-gcc, hosted]
+    needs: [linux-gcc, hosted, sanitizers]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+      id-token: write
+      attestations: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v7
         with:
           path: collected
           pattern: abliterate-cxx-*
@@ -328,18 +383,34 @@ jobs:
           test "$(find release -type f | wc -l)" -ge 8
           (cd release && sha256sum * | tee SHA256SUMS)
           test -s release/SHA256SUMS
+      - name: Attest release archives
+        uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: release/*
       - name: Publish rolling cxx-nightly (main)
         if: github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release delete cxx-nightly --yes || true
           git tag -f cxx-nightly
           git push -f origin cxx-nightly
-          gh release create cxx-nightly release/* \
-            --prerelease \
-            --title "abliterate-cxx nightly (all platforms)" \
-            --notes-file cxx/RELEASE-NOTES.md
+          if gh release view cxx-nightly >/dev/null 2>&1; then
+            gh release upload cxx-nightly release/* --clobber
+            gh release edit cxx-nightly --prerelease \
+              --title "abliterate-cxx nightly (all platforms)" \
+              --notes-file cxx/RELEASE-NOTES.md
+            expected="$(find release -maxdepth 1 -type f -printf '%f\n' | sort)"
+            while IFS= read -r asset; do
+              if ! grep -Fxq "$asset" <<<"$expected"; then
+                gh release delete-asset cxx-nightly "$asset" --yes
+              fi
+            done < <(gh release view cxx-nightly --json assets --jq '.assets[].name')
+          else
+            gh release create cxx-nightly release/* \
+              --prerelease \
+              --title "abliterate-cxx nightly (all platforms)" \
+              --notes-file cxx/RELEASE-NOTES.md
+          fi
       - name: Publish version tag
         if: startsWith(github.ref, 'refs/tags/')
         env:

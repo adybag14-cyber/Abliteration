@@ -1,0 +1,5 @@
+# GitHub's public Windows 11 + Visual Studio 2026 ARM64 preview image was
+# introduced after actionlint's bundled hosted-runner label table.
+self-hosted-runner:
+  labels:
+    - windows-11-vs2026-arm

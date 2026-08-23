@@ -9,12 +9,12 @@ This page is the **hand-holding path** for `abliterate-cxx`. Read it top to bott
 ## The only order that works
 
 ```text
-guide → doctor → self-check → demo → estimate dim → apply orba-directional → eval toys
+guide → doctor → limits → self-check → demo → estimate dim → apply orba-directional → eval toys
          → recipes → (optional) projected / cosmic / svd
          → then and only then a real model (Heretic)
 ```
 
-Hour 0 is `guide` → `doctor` → `self-check` → `demo`. Hour 0.5 is `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`.
+Hour 0 is `guide` → `doctor` → `limits` → `self-check` → `demo`. Hour 0.5 is `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`.
 
 If you skip to a 32B GGUF you will debug tooling for weeks and learn no geometry.
 
@@ -27,33 +27,35 @@ Pick **one unique filename**. GCC and Clang no longer share a name.
 | You have | Download from [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) |
 |----------|------------------------------------------------------------------------------------------------------|
 | Windows x64 | `abliterate-cxx-windows-x64-msvc.zip` |
-| Linux x64 | `abliterate-cxx-linux-x64-gcc15.tar.gz` |
-| Linux arm64 | `abliterate-cxx-linux-arm64-gcc15.tar.gz` |
+| Linux x64 | `abliterate-cxx-linux-x64-gcc16.tar.gz` |
+| Linux arm64 | `abliterate-cxx-linux-arm64-gcc16.tar.gz` |
 | macOS Apple Silicon | `abliterate-cxx-macos-arm64-llvm.tar.gz` |
 | macOS Intel | `abliterate-cxx-macos-x64-llvm.tar.gz` |
 
 **Windows x64**
 
-The zip is flattened: `abliterate-cxx.exe` sits next to `GETTING-STARTED.md` at archive root.
+The zip is flattened: `abliterate-cxx.exe` sits next to `GETTING-STARTED.md` at archive root. Use the checksum-first PowerShell block in [cxx/GETTING-STARTED.md](../cxx/GETTING-STARTED.md); it downloads `SHA256SUMS`, rejects a mismatch, and refuses to overwrite an existing destination.
 
 ```powershell
-# from https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly
-Expand-Archive -Force -Path abliterate-cxx-windows-x64-msvc.zip -DestinationPath .
+Expand-Archive -Path abliterate-cxx-windows-x64-msvc.zip -DestinationPath abliterate-cxx-1.1.0
+Set-Location abliterate-cxx-1.1.0
 .\abliterate-cxx.exe guide
 .\abliterate-cxx.exe doctor
+.\abliterate-cxx.exe limits
 .\abliterate-cxx.exe self-check
 .\abliterate-cxx.exe demo
 ```
 
-If you used `Expand-Archive` without `-DestinationPath`, `cd` into the zip-stem folder (`abliterate-cxx-windows-x64-msvc`). The exe is immediately there — no extra nested folder. Then run the same four Hour 0 commands.
+If you used `Expand-Archive` without `-DestinationPath`, `cd` into the zip-stem folder (`abliterate-cxx-windows-x64-msvc`). The exe is immediately there — no extra nested folder. Then run the same five Hour 0 commands.
 
 **Linux x64 / arm64**
 
 ```bash
-tar -xzf abliterate-cxx-linux-x64-gcc15.tar.gz
-cd abliterate-cxx-linux-x64-gcc15
+mkdir abliterate-cxx-1.1.0 && tar -xzf abliterate-cxx-linux-x64-gcc16.tar.gz -C abliterate-cxx-1.1.0
+cd abliterate-cxx-1.1.0
 ./abliterate-cxx guide
 ./abliterate-cxx doctor
+./abliterate-cxx limits
 ./abliterate-cxx self-check
 ./abliterate-cxx demo
 ```
@@ -61,11 +63,12 @@ cd abliterate-cxx-linux-x64-gcc15
 **macOS arm64 / x64**
 
 ```bash
-tar -xzf abliterate-cxx-macos-arm64-llvm.tar.gz
-cd abliterate-cxx-macos-arm64-llvm
+mkdir abliterate-cxx-1.1.0 && tar -xzf abliterate-cxx-macos-arm64-llvm.tar.gz -C abliterate-cxx-1.1.0
+cd abliterate-cxx-1.1.0
 xattr -d com.apple.quarantine ./abliterate-cxx 2>/dev/null || true
 ./abliterate-cxx guide
 ./abliterate-cxx doctor
+./abliterate-cxx limits
 ./abliterate-cxx self-check
 ./abliterate-cxx demo
 ```
@@ -77,6 +80,7 @@ npm run cxx:build
 npm run cxx:test
 ./cxx/build/abliterate-cxx guide
 ./cxx/build/abliterate-cxx doctor
+./cxx/build/abliterate-cxx limits
 ./cxx/build/abliterate-cxx self-check
 ./cxx/build/abliterate-cxx demo
 ```

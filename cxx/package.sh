@@ -8,7 +8,7 @@ BUILD="${1:?build dir}"
 TRIPLE="${2:?triple}"
 if [[ $# -lt 3 || -z "${3//[[:space:]]/}" ]]; then
   echo "package.sh: COMPILER (arg 3) required (non-empty). Do not fall back to triple." >&2
-  echo "Example compiler names: windows-x64-msvc windows-x64-clang windows-arm64-msvc linux-x64-gcc15 linux-x64-clang20 linux-arm64-gcc15 linux-arm64-clang20 macos-arm64-llvm macos-x64-llvm" >&2
+  echo "Example compiler names: windows-x64-msvc windows-x64-clang22 windows-arm64-msvc linux-x64-gcc16 linux-x64-clang22 linux-arm64-gcc16 linux-arm64-clang22 macos-arm64-llvm macos-x64-llvm" >&2
   exit 2
 fi
 COMPILER="$3"

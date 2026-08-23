@@ -95,7 +95,7 @@ Full index: [research-landscape.md](research-landscape.md) · [advanced-techniqu
 
 ## Beginners improving local models
 
-1. [cxx26-researcher-guide.md](cxx26-researcher-guide.md) — Hour 0 unique cxx-nightly then guide → doctor → self-check → demo (no GPU)
+1. [cxx26-researcher-guide.md](cxx26-researcher-guide.md) — Hour 0 unique cxx-nightly then guide → doctor → limits → self-check → demo (no GPU)
 2. [../techniques/safety-guardrail-abliteration-methodology.md](../techniques/safety-guardrail-abliteration-methodology.md) — theory
 3. [../instructions/beginner-reproduction-methodology.md](../instructions/beginner-reproduction-methodology.md) — reproducible first run
 4. [../instructions/setup-environment.md](../instructions/setup-environment.md)

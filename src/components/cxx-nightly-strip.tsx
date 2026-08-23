@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CXX_NIGHTLY_TAG, cxxDefaultArchives, cxxDownload, handbookUrl } from "@/lib/utils";
 
-const firstHourLoop = ["guide", "doctor", "self-check", "demo"] as const;
+const firstHourLoop = ["guide", "doctor", "limits", "self-check", "demo"] as const;
 
 export function CxxNightlyStrip() {
   return (
@@ -44,7 +44,7 @@ export function CxxNightlyStrip() {
           <div className="relative">
             <Badge className="border-background/10 bg-background/10 text-background">Hour 0 loop</Badge>
             <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight sm:text-3xl">C++26 toy-matrix lab</h3>
-            <p className="mt-4 font-mono text-sm font-bold leading-6 text-background">guide → doctor → self-check → demo</p>
+            <p className="mt-4 font-mono text-sm font-bold leading-6 text-background">guide → doctor → limits → self-check → demo</p>
             <ol className="mt-5 flex flex-wrap gap-2">
               {firstHourLoop.map((step, index) => (
                 <li key={step} className="flex items-center gap-2">

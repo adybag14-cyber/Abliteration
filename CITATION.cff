@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If this handbook or C++26 lab supports your work, cite this software and the primary papers relevant to your method."
+type: software
+title: "Abliteration Field Guide"
+abstract: "An evidence-led handbook, interactive field guide, and memory-safe C++26 toy-matrix laboratory for studying LLM refusal-direction interventions."
+authors:
+  - name: "adybag14-cyber"
+version: 2.0.0
+date-released: 2026-08-23
+license: Apache-2.0
+repository-code: "https://github.com/adybag14-cyber/Abliteration"
+url: "https://adybag14-cyber.github.io/Abliteration/"
+keywords:
+  - large language models
+  - mechanistic interpretability
+  - refusal direction
+  - activation steering
+  - C++26

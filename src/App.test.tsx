@@ -9,8 +9,8 @@ const nightlyArchives = [
     href: "https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-windows-x64-msvc.zip",
   },
   {
-    file: "abliterate-cxx-linux-x64-gcc15.tar.gz",
-    href: "https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-linux-x64-gcc15.tar.gz",
+    file: "abliterate-cxx-linux-x64-gcc16.tar.gz",
+    href: "https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-linux-x64-gcc16.tar.gz",
   },
   {
     file: "abliterate-cxx-macos-arm64-llvm.tar.gz",
@@ -41,7 +41,7 @@ describe("Abliteration Field Guide", () => {
     expect(screen.getByRole("heading", { name: /Six steps/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /Compare the shape/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /A checkpoint passes all gates/i })).toBeInTheDocument();
-    expect(screen.getAllByText(/guide\s*→\s*doctor\s*→\s*self-check\s*→\s*demo/).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText(/guide\s*→\s*doctor\s*→\s*limits\s*→\s*self-check\s*→\s*demo/).length).toBeGreaterThanOrEqual(1);
 
     const journey = document.querySelector("ol");
     expect(journey?.querySelector("li")?.textContent).toMatch(/Hour 0/);
@@ -74,6 +74,42 @@ describe("Abliteration Field Guide", () => {
     expect(path).toHaveTextContent("T08 + T31");
     expect(within(lab).getByRole("heading", { name: "C++26 toy-matrix lab" })).toBeInTheDocument();
     expectNightlyArchives(lab);
+  });
+
+  it("provides checksum-first platform commands and copies the selected recipe", async () => {
+    const user = userEvent.setup();
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText } });
+    render(<App />);
+
+    expect(screen.getByLabelText("Windows quick-start commands")).toHaveTextContent("Get-FileHash");
+    await user.click(screen.getByRole("button", { name: /Linux.*GCC 16 x64/i }));
+    const linuxCommands = screen.getByLabelText("Linux quick-start commands");
+    expect(linuxCommands).toHaveTextContent("sha256sum --check --strict");
+    expect(linuxCommands).toHaveTextContent("./abliterate-cxx limits");
+
+    await user.click(screen.getByRole("button", { name: "Copy Linux quick-start commands" }));
+    expect(writeText).toHaveBeenCalledTimes(1);
+    expect(writeText.mock.calls[0][0]).toContain("abliterate-cxx-linux-x64-gcc16.tar.gz");
+    expect(screen.getByText("Linux commands copied to the clipboard.")).toBeInTheDocument();
+  });
+
+  it("searches and facets the 50-paper primary-source snapshot", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    const research = document.getElementById("research")!;
+    expect(within(research).getByText(/50 papers match/)).toBeInTheDocument();
+    expect(within(research).getByRole("button", { name: "Show all 50 papers" })).toBeInTheDocument();
+
+    const search = within(research).getByRole("textbox", { name: /Search titles, authors, IDs, or topics/i });
+    await user.type(search, "2604.18901");
+    expect(within(research).getByText(/1 paper match/)).toBeInTheDocument();
+    expect(within(research).getByRole("heading", { name: /Harmful Intent as a Geometrically Recoverable Feature/ })).toBeInTheDocument();
+
+    await user.clear(search);
+    await user.click(within(research).getByRole("button", { name: /^Defense 11$/ }));
+    expect(within(research).getByText(/11 papers match/)).toBeInTheDocument();
+    expect(within(research).getAllByText("Defense").length).toBeGreaterThanOrEqual(1);
   });
 
   it("stores step completion and exposes a reset", async () => {

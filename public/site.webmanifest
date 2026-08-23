@@ -1,0 +1,18 @@
+{
+  "name": "Abliteration Field Guide",
+  "short_name": "Abliteration",
+  "description": "Evidence-led LLM abliteration field guide and memory-safe C++26 toy lab.",
+  "start_url": "/Abliteration/",
+  "scope": "/Abliteration/",
+  "display": "standalone",
+  "background_color": "#f7f7f4",
+  "theme_color": "#6046d5",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -6,11 +6,11 @@ const captureDirectory = path.resolve("artifacts/playwright/captures");
 
 const nightlyArchives = [
   "abliterate-cxx-windows-x64-msvc.zip",
-  "abliterate-cxx-linux-x64-gcc15.tar.gz",
+  "abliterate-cxx-linux-x64-gcc16.tar.gz",
   "abliterate-cxx-macos-arm64-llvm.tar.gz",
 ] as const;
 
-const hourZeroCommand = /guide\s*→\s*doctor\s*→\s*self-check\s*→\s*demo/;
+const hourZeroCommand = /guide\s*→\s*doctor\s*→\s*limits\s*→\s*self-check\s*→\s*demo/;
 
 async function openGuide(page: Page) {
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -232,6 +232,26 @@ test("header Lab click reveals Hour 0 nightlies below the sticky header", async 
       return h2Top - (headerBottom - 1);
     })
     .toBeGreaterThanOrEqual(0);
+});
+
+test("quick-start workbench and research observatory stay searchable", async ({ page }) => {
+  await openGuide(page);
+
+  const lab = page.locator("#lab");
+  await expect(lab.getByLabel("Windows quick-start commands", { exact: true })).toContainText("Get-FileHash");
+  await lab.getByRole("button", { name: /Linux.*GCC 16 x64/i }).click();
+  await expect(lab.getByLabel("Linux quick-start commands", { exact: true })).toContainText("sha256sum --check --strict");
+  await expect(lab.getByLabel("Linux quick-start commands", { exact: true })).toContainText("./abliterate-cxx limits");
+
+  const research = page.locator("#research");
+  await expect(research.getByText(/50 papers match/)).toBeVisible();
+  await research.getByRole("textbox", { name: /Search titles, authors, IDs, or topics/i }).fill("2604.18901");
+  await expect(research.getByText(/1 paper match/)).toBeVisible();
+  await expect(research.getByRole("heading", { name: /Harmful Intent as a Geometrically Recoverable Feature/ })).toBeVisible();
+
+  await research.getByRole("textbox", { name: /Search titles, authors, IDs, or topics/i }).fill("");
+  await research.getByRole("button", { name: /^Defense 11$/ }).click();
+  await expect(research.getByText(/11 papers match/)).toBeVisible();
 });
 
 test("evaluation gates and theme communicate state changes clearly", async ({ page }, testInfo) => {

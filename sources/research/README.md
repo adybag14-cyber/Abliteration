@@ -2,6 +2,8 @@
 
 Pinned PDFs, text extracts, and GitHub README snapshots for handbook citations.
 
+**Latest index:** [catalog-2026.json](catalog-2026.json) is the validated, machine-readable 50-paper primary-source update; the human reading map is [docs/research-2026-update.md](../../docs/research-2026-update.md). The catalog links to canonical arXiv records without adding another large batch of binaries to git.
+
 **Refresh:** `npm run fetch:research-papers`
 
 **Naming:** PDFs here use dot IDs (`arxiv-2602.02132.pdf`). `sources/fetched/` page snapshots from `fetch:docs` may use hyphen IDs (`arxiv-2602-02132.txt`) — cite **`papers/`** for offline PDFs.

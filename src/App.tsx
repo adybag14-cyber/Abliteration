@@ -3,18 +3,22 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { CliWorkbench } from "@/components/cli-workbench";
 import { CxxNightlyStrip } from "@/components/cxx-nightly-strip";
 import { EvaluationGates } from "@/components/evaluation-gates";
 import { JourneyMap } from "@/components/journey-map";
 import { MethodRadar } from "@/components/method-radar";
 import { PathFinder } from "@/components/path-finder";
 import { Reveal } from "@/components/reveal";
+import { ResearchExplorer } from "@/components/research-explorer";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteHeader } from "@/components/site-header";
 import { StepGuide } from "@/components/step-guide";
 import { TechniqueExplorer } from "@/components/technique-explorer";
 import { glossary, troubleshooting } from "@/data/guide";
 import { handbookUrl, REPOSITORY_URL } from "@/lib/utils";
+
+const buildSha = import.meta.env.VITE_BUILD_SHA?.slice(0, 7) || "local";
 
 const principles = [
   { icon: Microscope, number: "01", title: "Observe", text: "Measure how target and control prompts differ inside the model." },
@@ -76,6 +80,11 @@ export function App() {
                 <span className="flex items-center gap-2"><CheckCircle2 className="size-4 text-emerald-500" aria-hidden="true" /> No hidden cloud service</span>
                 <span className="flex items-center gap-2"><CheckCircle2 className="size-4 text-emerald-500" aria-hidden="true" /> Evidence before export</span>
               </div>
+              <dl className="mt-10 grid max-w-xl grid-cols-3 divide-x divide-border rounded-2xl border border-border bg-card/75 py-4 shadow-sm backdrop-blur-sm">
+                <div className="px-3 text-center"><dt className="font-mono text-xl font-bold text-primary sm:text-2xl">50</dt><dd className="mt-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">new papers</dd></div>
+                <div className="px-3 text-center"><dt className="font-mono text-xl font-bold text-primary sm:text-2xl">9</dt><dd className="mt-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">release lanes</dd></div>
+                <div className="px-3 text-center"><dt className="font-mono text-xl font-bold text-primary sm:text-2xl">3</dt><dd className="mt-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">hard gates</dd></div>
+              </dl>
             </Reveal>
             <Reveal delay={0.12}><HeroDiagram /></Reveal>
           </div>
@@ -107,8 +116,9 @@ export function App() {
 
         <section id="lab" className="scroll-mt-36 py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal><SectionHeading eyebrow="Hour 0 · C++26" title="C++26 Hour 0 — unique nightlies" description="Always-on toy-matrix downloads. Unpack one compiler-tagged archive, then guide → doctor → self-check → demo. No GPU. This strip does not depend on the route finder." /></Reveal>
+            <Reveal><SectionHeading eyebrow="Hour 0 · C++26" title="C++26 Hour 0 — unique nightlies" description="Always-on toy-matrix downloads. Unpack one compiler-tagged archive, then guide → doctor → limits → self-check → demo. No GPU. This strip does not depend on the route finder." /></Reveal>
             <Reveal className="mt-10"><CxxNightlyStrip /></Reveal>
+            <Reveal className="mt-6"><CliWorkbench /></Reveal>
           </div>
         </section>
 
@@ -140,14 +150,21 @@ export function App() {
           </div>
         </section>
 
-        <section id="gates" className="scroll-mt-28 py-20 lg:py-28">
+        <section id="research" className="scroll-mt-36 py-20 lg:py-28">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <Reveal><SectionHeading eyebrow="Primary-source observatory" title="Fifty new papers, one navigable evidence map" description="Search the August 2026 arXiv snapshot across refusal mechanisms, interventions, defenses, attacks, and evaluation. Inclusion means method relevance—not independent replication." /></Reveal>
+            <Reveal className="mt-10"><ResearchExplorer /></Reveal>
+          </div>
+        </section>
+
+        <section id="gates" className="scroll-mt-28 border-y border-border bg-card/45 py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Reveal><SectionHeading eyebrow="Evaluation lab" title="A checkpoint passes all gates—or it waits" description="Move the sliders to see how preservation, target improvement, and artifact integrity combine into one release decision." /></Reveal>
             <Reveal className="mt-10"><EvaluationGates /></Reveal>
           </div>
         </section>
 
-        <section className="border-y border-border bg-muted/35 py-20 lg:py-28">
+        <section className="bg-muted/35 py-20 lg:py-28">
           <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
             <Reveal>
               <SectionHeading eyebrow="Troubleshooting" title="When the result looks wrong" description="The safest fix is usually better evidence or a smaller edit—not more strength." />
@@ -192,8 +209,8 @@ export function App() {
 
       <footer className="border-t border-border bg-background py-8">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 text-center text-xs text-muted-foreground sm:px-6 md:flex-row md:text-left lg:px-8">
-          <span className="flex items-center gap-2"><span className="grid size-7 place-items-center rounded-lg bg-primary text-primary-foreground"><Orbit className="size-4" /></span> Abliteration Field Guide · CC0 documentation</span>
-          <span className="flex flex-wrap justify-center gap-x-5 gap-y-2"><a className="hover:text-foreground" href={handbookUrl("docs/risks-and-ethics.md")}>Responsible use</a><a className="hover:text-foreground" href={handbookUrl("references.md")}>Primary sources</a><a className="hover:text-foreground" href={REPOSITORY_URL}>GitHub</a></span>
+          <span className="flex items-center gap-2"><span className="grid size-7 place-items-center rounded-lg bg-primary text-primary-foreground"><Orbit className="size-4" /></span> Abliteration Field Guide · Apache-2.0</span>
+          <span className="flex flex-wrap justify-center gap-x-5 gap-y-2"><a className="hover:text-foreground" href={handbookUrl("docs/risks-and-ethics.md")}>Responsible use</a><a className="hover:text-foreground" href={handbookUrl("references.md")}>Primary sources</a><a className="hover:text-foreground" href={`${REPOSITORY_URL}/commit/${buildSha}`} aria-label={`Deployment commit ${buildSha}`}>Build {buildSha}</a><a className="hover:text-foreground" href={REPOSITORY_URL}>GitHub</a></span>
         </div>
       </footer>
     </div>

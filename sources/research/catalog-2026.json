@@ -1,0 +1,707 @@
+{
+  "snapshot_date": "2026-08-23",
+  "source": "arXiv API",
+  "query_scope": "Curated primary papers on refusal geometry, activation steering, abliteration, safety removal and recovery, over-refusal, and representation-level evaluation.",
+  "count": 50,
+  "papers": [
+    {
+      "id": "2605.29629",
+      "title": "Beyond Attack Success Rate: Temporal Logit Observability for LLM Safety Failures",
+      "authors": [
+        "Junyoung Park",
+        "Sunghwan Park",
+        "Seongyong Ju",
+        "Jaewoo Lee"
+      ],
+      "published": "2026-05-28",
+      "category": "cs.AI",
+      "area": "Evaluation",
+      "url": "https://arxiv.org/abs/2605.29629"
+    },
+    {
+      "id": "2604.18901",
+      "title": "Harmful Intent as a Geometrically Recoverable Feature of LLM Residual Streams",
+      "authors": [
+        "Isaac Llorente-Saguer"
+      ],
+      "published": "2026-04-21",
+      "category": "cs.LG",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2604.18901"
+    },
+    {
+      "id": "2606.10860",
+      "title": "Training LLMs to Enforce Multi-Level Instruction Hierarchies via Gravity-Weighted Direct Preference Optimization",
+      "authors": [
+        "Lena S. Bolliger",
+        "Lena A. Jäger"
+      ],
+      "published": "2026-06-09",
+      "category": "cs.CR",
+      "area": "Defense",
+      "url": "https://arxiv.org/abs/2606.10860"
+    },
+    {
+      "id": "2607.08883",
+      "title": "Optimizing Against Safety Representations: Activation-Guided Adversarial Suffixes and the Geometry of Refusal",
+      "authors": [
+        "Ege Çakar",
+        "Hannah Guan",
+        "Kayden Kehe"
+      ],
+      "published": "2026-07-09",
+      "category": "cs.LG",
+      "area": "Attack",
+      "url": "https://arxiv.org/abs/2607.08883"
+    },
+    {
+      "id": "2607.24392",
+      "title": "When LLM Defenses Backfire: Characterizing Safety, Performance, and Cost Trade-offs",
+      "authors": [
+        "Tong Zhang",
+        "Zexin Li",
+        "Simin Chen",
+        "Yun Peng"
+      ],
+      "published": "2026-07-27",
+      "category": "cs.CR",
+      "area": "Evaluation",
+      "url": "https://arxiv.org/abs/2607.24392"
+    },
+    {
+      "id": "2608.17202",
+      "title": "Fool's Gold: Defensive Deception Against Safety-Removal Attacks on Open-Weight Models",
+      "authors": [
+        "Mark Russinovich"
+      ],
+      "published": "2026-08-18",
+      "category": "cs.AI",
+      "area": "Defense",
+      "url": "https://arxiv.org/abs/2608.17202"
+    },
+    {
+      "id": "2606.04778",
+      "title": "Inference-Time Vulnerability Beyond Shallow Safety: Alignment Along Generation Trajectories",
+      "authors": [
+        "Kyungmin Park",
+        "Taesup Kim"
+      ],
+      "published": "2026-06-03",
+      "category": "cs.AI",
+      "area": "Defense",
+      "url": "https://arxiv.org/abs/2606.04778"
+    },
+    {
+      "id": "2606.05958",
+      "title": "Steering Vectors are an Adversarial Attack Surface",
+      "authors": [
+        "Abzal Aidakhmetov",
+        "Donato Crisostomi",
+        "Tommaso Mencattini",
+        "Adrian Robert Minut",
+        "Iacopo Masi",
+        "Emanuele Rodolà"
+      ],
+      "published": "2026-06-04",
+      "category": "cs.LG",
+      "area": "Attack",
+      "url": "https://arxiv.org/abs/2606.05958"
+    },
+    {
+      "id": "2606.10487",
+      "title": "Stop Early, Spend Less: Hidden-State Probes as a Practical Recipe for Streaming Moderation of LLM Outputs",
+      "authors": [
+        "Huizhen Shu",
+        "Xuying Li",
+        "Piao Xue"
+      ],
+      "published": "2026-06-09",
+      "category": "cs.LG",
+      "area": "Defense",
+      "url": "https://arxiv.org/abs/2606.10487"
+    },
+    {
+      "id": "2606.24952",
+      "title": "Perfect Detection, Failed Control: The Geometry of Knowing vs. Steering in Language Models",
+      "authors": [
+        "Cosimo Galeone",
+        "Anna Ettorre",
+        "Minsu Park",
+        "Giuseppe Ettorre",
+        "Daniele Ligorio"
+      ],
+      "published": "2026-06-23",
+      "category": "cs.CL",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2606.24952"
+    },
+    {
+      "id": "2606.22676",
+      "title": "Skin-Deep: A Geometric Diagnostic for Alignment Fragility in Large Language Model Representations",
+      "authors": [
+        "Dongyub Jude Lee",
+        "Jungseob Lee",
+        "Seungyoon Lee",
+        "Seongtae Hong",
+        "Suhyune Son",
+        "Sugyeong Eo",
+        "Jaehyung Seo",
+        "Heuiseok Lim"
+      ],
+      "published": "2026-06-21",
+      "category": "cs.AI",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2606.22676"
+    },
+    {
+      "id": "2607.09156",
+      "title": "Present but Rescaled: Chat-to-Agent Transfer of Additive Activation Steering",
+      "authors": [
+        "Lucas Pinto"
+      ],
+      "published": "2026-07-10",
+      "category": "cs.LG",
+      "area": "Intervention",
+      "url": "https://arxiv.org/abs/2607.09156"
+    },
+    {
+      "id": "2607.17427",
+      "title": "Abliteration Is Not a Scalpel: Off-Target Effects of Refusal Removal on Decision Disposition Across Model Families",
+      "authors": [
+        "Aleksander Fafuła"
+      ],
+      "published": "2026-07-19",
+      "category": "cs.LG",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2607.17427"
+    },
+    {
+      "id": "2607.00572",
+      "title": "HARC: Coupling Harmfulness and Refusal Directions for Robust Safety Alignment",
+      "authors": [
+        "Shei Pern Chua",
+        "Hao Wu",
+        "Qianli Ma",
+        "Fangzhao Wu"
+      ],
+      "published": "2026-07-01",
+      "category": "cs.AI",
+      "area": "Intervention",
+      "url": "https://arxiv.org/abs/2607.00572"
+    },
+    {
+      "id": "2607.10226",
+      "title": "When Are Sparse Feature Interventions Actually Localized? Matched Evaluation for SAE-Based Safety Control",
+      "authors": [
+        "Daming Luo"
+      ],
+      "published": "2026-07-11",
+      "category": "cs.AI",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2607.10226"
+    },
+    {
+      "id": "2608.00180",
+      "title": "A Constitution-Grid Instrument for Data-Efficient RL Alignment (C-Guard)",
+      "authors": [
+        "Xianling Zhang"
+      ],
+      "published": "2026-07-31",
+      "category": "cs.CL",
+      "area": "Defense",
+      "url": "https://arxiv.org/abs/2608.00180"
+    },
+    {
+      "id": "2605.21706",
+      "title": "Latent-space Attacks for Refusal Evasion in Language Models",
+      "authors": [
+        "Giorgio Piras",
+        "Raffaele Mura",
+        "Fabio Brau",
+        "Maura Pintor",
+        "Luca Oneto",
+        "Fabio Roli",
+        "Battista Biggio"
+      ],
+      "published": "2026-05-20",
+      "category": "cs.AI",
+      "area": "Attack",
+      "url": "https://arxiv.org/abs/2605.21706"
+    },
+    {
+      "id": "2606.31876",
+      "title": "Harnessing Textual Refusal Directions for Multimodal Safety",
+      "authors": [
+        "Moreno D'Incà",
+        "Nicu Sebe",
+        "Massimiliano Mancini"
+      ],
+      "published": "2026-06-30",
+      "category": "cs.AI",
+      "area": "Defense",
+      "url": "https://arxiv.org/abs/2606.31876"
+    },
+    {
+      "id": "2607.15977",
+      "title": "Refusal is Not Safety! Benchmarking Latent Safety Risks of LLM-Driven Content Humorization",
+      "authors": [
+        "Yu Cui",
+        "Ruiqing Yue",
+        "Tingyu Li",
+        "Sicheng Pan",
+        "Zhuoyu Sun",
+        "Xufeng Zhang",
+        "Baohan Huang",
+        "Haibin Zhang",
+        "Cong Zuo"
+      ],
+      "published": "2026-07-17",
+      "category": "cs.CR",
+      "area": "Evaluation",
+      "url": "https://arxiv.org/abs/2607.15977"
+    },
+    {
+      "id": "2607.27910",
+      "title": "A Cross-Architecture Audit of Direction-Based Inference-Time Defences in Vision-Language Models",
+      "authors": [
+        "Xiangyu Yin",
+        "Tora Bodin",
+        "Rohan Menon",
+        "Chih-Hong Cheng"
+      ],
+      "published": "2026-07-30",
+      "category": "cs.AI",
+      "area": "Defense",
+      "url": "https://arxiv.org/abs/2607.27910"
+    },
+    {
+      "id": "2606.17872",
+      "title": "AnchorKV: Safety-Aware KV Cache Compression via Soft Penalty with a Refusal Anchor",
+      "authors": [
+        "Ning Ni",
+        "Yingjie Lao"
+      ],
+      "published": "2026-06-16",
+      "category": "cs.LG",
+      "area": "Defense",
+      "url": "https://arxiv.org/abs/2606.17872"
+    },
+    {
+      "id": "2606.22686",
+      "title": "The Geometry of Refusal: Linear Instability in Safety-Aligned LLMs",
+      "authors": [
+        "Shivam Ratnakar",
+        "Kartikeya Vats"
+      ],
+      "published": "2026-06-21",
+      "category": "cs.CR",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2606.22686"
+    },
+    {
+      "id": "2605.12765",
+      "title": "Inference-Time Machine Unlearning via Gated Activation Redirection",
+      "authors": [
+        "Vinícius Conte Turani",
+        "Otávio Parraga",
+        "João Vitor Boer Abitante",
+        "Kristen K. Arguello",
+        "Joana Pasquali",
+        "Ramiro N. Barros",
+        "Flavio du Pin Calmon",
+        "Christian Mattjie",
+        "Rodrigo C. Barros",
+        "Lucas S. Kupssinskü"
+      ],
+      "published": "2026-05-12",
+      "category": "cs.LG",
+      "area": "Intervention",
+      "url": "https://arxiv.org/abs/2605.12765"
+    },
+    {
+      "id": "2607.05842",
+      "title": "Beyond Refusal: A Same-Lineage Study of Aligned and Abliterated LLMs for Vulnerability Analysis",
+      "authors": [
+        "Mingchen Li",
+        "Meikang Qiu",
+        "Zifan Peng",
+        "Heng Fan",
+        "Song Fu",
+        "Junhua Ding",
+        "Yunhe Feng"
+      ],
+      "published": "2026-07-07",
+      "category": "cs.SE",
+      "area": "Evaluation",
+      "url": "https://arxiv.org/abs/2607.05842"
+    },
+    {
+      "id": "2606.26161",
+      "title": "Refusal Lives Downstream of Persona in Chat Models",
+      "authors": [
+        "Viola Zhong",
+        "Qirui Li"
+      ],
+      "published": "2026-06-24",
+      "category": "cs.AI",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2606.26161"
+    },
+    {
+      "id": "2606.31748",
+      "title": "Addressing Over-Refusal in LLMs with Competing Rewards",
+      "authors": [
+        "Taeyoun Kim",
+        "Aviral Kumar"
+      ],
+      "published": "2026-06-30",
+      "category": "cs.LG",
+      "area": "Intervention",
+      "url": "https://arxiv.org/abs/2606.31748"
+    },
+    {
+      "id": "2606.08454",
+      "title": "Beyond Linear Activation Steering: Invertible Latent Transformations for Controlling LLM Behavior",
+      "authors": [
+        "Tuc Nguyen",
+        "Thai Le"
+      ],
+      "published": "2026-06-07",
+      "category": "cs.LG",
+      "area": "Intervention",
+      "url": "https://arxiv.org/abs/2606.08454"
+    },
+    {
+      "id": "2606.10154",
+      "title": "Quality Is Not a Safety Proxy Under Quantization",
+      "authors": [
+        "Sahil Kadadekar"
+      ],
+      "published": "2026-06-08",
+      "category": "cs.LG",
+      "area": "Evaluation",
+      "url": "https://arxiv.org/abs/2606.10154"
+    },
+    {
+      "id": "2608.05578",
+      "title": "Detecting Safety Training Modification in Language Models via Activation Analysis",
+      "authors": [
+        "Glen Messenger"
+      ],
+      "published": "2026-08-06",
+      "category": "cs.CR",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2608.05578"
+    },
+    {
+      "id": "2607.01854",
+      "title": "Has This Checkpoint Been Abliterated? A Two-Signal Audit and Its Failure Map",
+      "authors": [
+        "Gabriel Hurtado"
+      ],
+      "published": "2026-07-02",
+      "category": "cs.CR",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2607.01854"
+    },
+    {
+      "id": "2608.18093",
+      "title": "Abliteration Mitigation via Refusal Aliases",
+      "authors": [
+        "Nathan Truong"
+      ],
+      "published": "2026-06-07",
+      "category": "cs.CL",
+      "area": "Defense",
+      "url": "https://arxiv.org/abs/2608.18093"
+    },
+    {
+      "id": "2608.13304",
+      "title": "Refusing Intent, Not Form: Wrapper-Based Intent-Group Supervision for LLM Safety",
+      "authors": [
+        "Ping Wu",
+        "Haibo Tong",
+        "Feifei Zhao",
+        "Han Shen",
+        "Yu Shi",
+        "Yilin Zhao",
+        "Sicheng Shen",
+        "Guobin Shen",
+        "Yun Luo",
+        "Yi Zeng"
+      ],
+      "published": "2026-08-13",
+      "category": "cs.CL",
+      "area": "Defense",
+      "url": "https://arxiv.org/abs/2608.13304"
+    },
+    {
+      "id": "2608.12821",
+      "title": "HiRoute: Hierarchical Routed Prompt Tuning for Safety Alignment of Large Language Models",
+      "authors": [
+        "Fangzhou Chen",
+        "Shiji Zhao",
+        "Mengyang Wang",
+        "Qihui Zhu",
+        "Ranjie Duan",
+        "Maoxun Yuan",
+        "Xingxing Wei"
+      ],
+      "published": "2026-08-13",
+      "category": "cs.LG",
+      "area": "Intervention",
+      "url": "https://arxiv.org/abs/2608.12821"
+    },
+    {
+      "id": "2607.02714",
+      "title": "Not All Refusals Are Equal: How Safety Alignment Fails Cybersecurity at Scale",
+      "authors": [
+        "Vadym Hadetskyi",
+        "Dario Pasquini",
+        "Artem Sorokin"
+      ],
+      "published": "2026-07-02",
+      "category": "cs.CR",
+      "area": "Evaluation",
+      "url": "https://arxiv.org/abs/2607.02714"
+    },
+    {
+      "id": "2606.02530",
+      "title": "SafeSteer: Localized On-Policy Distillation for Efficient Safety Alignment",
+      "authors": [
+        "Hao Li",
+        "Jingkun An",
+        "Zijun Song",
+        "Pengyu Zhu",
+        "Rui Li",
+        "Hao Wang",
+        "Wendi Feng",
+        "Yesheng Liu",
+        "Lijun Li",
+        "Jin-Ge Yao",
+        "Lei Sha"
+      ],
+      "published": "2026-06-01",
+      "category": "cs.AI",
+      "area": "Intervention",
+      "url": "https://arxiv.org/abs/2606.02530"
+    },
+    {
+      "id": "2607.05355",
+      "title": "Faithfulness to Refusal: A Causal Audit of Neuron Selectors",
+      "authors": [
+        "Ananth Eswar",
+        "Pratinav Seth",
+        "Utsav Avaiya",
+        "Vinay Kumar Sankarapu"
+      ],
+      "published": "2026-07-06",
+      "category": "cs.CL",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2607.05355"
+    },
+    {
+      "id": "2605.17413",
+      "title": "Ablating Safety: Mechanisms for Removing Alignment in Language Models for Security Applications",
+      "authors": [
+        "Isaac David",
+        "Arthur Gervais"
+      ],
+      "published": "2026-05-17",
+      "category": "cs.CR",
+      "area": "Attack",
+      "url": "https://arxiv.org/abs/2605.17413"
+    },
+    {
+      "id": "2605.24583",
+      "title": "Measuring Alignment-Induced Activation Shifts Correctly: A Template-Controlled Difference-in-Differences Protocol",
+      "authors": [
+        "Yuki Nakamura"
+      ],
+      "published": "2026-05-23",
+      "category": "cs.LG",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2605.24583"
+    },
+    {
+      "id": "2605.15687",
+      "title": "ASRU: Activation Steering Meets Reinforcement Unlearning for Multimodal Large Language Models",
+      "authors": [
+        "Jiahui Guang",
+        "Haiyan Wang",
+        "Yingjie Zhu",
+        "Cuiyun Gao",
+        "Jing Li",
+        "Di Shao",
+        "Zhaoquan Gu"
+      ],
+      "published": "2026-05-15",
+      "category": "cs.CL",
+      "area": "Intervention",
+      "url": "https://arxiv.org/abs/2605.15687"
+    },
+    {
+      "id": "2607.19806",
+      "title": "OPIUM: Mitigating Steering Externalities and Over-Refusal via Dual Objective Latent Optimization",
+      "authors": [
+        "Kavin Aravindan",
+        "Arihant Rastogi",
+        "Krishak Aneja",
+        "Aadi Prasad",
+        "Saiyam Jain",
+        "Vaishnavi Shivkumar",
+        "Ponnurangam Kumaraguru"
+      ],
+      "published": "2026-07-22",
+      "category": "cs.LG",
+      "area": "Intervention",
+      "url": "https://arxiv.org/abs/2607.19806"
+    },
+    {
+      "id": "2608.11583",
+      "title": "Localizing Safety Alignment: MLP Layers and Mid-Network Blocks Encode Refusal Behavior in Large Language Models",
+      "authors": [
+        "Mingyu Zong",
+        "Sampad Mohanty",
+        "Bhaskar Krishnamachari"
+      ],
+      "published": "2026-08-12",
+      "category": "cs.AI",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2608.11583"
+    },
+    {
+      "id": "2608.16577",
+      "title": "BabelSteering: Multilingual Safety Alignment via English Steering Vectors",
+      "authors": [
+        "Emma V. Stein",
+        "Dominik Meier",
+        "Terry Ruas",
+        "Jan Philip Wahle",
+        "Bela Gipp"
+      ],
+      "published": "2026-08-17",
+      "category": "cs.CL",
+      "area": "Intervention",
+      "url": "https://arxiv.org/abs/2608.16577"
+    },
+    {
+      "id": "2608.11227",
+      "title": "Forecasting Side Effects of Activation Steering",
+      "authors": [
+        "Chong Yong Ong",
+        "Alson Wei Jie Sim",
+        "Peixin Zhang",
+        "Jun Sun"
+      ],
+      "published": "2026-07-28",
+      "category": "cs.AI",
+      "area": "Evaluation",
+      "url": "https://arxiv.org/abs/2608.11227"
+    },
+    {
+      "id": "2605.03095",
+      "title": "Revisiting JBShield: Breaking and Rebuilding Representation-Level Jailbreak Defenses",
+      "authors": [
+        "Kemal Derya",
+        "Berk Sunar"
+      ],
+      "published": "2026-05-04",
+      "category": "cs.CR",
+      "area": "Defense",
+      "url": "https://arxiv.org/abs/2605.03095"
+    },
+    {
+      "id": "2605.24154",
+      "title": "Palette: A Modular, Controllable, and Efficient Framework for On-demand Authorized Safety Alignment Relaxation in LLMs",
+      "authors": [
+        "Qitao Tan",
+        "Xiaoying Song",
+        "Arman Akbari",
+        "Arash Akbari",
+        "Yanzhi Wang",
+        "Xiaoming Zhai",
+        "Lingzi Hong",
+        "Zhen Xiang",
+        "Jin Lu",
+        "Geng Yuan"
+      ],
+      "published": "2026-05-22",
+      "category": "cs.AI",
+      "area": "Intervention",
+      "url": "https://arxiv.org/abs/2605.24154"
+    },
+    {
+      "id": "2605.06213",
+      "title": "Beyond Fixed Benchmarks and Worst-Case Attacks: Dynamic Boundary Evaluation for Language Models",
+      "authors": [
+        "Haoxiang Wang",
+        "Da Yu",
+        "Huishuai Zhang"
+      ],
+      "published": "2026-05-07",
+      "category": "cs.AI",
+      "area": "Evaluation",
+      "url": "https://arxiv.org/abs/2605.06213"
+    },
+    {
+      "id": "2605.30162",
+      "title": "BioRefusalAudit: Auditing Biosecurity Refusal Depth Using General and Domain-Fine-Tuned Sparse Autoencoders",
+      "authors": [
+        "Caleb DeLeeuw"
+      ],
+      "published": "2026-05-28",
+      "category": "cs.AI",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2605.30162"
+    },
+    {
+      "id": "2604.23130",
+      "title": "From Concept-Aligned Tokens to Vulnerable Features: Mechanistic Localization of Jailbreaks",
+      "authors": [
+        "Nilanjana Das",
+        "Mathew Dawit",
+        "Aman Chadha",
+        "Manas Gaur"
+      ],
+      "published": "2026-04-25",
+      "category": "cs.CL",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2604.23130"
+    },
+    {
+      "id": "2606.08682",
+      "title": "Activation Steering Induces Emergent Misalignment: A More Comprehensive Evaluation",
+      "authors": [
+        "Qi Cao",
+        "Jian Lou",
+        "Meiting Liu",
+        "Wenjie Feng",
+        "Dan Li",
+        "See-Kiong Ng",
+        "Anh Tuan Luu"
+      ],
+      "published": "2026-06-07",
+      "category": "cs.LG",
+      "area": "Evaluation",
+      "url": "https://arxiv.org/abs/2606.08682"
+    },
+    {
+      "id": "2604.27019",
+      "title": "Dynamic Adversarial Fine-Tuning Reorganizes Refusal Geometry",
+      "authors": [
+        "Wenhao Lan",
+        "Shan Li",
+        "Xinhua Lai",
+        "Meiqi Wu",
+        "Junbin Yang",
+        "Haihua Shen",
+        "Yijun Yang"
+      ],
+      "published": "2026-04-29",
+      "category": "cs.LG",
+      "area": "Mechanism",
+      "url": "https://arxiv.org/abs/2604.27019"
+    }
+  ]
+}
