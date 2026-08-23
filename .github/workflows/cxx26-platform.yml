@@ -384,7 +384,7 @@ jobs:
           (cd release && sha256sum * | tee SHA256SUMS)
           test -s release/SHA256SUMS
       - name: Attest release archives
-        uses: actions/attest-build-provenance@v3
+        uses: actions/attest-build-provenance@v4
         with:
           subject-path: release/*
       - name: Publish rolling cxx-nightly (main)
