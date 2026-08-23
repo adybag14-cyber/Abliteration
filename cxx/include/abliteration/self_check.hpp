@@ -40,23 +40,23 @@ struct SelfCheckReport {
   float arditi_resid = 0.f;
   float householder_resid = 0.f;
   float hook_first = 0.f;
-  int eval_n = 0;
-  int eval_false_refusal = 0;
-  int eval_true_hits = 0;
+  std::size_t eval_n = 0;
+  std::size_t eval_false_refusal = 0;
+  std::size_t eval_true_hits = 0;
   std::string fail;
 };
 
 [[nodiscard]] inline SelfCheckReport run_self_check() {
   SelfCheckReport r;
-  constexpr int d = 32;
-  constexpr int n = 40;
+  constexpr std::size_t d = 32;
+  constexpr std::size_t n = 40;
   Rng rng{0xC0FFEE};
 
   Vec r_true(d, 0.f);
   r_true[0] = 1.f;
   Mat h_bad(n, d), h_good(n, d);
-  for (int i = 0; i < n; ++i) {
-    for (int j = 0; j < d; ++j) {
+  for (std::size_t i = 0; i < n; ++i) {
+    for (std::size_t j = 0; j < d; ++j) {
       h_bad(i, j) = rng.normal() + (j == 0 ? 2.f : 0.f);
       h_good(i, j) = rng.normal();
     }
@@ -83,24 +83,24 @@ struct SelfCheckReport {
     return r;
   }
 
-  constexpr int d_out = 16, d_in = 32;
+  constexpr std::size_t d_out = 16, d_in = 32;
   Vec e0(d_out, 0.f);
   e0[0] = 1.f;
   Rng rw{1};
   Mat w(d_out, d_in);
-  for (int i = 0; i < d_out; ++i)
-    for (int j = 0; j < d_in; ++j) w(i, j) = rw.normal();
+  for (std::size_t i = 0; i < d_out; ++i)
+    for (std::size_t j = 0; j < d_in; ++j) w(i, j) = rw.normal();
 
   const Mat w_abl = apply_output_projection(w, e0, 1.f);
   r.arditi_resid = norm(mat_vec(w_abl, [&] {
     // r^T W'  == e0 · each column, i.e. first row of W'
     Vec rt(d_in);
-    for (int j = 0; j < d_in; ++j) rt[j] = w_abl(0, j);
+    for (std::size_t j = 0; j < d_in; ++j) rt[j] = w_abl(0, j);
     return rt;
   }()));
   // r @ W' : since r = e0, this is the first row
   r.arditi_resid = 0.f;
-  for (int j = 0; j < d_in; ++j) r.arditi_resid += w_abl(0, j) * w_abl(0, j);
+  for (std::size_t j = 0; j < d_in; ++j) r.arditi_resid += w_abl(0, j) * w_abl(0, j);
   r.arditi_resid = std::sqrt(r.arditi_resid);
   if (r.arditi_resid > 1e-4f) {
     r.fail = "arditi residual";
@@ -110,7 +110,7 @@ struct SelfCheckReport {
   const Mat hh = apply_householder(w, e0);
   // r^T H W + r^T W ≈ 0
   float hh_err = 0.f;
-  for (int j = 0; j < d_in; ++j) {
+  for (std::size_t j = 0; j < d_in; ++j) {
     const float e = hh(0, j) + w(0, j);
     hh_err += e * e;
   }
@@ -121,14 +121,14 @@ struct SelfCheckReport {
   }
 
   Mat basis(2, d_out);
-  for (int j = 0; j < d_out; ++j) basis(0, j) = e0[j];
+  for (std::size_t j = 0; j < d_out; ++j) basis(0, j) = e0[j];
   Vec extra(d_out);
-  for (int j = 0; j < d_out; ++j) extra[j] = rw.normal();
+  for (std::size_t j = 0; j < d_out; ++j) extra[j] = rw.normal();
   extra = unit(extra);
-  for (int j = 0; j < d_out; ++j) basis(1, j) = extra[j];
+  for (std::size_t j = 0; j < d_out; ++j) basis(1, j) = extra[j];
   const Mat w_sub = apply_subspace(w, basis, 1.f);
   float sub_err = 0.f;
-  for (int j = 0; j < d_in; ++j) sub_err += w_sub(0, j) * w_sub(0, j);
+  for (std::size_t j = 0; j < d_in; ++j) sub_err += w_sub(0, j) * w_sub(0, j);
   if (std::sqrt(sub_err) > 1e-3f) {
     r.fail = "subspace residual";
     return r;

@@ -6,7 +6,9 @@
 #include <cmath>
 #include <cstdlib>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 #include <string>
 
@@ -33,10 +35,10 @@ void test_self_check_shared() {
 void test_generated_dim() {
   // Plant e0 in a fresh cloud; estimate must recover it. No hardcoded r oracle.
   abliteration::Rng rng{99};
-  constexpr int d = 24, n = 50;
+  constexpr std::size_t d = 24, n = 50;
   abliteration::Mat bad(n, d), good(n, d);
-  for (int i = 0; i < n; ++i)
-    for (int j = 0; j < d; ++j) {
+  for (std::size_t i = 0; i < n; ++i)
+    for (std::size_t j = 0; j < d; ++j) {
       bad(i, j) = rng.normal() + (j == 3 ? 3.f : 0.f);
       good(i, j) = rng.normal();
     }
@@ -56,19 +58,19 @@ void test_generated_dim() {
 
 void test_projection_kills_r() {
   abliteration::Rng rng{7};
-  constexpr int d_out = 12, d_in = 20;
+  constexpr std::size_t d_out = 12, d_in = 20;
   abliteration::Mat w(d_out, d_in);
-  for (int i = 0; i < d_out; ++i)
-    for (int j = 0; j < d_in; ++j) w(i, j) = rng.normal();
+  for (std::size_t i = 0; i < d_out; ++i)
+    for (std::size_t j = 0; j < d_in; ++j) w(i, j) = rng.normal();
   abliteration::Vec r(d_out);
-  for (int i = 0; i < d_out; ++i) r[i] = rng.normal();
+  for (std::size_t i = 0; i < d_out; ++i) r[i] = rng.normal();
   r = abliteration::unit(r);
   const auto w2 = abliteration::apply_output_projection(w, r, 1.f);
   // r^T W' should be ~0
   float resid = 0.f;
-  for (int j = 0; j < d_in; ++j) {
+  for (std::size_t j = 0; j < d_in; ++j) {
     float col = 0.f;
-    for (int i = 0; i < d_out; ++i) col += r[i] * w2(i, j);
+    for (std::size_t i = 0; i < d_out; ++i) col += r[i] * w2(i, j);
     resid += col * col;
   }
   resid = std::sqrt(resid);
@@ -77,9 +79,9 @@ void test_projection_kills_r() {
 
   const auto hh = abliteration::apply_householder(w, r);
   float flip = 0.f;
-  for (int j = 0; j < d_in; ++j) {
+  for (std::size_t j = 0; j < d_in; ++j) {
     float a = 0.f, b = 0.f;
-    for (int i = 0; i < d_out; ++i) {
+    for (std::size_t i = 0; i < d_out; ++i) {
       a += r[i] * hh(i, j);
       b += r[i] * w(i, j);
     }
@@ -93,7 +95,7 @@ void test_hook_property() {
   abliteration::Vec h(8);
   abliteration::Vec r(8);
   abliteration::Rng rng{3};
-  for (int i = 0; i < 8; ++i) {
+  for (std::size_t i = 0; i < 8; ++i) {
     h[i] = rng.normal();
     r[i] = rng.normal();
   }
@@ -103,9 +105,9 @@ void test_hook_property() {
   // orthogonal complement preserved
   abliteration::Vec q = h;
   const float d = abliteration::dot(h, r);
-  for (int i = 0; i < 8; ++i) q[i] -= d * r[i];
+  for (std::size_t i = 0; i < 8; ++i) q[i] -= d * r[i];
   float err = 0.f;
-  for (int i = 0; i < 8; ++i) {
+  for (std::size_t i = 0; i < 8; ++i) {
     const float e = hp[i] - q[i];
     err += e * e;
   }
@@ -272,6 +274,116 @@ void test_json_field() {
   expect(abliteration::json_string_field(line, "response") == "I cannot help with that.",
          "json response field");
   expect(abliteration::json_string_field(line, "expected") == "tool_call", "json expected field");
+  const auto embedded =
+      R"({"response":"quoted \"expected\":\"refuse\" marker","expected":"tool_call"})";
+  expect(abliteration::json_string_field(embedded, "expected") == "tool_call",
+         "json field parser ignores key-shaped response text");
+}
+
+void test_hostile_inputs_fail_closed() {
+  namespace fs = std::filesystem;
+  bool threw = false;
+  try {
+    (void)abliteration::checked_matrix_elements(std::numeric_limits<std::size_t>::max(), 2);
+  } catch (const std::length_error&) {
+    threw = true;
+  }
+  expect(threw, "matrix multiplication overflow is rejected before allocation");
+
+  threw = false;
+  try {
+    abliteration::Mat m(1, 1);
+    (void)m(1, 0);
+  } catch (const std::out_of_range&) {
+    threw = true;
+  }
+  expect(threw, "matrix out-of-range access throws");
+
+  threw = false;
+  try {
+    (void)abliteration::unit(abliteration::Vec(4, 0.f));
+  } catch (const std::domain_error&) {
+    threw = true;
+  }
+  expect(threw, "zero direction is rejected");
+
+  threw = false;
+  try {
+    abliteration::Mat bad(2, 4, 1.f), good(2, 4, 0.f);
+    (void)abliteration::svd_directions(bad, good, -1);
+  } catch (const std::invalid_argument&) {
+    threw = true;
+  }
+  expect(threw, "negative SVD rank is rejected before allocation");
+
+  threw = false;
+  try {
+    abliteration::Mat w(2, 2, 1.f);
+    abliteration::Vec r(2, 1.f);
+    (void)abliteration::apply_output_projection(
+        w, r, std::numeric_limits<float>::quiet_NaN());
+  } catch (const std::invalid_argument&) {
+    threw = true;
+  }
+  expect(threw, "non-finite alpha is rejected");
+
+  const auto tmp = fs::temp_directory_path() / "abliterate-cxx-hostile-inputs";
+  std::error_code ec;
+  fs::create_directories(tmp, ec);
+  if (ec) {
+    std::cerr << "note: cannot mkdir for hostile-input tests\n";
+    return;
+  }
+  const auto write = [&](std::string_view name, std::string_view body) {
+    std::ofstream out(tmp / name, std::ios::binary);
+    out << body;
+  };
+  write("negative.txt", "-1 4\n");
+  write("overflow.txt", "18446744073709551615 2\n");
+  write("nonfinite.txt", "1 1\nnan\n");
+  write("trailing.txt", "1 1\n0\nextra\n");
+  write("long-header.txt", std::string(64, '9') + " 1\n0\n");
+  expect(!abliteration::load_mat((tmp / "negative.txt").string()),
+         "negative matrix dimensions fail closed");
+  expect(!abliteration::load_mat((tmp / "overflow.txt").string()),
+         "overflowing matrix dimensions fail closed");
+  expect(!abliteration::load_mat((tmp / "nonfinite.txt").string()),
+         "non-finite matrix values fail closed");
+  expect(!abliteration::load_mat((tmp / "trailing.txt").string()),
+         "trailing matrix data fails closed");
+  expect(!abliteration::load_mat((tmp / "long-header.txt").string()),
+         "oversized matrix header token fails before allocation");
+  expect(!abliteration::save_vec((tmp / "empty-vector.txt").string(), abliteration::Vec{}),
+         "empty vectors are rejected before output creation");
+
+  write("bad.jsonl", "not-json\n");
+  threw = false;
+  try {
+    (void)abliteration::load_jsonl((tmp / "bad.jsonl").string());
+  } catch (const std::runtime_error&) {
+    threw = true;
+  }
+  expect(threw, "non-object JSONL fails closed");
+
+  write("unterminated.jsonl", "{\"response\":\"unterminated}\n");
+  threw = false;
+  try {
+    (void)abliteration::load_jsonl((tmp / "unterminated.jsonl").string());
+  } catch (const std::runtime_error&) {
+    threw = true;
+  }
+  expect(threw, "unterminated JSON string fails closed");
+
+  write("oversized-line.jsonl", std::string(abliteration::kMaxJsonlLineBytes + 1, 'x'));
+  threw = false;
+  try {
+    (void)abliteration::load_jsonl((tmp / "oversized-line.jsonl").string());
+  } catch (const std::length_error&) {
+    threw = true;
+  }
+  expect(threw, "oversized JSONL line fails at the streaming bound");
+
+  fs::remove_all(tmp, ec);
 }
 
 }  // namespace
@@ -286,6 +398,7 @@ int main(int argc, char** argv) {
   test_svd_refuses_large_d();
   test_eval_empty_is_not_safety();
   test_json_field();
+  test_hostile_inputs_fail_closed();
   test_find_examples_dir_via_exe();
   test_resolve_eval_jsonl_via_examples();
   test_find_shipped_file();
@@ -294,6 +407,6 @@ int main(int argc, char** argv) {
     std::cerr << fails << " test(s) failed\n";
     return 1;
   }
-  std::cout << "ok 11 suites (self-check + generated + empty-eval + shipped examples + exe paths + resolve_eval_jsonl + find_shipped_file)\n";
+  std::cout << "ok 12 suites (self-check + generated + hostile-input + empty-eval + shipped examples + exe paths + resolve_eval_jsonl + find_shipped_file)\n";
   return 0;
 }

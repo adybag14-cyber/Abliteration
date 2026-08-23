@@ -1,0 +1,10 @@
+# Abliteration Field Guide
+
+Canonical site: https://adybag14-cyber.github.io/Abliteration/
+Source repository: https://github.com/adybag14-cyber/Abliteration
+Primary references: https://github.com/adybag14-cyber/Abliteration/blob/main/references.md
+2026 50-paper update: https://github.com/adybag14-cyber/Abliteration/blob/main/docs/research-2026-update.md
+C++26 researcher guide: https://github.com/adybag14-cyber/Abliteration/blob/main/docs/cxx26-researcher-guide.md
+Responsible use: https://github.com/adybag14-cyber/Abliteration/blob/main/docs/risks-and-ethics.md
+
+This is an evidence-led educational handbook. Inclusion of a paper or method does not imply independent replication, endorsement, or authorization for harmful use.

@@ -2,11 +2,20 @@
 
 ISO C++26 lab for refusal-direction math. **No GPU, no Python** for the first hour.
 
+## 1.1 safety and toolchain refresh
+
+- Certified release lanes now target GCC 16.2, LLVM/Clang 22 (including verified LLVM 22.1.8 on Windows), and MSVC 14.51 on the Visual Studio 2026 image.
+- Dimensions, allocation products, ranks, edit strengths, finite values, matrix files, JSONL lines, and record counts fail closed before unsafe work begins.
+- Bounds-checked tensor access and owned environment reads replace unchecked indexing and borrowed process-environment pointers at input boundaries.
+- Every release build enables platform hardening; Clang 22 ASan+UBSan runs hostile parser/arithmetic tests before publishing.
+- Release archives receive GitHub build-provenance attestations in addition to `SHA256SUMS`.
+
 ## 10 minutes
 
 ```text
 abliterate-cxx guide
 abliterate-cxx doctor
+abliterate-cxx limits
 abliterate-cxx self-check
 abliterate-cxx demo
 ```
@@ -19,17 +28,17 @@ Then open `GETTING-STARTED.md` in the archive (repo: [docs/cxx26-researcher-guid
 
 | Archive | Who |
 |---------|-----|
-| [abliterate-cxx-linux-x64-gcc15.tar.gz](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-linux-x64-gcc15.tar.gz) | Linux x86_64 (default) |
-| [abliterate-cxx-linux-x64-clang20.tar.gz](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-linux-x64-clang20.tar.gz) | Linux x86_64 Clang |
-| [abliterate-cxx-linux-arm64-gcc15.tar.gz](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-linux-arm64-gcc15.tar.gz) | Linux aarch64 |
-| [abliterate-cxx-linux-arm64-clang20.tar.gz](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-linux-arm64-clang20.tar.gz) | Linux aarch64 Clang |
+| [abliterate-cxx-linux-x64-gcc16.tar.gz](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-linux-x64-gcc16.tar.gz) | Linux x86_64 (GCC 16.2 default) |
+| [abliterate-cxx-linux-x64-clang22.tar.gz](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-linux-x64-clang22.tar.gz) | Linux x86_64 Clang 22 |
+| [abliterate-cxx-linux-arm64-gcc16.tar.gz](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-linux-arm64-gcc16.tar.gz) | Linux aarch64 GCC 16.2 |
+| [abliterate-cxx-linux-arm64-clang22.tar.gz](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-linux-arm64-clang22.tar.gz) | Linux aarch64 Clang 22 |
 | [abliterate-cxx-windows-x64-msvc.zip](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-windows-x64-msvc.zip) | Windows x64 (default) |
-| [abliterate-cxx-windows-x64-clang.zip](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-windows-x64-clang.zip) | Windows x64 Clang |
+| [abliterate-cxx-windows-x64-clang22.zip](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-windows-x64-clang22.zip) | Windows x64 Clang 22 |
 | [abliterate-cxx-windows-arm64-msvc.zip](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-windows-arm64-msvc.zip) | Windows ARM64 |
 | [abliterate-cxx-macos-arm64-llvm.tar.gz](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-macos-arm64-llvm.tar.gz) | Apple Silicon |
 | [abliterate-cxx-macos-x64-llvm.tar.gz](https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly/abliterate-cxx-macos-x64-llvm.tar.gz) | Intel Mac |
 
-Verify with `SHA256SUMS` on the release. Each archive was **unpacked on the runner** and `guide` + `doctor` + `self-check` + `demo` + estimate/apply/eval ran **outside the git checkout**.
+Verify with `SHA256SUMS` on the release. Each archive was **unpacked on the runner** and `guide` + `doctor` + `limits` + `self-check` + `demo` + estimate/apply/eval ran **outside the git checkout**. Release archives also carry GitHub artifact attestations.
 
 `doctor` must print `cplusplus=202400`. After Hour 0, do Hour 0.5 (`estimate dim` → `apply orba-directional` → `eval` toys → `recipes`), then Heretic for a real model.
 

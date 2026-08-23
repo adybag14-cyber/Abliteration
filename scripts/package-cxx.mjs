@@ -3,7 +3,7 @@
  * Pack abliterate-cxx + README + LICENSE for a CI compiler identity.
  * --compiler is required (matrix.name). Never fall back to --triple.
  *
- *   node scripts/package-cxx.mjs --build-dir cxx/ci-build --triple linux-x64 --compiler linux-x64-gcc15
+ *   node scripts/package-cxx.mjs --build-dir cxx/ci-build --triple linux-x64 --compiler linux-x64-gcc16
  */
 import { spawnSync } from 'child_process';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, writeFileSync } from 'fs';
@@ -14,12 +14,12 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 const COMPILER_EXAMPLES = [
   'windows-x64-msvc',
-  'windows-x64-clang',
+  'windows-x64-clang22',
   'windows-arm64-msvc',
-  'linux-x64-gcc15',
-  'linux-x64-clang20',
-  'linux-arm64-gcc15',
-  'linux-arm64-clang20',
+  'linux-x64-gcc16',
+  'linux-x64-clang22',
+  'linux-arm64-gcc16',
+  'linux-arm64-clang22',
   'macos-arm64-llvm',
   'macos-x64-llvm',
 ];

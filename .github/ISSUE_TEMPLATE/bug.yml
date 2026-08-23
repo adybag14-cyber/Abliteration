@@ -1,0 +1,39 @@
+name: Bug report
+description: Report a reproducible handbook, site, CLI, build, or release problem.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "For vulnerabilities, use private reporting under the Security tab instead of this public form."
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Observed outcome
+      description: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: input
+    id: revision
+    attributes:
+      label: Commit or release asset
+      placeholder: "Commit SHA or exact cxx-nightly filename"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Include exact commands and sanitized input where safe.
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Platform and toolchain
+      placeholder: "Windows 11 x64, MSVC 19.51"
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs or screenshots
+      description: Remove tokens, private model data, and personal information.

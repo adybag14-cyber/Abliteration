@@ -11,6 +11,11 @@
 
 namespace abliteration {
 
+inline void require_strength(float alpha) {
+  if (!std::isfinite(alpha) || alpha < 0.f || alpha > 2.f)
+    throw std::invalid_argument("strength alpha must be finite and in [0, 2]");
+}
+
 // r = normalize(mean(H_bad) − mean(H_good))  — subtract then normalize (Lai 2026)
 [[nodiscard]] inline Vec mean_difference(const Mat& h_bad, const Mat& h_good) {
   if (h_bad.cols != h_good.cols) throw std::invalid_argument("mean_difference: dim mismatch");
@@ -23,6 +28,8 @@ namespace abliteration {
 
 // Gram–Schmidt r off g; default two passes (Horning “twice is enough”)
 [[nodiscard]] inline Vec project_off(Vec r, Vec g, int passes = 2) {
+  if (r.size() != g.size()) throw std::invalid_argument("project_off: size mismatch");
+  if (passes <= 0 || passes > 8) throw std::invalid_argument("project_off: passes must be in [1, 8]");
   g = unit(g);
   for (int p = 0; p < passes; ++p) {
     const float d = dot(r, g);
@@ -49,6 +56,8 @@ namespace abliteration {
 inline void jacobi_eigen_symmetric(Mat& a, Mat& v, int max_sweeps = 64) {
   const std::size_t n = a.rows;
   if (a.rows != a.cols) throw std::invalid_argument("jacobi: not square");
+  if (max_sweeps <= 0 || max_sweeps > 1024)
+    throw std::invalid_argument("jacobi: max_sweeps must be in [1, 1024]");
   v = Mat(n, n, 0.f);
   for (std::size_t i = 0; i < n; ++i) v(i, i) = 1.f;
   for (int sweep = 0; sweep < max_sweeps; ++sweep) {
@@ -91,11 +100,15 @@ inline void jacobi_eigen_symmetric(Mat& a, Mat& v, int max_sweeps = 64) {
 // Top-k right singular vectors of (H_bad − mean_good), shape [k, d]
 [[nodiscard]] inline Mat svd_directions(const Mat& h_bad, const Mat& h_good, int rank) {
   if (h_bad.cols != h_good.cols) throw std::invalid_argument("svd: dim mismatch");
+  if (rank <= 0) throw std::invalid_argument("svd: rank must be positive");
   const Vec mg = mean_rows(h_good);
   const std::size_t n = h_bad.rows;
   const std::size_t d = h_bad.cols;
   // Toy Jacobi on C[d,d] — refuse 7B-scale residual dims (d=4096 → d*d huge).
   if (d > 512) throw std::invalid_argument("svd: d too large for in-process Jacobi (d*d)");
+  const std::size_t max_rank = std::min(n, d);
+  if (static_cast<std::size_t>(rank) > max_rank)
+    throw std::invalid_argument("svd: rank exceeds min(rows, cols)");
   Mat delta(n, d);
   for (std::size_t i = 0; i < n; ++i)
     for (std::size_t j = 0; j < d; ++j) delta(i, j) = h_bad(i, j) - mg[j];
@@ -114,22 +127,23 @@ inline void jacobi_eigen_symmetric(Mat& a, Mat& v, int max_sweeps = 64) {
   order.reserve(d);
   for (std::size_t i = 0; i < d; ++i) order.emplace_back(c(i, i), i);
   std::ranges::sort(order, [](const auto& a, const auto& b) { return a.first > b.first; });
-  const int k = std::min(rank, static_cast<int>(d));
-  Mat vh(static_cast<std::size_t>(k), d);
-  for (int t = 0; t < k; ++t) {
-    const std::size_t col = order[static_cast<std::size_t>(t)].second;
+  const std::size_t k = static_cast<std::size_t>(rank);
+  Mat vh(k, d);
+  for (std::size_t t = 0; t < k; ++t) {
+    const std::size_t col = order[t].second;
     Vec row(d);
     for (std::size_t i = 0; i < d; ++i) row[i] = ev(i, col);
     row = unit(row);
-    for (std::size_t i = 0; i < d; ++i) vh(static_cast<std::size_t>(t), i) = row[i];
+    for (std::size_t i = 0; i < d; ++i) vh(t, i) = row[i];
   }
   return vh;
 }
 
 // W' = (I − α r rᵀ) W     r in output dim (W rows)
 [[nodiscard]] inline Mat apply_output_projection(const Mat& w, Vec r, float alpha = 1.f) {
-  r = unit(r);
   if (r.size() != w.rows) throw std::invalid_argument("apply: r dim != W out");
+  require_strength(alpha);
+  r = unit(r);
   const Vec wt_r = mat_t_vec(w, r);
   Mat out = w;
   for (std::size_t i = 0; i < w.rows; ++i)
@@ -145,6 +159,7 @@ inline void jacobi_eigen_symmetric(Mat& a, Mat& v, int max_sweeps = 64) {
 [[nodiscard]] inline Mat qr_thin_columns(Mat a) {
   const std::size_t m = a.rows;
   const std::size_t k = a.cols;
+  if (k > m) throw std::invalid_argument("qr: basis rank exceeds dimension");
   for (std::size_t j = 0; j < k; ++j) {
     for (std::size_t i = 0; i < j; ++i) {
       float d = 0.f;
@@ -153,7 +168,9 @@ inline void jacobi_eigen_symmetric(Mat& a, Mat& v, int max_sweeps = 64) {
     }
     float n = 0.f;
     for (std::size_t r = 0; r < m; ++r) n += a(r, j) * a(r, j);
-    n = std::sqrt(std::max(n, kEps));
+    n = std::sqrt(n);
+    if (!std::isfinite(n) || n <= kEps)
+      throw std::invalid_argument("qr: basis is rank deficient");
     for (std::size_t r = 0; r < m; ++r) a(r, j) /= n;
   }
   return a;
@@ -161,6 +178,7 @@ inline void jacobi_eigen_symmetric(Mat& a, Mat& v, int max_sweeps = 64) {
 
 // W' = (I − α R Rᵀ) W. r_basis is [k, d_out]
 [[nodiscard]] inline Mat apply_subspace(const Mat& w, const Mat& r_basis, float alpha = 1.f) {
+  require_strength(alpha);
   if (r_basis.rows == 1 || (r_basis.cols == w.rows && r_basis.rows == 1)) {
     Vec r(r_basis.cols);
     r.data = r_basis.data;
@@ -172,6 +190,8 @@ inline void jacobi_eigen_symmetric(Mat& a, Mat& v, int max_sweeps = 64) {
   }
   if (r_basis.cols != w.rows)
     throw std::invalid_argument("subspace: R last dim != W out");
+  if (r_basis.rows > w.rows)
+    throw std::invalid_argument("subspace: basis rank exceeds output dimension");
   // R is [k, d_out]; columns of R^T are [d_out, k]
   Mat rt(w.rows, r_basis.rows);
   for (std::size_t i = 0; i < r_basis.rows; ++i)
@@ -223,10 +243,14 @@ enum class BakeMode { Arditi, Projected, OrbaDirectional, OrbaHouseholder, Subsp
     }
     case BakeMode::OrbaHouseholder: {
       Vec v(w.rows);
-      if (r.rows == 1) v.data = r.data;
-      else if (r.cols == 1) v.data = r.data;
-      else
+      if (r.rows == 1 && r.cols == w.rows)
+        v.data = r.data;
+      else if (r.cols == 1 && r.rows == w.rows)
+        v.data = r.data;
+      else if (r.cols == w.rows)
         for (std::size_t i = 0; i < w.rows; ++i) v[i] = r(0, i);
+      else
+        throw std::invalid_argument("apply_mode: r shape");
       return apply_householder(w, v);
     }
     case BakeMode::Subspace:
@@ -242,8 +266,9 @@ enum class BakeMode { Arditi, Projected, OrbaDirectional, OrbaHouseholder, Subsp
 
 // h' = h − α (h·r) r
 [[nodiscard]] inline Vec inference_ablate(const Vec& h, Vec r, float alpha = 1.f) {
-  r = unit(r);
   if (h.size() != r.size()) throw std::invalid_argument("hook: dim mismatch");
+  require_strength(alpha);
+  r = unit(r);
   const float d = dot(h, r);
   Vec o(h.size());
   for (std::size_t i = 0; i < h.size(); ++i) o[i] = h[i] - alpha * d * r[i];

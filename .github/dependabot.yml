@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      site-toolchain:
+        patterns:
+          - "@vitejs/*"
+          - "vite"
+          - "vitest"
+          - "typescript"
+          - "tailwindcss"
+          - "@tailwindcss/*"
+      browser-tests:
+        patterns:
+          - "playwright"
+          - "@playwright/*"
+          - "puppeteer"
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5

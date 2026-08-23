@@ -4,13 +4,16 @@
 
 Living handbook for **LLM abliteration** (weight-level refusal-direction surgery) plus **agentic security** stacks for factory firmware QA, pentest labs, and [CyberGym](https://cybergym.io) evaluation.
 
-**First hour (no GPU):** download one unique [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) archive — Windows `abliterate-cxx-windows-x64-msvc.zip`, Linux `abliterate-cxx-linux-x64-gcc15.tar.gz`, macOS `abliterate-cxx-macos-arm64-llvm.tar.gz` — then Hour 0: `abliterate-cxx guide` → `doctor` → `self-check` → `demo`. Hour 0.5: `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`. Walkthrough: [docs/cxx26-researcher-guide.md](docs/cxx26-researcher-guide.md). Paper word → chapter: [docs/paper-term-map.md](docs/paper-term-map.md).
+**First hour (no GPU):** download one unique [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) archive — Windows `abliterate-cxx-windows-x64-msvc.zip`, Linux `abliterate-cxx-linux-x64-gcc16.tar.gz`, macOS `abliterate-cxx-macos-arm64-llvm.tar.gz` — then Hour 0: `abliterate-cxx guide` → `doctor` → `limits` → `self-check` → `demo`. Hour 0.5: `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`. Walkthrough: [docs/cxx26-researcher-guide.md](docs/cxx26-researcher-guide.md). Paper word → chapter: [docs/paper-term-map.md](docs/paper-term-map.md).
 
 **Then:** [docs/complete-curriculum.md](docs/complete-curriculum.md) · [docs/setup-encyclopedia.md](docs/setup-encyclopedia.md) · [docs/bleeding-edge.md](docs/bleeding-edge.md) · [instructions/method-cookbook.md](instructions/method-cookbook.md)
 
 [![C++26 platform](https://github.com/adybag14-cyber/Abliteration/actions/workflows/cxx26-platform.yml/badge.svg)](https://github.com/adybag14-cyber/Abliteration/actions/workflows/cxx26-platform.yml)
+[![CodeQL](https://github.com/adybag14-cyber/Abliteration/actions/workflows/codeql.yml/badge.svg)](https://github.com/adybag14-cyber/Abliteration/actions/workflows/codeql.yml)
 
 > **New to the subject?** Open the [interactive Abliteration Field Guide](https://adybag14-cyber.github.io/Abliteration/#lab) — PathFinder defaults to the C++26 toy lab with the same unique nightly filenames. Then the six-step checklist, method spider diagram, searchable atlas (DIM / ORBA / COSMIC), and evaluation-gate simulator.
+
+The Pages guide now includes checksum-first commands for Windows, Linux, and macOS plus a searchable [50-paper 2026 primary-source observatory](https://adybag14-cyber.github.io/Abliteration/#research). Repository policy: [contributing](CONTRIBUTING.md) · [security](SECURITY.md) · [citation](CITATION.cff).
 
 ## What is abliteration?
 
@@ -145,7 +148,7 @@ npm run build        # static GitHub Pages artifact in dist/
 
 The site uses shadcn-style local components, Radix primitives, CSS-variable theming, accessible motion, and a repository-relative Vite base for GitHub Pages. Playwright stores its HTML report, traces, and inspectable desktop/mobile captures under `artifacts/playwright/`; the independent Puppeteer live audit writes full-page and focused production screenshots plus `audit.json` under `artifacts/puppeteer-live/` (both are gitignored). Publishing is handled by [`.github/workflows/pages.yml`](.github/workflows/pages.yml): Playwright verifies the artifact before deployment, then Puppeteer opens the deployed public URL and retains a second evidence bundle.
 
-**Research map (2024–2026 papers + repo PDFs):** [docs/refusal-research-beginners-guide.md](docs/refusal-research-beginners-guide.md) · [sources/research/README.md](sources/research/README.md) · `npm run fetch:research-papers`
+**Research map (2024–2026 papers + repo PDFs):** [50-paper 2026 update](docs/research-2026-update.md) · [machine catalog](sources/research/catalog-2026.json) · [beginner map](docs/refusal-research-beginners-guide.md) · [offline corpus](sources/research/README.md) · `npm run fetch:research-papers`
 
 **Leading edge:** [techniques/multi-category-refusal-beginners-guide.md](techniques/multi-category-refusal-beginners-guide.md) — QCRI 2026 · [docs/defenses-against-abliteration.md](docs/defenses-against-abliteration.md) — what resists surgery
 
@@ -242,4 +245,4 @@ Imported from `jarvis-tool-repair-pack-expanded-v7.zip` — tool-use repair data
 
 ## License
 
-Documentation: CC0-1.0. Third-party tools retain their own licenses.
+Code and documentation: Apache-2.0; see [LICENSE](LICENSE). Third-party tools and papers retain their own licenses.

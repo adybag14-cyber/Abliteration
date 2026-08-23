@@ -12,7 +12,7 @@ export const CXX_NIGHTLY_DOWNLOAD = `${REPOSITORY_URL}/releases/download/cxx-nig
 /** Default first-hour archives. Compiler is in the filename so GCC/Clang never collide. */
 export const cxxDefaultArchives = [
   { id: "windows", label: "Windows x64", file: "abliterate-cxx-windows-x64-msvc.zip" },
-  { id: "linux", label: "Linux x64", file: "abliterate-cxx-linux-x64-gcc15.tar.gz" },
+  { id: "linux", label: "Linux x64", file: "abliterate-cxx-linux-x64-gcc16.tar.gz" },
   { id: "macos", label: "macOS Apple Silicon", file: "abliterate-cxx-macos-arm64-llvm.tar.gz" },
 ] as const;
 

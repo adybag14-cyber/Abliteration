@@ -1,6 +1,7 @@
 #pragma once
 
-#include <cstdlib>
+#include "abliteration/environment.hpp"
+
 #include <filesystem>
 #include <string>
 #include <string_view>
@@ -94,8 +95,8 @@ inline bool is_examples(const std::filesystem::path& p) {
 }
 
 inline std::filesystem::path find_examples_dir() {
-  if (const char* env = std::getenv("ABLITERATE_EXAMPLES")) {
-    std::filesystem::path p(env);
+  if (const auto env = environment_value("ABLITERATE_EXAMPLES"); env && !env->empty()) {
+    std::filesystem::path p(*env);
     if (is_examples(p)) return std::filesystem::absolute(p);
   }
   ensure_exe_parent();

@@ -3,7 +3,7 @@ node_modules/
 dist/
 coverage/
 artifacts/playwright/
-artifacts/puppeteer-live/
+artifacts/puppeteer-live*/
 playwright-report/
 test-results/
 
@@ -32,6 +32,7 @@ Thumbs.db
 
 # C++26 platform build products
 cxx/build/
+cxx/build-*/
 cxx/ci-build/
 cxx/dist/
 

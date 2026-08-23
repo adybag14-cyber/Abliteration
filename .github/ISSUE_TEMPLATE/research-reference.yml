@@ -1,0 +1,34 @@
+name: Research reference
+description: Propose a primary paper or a correction to the evidence map.
+title: "[Reference]: "
+labels: [documentation, research]
+body:
+  - type: input
+    id: canonical
+    attributes:
+      label: Canonical primary-source URL
+      placeholder: "https://arxiv.org/abs/..."
+    validations:
+      required: true
+  - type: textarea
+    id: relevance
+    attributes:
+      label: Methodological relevance
+      description: Which mechanism, intervention, defense, attack, or evaluation claim does this change?
+    validations:
+      required: true
+  - type: dropdown
+    id: evidence
+    attributes:
+      label: Verification status
+      options:
+        - Paper claim only
+        - Independently reproduced
+        - Correction to existing metadata
+    validations:
+      required: true
+  - type: textarea
+    id: caveats
+    attributes:
+      label: Caveats or conflicts
+      description: Note retractions, revisions, missing artifacts, or competing findings.

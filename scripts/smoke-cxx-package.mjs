@@ -166,6 +166,19 @@ function run(args) {
   return r.stdout || '';
 }
 
+function runExpectFailure(args, expected) {
+  const cmd = wrap ? wrap.split(/\s+/).concat([exe, ...args]) : [exe, ...args];
+  console.log('> (expect exit 2)', cmd.join(' '));
+  const r = spawnSync(cmd[0], cmd.slice(1), { cwd, encoding: 'utf8' });
+  const output = `${r.stdout || ''}${r.stderr || ''}`;
+  if (r.status !== 2 || !output.includes(expected)) {
+    process.stdout.write(r.stdout || '');
+    process.stderr.write(r.stderr || '');
+    console.error(`smoke fail: expected exit 2 containing ${JSON.stringify(expected)} for ${args.join(' ')}`);
+    process.exit(1);
+  }
+}
+
 // Hour 0 (guide → doctor → self-check → demo).
 if (!existsSync(gettingStarted)) {
   console.error('GETTING-STARTED.md missing next to exe');
@@ -173,6 +186,11 @@ if (!existsSync(gettingStarted)) {
 }
 assertGuide(run(['guide']));
 assertDoctor(run(['doctor']));
+const limits = run(['limits']);
+if (!limits.includes('matrix_elements') || !limits.includes('jsonl_records')) {
+  console.error('limits did not disclose matrix/JSONL guardrails');
+  process.exit(1);
+}
 assertSelfCheck(run(['self-check']));
 const demo = run(['demo']);
 if (!demo.includes('estimate') || !demo.includes('eval')) {
@@ -185,6 +203,9 @@ if (!existsSync(join(cwd, 'r.txt'))) {
   process.exit(1);
 }
 run(['apply', '--mode', 'orba-directional', '--weight', 'examples/tiny-W.txt', '--direction', 'r.txt', '--out', 'W2.txt']);
+runExpectFailure(['apply', '--weight', 'examples/tiny-W.txt', '--direction', 'r.txt', '--alpha'], '--alpha requires a value');
+runExpectFailure(['apply', '--mode', 'orba-householder', '--weight', 'examples/tiny-W.txt', '--direction', 'r.txt', '--alpha', '0'], 'fixed reflection with alpha=2');
+runExpectFailure(['estimate', '--bad', 'examples/tiny-bad.txt', '--good', 'examples/tiny-good.txt', '--rank'], '--rank requires a value');
 const ev = run(['eval', '--jsonl', 'examples/generations.jsonl']);
 if (!ev.includes('"n": 5') && !ev.includes('"n":5')) {
   console.error('eval n != 5');
@@ -215,6 +236,11 @@ const doctorAbs = runAbs(['doctor']);
 assertDoctor(doctorAbs);
 if (!/examples/i.test(doctorAbs)) {
   console.error('doctor from foreign cwd did not report examples/');
+  process.exit(1);
+}
+const limitsAbs = runAbs(['limits']);
+if (!limitsAbs.includes('matrix_elements') || !limitsAbs.includes('jsonl_records')) {
+  console.error('limits from foreign cwd did not disclose matrix/JSONL guardrails');
   process.exit(1);
 }
 assertSelfCheck(runAbs(['self-check']));

@@ -1,6 +1,8 @@
 # Research landscape — refusal mechanisms & removal methods
 
-Taxonomy of **papers**, **open-source tools**, and **when each method applies**. Updated Jun 2026.
+Taxonomy of **papers**, **open-source tools**, and **when each method applies**. Core map updated Jun 2026; discovery snapshot updated 23 Aug 2026.
+
+> **Current discovery snapshot:** [2026 research update — 50 primary papers](research-2026-update.md) · [machine-readable catalog](../sources/research/catalog-2026.json). The core map below stays selective; the update covers adjacent mechanisms, interventions, defenses, attacks, and evaluation work.
 
 **Beginner paper map (PDFs in repo):** [refusal-research-beginners-guide.md](refusal-research-beginners-guide.md) · [../sources/research/README.md](../sources/research/README.md)
 

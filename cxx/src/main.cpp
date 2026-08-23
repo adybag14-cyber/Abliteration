@@ -6,8 +6,13 @@
 #include "abliteration/ui.hpp"
 
 #include <cstdlib>
+#include <cerrno>
+#include <charconv>
+#include <cmath>
+#include <expected>
 #include <filesystem>
 #include <iostream>
+#include <limits>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -24,6 +29,43 @@ std::string_view arg_val(int argc, char** argv, std::string_view key, std::strin
   return def;
 }
 
+bool has_arg(int argc, char** argv, std::string_view key) {
+  for (int i = 2; i < argc; ++i)
+    if (std::string_view(argv[i]) == key) return true;
+  return false;
+}
+
+std::expected<int, std::string> int_arg(int argc, char** argv, std::string_view key, int def,
+                                        int minimum, int maximum) {
+  const auto raw = arg_val(argc, argv, key);
+  if (raw.empty()) {
+    if (has_arg(argc, argv, key)) return std::unexpected(std::string(key) + " requires a value");
+    return def;
+  }
+  int value = 0;
+  const auto [end, ec] = std::from_chars(raw.data(), raw.data() + raw.size(), value);
+  if (ec != std::errc{} || end != raw.data() + raw.size() || value < minimum || value > maximum)
+    return std::unexpected(std::string(key) + " must be an integer in [" +
+                           std::to_string(minimum) + ", " + std::to_string(maximum) + "]");
+  return value;
+}
+
+std::expected<float, std::string> strength_arg(int argc, char** argv, float def = 1.f) {
+  const auto raw = arg_val(argc, argv, "--alpha");
+  if (raw.empty()) {
+    if (has_arg(argc, argv, "--alpha")) return std::unexpected("--alpha requires a value");
+    return def;
+  }
+  std::string token(raw);
+  char* end = nullptr;
+  errno = 0;
+  const float value = std::strtof(token.c_str(), &end);
+  if (errno == ERANGE || end != token.c_str() + token.size() || !std::isfinite(value) ||
+      value < 0.f || value > 2.f)
+    return std::unexpected("--alpha must be a finite number in [0, 2]");
+  return value;
+}
+
 void usage() {
   ui::banner();
   std::cout
@@ -35,6 +77,7 @@ void usage() {
       << "  abliterate-cxx " << ui::cyan() << "demo" << ui::reset() << "          run toys: estimate → apply → hook → eval\n"
       << "  abliterate-cxx " << ui::cyan() << "recipes" << ui::reset() << "       paper → --mode map (2024–2026)\n"
       << "  abliterate-cxx " << ui::cyan() << "why <mode>" << ui::reset() << "     one screen per operator\n"
+      << "  abliterate-cxx " << ui::cyan() << "limits" << ui::reset() << "         input and memory guardrails\n"
       << '\n'
       << ui::bold() << "Operators" << ui::reset() << '\n'
       << "  estimate --mode dim|projected|cosmic|svd --bad FILE --good FILE [--rank K] [--out r.txt]\n"
@@ -59,15 +102,17 @@ int cmd_guide() {
       << '\n'
       << ui::bold() << "10 minutes — hold this order" << ui::reset() << "\n\n"
       << "  1.  " << ui::cyan() << "abliterate-cxx doctor" << ui::reset() << '\n'
-      << "  2.  " << ui::cyan() << "abliterate-cxx self-check" << ui::reset()
+      << "  2.  " << ui::cyan() << "abliterate-cxx limits" << ui::reset()
+      << ui::dim() << "              inspect fail-closed bounds" << ui::reset() << '\n'
+      << "  3.  " << ui::cyan() << "abliterate-cxx self-check" << ui::reset()
       << ui::dim() << "          prove the math binary" << ui::reset() << '\n'
-      << "  3.  " << ui::cyan() << "abliterate-cxx demo" << ui::reset()
+      << "  4.  " << ui::cyan() << "abliterate-cxx demo" << ui::reset()
       << ui::dim() << "                toys in examples/" << ui::reset() << '\n'
-      << "  4.  estimate --mode " << ui::cyan() << "dim" << ui::reset()
+      << "  5.  estimate --mode " << ui::cyan() << "dim" << ui::reset()
       << " then " << ui::cyan() << "projected" << ui::reset() << '\n'
-      << "  5.  apply --mode " << ui::cyan() << "orba-directional" << ui::reset() << '\n'
-      << "  6.  eval --jsonl examples/generations.jsonl\n"
-      << "  7.  " << ui::cyan() << "abliterate-cxx recipes" << ui::reset()
+      << "  6.  apply --mode " << ui::cyan() << "orba-directional" << ui::reset() << '\n'
+      << "  7.  eval --jsonl examples/generations.jsonl\n"
+      << "  8.  " << ui::cyan() << "abliterate-cxx recipes" << ui::reset()
       << ui::dim() << "             only then pick a 2025–2026 mode" << ui::reset() << "\n\n"
       << ui::bold() << "Do not" << ui::reset() << " start on a 32B GGUF. This CLI is the lab notebook.\n"
       << "Real checkpoints: Heretic / llm-abliteration after step 6.\n\n"
@@ -91,6 +136,17 @@ int cmd_doctor() {
 #ifdef ABLITERATE_TARGET
   std::cout << "target=" << ABLITERATE_TARGET << '\n';
 #endif
+#if defined(__clang__)
+  std::cout << "compiler=clang " << __clang_major__ << '.' << __clang_minor__ << '.'
+            << __clang_patchlevel__ << '\n';
+#elif defined(_MSC_VER)
+  std::cout << "compiler=msvc " << _MSC_VER << '\n';
+#elif defined(__GNUC__)
+  std::cout << "compiler=gcc " << __GNUC__ << '.' << __GNUC_MINOR__ << '.'
+            << __GNUC_PATCHLEVEL__ << '\n';
+#endif
+  std::cout << "matrix_limit_elements=" << abliteration::kMaxMatrixElements << '\n'
+            << "jsonl_limit_records=" << abliteration::kMaxJsonlRecords << '\n';
   const auto ex = abliteration::find_examples_dir();
   if (ex.empty()) {
     ui::warn("examples/ not found (tiny-bad.txt)");
@@ -106,6 +162,20 @@ int cmd_doctor() {
     ui::next("abliterate-cxx guide");
   }
   return rc;
+}
+
+int cmd_limits() {
+  std::cout << "{\n"
+            << "  \"matrix_elements\": " << abliteration::kMaxMatrixElements << ",\n"
+            << "  \"matrix_file_bytes\": " << abliteration::kMaxMatrixFileBytes << ",\n"
+            << "  \"jsonl_records\": " << abliteration::kMaxJsonlRecords << ",\n"
+            << "  \"jsonl_line_bytes\": " << abliteration::kMaxJsonlLineBytes << ",\n"
+            << "  \"jsonl_file_bytes\": " << abliteration::kMaxJsonlFileBytes << ",\n"
+            << "  \"alpha_min\": 0,\n"
+            << "  \"alpha_max\": 2,\n"
+            << "  \"toy_svd_dimension_max\": 512\n"
+            << "}\n";
+  return 0;
 }
 
 int cmd_recipes() {
@@ -257,11 +327,15 @@ int cmd_estimate(int argc, char** argv) {
   const auto mode = std::string(arg_val(argc, argv, "--mode", "dim"));
   const auto bad_p = arg_val(argc, argv, "--bad");
   const auto good_p = arg_val(argc, argv, "--good");
-  const int rank = std::atoi(std::string(arg_val(argc, argv, "--rank", "4")).c_str());
+  const auto rank = int_arg(argc, argv, "--rank", 4, 1, 512);
   const auto out_p = arg_val(argc, argv, "--out", "r.txt");
   if (bad_p.empty() || good_p.empty()) {
     ui::die_hint("estimate needs --bad and --good activation matrices",
                  "abliterate-cxx demo   or   abliterate-cxx why dim");
+    return 2;
+  }
+  if (!rank) {
+    ui::die_hint(rank.error(), "choose --rank between 1 and min(rows, cols), at most 512");
     return 2;
   }
   auto bad = abliteration::load_mat(bad_p);
@@ -298,7 +372,7 @@ int cmd_estimate(int argc, char** argv) {
   }
   if (mode == "svd") {
     try {
-      const auto vh = abliteration::svd_directions(*bad, *good, rank);
+      const auto vh = abliteration::svd_directions(*bad, *good, *rank);
       if (auto e = abliteration::save_mat(out_p, vh); !e) {
         ui::err(e.error());
         return 2;
@@ -320,11 +394,15 @@ int cmd_apply(int argc, char** argv) {
   const auto mode_s = std::string(arg_val(argc, argv, "--mode", "orba-directional"));
   const auto wp = arg_val(argc, argv, "--weight");
   const auto rp = arg_val(argc, argv, "--direction");
-  const float alpha = std::strtof(std::string(arg_val(argc, argv, "--alpha", "1")).c_str(), nullptr);
+  const auto alpha = strength_arg(argc, argv);
   const auto out_p = arg_val(argc, argv, "--out", "W2.txt");
   if (wp.empty() || rp.empty()) {
     ui::die_hint("apply needs --weight and --direction",
                  "abliterate-cxx estimate …   then   abliterate-cxx why orba-directional");
+    return 2;
+  }
+  if (!alpha) {
+    ui::die_hint(alpha.error(), "start with --alpha 1; use 0..2 only");
     return 2;
   }
   auto w = abliteration::load_mat(wp);
@@ -339,13 +417,22 @@ int cmd_apply(int argc, char** argv) {
   }
   try {
     const auto mode = abliteration::parse_bake_mode(mode_s);
-    const auto w2 = abliteration::apply_mode(*w, *r, mode, alpha);
+    float applied_alpha = *alpha;
+    if (mode == abliteration::BakeMode::OrbaHouseholder) {
+      if (has_arg(argc, argv, "--alpha") && std::abs(applied_alpha - 2.f) > 1e-6f) {
+        ui::die_hint("orba-householder is a fixed reflection with alpha=2",
+                     "omit --alpha or pass --alpha 2; use orba-directional for tunable strength");
+        return 2;
+      }
+      applied_alpha = 2.f;
+    }
+    const auto w2 = abliteration::apply_mode(*w, *r, mode, applied_alpha);
     if (auto e = abliteration::save_mat(out_p, w2); !e) {
       ui::err(e.error());
       return 2;
     }
     std::cout << "wrote " << out_p << "  " << w2.rows << "x" << w2.cols << "  mode=" << mode_s
-              << "  alpha=" << alpha << '\n';
+              << "  alpha=" << applied_alpha << '\n';
     if (mode_s == "orba-householder")
       ui::warn("Householder can flip semantics — A/B against orba-directional");
     ui::next("abliterate-cxx hook --h examples/tiny-h.txt --direction " + std::string(rp));
@@ -360,9 +447,13 @@ int cmd_apply(int argc, char** argv) {
 int cmd_hook(int argc, char** argv) {
   const auto hp = arg_val(argc, argv, "--h");
   const auto rp = arg_val(argc, argv, "--direction");
-  const float alpha = std::strtof(std::string(arg_val(argc, argv, "--alpha", "1")).c_str(), nullptr);
+  const auto alpha = strength_arg(argc, argv);
   if (hp.empty() || rp.empty()) {
     ui::die_hint("hook needs --h and --direction", "abliterate-cxx why hook");
+    return 2;
+  }
+  if (!alpha) {
+    ui::die_hint(alpha.error(), "start with --alpha 1; use 0..2 only");
     return 2;
   }
   auto h = abliteration::load_mat(hp);
@@ -378,7 +469,7 @@ int cmd_hook(int argc, char** argv) {
   if (h->rows == 1) {
     abliteration::Vec hv(h->cols);
     hv.data = h->data;
-    const auto o = abliteration::inference_ablate(hv, *r, alpha);
+    const auto o = abliteration::inference_ablate(hv, *r, *alpha);
     std::cout << "1 " << o.size() << '\n';
     for (std::size_t i = 0; i < o.size(); ++i) {
       if (i) std::cout << ' ';
@@ -388,7 +479,7 @@ int cmd_hook(int argc, char** argv) {
     ui::next("abliterate-cxx eval --jsonl examples/generations.jsonl");
     return 0;
   }
-  const auto o = abliteration::inference_ablate_batch(*h, *r, alpha);
+  const auto o = abliteration::inference_ablate_batch(*h, *r, *alpha);
   std::cout << o.rows << ' ' << o.cols << '\n';
   for (std::size_t i = 0; i < o.rows; ++i) {
     for (std::size_t j = 0; j < o.cols; ++j) {
@@ -445,45 +536,71 @@ int cmd_eval(int argc, char** argv) {
 }  // namespace
 
 int main(int argc, char** argv) {
-  if (argc > 0) abliteration::set_argv0(argv[0]);
-  ui::enable_windows_vt();
-  if (argc < 2) {
-    usage();
-    return 0;
-  }
-  const std::string_view cmd = argv[1];
-  if (cmd == "-h" || cmd == "--help" || cmd == "help") {
-    usage();
-    return 0;
-  }
-  if (cmd == "guide" || cmd == "intro" || cmd == "start") return cmd_guide();
-  if (cmd == "doctor") return cmd_doctor();
-  if (cmd == "recipes" || cmd == "map") return cmd_recipes();
-  if (cmd == "why") {
-    if (argc < 3) {
-      ui::die_hint("why needs a mode", "abliterate-cxx why dim|projected|cosmic|svd|orba-directional");
-      return 2;
+  try {
+    if (argc > 0) abliteration::set_argv0(argv[0]);
+    ui::enable_windows_vt();
+    if (argc < 2) {
+      usage();
+      return 0;
     }
-    return cmd_why(argv[2]);
-  }
-  if (cmd == "demo" || cmd == "tutorial") return cmd_demo();
-  if (cmd == "version" || cmd == "--version") {
-    std::cout << "abliterate-cxx"
+    const std::string_view cmd = argv[1];
+    if (cmd == "-h" || cmd == "--help" || cmd == "help") {
+      usage();
+      return 0;
+    }
+    if (cmd == "guide" || cmd == "intro" || cmd == "start") return cmd_guide();
+    if (cmd == "doctor") return cmd_doctor();
+    if (cmd == "limits") return cmd_limits();
+    if (cmd == "recipes" || cmd == "map") return cmd_recipes();
+    if (cmd == "why") {
+      if (argc < 3) {
+        ui::die_hint("why needs a mode", "abliterate-cxx why dim|projected|cosmic|svd|orba-directional");
+        return 2;
+      }
+      return cmd_why(argv[2]);
+    }
+    if (cmd == "demo" || cmd == "tutorial") return cmd_demo();
+    if (cmd == "version" || cmd == "--version") {
+      const bool json = argc >= 3 && std::string_view(argv[2]) == "--json";
+      if (json) {
+        std::cout << "{\"name\":\"abliterate-cxx\",\"version\":\""
 #ifdef ABLITERATE_VERSION
-              << " " << ABLITERATE_VERSION
+                  << ABLITERATE_VERSION
+#else
+                  << "unknown"
 #endif
-              << '\n';
-    std::cout << "cplusplus=" << __cplusplus << '\n';
+                  << "\",\"cplusplus\":" << __cplusplus << ",\"target\":\""
 #ifdef ABLITERATE_TARGET
-    std::cout << "target=" << ABLITERATE_TARGET << '\n';
+                  << ABLITERATE_TARGET
+#else
+                  << "unknown"
 #endif
-    return (__cplusplus >= 202400L) ? 0 : 1;
+                  << "\"}\n";
+      } else {
+        std::cout << "abliterate-cxx"
+#ifdef ABLITERATE_VERSION
+                  << " " << ABLITERATE_VERSION
+#endif
+                  << '\n';
+        std::cout << "cplusplus=" << __cplusplus << '\n';
+#ifdef ABLITERATE_TARGET
+        std::cout << "target=" << ABLITERATE_TARGET << '\n';
+#endif
+      }
+      return (__cplusplus >= 202400L) ? 0 : 1;
+    }
+    if (cmd == "self-check") return cmd_self_check();
+    if (cmd == "estimate") return cmd_estimate(argc, argv);
+    if (cmd == "apply") return cmd_apply(argc, argv);
+    if (cmd == "hook") return cmd_hook(argc, argv);
+    if (cmd == "eval") return cmd_eval(argc, argv);
+    ui::die_hint("unknown command: " + std::string(cmd), "abliterate-cxx guide");
+    return 2;
+  } catch (const std::bad_alloc&) {
+    ui::die_hint("allocation refused", "check abliterate-cxx limits and use smaller text matrices");
+    return 2;
+  } catch (const std::exception& ex) {
+    ui::die_hint(ex.what(), "run abliterate-cxx doctor, then abliterate-cxx guide");
+    return 2;
   }
-  if (cmd == "self-check") return cmd_self_check();
-  if (cmd == "estimate") return cmd_estimate(argc, argv);
-  if (cmd == "apply") return cmd_apply(argc, argv);
-  if (cmd == "hook") return cmd_hook(argc, argv);
-  if (cmd == "eval") return cmd_eval(argc, argv);
-  ui::die_hint("unknown command: " + std::string(cmd), "abliterate-cxx guide");
-  return 2;
 }

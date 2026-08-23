@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Abliteration Field Guide</title>
+  <desc id="desc">Measure, test, edit, verify. Memory-safe C++26 lab and 50-paper evidence map.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#17171f"/><stop offset="1" stop-color="#29224a"/></linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#7658ff"/><stop offset="1" stop-color="#4ed4de"/></linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#ffffff" stroke-opacity=".055"/></pattern>
+  </defs>
+  <rect width="1200" height="630" rx="34" fill="url(#bg)"/>
+  <rect width="1200" height="630" rx="34" fill="url(#grid)"/>
+  <circle cx="930" cy="310" r="205" fill="none" stroke="#8068ec" stroke-opacity=".2" stroke-width="2"/>
+  <circle cx="930" cy="310" r="133" fill="none" stroke="#8068ec" stroke-opacity=".35" stroke-dasharray="8 12" stroke-width="2"/>
+  <rect x="856" y="236" width="148" height="148" rx="34" fill="#f8f7f2"/>
+  <circle cx="930" cy="310" r="28" fill="#654de0"/>
+  <path d="M752 417 1090 211" stroke="url(#line)" stroke-width="9" stroke-linecap="round"/>
+  <text x="86" y="126" fill="#a998ff" font-family="ui-monospace, monospace" font-size="20" font-weight="700" letter-spacing="4">OPEN-WEIGHT MODEL FIELD GUIDE</text>
+  <text x="82" y="230" fill="#fbfaf7" font-family="Inter, Segoe UI, sans-serif" font-size="69" font-weight="750">Abliteration,</text>
+  <text x="82" y="309" fill="#9d8aff" font-family="Inter, Segoe UI, sans-serif" font-size="69" font-weight="750">without the fog.</text>
+  <text x="86" y="380" fill="#c6c3cf" font-family="Inter, Segoe UI, sans-serif" font-size="25">Measure → test → edit → verify</text>
+  <rect x="84" y="447" width="292" height="58" rx="18" fill="#6a51e2"/>
+  <text x="112" y="483" fill="#ffffff" font-family="ui-monospace, monospace" font-size="19" font-weight="700">MEMORY-SAFE C++26 LAB</text>
+  <rect x="392" y="447" width="254" height="58" rx="18" fill="#ffffff" fill-opacity=".08" stroke="#ffffff" stroke-opacity=".14"/>
+  <text x="420" y="483" fill="#ffffff" font-family="ui-monospace, monospace" font-size="19" font-weight="700">50-PAPER MAP</text>
+  <text x="86" y="566" fill="#8e8b98" font-family="ui-monospace, monospace" font-size="18">adybag14-cyber.github.io/Abliteration</text>
+</svg>

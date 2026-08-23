@@ -2,7 +2,13 @@
 
 ISO **C++26** CLI for the handbook’s core operators. This is the helper path for students and researchers who want estimate / bake / hook / eval **without Python**.
 
-Requires a C++26 compiler (`-std=c++26`). GCC 15+ and Clang 20+ are known to work.
+Requires a C++26 compiler (`-std=c++26`). CI certifies GCC 16.2, Clang/LLVM 22, and MSVC 14.51; older GCC 15 and Clang 20 builds are no longer release targets.
+
+## Memory-safety contract
+
+The CLI validates dimensions, shape products, ranks, edit strengths, finite numbers, file sizes, line sizes, and JSONL record counts **before** allocation or indexing. Matrix storage is capped at 64 Mi elements / 512 MiB of text input, evaluation input at 1,000,000 records with 1 MiB per line, and SVD feature width at 512. `abliterate-cxx limits` prints the executable contract.
+
+Bounds-checked access, owned environment strings, guarded arithmetic, deterministic error exits, stack protection, control-flow protection on MSVC, FORTIFY/RELRO on supported Linux builds, and a Clang 22 ASan+UBSan hostile-input lane form the release baseline. These controls reduce risk; they are not a formal proof of memory safety. Report suspected bypasses privately through [SECURITY.md](../SECURITY.md).
 
 ```bash
 # from repo root
@@ -20,7 +26,7 @@ cmake --build cxx/build
 ./cxx/build/abliterate-cxx-tests
 ```
 
-**First hour:** Hour 0 is `abliterate-cxx guide` → `doctor` → `self-check` → `demo`. Hour 0.5: `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`. Walkthrough: [GETTING-STARTED.md](GETTING-STARTED.md) · [docs/cxx26-researcher-guide.md](../docs/cxx26-researcher-guide.md)
+**First hour:** Hour 0 is `abliterate-cxx guide` → `doctor` → `limits` → `self-check` → `demo`. Hour 0.5: `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`. Walkthrough: [GETTING-STARTED.md](GETTING-STARTED.md) · [docs/cxx26-researcher-guide.md](../docs/cxx26-researcher-guide.md)
 
 ## Subcommands
 

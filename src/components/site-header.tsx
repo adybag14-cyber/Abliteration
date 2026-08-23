@@ -11,6 +11,7 @@ const navigation = [
   ["Steps", "#steps"],
   ["Compare", "#compare"],
   ["Techniques", "#techniques"],
+  ["Research", "#research"],
   ["Gates", "#gates"],
 ];
 

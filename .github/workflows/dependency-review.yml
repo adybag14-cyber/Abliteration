@@ -1,0 +1,19 @@
+name: Dependency review
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+          license-check: true
+          deny-licenses: GPL-2.0-only, GPL-3.0-only, AGPL-1.0-only, AGPL-3.0-only
