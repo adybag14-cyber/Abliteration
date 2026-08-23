@@ -2,7 +2,7 @@ name: C++26 platform — multi-target build, test, deploy
 
 # Native ISO C++26 binaries. A target that cannot compile -std=c++26 fails.
 # Linux x64/arm64 (GCC 16.2 + Clang 22), Windows x64 (Clang 22 + MSVC 14.51),
-# Windows arm64 (MSVC, experimental runner), macOS arm64 + x64 (Homebrew LLVM 22).
+# Windows arm64 (VS 2026 MSVC, preview runner), macOS arm64 + x64 (Homebrew LLVM 22).
 
 on:
   push:
@@ -127,11 +127,13 @@ jobs:
             os: windows-2025-vs2026
             compiler: cl
             triple: windows-x64
+            msvc_arch: x64
             experimental: false
           - name: windows-arm64-msvc
-            os: windows-11-arm
+            os: windows-11-vs2026-arm
             compiler: cl
             triple: windows-arm64
+            msvc_arch: amd64_arm64
             experimental: true
           - name: macos-arm64-llvm
             os: macos-latest
@@ -239,6 +241,8 @@ jobs:
       - name: MSVC developer environment
         if: matrix.compiler == 'cl'
         uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.msvc_arch }}
 
       - name: Prove current compiler generation
         run: |
