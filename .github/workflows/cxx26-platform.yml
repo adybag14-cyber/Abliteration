@@ -173,7 +173,7 @@ jobs:
 
       - name: Cache verified LLVM 22.1.8 archive (Windows)
         if: runner.os == 'Windows' && matrix.llvm
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: .ci-cache/LLVM-22.1.8-win64.exe
           key: llvm-22.1.8-win64-16e5709785fef73c
