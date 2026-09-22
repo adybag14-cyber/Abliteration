@@ -4,6 +4,7 @@ ISO C++26 lab for refusal-direction math. **No GPU, no Python** for the first ho
 
 ## 1.2 selective research refresh
 
+- The macOS release lanes use pinned-major Homebrew LLVM 23; Linux and Windows Clang lanes retain LLVM 22.
 - Adds `select-layers --scores FILE --count K` with bounded, deterministic support selection and JSON output.
 - Adds `apply --mode norm-preserving`: rank-one removal plus column-norm restoration, with erased-column rejection.
 - Adds selective checkpoint planning/export/verification and selected-tensor SFT in the companion Python research toolkit.

@@ -3,7 +3,8 @@
 This is an executed researcher tutorial, not a reproduction of an unnamed 98%
 claim. It compares the unchanged checkpoint with three selective interventions
 and the earlier all-layer projection control. Raw generations and candidate
-weights remain local; aggregate results and their digests are published.
+weights remain local; aggregate results and their digests are published. The
+measured implementation files match [source commit 1c8cff9](https://github.com/adybag14-cyber/Abliteration/tree/1c8cff903db31a50d5fc1fe5ea0a714ecc8708d7); their SHA-256 values are included in the 256-token report.
 
 ## Exact input and scope
 

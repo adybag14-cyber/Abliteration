@@ -2,7 +2,7 @@
 
 ISO **C++26** CLI for the handbook’s core operators. This is the helper path for students and researchers who want estimate / bake / hook / eval **without Python**.
 
-Requires a C++26 compiler (`-std=c++26`). CI certifies GCC 16.2, Clang/LLVM 22, and MSVC 14.51; older GCC 15 and Clang 20 builds are no longer release targets.
+Requires a C++26 compiler (`-std=c++26`). The release matrix covers GCC 16.2, Clang/LLVM 22 on Linux/Windows, LLVM 23 on macOS, and MSVC 14.51; older GCC 15 and Clang 20 builds are no longer release targets.
 
 ## Memory-safety contract
 

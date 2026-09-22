@@ -64,8 +64,8 @@ On every `cxx/**` change (and on `main`), Actions **builds, dialect-checks (`cpl
 | `windows-x64-clang22` | `windows-2025-vs2026` | SHA-256-verified, cached LLVM 22.1.8 archive + MSVC STL |
 | `windows-x64-msvc` | `windows-2025-vs2026` | MSVC 14.51 `/std:c++latest` + `/Zc:__cplusplus` |
 | `windows-arm64-msvc` | `windows-11-vs2026-arm` | MSVC 14.51 cross-targeting ARM64 (preview runner) |
-| `macos-arm64-llvm` | `macos-latest` | Homebrew LLVM |
-| `macos-x64-llvm` | `macos-latest` + `-arch x86_64` (Rosetta test) | Homebrew LLVM |
+| `macos-arm64-llvm` | `macos-latest` | Homebrew LLVM 23 (`llvm@23`) |
+| `macos-x64-llvm` | `macos-latest` + `-arch x86_64` (Rosetta test) | Homebrew LLVM 23 (`llvm@23`) |
 
 A target that cannot prove `cplusplus=202400` **fails**. There is no C++20 fallback.
 
