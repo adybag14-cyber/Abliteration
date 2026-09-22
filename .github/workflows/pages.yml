@@ -48,6 +48,9 @@ jobs:
       - name: Test interactive guide
         run: npm run test:site
 
+      - name: Test Markdown compilation and route safety
+        run: npm run test:handbook
+
       - name: Validate handbook
         run: npm run validate
 
@@ -106,7 +109,7 @@ jobs:
           EXPECTED_BUILD_SHA: ${{ github.sha }}
         run: |
           for attempt in 1 2 3 4 5; do
-            if npm run audit:live:puppeteer -- --url "$LIVE_GUIDE_URL" --expected-sha "$EXPECTED_BUILD_SHA"; then
+            if npm run audit:live:puppeteer -- --url "$LIVE_GUIDE_URL" --expected-sha "$EXPECTED_BUILD_SHA" && npm run audit:live:handbook -- --url "$LIVE_GUIDE_URL" --expected-sha "$EXPECTED_BUILD_SHA"; then
               exit 0
             fi
             echo "Live audit attempt ${attempt} did not observe ${EXPECTED_BUILD_SHA}; waiting for Pages propagation"
@@ -119,6 +122,8 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: puppeteer-live-evidence
-          path: artifacts/puppeteer-live
+          path: |
+            artifacts/puppeteer-live
+            artifacts/handbook-audit/live
           if-no-files-found: error
           retention-days: 14

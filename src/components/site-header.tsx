@@ -54,7 +54,7 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-1 lg:ml-2">
           <ThemeToggle />
           <Button variant="ghost" size="icon" asChild>
-            <a href={`${REPOSITORY_URL}#readme`} aria-label="Read the full handbook on GitHub"><BookOpen aria-hidden="true" /></a>
+            <a href={`${import.meta.env.BASE_URL}handbook/`} aria-label="Browse the complete handbook"><BookOpen aria-hidden="true" /></a>
           </Button>
           <Button variant="secondary" size="sm" className="hidden sm:inline-flex" asChild>
             <a href={REPOSITORY_URL}><GitFork aria-hidden="true" /> GitHub</a>

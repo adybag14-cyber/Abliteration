@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { isReaderSource, readerUrl } from "./handbook-routing.js";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -21,5 +22,6 @@ export function cxxDownload(file: string) {
 }
 
 export function handbookUrl(path: string) {
+  if (isReaderSource(path.split("#")[0])) return readerUrl(path, import.meta.env.BASE_URL);
   return `${REPOSITORY_URL}/blob/main/${path}`;
 }

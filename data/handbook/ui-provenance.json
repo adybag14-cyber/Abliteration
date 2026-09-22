@@ -1,0 +1,25 @@
+{
+  "retrieved": "2026-09-22",
+  "components": [
+    {
+      "component": "dialog",
+      "source": "https://ui.shadcn.com/r/styles/new-york/dialog.json",
+      "registry_sha256": "e240f8eaa9e9e626dffa1a340469c6bace9c631e78b7b10e7d0f178a32a1c71c"
+    },
+    {
+      "component": "sheet",
+      "source": "https://ui.shadcn.com/r/styles/new-york/sheet.json",
+      "registry_sha256": "f9d5c635be7785736a4d716975fc3d34eecaf09552dd4805569fd989e56fda8a"
+    },
+    {
+      "component": "command",
+      "source": "https://ui.shadcn.com/r/styles/new-york/command.json",
+      "registry_sha256": "b2800b32e6dbfb403ff7735480b69116154a8dbc933674220daece55192a8aed"
+    },
+    {
+      "component": "breadcrumb",
+      "source": "https://ui.shadcn.com/r/styles/new-york/breadcrumb.json",
+      "registry_sha256": "617dfb02af217c0a8bd7fc1bc38dc739fe87570c7654408c6a6e6ebbf4084dce"
+    }
+  ]
+}

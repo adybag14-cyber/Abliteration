@@ -1,5 +1,7 @@
 # Abliteration — Complete Handbook
 
+**[Read the complete interactive handbook](https://adybag14-cyber.github.io/Abliteration/handbook/)** — dedicated chapter pages, searchable reference material, visual companions, and source-linked examples. [Website and contribution guide](docs/handbook-site.md).
+
 **Goal:** the most complete abliteration guide on the internet — every major **method**, **setup**, **bleeding-edge technique**, and **runnable script**, from Arditi 2024 through ORBA / COSMIC / SOM / SVD (2025–2026).
 
 Living handbook for **LLM abliteration** (weight-level refusal-direction surgery) plus **agentic security** stacks for factory firmware QA, pentest labs, and [CyberGym](https://cybergym.io) evaluation.

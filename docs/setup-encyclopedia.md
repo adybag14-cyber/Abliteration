@@ -14,7 +14,7 @@ One page for **OS × GPU × VRAM × tool**. Pair with [complete-curriculum.md](c
 | **12 GB** | 7B–8B 4-bit measure; 4B FP16 | low-vram or production + `bnb_4bit` |
 | **16–24 GB** | 8B–14B FP16 / 4-bit 20B+ sharded | `config.production.toml` |
 | **48–80 GB** | 32B dense / small MoE native | production + higher `n_trials` |
-| **Apple 16–36 GB unified** | Infer GGUF/MLX; surgery often off-box | [Apple Silicon](#apple-silicon) |
+| **Apple 16–36 GB unified** | Infer GGUF/MLX; surgery often off-box | [Apple Silicon](#macos-apple-silicon) |
 | **CPU only** | Infer Q4 GGUF; no comfortable Heretic | Hour 0 Stage 0.5, then Track C beginner (download) or rent GPU |
 
 ```powershell
