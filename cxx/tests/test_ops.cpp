@@ -386,11 +386,34 @@ void test_hostile_inputs_fail_closed() {
   fs::remove_all(tmp, ec);
 }
 
+void test_selective_operators() {
+  abliteration::Mat w(3, 2);
+  w.data = {3.f, 0.f, 4.f, 0.f, 2.f, 0.f};
+  abliteration::Vec r(3); r.data = {1.f, 0.f, 0.f};
+  auto out = abliteration::apply_norm_preserving(w, r);
+  expect(std::abs(out(0, 0)) < 1e-6f, "norm-preserving removes selected direction");
+  float norm = 0.f;
+  for (std::size_t i = 0; i < 3; ++i) norm += out(i, 0) * out(i, 0);
+  expect(std::abs(norm - 29.f) < 1e-4f, "norm-preserving retains original column norm");
+  expect(out(0, 1) == 0.f && out(1, 1) == 0.f, "zero columns stay zero");
+  bool threw = false;
+  w.data = {1.f, 0.f, 0.f, 0.f, 0.f, 0.f};
+  try { (void)abliteration::apply_norm_preserving(w, r); } catch (const std::invalid_argument&) { threw = true; }
+  expect(threw, "erased nonzero columns are rejected");
+  abliteration::Mat scores(4, 2); scores.data = {3.f, 2.f, 1.f, 2.f, 2.f, 0.f, 0.f, 3.f};
+  const auto layers = abliteration::select_layers(scores, 2);
+  expect(layers == std::vector<std::size_t>{0, 1}, "stable layer selection and tie break");
+  scores(0, 0) = 1.f; threw = false;
+  try { (void)abliteration::select_layers(scores, 2); } catch (const std::invalid_argument&) { threw = true; }
+  expect(threw, "duplicate layer ids rejected");
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
   if (argc > 0) abliteration::set_argv0(argv[0]);
   test_self_check_shared();
+  test_selective_operators();
   test_generated_dim();
   test_projection_kills_r();
   test_hook_property();
@@ -407,6 +430,6 @@ int main(int argc, char** argv) {
     std::cerr << fails << " test(s) failed\n";
     return 1;
   }
-  std::cout << "ok 12 suites (self-check + generated + hostile-input + empty-eval + shipped examples + exe paths + resolve_eval_jsonl + find_shipped_file)\n";
+  std::cout << "ok 13 suites (self-check + generated + hostile-input + empty-eval + shipped examples + exe paths + resolve_eval_jsonl + find_shipped_file)\n";
   return 0;
 }

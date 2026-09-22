@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { ArrowUpRight, BookOpen, CalendarDays, Search } from "lucide-react";
-import catalog from "../../sources/research/catalog-2026.json";
+import { latestResearchDate, researchPapers, researchSnapshots, type ResearchPaper } from "@/data/research";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { handbookUrl } from "@/lib/utils";
 
 type Area = "All" | "Mechanism" | "Intervention" | "Defense" | "Evaluation" | "Attack";
-type Paper = (typeof catalog.papers)[number];
+type Paper = ResearchPaper;
 
 const areas: Area[] = ["All", "Mechanism", "Intervention", "Defense", "Evaluation", "Attack"];
 const areaStyles: Record<Exclude<Area, "All">, string> = {
@@ -20,7 +20,7 @@ const areaStyles: Record<Exclude<Area, "All">, string> = {
 };
 
 function matches(paper: Paper, query: string) {
-  const haystack = [paper.id, paper.title, paper.area, paper.category, ...paper.authors].join(" ").toLocaleLowerCase();
+  const haystack = [paper.id, paper.title, paper.area, paper.category, paper.summary, paper.scope, ...paper.authors].join(" ").toLocaleLowerCase();
   return haystack.includes(query.toLocaleLowerCase().trim());
 }
 
@@ -28,11 +28,16 @@ export function ResearchExplorer() {
   const [area, setArea] = useState<Area>("All");
   const [query, setQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
+  const [snapshot, setSnapshot] = useState("All snapshots");
+  const [compared, setCompared] = useState<string[]>([]);
+  const [citationStatus, setCitationStatus] = useState("");
+  const snapshotPapers = useMemo(() => researchPapers.filter((paper) => snapshot === "All snapshots" || paper.snapshot === snapshot), [snapshot]);
+  const comparison = researchPapers.filter((paper) => compared.includes(paper.id));
 
-  const counts = useMemo(() => Object.fromEntries(areas.map((candidate) => [candidate, candidate === "All" ? catalog.papers.length : catalog.papers.filter((paper) => paper.area === candidate).length])), []);
+  const counts = useMemo(() => Object.fromEntries(areas.map((candidate) => [candidate, candidate === "All" ? snapshotPapers.length : snapshotPapers.filter((paper) => paper.area === candidate).length])), [snapshotPapers]);
   const filtered = useMemo(
-    () => catalog.papers.filter((paper) => (area === "All" || paper.area === area) && matches(paper, query)),
-    [area, query],
+    () => snapshotPapers.filter((paper) => (area === "All" || paper.area === area) && matches(paper, query)),
+    [area, query, snapshotPapers],
   );
   const visible = expanded || query.trim() || area !== "All" ? filtered : filtered.slice(0, 9);
 
@@ -47,8 +52,9 @@ export function ResearchExplorer() {
               <Input id="paper-search" value={query} onChange={(event) => setQuery(event.target.value)} className="pl-10" placeholder="Try refusal geometry, evaluation, or 2604.18901" />
             </div>
           </div>
-          <Button variant="secondary" asChild><a href={handbookUrl("docs/research-2026-update.md")}><BookOpen aria-hidden="true" /> Open annotated paper map</a></Button>
+          <Button variant="secondary" asChild><a href={handbookUrl("docs/research-september-2026.md")}><BookOpen aria-hidden="true" /> Open annotated paper map</a></Button>
         </div>
+        <div className="mt-4 flex flex-wrap items-center gap-3"><label htmlFor="research-snapshot" className="text-sm font-bold">Catalog snapshot</label><select id="research-snapshot" className="h-10 rounded-xl border border-input bg-background px-3 text-sm" value={snapshot} onChange={(event) => { setSnapshot(event.target.value); setArea("All"); setExpanded(false); }}>{researchSnapshots.map((date) => <option key={date}>{date}</option>)}</select><p className="text-xs text-muted-foreground">The original 50-paper snapshot is preserved. Fourteen additions include newer work and earlier gaps.</p></div>
         <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label="Filter papers by research area">
           {areas.map((candidate) => (
             <Button
@@ -69,8 +75,10 @@ export function ResearchExplorer() {
       </Card>
 
       <p className="mt-5 text-sm font-semibold text-muted-foreground" role="status" aria-live="polite">
-        {filtered.length} {filtered.length === 1 ? "paper" : "papers"} match · arXiv primary records · snapshot {catalog.snapshot_date}
+        {filtered.length} {filtered.length === 1 ? "paper" : "papers"} match · arXiv primary records · refreshed {latestResearchDate}
       </p>
+      {comparison.length > 0 && <Card className="mt-4 p-5"><div className="flex items-center justify-between gap-3"><h3 className="font-semibold">Compare research scope ({comparison.length}/3)</h3><Button size="sm" variant="ghost" onClick={() => setCompared([])}>Clear comparison</Button></div><div className="mt-4 grid gap-4 md:grid-cols-3">{comparison.map((paper) => <div key={paper.id} className="rounded-xl border border-border p-4"><p className="font-mono text-xs text-primary">{paper.id}</p><h4 className="mt-2 text-sm font-bold">{paper.title}</h4><p className="mt-3 text-sm leading-6 text-muted-foreground">{paper.scope ?? `${paper.area} study; consult the primary paper for its evaluated model set.`}</p><p className="mt-3 text-xs font-semibold">{paper.implementation ?? "Primary reference"}</p><p className="mt-2 text-xs leading-5 text-muted-foreground">{paper.implication ?? "The bibliography establishes relevance, not an implementation or a replication."}</p></div>)}</div></Card>}
+      <p role="status" aria-live="polite" className="mt-2 text-xs text-muted-foreground">{citationStatus}</p>
 
       {visible.length ? (
         <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -82,6 +90,9 @@ export function ResearchExplorer() {
               </div>
               <h3 className="mt-4 font-display text-lg font-semibold leading-6 tracking-tight">{paper.title}</h3>
               <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted-foreground">{paper.authors.join(", ")}</p>
+              {paper.summary && <p className="mt-3 text-sm leading-6 text-muted-foreground">{paper.summary}</p>}
+              {paper.implementation && <p className="mt-3 text-xs font-semibold text-primary">{paper.implementation === "reference-only" ? "Reference only · not reproduced here" : "Evaluation guidance"}</p>}
+              <div className="mt-4 flex flex-wrap gap-2"><Button size="sm" variant={compared.includes(paper.id) ? "default" : "outline"} aria-pressed={compared.includes(paper.id)} disabled={compared.length >= 3 && !compared.includes(paper.id)} onClick={() => setCompared((current) => current.includes(paper.id) ? current.filter((id) => id !== paper.id) : [...current, paper.id])} aria-label={`Compare ${paper.id}`}>Compare</Button><Button size="sm" variant="ghost" aria-label={`Copy citation for ${paper.id}`} onClick={async () => { try { await navigator.clipboard.writeText(`${paper.authors.join("; ")}. ${paper.title}. arXiv:${paper.id} (${paper.published}). ${paper.version_url ?? paper.url}`); setCitationStatus(`Citation for ${paper.id} copied.`); } catch { setCitationStatus("Clipboard unavailable. Open the primary record for its citation."); } }}>Copy citation</Button></div>
               <div className="mt-auto flex items-center justify-between gap-3 pt-5">
                 <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"><CalendarDays className="size-3.5" aria-hidden="true" /> {paper.published}</span>
                 <a className="inline-flex items-center gap-1 rounded-lg text-xs font-bold text-primary outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring" href={paper.url} target="_blank" rel="noreferrer">

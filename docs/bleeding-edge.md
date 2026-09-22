@@ -115,3 +115,7 @@ If KL is tiny and refusal barely moved, **stop raising `max_weight`**. Change th
 | Downloading a mystery “uncensored GGUF” | Unknown pipeline, no eval |
 
 Those can be **adjacent** (Jarvis QLoRA *after* surgery). They are not substitutes for Stages 2–3 of the curriculum.
+
+## September 2026 update
+
+[Additive research refresh](research-september-2026.md) includes LoMC, NeST, DDO, ART, and evaluation work. [Selective interventions](selective-methods-2026.md) distinguishes the implemented generic helpers from paper-specific algorithms. [MiniCPM5 study](minicpm5-selective-study.md) provides measured evidence.

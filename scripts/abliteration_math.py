@@ -10,7 +10,7 @@ from typing import Literal
 
 import torch
 
-Mode = Literal["arditi", "projected", "orba-directional", "orba-householder", "subspace"]
+Mode = Literal["arditi", "projected", "orba-directional", "orba-householder", "subspace", "norm-preserving"]
 
 
 def unit(v: torch.Tensor, dim: int = -1, eps: float = 1e-8) -> torch.Tensor:
@@ -80,6 +80,15 @@ def apply_subspace(weight: torch.Tensor, r_basis: torch.Tensor, alpha: float = 1
 
 
 def apply_mode(weight: torch.Tensor, r: torch.Tensor, mode: Mode, alpha: float = 1.0) -> torch.Tensor:
+    import math
+    if not math.isfinite(alpha) or not 0 <= alpha <= 2:
+        raise ValueError("alpha must be finite and in [0, 2]")
+    if weight.ndim != 2 or not torch.isfinite(weight).all() or not torch.isfinite(r).all():
+        raise ValueError("weights must be a finite matrix and directions must be finite")
+    if r.numel() == 0 or r.float().norm() <= 1e-8:
+        raise ValueError("direction must be nonzero")
+    if mode == "norm-preserving":
+        return apply_norm_preserving(weight, r if r.ndim == 1 else r[0], alpha)
     if mode in ("arditi", "projected", "orba-directional"):
         return apply_output_projection(weight, r if r.ndim == 1 else r[0], alpha)
     if mode == "orba-householder":
@@ -87,6 +96,24 @@ def apply_mode(weight: torch.Tensor, r: torch.Tensor, mode: Mode, alpha: float =
     if mode == "subspace":
         return apply_subspace(weight, r, alpha)
     raise ValueError(f"unknown mode {mode}")
+
+
+def apply_norm_preserving(weight: torch.Tensor, r: torch.Tensor, alpha: float = 1.0) -> torch.Tensor:
+    """Rank-one removal followed by original column-norm restoration.
+
+    This preserves column norms, not singular values or downstream capability.
+    A nonzero column erased by projection has no norm-preserving solution along
+    its remaining direction; reject that case rather than fabricate a vector.
+    """
+    if not 0 <= alpha <= 1:
+        raise ValueError("norm-preserving alpha must be in [0, 1]")
+    original = weight.float()
+    projected = apply_output_projection(original, r, alpha)
+    before, after = original.norm(dim=0), projected.norm(dim=0)
+    if ((before > 1e-8) & (after <= 1e-8)).any():
+        raise ValueError("projection erased a nonzero column; cannot preserve its norm")
+    scale = torch.where(before == 0, torch.ones_like(before), before / after.clamp_min(1e-8))
+    return (projected * scale).to(weight.dtype)
 
 
 def inference_ablate(h: torch.Tensor, r: torch.Tensor, alpha: float = 1.0) -> torch.Tensor:

@@ -1,0 +1,19 @@
+{
+  "verified_at": "2026-09-22",
+  "heretic": {
+    "repository": "https://github.com/p-e-w/heretic",
+    "release": "https://github.com/p-e-w/heretic/releases/tag/v1.4.0",
+    "latest_stable_tag": "v1.4.0",
+    "latest_pypi_version": "1.4.0",
+    "commit": "6ea3b8d778d047b4b3b7c5b843e21c5bea98ee8d",
+    "status": "existing stable pin reconfirmed; legacy source snapshots preserved",
+    "development_branch_policy": "An unreleased branch or model-card recipe does not replace a tested stable profile automatically."
+  },
+  "research_runtime": {
+    "torch": "2.13.0+cu130",
+    "transformers": "5.14.1",
+    "safetensors": "0.8.0",
+    "huggingface_hub": "1.24.0",
+    "status": "versions used in the local MiniCPM5 experiment, not a claim to be the newest available packages"
+  }
+}

@@ -11,6 +11,9 @@ import { MethodRadar } from "@/components/method-radar";
 import { PathFinder } from "@/components/path-finder";
 import { Reveal } from "@/components/reveal";
 import { ResearchExplorer } from "@/components/research-explorer";
+import { SelectiveLab } from "@/components/selective-lab";
+import { ResearchResults } from "@/components/research-results";
+import { researchPapers } from "@/data/research";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteHeader } from "@/components/site-header";
 import { StepGuide } from "@/components/step-guide";
@@ -81,7 +84,7 @@ export function App() {
                 <span className="flex items-center gap-2"><CheckCircle2 className="size-4 text-emerald-500" aria-hidden="true" /> Evidence before export</span>
               </div>
               <dl className="mt-10 grid max-w-xl grid-cols-3 divide-x divide-border rounded-2xl border border-border bg-card/75 py-4 shadow-sm backdrop-blur-sm">
-                <div className="px-3 text-center"><dt className="font-mono text-xl font-bold text-primary sm:text-2xl">50</dt><dd className="mt-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">new papers</dd></div>
+                <div className="px-3 text-center"><dt className="font-mono text-xl font-bold text-primary sm:text-2xl">{researchPapers.length}</dt><dd className="mt-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">primary records</dd></div>
                 <div className="px-3 text-center"><dt className="font-mono text-xl font-bold text-primary sm:text-2xl">9</dt><dd className="mt-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">release lanes</dd></div>
                 <div className="px-3 text-center"><dt className="font-mono text-xl font-bold text-primary sm:text-2xl">3</dt><dd className="mt-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">hard gates</dd></div>
               </dl>
@@ -129,6 +132,14 @@ export function App() {
           </div>
         </section>
 
+        <section id="selective" className="scroll-mt-36 border-y border-border bg-muted/25 py-20 lg:py-28">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <Reveal><SectionHeading eyebrow="September 2026 · selective interventions" title="A smaller edit. A clearer experiment." description="Explore how layer selection, tensor selection, and fine-tuning differ. Build an explicit edit plan for MiniCPM5-1B, then follow the measured researcher walkthrough." /></Reveal>
+            <Reveal className="mt-10"><SelectiveLab /></Reveal>
+            <div id="study" className="mt-10 scroll-mt-36"><ResearchResults /></div>
+          </div>
+        </section>
+
         <section id="steps" className="scroll-mt-28 border-y border-border bg-muted/35 py-20 lg:py-28">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <Reveal><SectionHeading eyebrow="Beginner workflow" title="Six steps. One proof at every handoff." description="Open each step for the why, the actions, and the evidence you should have before moving forward." /></Reveal>
@@ -152,7 +163,7 @@ export function App() {
 
         <section id="research" className="scroll-mt-36 py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal><SectionHeading eyebrow="Primary-source observatory" title="Fifty new papers, one navigable evidence map" description="Search the August 2026 arXiv snapshot across refusal mechanisms, interventions, defenses, attacks, and evaluation. Inclusion means method relevance—not independent replication." /></Reveal>
+            <Reveal><SectionHeading eyebrow="Primary-source observatory" title="A growing evidence map, with its history intact" description="Search 64 primary records, compare their scope, and copy versioned citations. The August snapshot remains available alongside 14 September additions; publication dates distinguish new papers from earlier gaps." /></Reveal>
             <Reveal className="mt-10"><ResearchExplorer /></Reveal>
           </div>
         </section>

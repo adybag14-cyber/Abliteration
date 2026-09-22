@@ -101,3 +101,7 @@ Set-Location abliterate-cxx-1.1.0
 Hour 0 is `guide` → `doctor` → `limits` → `self-check` → `demo`. Hour 0.5: `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`.
 
 Archives are named `abliterate-cxx-<os>-<arch>-<compiler>` so GCC and Clang never overwrite each other. `examples/` sits next to the binary (`doctor` finds them without `cd` if you keep that layout). The **MSVC** Windows nightly (`windows-x64-msvc`) is `/MT` (static CRT, no VC++ redistributable). The Clang Windows zip may still need the Universal CRT. `doctor` locates `examples/` from the real executable path.
+
+## Version 1.2 selective operators
+
+`select-layers --scores FILE --count K` returns deterministic calibration support. `apply --mode norm-preserving` restores column norms after rank-one projection. See [selection and failure semantics](selective-methods-2026.md). Real safetensors model inference and training use the companion Python toolkit.

@@ -1,0 +1,5 @@
+# Tested researcher runtime. For CPU CI install torch from the CPU wheel index.
+torch==2.13.0
+transformers==5.14.1
+safetensors==0.8.0
+huggingface-hub==1.24.0

@@ -18,7 +18,7 @@ Verify `SHA256SUMS` **before extraction**. These copy-ready paths download into 
 ```powershell
 $base = "https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly"
 $archive = "abliterate-cxx-windows-x64-msvc.zip"
-$destination = "abliterate-cxx-1.1.0"
+$destination = "abliterate-cxx-1.2.0"
 Invoke-WebRequest "$base/SHA256SUMS" -OutFile SHA256SUMS
 Invoke-WebRequest "$base/$archive" -OutFile $archive
 $expected = ((Select-String -Path SHA256SUMS -Pattern "  $archive$").Line -split "\s+")[0]
@@ -39,7 +39,7 @@ Set-Location $destination
 ```bash
 base="https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly"
 archive="abliterate-cxx-linux-x64-gcc16.tar.gz"
-destination="abliterate-cxx-1.1.0"
+destination="abliterate-cxx-1.2.0"
 curl --fail --location --remote-name "$base/SHA256SUMS"
 curl --fail --location --remote-name "$base/$archive"
 grep "  $archive$" SHA256SUMS | sha256sum --check --strict -
@@ -57,7 +57,7 @@ cd "$destination"
 ```bash
 base="https://github.com/adybag14-cyber/Abliteration/releases/download/cxx-nightly"
 archive="abliterate-cxx-macos-arm64-llvm.tar.gz"
-destination="abliterate-cxx-1.1.0"
+destination="abliterate-cxx-1.2.0"
 curl --fail --location --remote-name "$base/SHA256SUMS"
 curl --fail --location --remote-name "$base/$archive"
 grep "  $archive$" SHA256SUMS | shasum -a 256 --check -

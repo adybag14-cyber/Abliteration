@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
   <title id="title">Abliteration Field Guide</title>
-  <desc id="desc">Measure, test, edit, verify. Memory-safe C++26 lab and 50-paper evidence map.</desc>
+  <desc id="desc">Measure, test, edit, verify. Selective C++26 tools, MiniCPM5 study, and 64 primary references.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#17171f"/><stop offset="1" stop-color="#29224a"/></linearGradient>
     <linearGradient id="line" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#7658ff"/><stop offset="1" stop-color="#4ed4de"/></linearGradient>
@@ -18,8 +18,8 @@
   <text x="82" y="309" fill="#9d8aff" font-family="Inter, Segoe UI, sans-serif" font-size="69" font-weight="750">without the fog.</text>
   <text x="86" y="380" fill="#c6c3cf" font-family="Inter, Segoe UI, sans-serif" font-size="25">Measure → test → edit → verify</text>
   <rect x="84" y="447" width="292" height="58" rx="18" fill="#6a51e2"/>
-  <text x="112" y="483" fill="#ffffff" font-family="ui-monospace, monospace" font-size="19" font-weight="700">MEMORY-SAFE C++26 LAB</text>
+  <text x="112" y="483" fill="#ffffff" font-family="ui-monospace, monospace" font-size="19" font-weight="700">C++26 RESEARCH LAB</text>
   <rect x="392" y="447" width="254" height="58" rx="18" fill="#ffffff" fill-opacity=".08" stroke="#ffffff" stroke-opacity=".14"/>
-  <text x="420" y="483" fill="#ffffff" font-family="ui-monospace, monospace" font-size="19" font-weight="700">50-PAPER MAP</text>
+  <text x="420" y="483" fill="#ffffff" font-family="ui-monospace, monospace" font-size="19" font-weight="700">64-PAPER MAP</text>
   <text x="86" y="566" fill="#8e8b98" font-family="ui-monospace, monospace" font-size="18">adybag14-cyber.github.io/Abliteration</text>
 </svg>

@@ -35,6 +35,10 @@ for (const marker of [
 ]) assert(html.includes(marker), `index.html is missing ${marker}`);
 assert(!html.includes("%VITE_"), "index.html contains an unresolved Vite environment token");
 assert(!html.includes("__ABLITERATION_BUILD_SHA__"), "index.html contains an unresolved build SHA token");
+const linkedData = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
+assert(linkedData, "index.html has no structured-data payload");
+const linkedDataHash = createHash("sha256").update(linkedData).digest("base64");
+assert(html.includes(`'sha256-${linkedDataHash}'`), "structured data changed without updating its CSP hash");
 
 const assetDirectory = path.join(dist, "assets");
 const assets = readdirSync(assetDirectory).filter((name) => statSync(path.join(assetDirectory, name)).isFile());

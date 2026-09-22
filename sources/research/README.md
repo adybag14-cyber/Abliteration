@@ -58,3 +58,7 @@ Listed in `scripts/fetch-docs.mjs`. Offline files `sources/fetched/grimjim-proje
 |-------|-----|
 | Projected abliteration | [grimjim/projected-abliteration](https://huggingface.co/blog/grimjim/projected-abliteration) |
 | Norm-preserving biprojected | [grimjim/norm-preserving-biprojected-abliteration](https://huggingface.co/blog/grimjim/norm-preserving-biprojected-abliteration) |
+
+## September 2026 additive catalog
+
+[catalog-2026-09.json](catalog-2026-09.json) adds 14 verified primary records without replacing the August catalog or archived papers. [Annotated update](../../docs/research-september-2026.md). [Tooling recheck](tooling-2026-09.json).

@@ -2,10 +2,10 @@
   "@context": "https://schema.org",
   "@type": "TechArticle",
   "headline": "Abliteration Field Guide",
-  "description": "Evidence-led LLM abliteration with a memory-safe C++26 lab, verified nightlies, evaluation gates, and a 50-paper primary-source map.",
+  "description": "Evidence-led LLM abliteration with a C++26 research lab, verified nightlies, evaluation gates, and a 64-record primary-source map.",
   "url": "https://adybag14-cyber.github.io/Abliteration/",
   "mainEntityOfPage": "https://adybag14-cyber.github.io/Abliteration/",
-  "dateModified": "2026-08-23",
+  "dateModified": "2026-09-22",
   "isAccessibleForFree": true,
   "license": "https://www.apache.org/licenses/LICENSE-2.0",
   "author": {

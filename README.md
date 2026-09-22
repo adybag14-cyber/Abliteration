@@ -13,7 +13,28 @@ Living handbook for **LLM abliteration** (weight-level refusal-direction surgery
 
 > **New to the subject?** Open the [interactive Abliteration Field Guide](https://adybag14-cyber.github.io/Abliteration/#lab) — PathFinder defaults to the C++26 toy lab with the same unique nightly filenames. Then the six-step checklist, method spider diagram, searchable atlas (DIM / ORBA / COSMIC), and evaluation-gate simulator.
 
-The Pages guide now includes checksum-first commands for Windows, Linux, and macOS plus a searchable [50-paper 2026 primary-source observatory](https://adybag14-cyber.github.io/Abliteration/#research). Repository policy: [contributing](CONTRIBUTING.md) · [security](SECURITY.md) · [citation](CITATION.cff).
+The Pages guide now includes checksum-first commands for Windows, Linux, and macOS plus a searchable [64-record primary-source observatory](https://adybag14-cyber.github.io/Abliteration/#research). Repository policy: [contributing](CONTRIBUTING.md) · [security](SECURITY.md) · [citation](CITATION.cff).
+
+
+## September 2026: selective interventions and a measured MiniCPM5 example
+
+The original methods, references, and August 50-paper catalog remain available.
+This edition adds [14 primary records](docs/research-september-2026.md), a
+[selective-method guide](docs/selective-methods-2026.md), and an
+[executed MiniCPM5-1B study](docs/minicpm5-selective-study.md). The
+[shadcn/ui planner](https://adybag14-cyber.github.io/Abliteration/#selective) lets
+researchers select layers and tensor families, inspect parameter budgets, copy
+commands, compare methods, and read measured results with uncertainty.
+
+New tools: `selective-checkpoint.py inspect|plan|apply|verify`,
+`run-research-experiment.py`, and C++26 `select-layers` / `norm-preserving`.
+The example changes four of MiniCPM5's 219 tensors (1.89% of stored parameters),
+including an actual selected-tensor SFT control. Tensor digests verify that the
+remaining weights stay identical. This is not a verified 98% refusal-reduction
+claim or a dense-model reproduction of MoE-specific papers.
+
+Research toolkit: [RESEARCH-TOOLS.md](RESEARCH-TOOLS.md). The existing Heretic
+1.4.0 stable pin was rechecked against GitHub and PyPI; it remains current.
 
 ## What is abliteration?
 

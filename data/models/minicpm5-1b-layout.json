@@ -1,0 +1,26 @@
+{
+  "model_id": "openbmb/MiniCPM5-1B",
+  "revision": "87179e5c1f455ef22e6223592d2d61351b525bfc",
+  "layers": 24,
+  "total_parameters": 1080632832,
+  "total_tensors": 219,
+  "shards": 1,
+  "families": {
+    "o_proj": {
+      "shape": [
+        1536,
+        2048
+      ],
+      "parameters": 3145728,
+      "count": 24
+    },
+    "down_proj": {
+      "shape": [
+        1536,
+        4608
+      ],
+      "parameters": 7077888,
+      "count": 24
+    }
+  }
+}

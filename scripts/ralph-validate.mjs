@@ -25,7 +25,7 @@ function walkMd(dir, out = []) {
     const p = join(dir, e.name);
     if (e.isDirectory()) {
       const norm = p.replace(/\\/g, '/');
-      if (['node_modules', '.git', 'sources/zig-canonical', 'cxx/dist', 'cxx/build', 'cxx/ci-build'].some((x) => norm.includes(x))) continue;
+      if (['node_modules', '.git', 'artifacts/', 'sources/zig-canonical', 'cxx/dist', 'cxx/build', 'cxx/ci-build'].some((x) => norm.includes(x))) continue;
       walkMd(p, out);
     } else if (e.name.endsWith('.md')) out.push(p);
   }
@@ -438,6 +438,9 @@ function validateAdvancedToolTests() {
 }
 
 function validateResearch2026Catalog() {
+  const refresh = spawnSync('python', ['scripts/validate-research-refresh.py'], { cwd: root, encoding: 'utf8' });
+  if (refresh.status !== 0) err(`research refresh validation failed: ${refresh.stderr || refresh.stdout}`);
+
   const rel = 'sources/research/catalog-2026.json';
   let catalog;
   try {

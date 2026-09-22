@@ -75,10 +75,12 @@ def main() -> int:
     ap.add_argument(
         "--mode",
         default="projected",
-        choices=("arditi", "projected", "orba-directional", "orba-householder", "subspace"),
+        choices=("arditi", "projected", "orba-directional", "orba-householder", "subspace", "norm-preserving"),
     )
     ap.add_argument("--alpha", type=float, default=1.0)
     ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--layers", help="Explicit dense-Llama layer selection; enables verified selective export")
+    ap.add_argument("--modules", default="o_proj,down_proj", help="Selected route only: o_proj and/or down_proj")
     args = ap.parse_args()
 
     if args.self_test:
@@ -93,6 +95,14 @@ def main() -> int:
         return 2
 
     r = load_direction(args.direction)
+    if args.layers:
+        from checkpoint_tools import parse_layers, plan, sha256, write_candidate
+        selection = plan(args.weights, parse_layers(args.layers), args.modules.split(","))
+        report = write_candidate(args.weights, args.out, selection,
+                                 lambda name, tensor: apply_mode(tensor, r, args.mode, args.alpha),
+                                 provenance={"mode": args.mode, "alpha": args.alpha, "direction_sha256": sha256(args.direction)})
+        print(json.dumps({"changed_tensors": report["changed_tensor_count"], "unselected_tensors_identical": report["unselected_tensors_identical"]}))
+        return 0
     args.out.mkdir(parents=True, exist_ok=True)
     n = 0
     for shard in iter_shards(args.weights):

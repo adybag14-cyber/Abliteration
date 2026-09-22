@@ -8,6 +8,7 @@ import { REPOSITORY_URL } from "@/lib/utils";
 const navigation = [
   ["Lab", "#lab"],
   ["Path", "#path"],
+  ["Selective", "#selective"],
   ["Steps", "#steps"],
   ["Compare", "#compare"],
   ["Techniques", "#techniques"],

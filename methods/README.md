@@ -65,3 +65,7 @@ Before every permanent path: prepare contrasts with
 [contrast-set-design.md](contrast-set-design.md), require held-out causal evidence
 with [direction-diagnostics-and-localization.md](direction-diagnostics-and-localization.md),
 and bind outputs with [experiment provenance](../docs/experiment-provenance.md).
+
+## Selective tensor and layer routes (September 2026)
+
+[Selective method guide](../docs/selective-methods-2026.md) covers exact tensor plans, verified exports, norm-preserving projection, and selected-tensor SFT. [MiniCPM5-1B study](../docs/minicpm5-selective-study.md) records the tested support matrix and measured limitations.

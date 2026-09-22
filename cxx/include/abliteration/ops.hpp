@@ -155,6 +155,55 @@ inline void jacobi_eigen_symmetric(Mat& a, Mat& v, int max_sweeps = 64) {
   return apply_output_projection(w, u, 2.f);
 }
 
+// Restore each output-column norm after rank-one removal. This is not spectral
+// preservation and does not imply preservation of model quality.
+[[nodiscard]] inline Mat apply_norm_preserving(const Mat& w, const Vec& r, float alpha = 1.f) {
+  require_strength(alpha);
+  if (alpha > 1.f) throw std::invalid_argument("norm-preserving alpha must be in [0, 1]");
+  Mat out = apply_output_projection(w, r, alpha);
+  for (std::size_t j = 0; j < w.cols; ++j) {
+    double before = 0., after = 0.;
+    for (std::size_t i = 0; i < w.rows; ++i) {
+      before += static_cast<double>(w(i, j)) * w(i, j);
+      after += static_cast<double>(out(i, j)) * out(i, j);
+    }
+    if (before > 1e-16 && after <= 1e-16)
+      throw std::invalid_argument("projection erased a nonzero column; cannot preserve its norm");
+    const double scale = before == 0. ? 1. : std::sqrt(before / after);
+    for (std::size_t i = 0; i < w.rows; ++i) {
+      out(i, j) = static_cast<float>(out(i, j) * scale);
+      if (!std::isfinite(out(i, j))) throw std::invalid_argument("non-finite norm-preserving output");
+    }
+  }
+  return out;
+}
+
+// Calibration-only layer selection. Columns: zero-based layer id, nonnegative
+// score. Stable tie-breaking makes independently regenerated plans reproducible.
+[[nodiscard]] inline std::vector<std::size_t> select_layers(const Mat& scores, std::size_t count) {
+  if (scores.cols != 2 || scores.rows > 4096 || count == 0 || count > scores.rows)
+    throw std::invalid_argument("layer scores need two columns, <=4096 rows, and a valid count");
+  std::vector<std::pair<float, std::size_t>> ranked;
+  std::vector<bool> seen(4096, false);
+  for (std::size_t i = 0; i < scores.rows; ++i) {
+    const float id = scores(i, 0), score = scores(i, 1);
+    if (!std::isfinite(id) || !std::isfinite(score) || id < 0.f || id > 4095.f ||
+        std::floor(id) != id || score < 0.f)
+      throw std::invalid_argument("layer ids must be distinct integers in [0,4095]; scores must be finite and nonnegative");
+    const auto layer = static_cast<std::size_t>(id);
+    if (seen[layer]) throw std::invalid_argument("duplicate layer id");
+    seen[layer] = true;
+    ranked.emplace_back(score, layer);
+  }
+  std::ranges::sort(ranked, [](const auto& a, const auto& b) {
+    return a.first != b.first ? a.first > b.first : a.second < b.second;
+  });
+  std::vector<std::size_t> selected;
+  for (std::size_t i = 0; i < count; ++i) selected.push_back(ranked[i].second);
+  std::ranges::sort(selected);
+  return selected;
+}
+
 // Modified Gram–Schmidt on columns of A [m, k] → Q [m, k] with orthonormal columns
 [[nodiscard]] inline Mat qr_thin_columns(Mat a) {
   const std::size_t m = a.rows;
@@ -212,7 +261,7 @@ inline void jacobi_eigen_symmetric(Mat& a, Mat& v, int max_sweeps = 64) {
   return out;
 }
 
-enum class BakeMode { Arditi, Projected, OrbaDirectional, OrbaHouseholder, Subspace };
+enum class BakeMode { Arditi, Projected, OrbaDirectional, OrbaHouseholder, Subspace, NormPreserving };
 
 [[nodiscard]] inline BakeMode parse_bake_mode(std::string_view s) {
   if (s == "arditi") return BakeMode::Arditi;
@@ -220,6 +269,7 @@ enum class BakeMode { Arditi, Projected, OrbaDirectional, OrbaHouseholder, Subsp
   if (s == "orba-directional") return BakeMode::OrbaDirectional;
   if (s == "orba-householder") return BakeMode::OrbaHouseholder;
   if (s == "subspace") return BakeMode::Subspace;
+  if (s == "norm-preserving") return BakeMode::NormPreserving;
   throw std::invalid_argument("unknown bake mode");
 }
 
@@ -227,6 +277,7 @@ enum class BakeMode { Arditi, Projected, OrbaDirectional, OrbaHouseholder, Subsp
   switch (mode) {
     case BakeMode::Arditi:
     case BakeMode::Projected:
+    case BakeMode::NormPreserving:
     case BakeMode::OrbaDirectional: {
       Vec v(r.cols == w.rows ? r.cols : r.rows);
       if (r.rows == 1 && r.cols == w.rows) {
@@ -239,7 +290,7 @@ enum class BakeMode { Arditi, Projected, OrbaDirectional, OrbaHouseholder, Subsp
       } else {
         throw std::invalid_argument("apply_mode: r shape");
       }
-      return apply_output_projection(w, v, alpha);
+      return mode == BakeMode::NormPreserving ? apply_norm_preserving(w, v, alpha) : apply_output_projection(w, v, alpha);
     }
     case BakeMode::OrbaHouseholder: {
       Vec v(w.rows);

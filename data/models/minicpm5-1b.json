@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "model_id": "openbmb/MiniCPM5-1B",
+  "revision": "87179e5c1f455ef22e6223592d2d61351b525bfc",
+  "verified_at": "2026-09-22",
+  "source": "https://huggingface.co/openbmb/MiniCPM5-1B",
+  "license": "apache-2.0",
+  "architecture": "LlamaForCausalLM",
+  "layers": 24,
+  "parameters": 1080632832,
+  "dtype": "bfloat16",
+  "thinking": false,
+  "note": "Pinned final instruction checkpoint, not the Base or SFT checkpoint. A model revision is not a claim that an intervention preserves quality."
+}
