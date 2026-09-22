@@ -191,7 +191,7 @@ Always A/B **same prompt** on F16 vs Q4 after export.
 
 Flow: patch llama.cpp `cvector-generator` → run on GGUF → `convert-into-measurements.py` → ablate HF shards → re-export GGUF.
 
-→ Full toolchain table: [../docs/toolchain-safetensors-gguf-lora.md](../docs/toolchain-safetensors-gguf-lora.md#gguf--measure--safetensors-experimental)
+→ Full toolchain table: [../docs/toolchain-safetensors-gguf-lora.md](../docs/toolchain-safetensors-gguf-lora.md#path-5--gguf-native-measure-low-vram-experimental)
 
 ---
 

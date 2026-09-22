@@ -3,6 +3,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import puppeteer from "puppeteer";
+import { navigateBrowser } from "./lib/browser-navigation.mjs";
 
 const defaultUrl = "https://adybag14-cyber.github.io/Abliteration/";
 const defaultOutput = path.resolve("artifacts/puppeteer-live");
@@ -89,7 +90,7 @@ async function auditViewport(browser, viewport) {
       hasTouch: viewport.hasTouch,
     });
     await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
-    const response = await page.goto(targetUrl, { waitUntil: "networkidle2", timeout: 45_000 });
+    const response = await navigateBrowser(page, targetUrl, 2);
     assert(response, "navigation did not return a response");
     assert(response.status() >= 200 && response.status() < 400, `live page returned HTTP ${response.status()}`);
     await page.evaluate(() => document.fonts.ready);
@@ -97,7 +98,8 @@ async function auditViewport(browser, viewport) {
       localStorage.clear();
       sessionStorage.clear();
     });
-    await page.reload({ waitUntil: "networkidle2", timeout: 45_000 });
+    await page.reload({ waitUntil: "load", timeout: 45_000 });
+    await page.waitForNetworkIdle({ idleTime: 500, concurrency: 2, timeout: 45_000 });
     await revealWholePage(page);
 
     const deploymentManifest = await page.evaluate(async () => {

@@ -211,7 +211,7 @@ export function App() {
             <h2 className="mt-7 font-display text-4xl font-semibold tracking-[-0.04em] text-balance sm:text-5xl">The guide gets you oriented.<br />The handbook takes you all the way.</h2>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-background/65">Open the repository for full methods, configs, source papers, evaluation corpora, and reproducibility tools.</p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <Button size="lg" variant="secondary" asChild><a href={REPOSITORY_URL}><GitFork aria-hidden="true" /> Explore the handbook</a></Button>
+              <Button size="lg" variant="secondary" asChild><a href={`${import.meta.env.BASE_URL}handbook/`}><BookOpen aria-hidden="true" /> Explore the handbook</a></Button>
               <Button size="lg" variant="outline" className="border-background/20 text-background hover:bg-background/10 hover:text-background" asChild><a href={handbookUrl("instructions/beginner-local-model-guide.md")}>Open the full beginner guide <ChevronRight aria-hidden="true" /></a></Button>
             </div>
           </Reveal>

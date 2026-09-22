@@ -52,21 +52,37 @@ function gzipBytes(names) {
   return names.reduce((total, name) => total + gzipSync(readFileSync(path.join(assetDirectory, name))).byteLength, 0);
 }
 
+function descendants(directory) {
+  return readdirSync(path.join(dist, directory), { withFileTypes: true }).flatMap((entry) => {
+    const relative = path.posix.join(directory, entry.name);
+    return entry.isDirectory() ? descendants(relative) : [relative];
+  });
+}
+const handbookFiles = [...descendants("handbook"), ...descendants("handbook-media")];
+const handbookPages = handbookFiles.filter((name) => name.endsWith(".html"));
+assert(handbookPages.length > 1, "handbook chapter pages are missing");
+
 const budgets = {
   htmlBytes: 48 * 1024,
   javascriptGzipBytes: 350 * 1024,
   cssGzipBytes: 90 * 1024,
+  chapterHtmlGzipBytes: 180 * 1024,
+  searchGzipBytes: 350 * 1024,
 };
 const sizes = {
   htmlBytes: Buffer.byteLength(html),
   javascriptGzipBytes: gzipBytes(javascript),
   cssGzipBytes: gzipBytes(stylesheets),
+  largestChapterHtmlGzipBytes: Math.max(...handbookPages.map((name) => gzipSync(readFileSync(path.join(dist, name))).byteLength)),
+  searchGzipBytes: gzipSync(readFileSync(path.join(dist, "handbook/search-index.json"))).byteLength,
 };
 assert(sizes.htmlBytes <= budgets.htmlBytes, `HTML budget exceeded: ${sizes.htmlBytes} > ${budgets.htmlBytes}`);
 assert(sizes.javascriptGzipBytes <= budgets.javascriptGzipBytes, `JavaScript gzip budget exceeded: ${sizes.javascriptGzipBytes} > ${budgets.javascriptGzipBytes}`);
 assert(sizes.cssGzipBytes <= budgets.cssGzipBytes, `CSS gzip budget exceeded: ${sizes.cssGzipBytes} > ${budgets.cssGzipBytes}`);
+assert(sizes.largestChapterHtmlGzipBytes <= budgets.chapterHtmlGzipBytes, "chapter HTML gzip budget exceeded");
+assert(sizes.searchGzipBytes <= budgets.searchGzipBytes, "full-text search gzip budget exceeded");
 
-const hashedFiles = required.concat(assets.map((name) => `assets/${name}`));
+const hashedFiles = required.concat(assets.map((name) => `assets/${name}`), handbookFiles);
 const files = hashedFiles.map((relative) => {
   const bytes = readFileSync(path.join(dist, relative));
   return { path: relative.replaceAll("\\", "/"), bytes: bytes.byteLength, sha256: createHash("sha256").update(bytes).digest("hex") };
@@ -85,6 +101,7 @@ else {
   assert(existsSync(manifestPath), "deployment-manifest.json is missing");
   const deployed = JSON.parse(readFileSync(manifestPath, "utf8"));
   assert.equal(deployed.commit, manifest.commit, "deployment manifest commit does not match this environment");
+  assert.deepEqual(deployed.files, files, "deployment manifest files no longer match the artifact");
 }
 
 console.log(`Pages artifact audit passed: JS ${sizes.javascriptGzipBytes} B gzip, CSS ${sizes.cssGzipBytes} B gzip, HTML ${sizes.htmlBytes} B`);

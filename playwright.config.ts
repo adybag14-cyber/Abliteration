@@ -37,6 +37,7 @@ export default defineConfig({
   projects: [
     {
       name: "desktop-chromium",
+      testIgnore: "**/audit-contract.spec.ts",
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1440, height: 1000 },
@@ -44,10 +45,17 @@ export default defineConfig({
     },
     {
       name: "mobile-chromium",
+      testIgnore: "**/audit-contract.spec.ts",
       use: {
         ...devices["iPhone 13"],
         browserName: "chromium",
       },
+    },
+    {
+      name: "deployment-audits",
+      testMatch: "**/audit-contract.spec.ts",
+      dependencies: ["desktop-chromium", "mobile-chromium"],
+      use: { ...devices["Desktop Chrome"] },
     },
   ],
 });
