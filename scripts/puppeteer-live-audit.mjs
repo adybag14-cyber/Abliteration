@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import puppeteer from "puppeteer";
@@ -16,6 +16,11 @@ const targetUrl = new URL(readArgument("--url", defaultUrl)).href;
 const outputDirectory = path.resolve(readArgument("--out", defaultOutput));
 const expectedBuildSha = readArgument("--expected-sha", process.env.EXPECTED_BUILD_SHA ?? "");
 const headed = process.argv.includes("--headed");
+const researchCatalogs = await Promise.all([
+  "../sources/research/catalog-2026.json",
+  "../sources/research/catalog-2026-09.json",
+].map(async (relative) => JSON.parse(await readFile(new URL(relative, import.meta.url), "utf8"))));
+const expectedResearchCount = researchCatalogs.reduce((total, catalog) => total + catalog.papers.length, 0);
 
 const viewports = [
   { name: "desktop", width: 1440, height: 1000, isMobile: false, hasTouch: false },
@@ -146,7 +151,7 @@ async function auditViewport(browser, viewport) {
     assert.equal(initial.mobileNavigationVisible, viewport.isMobile);
     assert.equal(initial.desktopNavigationVisible, !viewport.isMobile);
     assert.match(initial.contentSecurityPolicy ?? "", /default-src 'self'/);
-    assert.match(initial.researchStatus ?? "", /50 papers match/);
+    assert.match(initial.researchStatus ?? "", new RegExp(`^${expectedResearchCount} papers match`));
     assert.equal(deploymentManifest.schemaVersion, 1);
     assert.equal(deploymentManifest.commit, initial.buildSha, "manifest and document build SHAs differ");
     if (expectedBuildSha) {
