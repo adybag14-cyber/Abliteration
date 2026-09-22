@@ -44,7 +44,18 @@ export function sourceRoute(source) {
   return `handbook/${slug.split("/").map(encodeURIComponent).join("/")}/`;
 }
 
+export function readerBase(base = "/") {
+  if (base === "/") return "/";
+  if (base === "/Abliteration/" || base === "/Abliteration")
+    return "/Abliteration/";
+  throw new Error("Unsupported handbook base path");
+}
+
 export function readerUrl(source, base = "/") {
   const [file, fragment] = source.split("#", 2);
-  return `${base.endsWith("/") ? base : `${base}/`}${sourceRoute(file)}${fragment ? `#${fragment}` : ""}`;
+  let decoded = fragment;
+  try {
+    if (fragment) decoded = decodeURIComponent(fragment);
+  } catch {}
+  return `${readerBase(base)}${sourceRoute(file)}${decoded ? `#${encodeURIComponent(decoded)}` : ""}`;
 }

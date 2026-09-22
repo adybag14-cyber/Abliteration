@@ -55,7 +55,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { readerUrl } from "@/lib/handbook-routing.js";
+import { readerBase, readerUrl } from "@/lib/handbook-routing.js";
 import { ChapterCompanion } from "./lessons";
 import { ChapterIllustration } from "./visuals";
 import type {
@@ -210,7 +210,9 @@ function SearchDialog({
                 value={chapter.source}
                 className="handbook-search-result"
                 onSelect={() => {
-                  window.location.assign(readerUrl(chapter.source, boot.base));
+                  window.location.assign(
+                    readerUrl(chapter.source, readerBase(boot.base)),
+                  );
                 }}
               >
                 <FileText aria-hidden="true" />
@@ -251,7 +253,10 @@ function SearchDialog({
 function Sidebar({ boot }: { boot: HandbookBootstrap }) {
   return (
     <nav className="handbook-sidebar-content" aria-label="Handbook chapters">
-      <a className="sidebar-library-link" href={`${boot.base}handbook/`}>
+      <a
+        className="sidebar-library-link"
+        href={`${readerBase(boot.base)}handbook/`}
+      >
         <BookOpen aria-hidden="true" /> Browse the library{" "}
         <ArrowUpRight aria-hidden="true" />
       </a>
@@ -279,7 +284,7 @@ function Sidebar({ boot }: { boot: HandbookBootstrap }) {
               {chapters.map((chapter) => (
                 <a
                   key={chapter.source}
-                  href={readerUrl(chapter.source, boot.base)}
+                  href={readerUrl(chapter.source, readerBase(boot.base))}
                   aria-current={
                     chapter.source === boot.chapter?.source ? "page" : undefined
                   }
@@ -292,7 +297,7 @@ function Sidebar({ boot }: { boot: HandbookBootstrap }) {
         );
       })}
       <div className="sidebar-bottom">
-        <a href={boot.base}>
+        <a href={readerBase(boot.base)}>
           <ArrowLeft aria-hidden="true" /> Interactive field guide
         </a>
         <a href={repository}>
@@ -315,7 +320,10 @@ function Header({
   return (
     <header className="handbook-header">
       <div className="handbook-header-inner">
-        <a href={`${boot.base}handbook/`} className="handbook-brand">
+        <a
+          href={`${readerBase(boot.base)}handbook/`}
+          className="handbook-brand"
+        >
           <span className="handbook-logo">
             <Orbit aria-hidden="true" />
           </span>
@@ -323,7 +331,7 @@ function Header({
             Abliteration <strong>Handbook</strong>
           </span>
         </a>
-        <a href={boot.base} className="header-field-link">
+        <a href={readerBase(boot.base)} className="header-field-link">
           Field guide <ArrowUpRight aria-hidden="true" />
         </a>
         <div className="handbook-header-actions">
@@ -449,7 +457,7 @@ function Library({ boot }: { boot: HandbookBootstrap }) {
         {featured.map((chapter, index) => (
           <a
             key={chapter.source}
-            href={readerUrl(chapter.source, boot.base)}
+            href={readerUrl(chapter.source, readerBase(boot.base))}
             className="featured-chapter"
           >
             <span className="eyebrow">
@@ -543,7 +551,7 @@ function Library({ boot }: { boot: HandbookBootstrap }) {
             return (
               <a
                 key={chapter.source}
-                href={readerUrl(chapter.source, boot.base)}
+                href={readerUrl(chapter.source, readerBase(boot.base))}
                 className={`chapter-card accent-${chapter.collection}`}
               >
                 <span className="chapter-card-icon">
@@ -598,7 +606,7 @@ function Library({ boot }: { boot: HandbookBootstrap }) {
                 .filter((chapter) => chapter.collection === group.id)
                 .map((chapter) => (
                   <li key={chapter.source}>
-                    <a href={readerUrl(chapter.source, boot.base)}>
+                    <a href={readerUrl(chapter.source, readerBase(boot.base))}>
                       {chapter.title}
                     </a>
                   </li>
@@ -667,7 +675,7 @@ function ChapterReader({
     .map((source) => boot.catalog.find((item) => item.source === source))
     .filter(Boolean)
     .slice(0, 4) as ChapterSummary[];
-  const sourceUrl = `${repository}/blob/${boot.sourceCommit}/${chapter.source}`;
+  const sourceUrl = `${repository}/blob/${encodeURIComponent(boot.sourceCommit)}/${chapter.source.split("/").map(encodeURIComponent).join("/")}`;
   useEffect(() => {
     try {
       const stored = JSON.parse(localStorage.getItem(progressKey) || "[]");
@@ -865,14 +873,14 @@ function ChapterReader({
         <Breadcrumb className="chapter-breadcrumbs">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href={`${boot.base}handbook/`}>
+              <BreadcrumbLink href={`${readerBase(boot.base)}handbook/`}>
                 Handbook
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink
-                href={`${boot.base}handbook/?collection=${chapter.collection}`}
+                href={`${readerBase(boot.base)}handbook/?collection=${encodeURIComponent(chapter.collection)}`}
               >
                 {group.title}
               </BreadcrumbLink>
@@ -1063,7 +1071,10 @@ function ChapterReader({
             <h2>Follow the ideas into the next chapter.</h2>
             <div>
               {related.map((item) => (
-                <a key={item.source} href={readerUrl(item.source, boot.base)}>
+                <a
+                  key={item.source}
+                  href={readerUrl(item.source, readerBase(boot.base))}
+                >
                   <span>{item.title}</span>
                   <ArrowUpRight aria-hidden="true" />
                 </a>
@@ -1074,7 +1085,10 @@ function ChapterReader({
         <nav className="chapter-pagination" aria-label="Adjacent chapters">
           {adjacent.map((item, index) =>
             item ? (
-              <a key={item.source} href={readerUrl(item.source, boot.base)}>
+              <a
+                key={item.source}
+                href={readerUrl(item.source, readerBase(boot.base))}
+              >
                 <small>
                   {index === 0 ? "Previous" : "Next"} in {group.title}
                 </small>
@@ -1130,14 +1144,18 @@ export function HandbookApp({ boot }: { boot: HandbookBootstrap }) {
         <Library boot={boot} />
       )}
       <footer className="handbook-footer">
-        <a href={boot.base}>
+        <a href={readerBase(boot.base)}>
           <Orbit aria-hidden="true" /> Abliteration Field Guide
         </a>
         <p>Source-preserving research documentation.</p>
         <div>
-          <a href={readerUrl("references.md", boot.base)}>Primary references</a>
+          <a href={readerUrl("references.md", readerBase(boot.base))}>
+            Primary references
+          </a>
           <a href={repository}>GitHub</a>
-          <a href={`${repository}/commit/${boot.sourceCommit}`}>
+          <a
+            href={`${repository}/commit/${encodeURIComponent(boot.sourceCommit)}`}
+          >
             Build {boot.buildId.slice(0, 7)}
           </a>
         </div>

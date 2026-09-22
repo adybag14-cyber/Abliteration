@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { createHighlighter } from "shiki";
 import { JSDOM } from "jsdom";
 import {
+  readerBase,
   isReaderSource,
   readerUrl,
   sourceRoute,
@@ -96,4 +97,20 @@ test("sanitized Markdown keeps code and unique headings without executing embedd
   } finally {
     highlighter.dispose();
   }
+});
+
+test("embedded metadata cannot turn navigation into a script or external base", () => {
+  for (const base of [
+    "javascript:alert(1)",
+    "//untrusted.example/",
+    "data:text/html,x",
+    "/elsewhere/",
+  ]) {
+    assert.throws(() => readerBase(base), /Unsupported/);
+    assert.throws(() => readerUrl("docs/theory.md", base), /Unsupported/);
+  }
+  assert.equal(
+    readerUrl("docs/theory.md#%22%3E%3Cscript%3E", "/"),
+    "/handbook/docs/theory/#%22%3E%3Cscript%3E",
+  );
 });
