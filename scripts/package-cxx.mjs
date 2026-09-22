@@ -71,6 +71,8 @@ copyFileSync(join(root, 'cxx', 'GETTING-STARTED.md'), join(pkgDir, 'GETTING-STAR
 copyFileSync(join(root, 'cxx', 'INSTALL.txt'), join(pkgDir, 'INSTALL.txt'));
 copyFileSync(join(root, 'LICENSE'), join(pkgDir, 'LICENSE'));
 copyFileSync(join(root, 'docs', 'cxx26-platform.md'), join(pkgDir, 'cxx26-platform.md'));
+copyFileSync(join(root, 'docs', 'selective-methods-2026.md'), join(pkgDir, 'selective-methods-2026.md'));
+copyFileSync(join(root, 'docs', 'minicpm5-selective-study.md'), join(pkgDir, 'minicpm5-selective-study.md'));
 copyFileSync(join(root, 'docs', 'cxx26-researcher-guide.md'), join(pkgDir, 'cxx26-researcher-guide.md'));
 const exSrc = join(root, 'cxx', 'examples');
 const exDst = join(pkgDir, 'examples');

@@ -94,12 +94,12 @@ describe("Abliteration Field Guide", () => {
     expect(screen.getByText("Linux commands copied to the clipboard.")).toBeInTheDocument();
   });
 
-  it("searches and facets the 50-paper primary-source snapshot", async () => {
+  it("searches and facets the combined and preserved primary-source snapshots", async () => {
     const user = userEvent.setup();
     render(<App />);
     const research = document.getElementById("research")!;
-    expect(within(research).getByText(/50 papers match/)).toBeInTheDocument();
-    expect(within(research).getByRole("button", { name: "Show all 50 papers" })).toBeInTheDocument();
+    expect(within(research).getByText(/64 papers match/)).toBeInTheDocument();
+    expect(within(research).getByRole("button", { name: "Show all 64 papers" })).toBeInTheDocument();
 
     const search = within(research).getByRole("textbox", { name: /Search titles, authors, IDs, or topics/i });
     await user.type(search, "2604.18901");
@@ -107,6 +107,8 @@ describe("Abliteration Field Guide", () => {
     expect(within(research).getByRole("heading", { name: /Harmful Intent as a Geometrically Recoverable Feature/ })).toBeInTheDocument();
 
     await user.clear(search);
+    await user.selectOptions(within(research).getByLabelText("Catalog snapshot"), "2026-08-23");
+    expect(within(research).getByText(/50 papers match/)).toBeInTheDocument();
     await user.click(within(research).getByRole("button", { name: /^Defense 11$/ }));
     expect(within(research).getByText(/11 papers match/)).toBeInTheDocument();
     expect(within(research).getAllByText("Defense").length).toBeGreaterThanOrEqual(1);

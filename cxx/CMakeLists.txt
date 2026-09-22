@@ -4,7 +4,7 @@ if(POLICY CMP0091)
   cmake_policy(SET CMP0091 NEW)
 endif()
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded" CACHE STRING "MSVC CRT: /MT" FORCE)
-project(abliterate-cxx VERSION 1.1.0 LANGUAGES CXX)
+project(abliterate-cxx VERSION 1.2.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_EXTENSIONS OFF)
 option(ABLITERATE_ENABLE_HARDENING "Enable platform exploit mitigations" ON)

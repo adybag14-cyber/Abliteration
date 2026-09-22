@@ -2,6 +2,16 @@
 
 ISO C++26 lab for refusal-direction math. **No GPU, no Python** for the first hour.
 
+## 1.2 selective research refresh
+
+- The macOS release lanes use pinned-major Homebrew LLVM 23; Linux and Windows Clang lanes retain LLVM 22.
+- Adds `select-layers --scores FILE --count K` with bounded, deterministic support selection and JSON output.
+- Adds `apply --mode norm-preserving`: rank-one removal plus column-norm restoration, with erased-column rejection.
+- Adds selective checkpoint planning/export/verification and selected-tensor SFT in the companion Python research toolkit.
+- Includes a pinned MiniCPM5-1B researcher example, disjoint data splits, tensor/shard digests, and measured aggregate results.
+- Preserves the original numerical modes and August research catalog; adds 14 primary references and an interactive shadcn/ui planner.
+- C++ handles numerical operators and plans. Real checkpoint inference, training, and serialization require the documented Python runtime.
+
 ## 1.1 safety and toolchain refresh
 
 - Certified release lanes now target GCC 16.2, LLVM/Clang 22 (including verified LLVM 22.1.8 on Windows), and MSVC 14.51 on the Visual Studio 2026 image.

@@ -58,7 +58,7 @@ const flags = [
   '-fstack-protector-strong',
   '-O2',
   `-I${inc}`,
-  '-DABLITERATE_VERSION="1.1.0"',
+  '-DABLITERATE_VERSION="1.2.0"',
   `-DABLITERATE_TARGET="${target}"`,
 ];
 

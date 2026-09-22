@@ -3,6 +3,7 @@ node_modules/
 dist/
 coverage/
 artifacts/playwright/
+artifacts/research-package/
 artifacts/puppeteer-live*/
 playwright-report/
 test-results/
@@ -21,6 +22,8 @@ venv/
 *.pth
 checkpoints/
 models/
+!data/models/
+!data/models/*.json
 outputs/
 runs/
 

@@ -182,3 +182,7 @@ python scripts/eval-refusal-rate.py --responses-jsonl <your-generations.jsonl>
 ```
 
 Corpora: [../docs/evaluation.md](../docs/evaluation.md).
+
+## Selective checkpoint experiment
+
+Follow the [MiniCPM5 measured walkthrough](../docs/minicpm5-selective-study.md) for pinned download, calibration, all-layer and selected controls, selected-tensor SFT, and independent tensor verification. The [planner](https://adybag14-cyber.github.io/Abliteration/#selective) emits exact tensor-selection commands.

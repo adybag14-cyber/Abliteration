@@ -236,3 +236,7 @@ Full pipeline including eval corpora and runtime gate: [instructions/agentic-sec
 - **Gradient RDO** — optimized refusal direction (TUM 2025)
 - **Multi-direction subspace** — PCA / category-specific directions
 - **Context7** — up-to-date dependency docs → [docs/context7.md](docs/context7.md)
+
+## Additive September 2026 refresh
+
+See the [14-paper annotated update](docs/research-september-2026.md), [versioned catalog](sources/research/catalog-2026-09.json), and [selective-method guide](docs/selective-methods-2026.md). The previous bibliography and snapshots are preserved.

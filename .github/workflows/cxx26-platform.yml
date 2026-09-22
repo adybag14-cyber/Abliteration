@@ -2,7 +2,7 @@ name: C++26 platform — multi-target build, test, deploy
 
 # Native ISO C++26 binaries. A target that cannot compile -std=c++26 fails.
 # Linux x64/arm64 (GCC 16.2 + Clang 22), Windows x64 (Clang 22 + MSVC 14.51),
-# Windows arm64 (VS 2026 MSVC, preview runner), macOS arm64 + x64 (Homebrew LLVM 22).
+# Windows arm64 (VS 2026 MSVC, preview runner), macOS arm64 + x64 (Homebrew LLVM 23).
 
 on:
   push:
@@ -14,6 +14,15 @@ on:
       - "scripts/package-cxx.mjs"
       - "scripts/smoke-cxx-package.mjs"
       - "scripts/run-cxx-*.mjs"
+      - "scripts/*research*"
+      - "scripts/*selective*"
+      - "scripts/checkpoint_tools.py"
+      - "scripts/abliteration_math.py"
+      - "data/experiments/**"
+      - "data/models/**"
+      - "sources/research/catalog-2026-09.json"
+      - "requirements-research.txt"
+      - "RESEARCH-TOOLS.md"
       - ".github/workflows/cxx26-platform.yml"
   pull_request:
     branches: [main]
@@ -23,6 +32,15 @@ on:
       - "scripts/package-cxx.mjs"
       - "scripts/smoke-cxx-package.mjs"
       - "scripts/run-cxx-*.mjs"
+      - "scripts/*research*"
+      - "scripts/*selective*"
+      - "scripts/checkpoint_tools.py"
+      - "scripts/abliteration_math.py"
+      - "data/experiments/**"
+      - "data/models/**"
+      - "sources/research/catalog-2026-09.json"
+      - "requirements-research.txt"
+      - "RESEARCH-TOOLS.md"
       - ".github/workflows/cxx26-platform.yml"
   workflow_dispatch:
 
@@ -138,6 +156,7 @@ jobs:
           - name: macos-arm64-llvm
             os: macos-latest
             compiler: clang++
+            llvm: "23"
             brew_llvm: true
             triple: macos-arm64
             osx_arch: arm64
@@ -145,6 +164,7 @@ jobs:
           - name: macos-x64-llvm
             os: macos-latest
             compiler: clang++
+            llvm: "23"
             brew_llvm: true
             triple: macos-x64
             osx_arch: x86_64
@@ -203,10 +223,10 @@ jobs:
         if: matrix.brew_llvm
         run: |
           brew update
-          brew install llvm
-          echo "$(brew --prefix llvm)/bin" >> "$GITHUB_PATH"
-          echo "CC=$(brew --prefix llvm)/bin/clang" >> "$GITHUB_ENV"
-          echo "CXX=$(brew --prefix llvm)/bin/clang++" >> "$GITHUB_ENV"
+          brew install llvm@${{ matrix.llvm }}
+          echo "$(brew --prefix llvm@${{ matrix.llvm }})/bin" >> "$GITHUB_PATH"
+          echo "CC=$(brew --prefix llvm@${{ matrix.llvm }})/bin/clang" >> "$GITHUB_ENV"
+          echo "CXX=$(brew --prefix llvm@${{ matrix.llvm }})/bin/clang++" >> "$GITHUB_ENV"
 
       - name: Install Ninja (Linux apt — works on x64 and arm64)
         if: runner.os == 'Linux'
@@ -266,7 +286,7 @@ jobs:
             grep -E 'Version 19\.5[1-9]' compiler.txt
           else
             "${CXX:-clang++}" --version | tee compiler.txt
-            grep -E 'clang version 22\.' compiler.txt
+            grep -E 'clang version ${{ matrix.llvm }}\.' compiler.txt
           fi
 
       - name: Configure and build (Clang)
@@ -353,9 +373,44 @@ jobs:
           CXX: clang++-22
         run: npm run cxx:sanitize
 
+  research-tools:
+    name: Research toolkit - CPU integrity and package
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Install bounded CPU test dependencies
+        run: |
+          python -m pip install torch==2.13.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install safetensors==0.8.0 numpy==2.2.6
+      - name: Validate primary-source catalogs and reported results
+        run: python scripts/validate-research-refresh.py
+      - name: Verify selective export, frozen parameters, and corruption detection
+        run: python scripts/test-selective-tools.py
+      - name: Package researcher tools with a source manifest
+        run: node scripts/package-research-tools.mjs
+      - name: Smoke the extracted toolkit
+        run: |
+          mkdir /tmp/research-toolkit-smoke
+          tar -xzf artifacts/research-package/abliteration-research-tools-1.2.0.tar.gz -C /tmp/research-toolkit-smoke
+          cd /tmp/research-toolkit-smoke/abliteration-research-tools-1.2.0
+          python scripts/test-selective-tools.py
+          python scripts/selective-checkpoint.py --help
+      - uses: actions/upload-artifact@v7
+        with:
+          name: abliterate-research-tools
+          path: artifacts/research-package/*.tar.gz
+          if-no-files-found: error
+          retention-days: 30
+
   publish:
     name: Deploy multi-platform packages
-    needs: [linux-gcc, hosted, sanitizers]
+    needs: [linux-gcc, hosted, sanitizers, research-tools]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
     runs-on: ubuntu-24.04
     permissions:
@@ -367,7 +422,7 @@ jobs:
       - uses: actions/download-artifact@v8
         with:
           path: collected
-          pattern: abliterate-cxx-*
+          pattern: abliterate-*
       - name: Flatten release directory (fail on name collisions)
         run: |
           mkdir -p release
@@ -417,5 +472,5 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create "${GITHUB_REF_NAME}" release/* \
-            --title "abliterate-cxx ${GITHUB_REF_NAME}" \
-            --notes "Multi-platform ISO C++26 abliterate-cxx. docs/cxx26-platform.md"
+            --title "Abliteration ${GITHUB_REF_NAME} - C++26 and selective research toolkit" \
+            --notes-file cxx/RELEASE-NOTES.md

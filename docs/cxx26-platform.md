@@ -64,8 +64,8 @@ On every `cxx/**` change (and on `main`), Actions **builds, dialect-checks (`cpl
 | `windows-x64-clang22` | `windows-2025-vs2026` | SHA-256-verified, cached LLVM 22.1.8 archive + MSVC STL |
 | `windows-x64-msvc` | `windows-2025-vs2026` | MSVC 14.51 `/std:c++latest` + `/Zc:__cplusplus` |
 | `windows-arm64-msvc` | `windows-11-vs2026-arm` | MSVC 14.51 cross-targeting ARM64 (preview runner) |
-| `macos-arm64-llvm` | `macos-latest` | Homebrew LLVM |
-| `macos-x64-llvm` | `macos-latest` + `-arch x86_64` (Rosetta test) | Homebrew LLVM |
+| `macos-arm64-llvm` | `macos-latest` | Homebrew LLVM 23 (`llvm@23`) |
+| `macos-x64-llvm` | `macos-latest` + `-arch x86_64` (Rosetta test) | Homebrew LLVM 23 (`llvm@23`) |
 
 A target that cannot prove `cplusplus=202400` **fails**. There is no C++20 fallback.
 
@@ -101,3 +101,7 @@ Set-Location abliterate-cxx-1.1.0
 Hour 0 is `guide` → `doctor` → `limits` → `self-check` → `demo`. Hour 0.5: `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`.
 
 Archives are named `abliterate-cxx-<os>-<arch>-<compiler>` so GCC and Clang never overwrite each other. `examples/` sits next to the binary (`doctor` finds them without `cd` if you keep that layout). The **MSVC** Windows nightly (`windows-x64-msvc`) is `/MT` (static CRT, no VC++ redistributable). The Clang Windows zip may still need the Universal CRT. `doctor` locates `examples/` from the real executable path.
+
+## Version 1.2 selective operators
+
+`select-layers --scores FILE --count K` returns deterministic calibration support. `apply --mode norm-preserving` restores column norms after rank-one projection. See [selection and failure semantics](selective-methods-2026.md). Real safetensors model inference and training use the companion Python toolkit.

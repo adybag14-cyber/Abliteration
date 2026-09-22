@@ -81,10 +81,11 @@ void usage() {
       << '\n'
       << ui::bold() << "Operators" << ui::reset() << '\n'
       << "  estimate --mode dim|projected|cosmic|svd --bad FILE --good FILE [--rank K] [--out r.txt]\n"
-      << "  apply    --mode arditi|orba-directional|orba-householder|subspace\n"
+      << "  apply    --mode arditi|orba-directional|orba-householder|subspace|norm-preserving\n"
       << "           --weight W.txt --direction r.txt [--alpha 1] [--out W2.txt]\n"
       << "  hook     --h H.txt --direction r.txt [--alpha 1]\n"
       << "  eval     --jsonl generations.jsonl\n"
+      << "  select-layers --scores FILE --count K  (calibration scores; JSON plan)\n"
       << "  version\n"
       << '\n'
       << ui::dim()
@@ -201,6 +202,9 @@ int cmd_recipes() {
       << "  2026  RFM-AGOP 2607.02396           Winninger RFM; reported GPU estimator; not this bin\n"
       << "  2026  Code LLMs 2606.05396          removes *won't*, not *can't*\n"
       << "  2026  Task over-refuse 2603.27518   over-refuse is task-local — factory DIM not safety DIM\n\n"
+      << "  2026  Selective tensor study       select-layers; Python checkpoint toolkit for MiniCPM5\n"
+      << "  2026  Column norm restoration     apply --mode norm-preserving (not spectrum preservation)\n"
+      << "  2026  LoMC / NeST / DDO           scoped primary references; not implementations in this binary\n\n"
       << ui::bold() << "Stay in this binary" << ui::reset() << " until demo + eval on toys is boring.\n"
       << ui::bold() << "Leave for GPU" << ui::reset() << " when you need a real instruct checkpoint.\n";
   ui::next("abliterate-cxx why dim");
@@ -213,6 +217,18 @@ int cmd_why(std::string_view mode) {
     std::cout << "Arditi 2024: r = normalize(mean(h_bad) − mean(h_good)).\n"
                  "Subtract then normalize (Lai 2026: keep magnitude contrast).\n";
     ui::next("abliterate-cxx estimate --mode dim --bad examples/tiny-bad.txt --good examples/tiny-good.txt");
+    return 0;
+  }
+  if (mode == "norm-preserving") {
+    std::cout << "Project a rank-one component, then restore each original column norm.\n"
+                 "Rejects an erased nonzero column. Does not preserve singular values or guarantee utility.\n";
+    ui::next("abliterate-cxx apply --mode norm-preserving --weight examples/tiny-W.txt --direction r.txt --alpha 0.8");
+    return 0;
+  }
+  if (mode == "select-layers") {
+    std::cout << "Select top calibration scores with lower-layer-id tie breaking.\n"
+                 "Selection is a diagnostic plan, not proof of causal refusal control.\n";
+    ui::next("abliterate-cxx select-layers --scores examples/layer-scores.txt --count 2");
     return 0;
   }
   if (mode == "projected") {
@@ -533,6 +549,23 @@ int cmd_eval(int argc, char** argv) {
   }
 }
 
+int cmd_select_layers(int argc, char** argv) {
+  const auto file = arg_val(argc, argv, "--scores");
+  if (file.empty()) throw std::invalid_argument("--scores is required");
+  auto scores = abliteration::load_mat(std::string(file));
+  if (!scores) throw std::invalid_argument(scores.error());
+  auto count = int_arg(argc, argv, "--count", 2, 1, 4096);
+  if (!count) throw std::invalid_argument(count.error());
+  const auto selected = abliteration::select_layers(*scores, static_cast<std::size_t>(*count));
+  std::cout << "{\"selection_source\":\"calibration_scores\",\"layers\":[";
+  for (std::size_t i = 0; i < selected.size(); ++i) {
+    if (i) std::cout << ',';
+    std::cout << selected[i];
+  }
+  std::cout << "],\"count\":" << selected.size() << "}\n";
+  return 0;
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -594,6 +627,7 @@ int main(int argc, char** argv) {
     if (cmd == "apply") return cmd_apply(argc, argv);
     if (cmd == "hook") return cmd_hook(argc, argv);
     if (cmd == "eval") return cmd_eval(argc, argv);
+    if (cmd == "select-layers") return cmd_select_layers(argc, argv);
     ui::die_hint("unknown command: " + std::string(cmd), "abliterate-cxx guide");
     return 2;
   } catch (const std::bad_alloc&) {

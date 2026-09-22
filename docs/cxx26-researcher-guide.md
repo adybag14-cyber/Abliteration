@@ -37,8 +37,8 @@ Pick **one unique filename**. GCC and Clang no longer share a name.
 The zip is flattened: `abliterate-cxx.exe` sits next to `GETTING-STARTED.md` at archive root. Use the checksum-first PowerShell block in [cxx/GETTING-STARTED.md](../cxx/GETTING-STARTED.md); it downloads `SHA256SUMS`, rejects a mismatch, and refuses to overwrite an existing destination.
 
 ```powershell
-Expand-Archive -Path abliterate-cxx-windows-x64-msvc.zip -DestinationPath abliterate-cxx-1.1.0
-Set-Location abliterate-cxx-1.1.0
+Expand-Archive -Path abliterate-cxx-windows-x64-msvc.zip -DestinationPath abliterate-cxx-1.2.0
+Set-Location abliterate-cxx-1.2.0
 .\abliterate-cxx.exe guide
 .\abliterate-cxx.exe doctor
 .\abliterate-cxx.exe limits
@@ -51,8 +51,8 @@ If you used `Expand-Archive` without `-DestinationPath`, `cd` into the zip-stem 
 **Linux x64 / arm64**
 
 ```bash
-mkdir abliterate-cxx-1.1.0 && tar -xzf abliterate-cxx-linux-x64-gcc16.tar.gz -C abliterate-cxx-1.1.0
-cd abliterate-cxx-1.1.0
+mkdir abliterate-cxx-1.2.0 && tar -xzf abliterate-cxx-linux-x64-gcc16.tar.gz -C abliterate-cxx-1.2.0
+cd abliterate-cxx-1.2.0
 ./abliterate-cxx guide
 ./abliterate-cxx doctor
 ./abliterate-cxx limits
@@ -63,8 +63,8 @@ cd abliterate-cxx-1.1.0
 **macOS arm64 / x64**
 
 ```bash
-mkdir abliterate-cxx-1.1.0 && tar -xzf abliterate-cxx-macos-arm64-llvm.tar.gz -C abliterate-cxx-1.1.0
-cd abliterate-cxx-1.1.0
+mkdir abliterate-cxx-1.2.0 && tar -xzf abliterate-cxx-macos-arm64-llvm.tar.gz -C abliterate-cxx-1.2.0
+cd abliterate-cxx-1.2.0
 xattr -d com.apple.quarantine ./abliterate-cxx 2>/dev/null || true
 ./abliterate-cxx guide
 ./abliterate-cxx doctor
