@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import puppeteer from "puppeteer";
-import { navigateBrowser } from "./lib/browser-navigation.mjs";
+import { dismissBrowserDialog, navigateBrowser } from "./lib/browser-navigation.mjs";
 
 function option(name, fallback) {
   const index = process.argv.indexOf(name);
@@ -159,13 +159,13 @@ try {
           .querySelector('[role="option"]')
           ?.textContent.includes("MiniCPM5"),
       );
-      await page.keyboard.press("Escape");
+      await dismissBrowserDialog(page, ".handbook-search-dialog");
       if (viewport.name === "mobile") {
         await page.click('button[aria-label="Open handbook navigation"]');
         await page.waitForSelector(
           '[role="dialog"] nav[aria-label="Handbook chapters"]',
         );
-        await page.keyboard.press("Escape");
+        await dismissBrowserDialog(page, ".handbook-mobile-sheet");
       }
       await navigate(page, "handbook/");
       await page.screenshot({

@@ -19,3 +19,14 @@ export async function navigateBrowser(page, destination, concurrency = 0) {
   });
   return response;
 }
+
+/** Dismiss a modal before interacting with the page underneath it. */
+export async function dismissBrowserDialog(page, selector) {
+  await page.keyboard.press("Escape");
+  // Radix can retain the closing portal and its pointer lock after Escape.
+  // Wait for both before a fast subsequent click can hit the page underneath.
+  await page.waitForSelector(selector, { hidden: true });
+  await page.waitForFunction(
+    () => getComputedStyle(document.body).pointerEvents !== "none",
+  );
+}

@@ -8,6 +8,39 @@ import path from "node:path";
 // after the preceding one has closed it.
 test.describe.configure({ mode: "serial" });
 
+test("Puppeteer waits for a dismissed modal before clicking the page", async () => {
+  const { default: puppeteer } = await import("puppeteer");
+  const { dismissBrowserDialog } = await import("../scripts/lib/browser-navigation.mjs");
+  const browser = await puppeteer.launch({
+    headless: true,
+    executablePath: chromium.executablePath(),
+    args: process.env.CI ? ["--no-sandbox"] : [],
+  });
+  try {
+    const page = await browser.newPage();
+    await page.setContent(`
+      <button id="menu" onclick="this.textContent = 'Navigation opened'">Open navigation</button>
+      <div id="closing-dialog" role="dialog"
+        style="position:fixed;inset:0;z-index:10;background:rgba(0,0,0,.2);pointer-events:auto"></div>
+      <script>
+        document.body.style.pointerEvents = 'none';
+        document.addEventListener('keydown', event => {
+          if (event.key !== 'Escape') return;
+          setTimeout(() => {
+            document.querySelector('#closing-dialog').remove();
+            setTimeout(() => { document.body.style.pointerEvents = ''; }, 100);
+          }, 600);
+        });
+      </script>
+    `);
+    await dismissBrowserDialog(page, "#closing-dialog");
+    await page.click("#menu");
+    expect(await page.$eval("#menu", element => element.textContent)).toBe("Navigation opened");
+  } finally {
+    await browser.close();
+  }
+});
+
 test("the production Puppeteer audit accepts the built guide before deployment", async ({
   baseURL,
 }, testInfo) => {
