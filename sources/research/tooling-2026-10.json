@@ -1,0 +1,62 @@
+{
+  "verified_at": "2026-10-05",
+  "claim_policy": "Release pins, development observations and unreplicated publisher claims are separate.",
+  "sources": [
+    {
+      "id": "heretic-stable",
+      "repository": "https://github.com/p-e-w/heretic",
+      "revision": "6ea3b8d778d047b4b3b7c5b843e21c5bea98ee8d",
+      "kind": "official-release",
+      "tag": "v1.4.0",
+      "release_url": "https://github.com/p-e-w/heretic/releases/tag/v1.4.0",
+      "pypi_version": "1.4.0",
+      "pypi_metadata_sha256": "92e174c10f15539410a5684fd925036c5fff77c49adaeafb17f487edc55b8427",
+      "status": "existing stable pin reconfirmed"
+    },
+    {
+      "id": "heretic-development",
+      "repository": "https://github.com/p-e-w/heretic",
+      "revision": "208c0ca35b3feade91dc74755cb80b529affa325",
+      "kind": "development-source",
+      "commit_date": "2026-10-04",
+      "status": "reviewed source; not installed or benchmarked here",
+      "change_url": "https://github.com/p-e-w/heretic/pull/476",
+      "files": [
+        {
+          "path": "src/heretic/modifiers/ara.py",
+          "sha256": "0f1442d628011615594298a7fd08620d202a299e3b28afca3440e58cc956deb9"
+        },
+        {
+          "path": "README.md",
+          "sha256": "5185664bcfbd2b5b06f27e914455daf3fde43220c694db67d356f811046c6498"
+        }
+      ]
+    },
+    {
+      "id": "sumandora-reference",
+      "repository": "https://github.com/Sumandora/remove-refusals-with-transformers",
+      "revision": "7786b0a8c50f4e7c16a0e300e697b2876decc0c6",
+      "kind": "reference-implementation",
+      "status": "linked by reviewed huihui cards; not proof of an identical recipe for every checkpoint",
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "ca7720eea288291430efeea567081fb24397bfa971a6140e1840742d2862cb9d"
+        }
+      ]
+    },
+    {
+      "id": "huihui-weight-comparison",
+      "repository": "https://github.com/huihui-support/compare_models",
+      "revision": "a1d10b38cb7242cdd67149f2b1b8df47f6c5b9da",
+      "kind": "weight-inspection-tool",
+      "status": "mean absolute weight-difference visualization; not a behavioural benchmark or abliteration algorithm",
+      "files": [
+        {
+          "path": "compare_models.py",
+          "sha256": "38add194a6692622daa82593c19a4d3fe0abd7c4fe2c1a88c0db1aa11bbcb9e2"
+        }
+      ]
+    }
+  ]
+}

@@ -93,3 +93,7 @@ Full eval matrices: [../evaluation.md](../evaluation.md) · Deploy workflow: [..
 ## Agent stack reminder
 
 Heretic abliteration → optional Jarvis DPO → **runtime gate** on destructive/out-of-scope commands → tool execution. See [../../instructions/agentic-security-stack.md](../../instructions/agentic-security-stack.md).
+
+## Huihui checkpoint evidence
+
+[Huihui-ai](huihui-ai.md) covers pinned cards, selective layer disclosures, quantization variants and the limits of weight-difference plots. [October tooling provenance](../../sources/research/tooling-2026-10.json) separates stable Heretic from inspected development code.

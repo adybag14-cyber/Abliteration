@@ -1,0 +1,174 @@
+{
+  "snapshot_date": "2026-10-05",
+  "methods": [
+    "Devbox Hermes native web discovery and targeted fetching",
+    "Codex built-in web searches",
+    "arXiv API plus canonical citation metadata",
+    "Hugging Face model metadata and revision-pinned cards",
+    "GitHub release, commit and source APIs"
+  ],
+  "hermes": {
+    "job_id": "job-op-2132ad1f0fcb91fe0e95b5529730178cfbd1b16e8053469aec9e9f7f8c0d3cc1",
+    "queries_completed": 6,
+    "target_documents": 50,
+    "parsed_documents": 29,
+    "target_met": false,
+    "stop_reason": "candidate_exhaustion",
+    "reviewed_source_briefs": 29,
+    "sources": [
+      {
+        "source_id": "s1",
+        "url": "https://github.com/p-e-w/heretic",
+        "classification": "external-source-lead"
+      },
+      {
+        "source_id": "s2",
+        "url": "https://github.com/huihui-support",
+        "classification": "discovery-page-only"
+      },
+      {
+        "source_id": "s3",
+        "url": "https://arxiv.org/abs/2607.17427",
+        "classification": "external-source-lead"
+      },
+      {
+        "source_id": "s4",
+        "url": "https://arxiv.org/abs/2608.18093",
+        "classification": "external-source-lead"
+      },
+      {
+        "source_id": "s5",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/docs/selective-methods-2026.md",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s6",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/docs/research-2026-update.md",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s7",
+        "url": "https://arxiv.org/abs/2512.13655",
+        "classification": "external-source-lead"
+      },
+      {
+        "source_id": "s8",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/docs/comparative-abliteration-benchmarks.md",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s9",
+        "url": "https://github.com/Sumandora/remove-refusals-with-transformers",
+        "classification": "external-source-lead"
+      },
+      {
+        "source_id": "s10",
+        "url": "https://github.com/topics/abliteration",
+        "classification": "discovery-page-only"
+      },
+      {
+        "source_id": "s11",
+        "url": "https://github.com/huihui-support/compare_models",
+        "classification": "external-source-lead"
+      },
+      {
+        "source_id": "s12",
+        "url": "https://arxiv.org/abs/2607.17427v1",
+        "classification": "same-paper-version-duplicate"
+      },
+      {
+        "source_id": "s13",
+        "url": "https://arxiv.org/abs/2608.18093v1",
+        "classification": "same-paper-version-duplicate"
+      },
+      {
+        "source_id": "s14",
+        "url": "https://github.com/adybag14-cyber/Abliteration",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s15",
+        "url": "https://arxiv.org/abs/2606.13709",
+        "classification": "external-source-lead"
+      },
+      {
+        "source_id": "s16",
+        "url": "https://arxiv.org/abs/2609.16204",
+        "classification": "external-source-lead"
+      },
+      {
+        "source_id": "s17",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/sources/research/catalog-2026.json",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s18",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/docs/evaluation.md",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s19",
+        "url": "https://arxiv.org/abs/2512.13655v2",
+        "classification": "same-paper-version-duplicate"
+      },
+      {
+        "source_id": "s20",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/sources/research/papers/arxiv-2512.13655.pdf",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s21",
+        "url": "https://github.com/ricyoung/abliteration-comparison",
+        "classification": "external-source-lead"
+      },
+      {
+        "source_id": "s22",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/docs/refusal-research-beginners-guide.md",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s23",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/techniques/moe-hybrid-abliteration.md",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s24",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/techniques/extended-abliteration-toolkit.md",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s25",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/techniques/eval-driven-abliteration.md",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s26",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/instructions/advanced-abliteration-workflow.md",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s27",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/docs/defenses-against-abliteration.md",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s28",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/docs/toolchain-safetensors-gguf-lora.md",
+        "classification": "self-citation-excluded"
+      },
+      {
+        "source_id": "s29",
+        "url": "https://github.com/adybag14-cyber/Abliteration/blob/main/docs/tools/abliteration-tooling.md",
+        "classification": "self-citation-excluded"
+      }
+    ]
+  },
+  "new_papers": 8,
+  "huihui_cards": 8,
+  "limitations": [
+    "Discovery results are not independent confirmations.",
+    "Self-citations, version duplicates and index/profile pages do not count as new research evidence.",
+    "No new paper-specific algorithm or model checkpoint was executed.",
+    "The first broad arXiv query was bounded; the narrower refusal query and selected canonical records supplied additional coverage."
+  ]
+}

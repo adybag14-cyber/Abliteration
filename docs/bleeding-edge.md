@@ -119,3 +119,7 @@ Those can be **adjacent** (Jarvis QLoRA *after* surgery). They are not substitut
 ## September 2026 update
 
 [Additive research refresh](research-september-2026.md) includes LoMC, NeST, DDO, ART, and evaluation work. [Selective interventions](selective-methods-2026.md) distinguishes the implemented generic helpers from paper-specific algorithms. [MiniCPM5 study](minicpm5-selective-study.md) provides measured evidence.
+
+## October 2026 follow-up
+
+The [October research map](research-october-2026.md) covers KAS, MetaSteer, semantic/value editing and newer defensive/evaluation work. [Adaptive interventions and ARA](../methods/adaptive-interventions-2026.md) records the current development-code boundary; [huihui-ai](tools/huihui-ai.md) records publisher-specific evidence.

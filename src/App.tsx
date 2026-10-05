@@ -163,7 +163,7 @@ export function App() {
 
         <section id="research" className="scroll-mt-36 py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Reveal><SectionHeading eyebrow="Primary-source observatory" title="A growing evidence map, with its history intact" description="Search 64 primary records, compare their scope, and copy versioned citations. The August snapshot remains available alongside 14 September additions; publication dates distinguish new papers from earlier gaps." /></Reveal>
+            <Reveal><SectionHeading eyebrow="Primary-source observatory" title="A growing evidence map, with its history intact" description={`Search ${researchPapers.length} primary records, compare scope and limitations, and copy versioned citations. The August and September snapshots remain available alongside the October update and a dedicated huihui evidence guide.`} /></Reveal>
             <Reveal className="mt-10"><ResearchExplorer /></Reveal>
           </div>
         </section>

@@ -15,8 +15,12 @@ Living handbook for **LLM abliteration** (weight-level refusal-direction surgery
 
 > **New to the subject?** Open the [interactive Abliteration Field Guide](https://adybag14-cyber.github.io/Abliteration/#lab) — PathFinder defaults to the C++26 toy lab with the same unique nightly filenames. Then the six-step checklist, method spider diagram, searchable atlas (DIM / ORBA / COSMIC), and evaluation-gate simulator.
 
-The Pages guide now includes checksum-first commands for Windows, Linux, and macOS plus a searchable [64-record primary-source observatory](https://adybag14-cyber.github.io/Abliteration/#research). Repository policy: [contributing](CONTRIBUTING.md) · [security](SECURITY.md) · [citation](CITATION.cff).
+The Pages guide now includes checksum-first commands for Windows, Linux, and macOS plus a searchable [72-record primary-source observatory](https://adybag14-cyber.github.io/Abliteration/#research). Repository policy: [contributing](CONTRIBUTING.md) · [security](SECURITY.md) · [citation](CITATION.cff).
 
+
+## October 2026: adaptive methods and huihui evidence
+
+The [October research map](docs/research-october-2026.md) adds eight late-September/early-October papers, an [adaptive-intervention and ARA guide](methods/adaptive-interventions-2026.md), and [huihui-ai checkpoint evidence](docs/tools/huihui-ai.md) with eight pinned model cards. It separates reported methods, defensive results, stable releases and development code. The older snapshots and measured MiniCPM5 results remain intact.
 
 ## September 2026: selective interventions and a measured MiniCPM5 example
 

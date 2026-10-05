@@ -2,7 +2,7 @@
 
 Pinned PDFs, text extracts, and GitHub README snapshots for handbook citations.
 
-**Latest index:** [catalog-2026.json](catalog-2026.json) is the validated, machine-readable 50-paper primary-source update; the human reading map is [docs/research-2026-update.md](../../docs/research-2026-update.md). The catalog links to canonical arXiv records without adding another large batch of binaries to git.
+**Latest index:** [catalog-2026-10.json](catalog-2026-10.json) adds eight primary records; read the [October map](../../docs/research-october-2026.md). The [August 50-paper catalog](catalog-2026.json) and [September 14-paper catalog](catalog-2026-09.json) remain available unchanged. The catalog links to canonical arXiv records without adding another large batch of binaries to git.
 
 **Refresh:** `npm run fetch:research-papers`
 
@@ -62,3 +62,7 @@ Listed in `scripts/fetch-docs.mjs`. Offline files `sources/fetched/grimjim-proje
 ## September 2026 additive catalog
 
 [catalog-2026-09.json](catalog-2026-09.json) adds 14 verified primary records without replacing the August catalog or archived papers. [Annotated update](../../docs/research-september-2026.md). [Tooling recheck](tooling-2026-09.json).
+
+## October 2026 evidence
+
+[Eight-paper catalog](catalog-2026-10.json) · [Huihui revision/card snapshot](huihui-2026-10.json) · [Tooling provenance](tooling-2026-10.json) · [Search coverage and exclusions](discovery-2026-10.json). The combined observatory has 72 papers. Model-card records are separate from the paper count.

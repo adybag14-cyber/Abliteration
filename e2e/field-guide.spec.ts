@@ -244,7 +244,7 @@ test("quick-start workbench and research observatory stay searchable", async ({ 
   await expect(lab.getByLabel("Linux quick-start commands", { exact: true })).toContainText("./abliterate-cxx limits");
 
   const research = page.locator("#research");
-  await expect(research.getByText(/64 papers match/)).toBeVisible();
+  await expect(research.getByText(/72 papers match/)).toBeVisible();
   await research.getByRole("textbox", { name: /Search titles, authors, IDs, or topics/i }).fill("2604.18901");
   await expect(research.getByText(/1 paper match/)).toBeVisible();
   await expect(research.getByRole("heading", { name: /Harmful Intent as a Geometrically Recoverable Feature/ })).toBeVisible();

@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-05",
+  "publisher": "huihui-ai",
+  "source_policy": "Pinned public model metadata and card bytes. Publisher claims are not independently replicated; no model weights were downloaded or executed.",
+  "discovery_api": "https://huggingface.co/api/models?author=huihui-ai&sort=lastModified&direction=-1&limit=12&full=true",
+  "selection_policy": "Illustrative recent publisher entries plus older cards with explicit revision/method qualifications; not an exhaustive catalog or benchmark ranking.",
+  "models": [
+    {
+      "id": "huihui-ai/Huihui-Qwen3.8-Flash-Next-abliterated",
+      "revision": "298f94632b784e26a7fe576114f82066689d5baa",
+      "created_at": "2026-09-29T05:57:50.000Z",
+      "last_modified": "2026-10-01T08:40:46.000Z",
+      "base_models": [
+        "Qwen/Qwen3.8-Flash-Next"
+      ],
+      "pipeline_tag": "image-text-to-text",
+      "format": "safetensors",
+      "license_reported": "other",
+      "url": "https://huggingface.co/huihui-ai/Huihui-Qwen3.8-Flash-Next-abliterated",
+      "card_url": "https://huggingface.co/huihui-ai/Huihui-Qwen3.8-Flash-Next-abliterated/blob/298f94632b784e26a7fe576114f82066689d5baa/README.md",
+      "card_download_url": "https://huggingface.co/huihui-ai/Huihui-Qwen3.8-Flash-Next-abliterated/resolve/298f94632b784e26a7fe576114f82066689d5baa/README.md",
+      "card_sha256": "0febbdeba014ce76fdaaa449772f6f17ecb17d692c8ede3271912915bd0616ff",
+      "metadata_sha256": "2e96b34ad137b3a01ff29f716cda3ac3d04142713ce998ff8cd6485745d1678e",
+      "reviewed_at": "2026-10-05",
+      "evidence_level": "publisher model card; not independently evaluated here",
+      "claims": {
+        "faster_method": false,
+        "both_thinking_modes": false,
+        "layer_correction": false
+      }
+    },
+    {
+      "id": "huihui-ai/Huihui-Xing4.0-29B-A4B-abliterated",
+      "revision": "25d14eb6346cfb83d2a22e4cbc1454366c5cc984",
+      "created_at": "2026-09-29T22:34:32.000Z",
+      "last_modified": "2026-09-30T08:55:04.000Z",
+      "base_models": [
+        "XingChen-AGI/Xing4.0-29B-A4B"
+      ],
+      "pipeline_tag": "text-generation",
+      "format": "safetensors",
+      "license_reported": "apache-2.0",
+      "url": "https://huggingface.co/huihui-ai/Huihui-Xing4.0-29B-A4B-abliterated",
+      "card_url": "https://huggingface.co/huihui-ai/Huihui-Xing4.0-29B-A4B-abliterated/blob/25d14eb6346cfb83d2a22e4cbc1454366c5cc984/README.md",
+      "card_download_url": "https://huggingface.co/huihui-ai/Huihui-Xing4.0-29B-A4B-abliterated/resolve/25d14eb6346cfb83d2a22e4cbc1454366c5cc984/README.md",
+      "card_sha256": "6d0ddbded44126817ab1ce04794a2b592d20fc29a4f9e26285a5c4329af7562e",
+      "metadata_sha256": "d5c31e9a4640ff7607365ea10bdfe2931bf06afb278564fd21db9230abb4976c",
+      "reviewed_at": "2026-10-05",
+      "evidence_level": "publisher model card; not independently evaluated here",
+      "claims": {
+        "faster_method": false,
+        "both_thinking_modes": false,
+        "layer_correction": false
+      }
+    },
+    {
+      "id": "huihui-ai/Huihui-GLM-5.3-Flash-abliterated-GGUF",
+      "revision": "06f66b01ee15bc22b326f733fcc1518ec472e373",
+      "created_at": "2026-09-26T04:52:38.000Z",
+      "last_modified": "2026-10-01T11:40:07.000Z",
+      "base_models": [
+        "zai-org/GLM-5.3-Flash"
+      ],
+      "pipeline_tag": "image-text-to-text",
+      "format": "GGUF",
+      "license_reported": "mit",
+      "url": "https://huggingface.co/huihui-ai/Huihui-GLM-5.3-Flash-abliterated-GGUF",
+      "card_url": "https://huggingface.co/huihui-ai/Huihui-GLM-5.3-Flash-abliterated-GGUF/blob/06f66b01ee15bc22b326f733fcc1518ec472e373/README.md",
+      "card_download_url": "https://huggingface.co/huihui-ai/Huihui-GLM-5.3-Flash-abliterated-GGUF/resolve/06f66b01ee15bc22b326f733fcc1518ec472e373/README.md",
+      "card_sha256": "229c027f3ac27e2ec7f514cf949e69b115c6f1cef1bfd1a2ebf42adba29405de",
+      "metadata_sha256": "2120216f12b4a0877f505e3287d2d533715592965d8baa56fee6c3165dcb7059",
+      "reviewed_at": "2026-10-05",
+      "evidence_level": "publisher model card; not independently evaluated here",
+      "claims": {
+        "faster_method": false,
+        "both_thinking_modes": false,
+        "layer_correction": false
+      }
+    },
+    {
+      "id": "huihui-ai/Huihui-Qwen3.8-27B-abliterated-GGUF",
+      "revision": "b146b417080fd3e0e842e9539e69921707360aae",
+      "created_at": "2026-08-16T13:18:55.000Z",
+      "last_modified": "2026-10-01T14:09:38.000Z",
+      "base_models": [
+        "Qwen/Qwen3.8-27B"
+      ],
+      "pipeline_tag": "image-text-to-text",
+      "format": "GGUF",
+      "license_reported": "apache-2.0",
+      "url": "https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated-GGUF",
+      "card_url": "https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated-GGUF/blob/b146b417080fd3e0e842e9539e69921707360aae/README.md",
+      "card_download_url": "https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated-GGUF/resolve/b146b417080fd3e0e842e9539e69921707360aae/README.md",
+      "card_sha256": "16bd364182dcd244ebbda0dec35d5701d3745f03fb25fccb84a418bf7f6c4c20",
+      "metadata_sha256": "921b6f85c0f63f11be4fb54170fb816a3e4314b4f737aff4fd9611031ff50dc0",
+      "reviewed_at": "2026-10-05",
+      "evidence_level": "publisher model card; not independently evaluated here",
+      "claims": {
+        "faster_method": false,
+        "both_thinking_modes": false,
+        "layer_correction": false
+      }
+    },
+    {
+      "id": "huihui-ai/Huihui-gemma-4-31B-it-abliterated",
+      "revision": "2abf02b3a9cd51ce98a41d9ecd2d0d9e142ae5e6",
+      "created_at": "2026-04-09T15:13:42.000Z",
+      "last_modified": "2026-04-10T03:05:24.000Z",
+      "base_models": [
+        "google/gemma-4-31B-it"
+      ],
+      "pipeline_tag": "any-to-any",
+      "format": "safetensors",
+      "license_reported": "apache-2.0",
+      "url": "https://huggingface.co/huihui-ai/Huihui-gemma-4-31B-it-abliterated",
+      "card_url": "https://huggingface.co/huihui-ai/Huihui-gemma-4-31B-it-abliterated/blob/2abf02b3a9cd51ce98a41d9ecd2d0d9e142ae5e6/README.md",
+      "card_download_url": "https://huggingface.co/huihui-ai/Huihui-gemma-4-31B-it-abliterated/resolve/2abf02b3a9cd51ce98a41d9ecd2d0d9e142ae5e6/README.md",
+      "card_sha256": "83f029489e92592db7047377da229bed483a203c425ddbb5359ca7a63f5a2fba",
+      "metadata_sha256": "0e29e9351c3913d29d72d0d51492b4b2db33e102fbb9c028226b6a3eccdc937b",
+      "reviewed_at": "2026-10-05",
+      "evidence_level": "publisher model card; not independently evaluated here",
+      "claims": {
+        "faster_method": false,
+        "both_thinking_modes": true,
+        "layer_correction": false
+      }
+    },
+    {
+      "id": "huihui-ai/Huihui-Qwen3-4B-abliterated-v2",
+      "revision": "a494c65b10bf8fdc56c0ff11d36987c1d018f162",
+      "created_at": "2025-06-19T03:38:43.000Z",
+      "last_modified": "2025-06-19T04:03:44.000Z",
+      "base_models": [
+        "Qwen/Qwen3-4B"
+      ],
+      "pipeline_tag": "text-generation",
+      "format": "safetensors",
+      "license_reported": "apache-2.0",
+      "url": "https://huggingface.co/huihui-ai/Huihui-Qwen3-4B-abliterated-v2",
+      "card_url": "https://huggingface.co/huihui-ai/Huihui-Qwen3-4B-abliterated-v2/blob/a494c65b10bf8fdc56c0ff11d36987c1d018f162/README.md",
+      "card_download_url": "https://huggingface.co/huihui-ai/Huihui-Qwen3-4B-abliterated-v2/resolve/a494c65b10bf8fdc56c0ff11d36987c1d018f162/README.md",
+      "card_sha256": "d98b1fdeac77793ec34ec690d1bb51af997c78c29a9f0a2c6c3f666c7c1c6448",
+      "metadata_sha256": "9f3025bc1b3eab3dec487df99bf096d8eeb4564723c8fa8f7baf191fe3c1a614",
+      "reviewed_at": "2026-10-05",
+      "evidence_level": "publisher model card; not independently evaluated here",
+      "claims": {
+        "faster_method": true,
+        "both_thinking_modes": false,
+        "layer_correction": true
+      }
+    },
+    {
+      "id": "huihui-ai/Huihui-Qwen3-14B-abliterated-v2",
+      "revision": "3b79629fdd65004d3b9cdf5beb0739e8c7e1becd",
+      "created_at": "2025-06-17T15:29:37.000Z",
+      "last_modified": "2025-06-19T15:40:01.000Z",
+      "base_models": [
+        "Qwen/Qwen3-14B"
+      ],
+      "pipeline_tag": "text-generation",
+      "format": "safetensors",
+      "license_reported": "apache-2.0",
+      "url": "https://huggingface.co/huihui-ai/Huihui-Qwen3-14B-abliterated-v2",
+      "card_url": "https://huggingface.co/huihui-ai/Huihui-Qwen3-14B-abliterated-v2/blob/3b79629fdd65004d3b9cdf5beb0739e8c7e1becd/README.md",
+      "card_download_url": "https://huggingface.co/huihui-ai/Huihui-Qwen3-14B-abliterated-v2/resolve/3b79629fdd65004d3b9cdf5beb0739e8c7e1becd/README.md",
+      "card_sha256": "bb13c7a1c8bff4784a119a29e84a63c8d636a85ca9276c410c1eaa27f861b106",
+      "metadata_sha256": "7b6a4a99854460053f0c35a3aa0a6dca40ca6b580bda45044f8045ffbfbe6121",
+      "reviewed_at": "2026-10-05",
+      "evidence_level": "publisher model card; not independently evaluated here",
+      "claims": {
+        "faster_method": true,
+        "both_thinking_modes": false,
+        "layer_correction": true
+      }
+    },
+    {
+      "id": "huihui-ai/Huihui-Qwen3-30B-A3B-Instruct-2507-abliterated",
+      "revision": "e2f73ec7e99ee316beb8069ca90e4c3cbef8aa0f",
+      "created_at": "2025-08-01T09:21:48.000Z",
+      "last_modified": "2025-08-02T05:55:21.000Z",
+      "base_models": [
+        "Qwen/Qwen3-30B-A3B-Instruct-2507"
+      ],
+      "pipeline_tag": "text-generation",
+      "format": "safetensors",
+      "license_reported": "apache-2.0",
+      "url": "https://huggingface.co/huihui-ai/Huihui-Qwen3-30B-A3B-Instruct-2507-abliterated",
+      "card_url": "https://huggingface.co/huihui-ai/Huihui-Qwen3-30B-A3B-Instruct-2507-abliterated/blob/e2f73ec7e99ee316beb8069ca90e4c3cbef8aa0f/README.md",
+      "card_download_url": "https://huggingface.co/huihui-ai/Huihui-Qwen3-30B-A3B-Instruct-2507-abliterated/resolve/e2f73ec7e99ee316beb8069ca90e4c3cbef8aa0f/README.md",
+      "card_sha256": "521e7f530b524ef3c4022fb85158b44286a786254bc52d4fb08eaa6c64e0e05a",
+      "metadata_sha256": "d448b792c379ab6817968515b870915b29ac7e4243f9fe4bb42815c8dba80b8c",
+      "reviewed_at": "2026-10-05",
+      "evidence_level": "publisher model card; not independently evaluated here",
+      "claims": {
+        "faster_method": true,
+        "both_thinking_modes": false,
+        "layer_correction": false
+      }
+    }
+  ],
+  "marker_policy": "Boolean claim markers only indicate whether the specified wording appeared in the reviewed card. False does not establish that a method or capability is absent."
+}

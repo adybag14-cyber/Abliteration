@@ -240,3 +240,9 @@ Full pipeline including eval corpora and runtime gate: [instructions/agentic-sec
 ## Additive September 2026 refresh
 
 See the [14-paper annotated update](docs/research-september-2026.md), [versioned catalog](sources/research/catalog-2026-09.json), and [selective-method guide](docs/selective-methods-2026.md). The previous bibliography and snapshots are preserved.
+
+## Additive October 2026 refresh
+
+[Annotated eight-paper map](docs/research-october-2026.md) · [versioned catalog](sources/research/catalog-2026-10.json) · [adaptive interventions and ARA](methods/adaptive-interventions-2026.md) · [huihui-ai guide](docs/tools/huihui-ai.md) · [pinned model cards](sources/research/huihui-2026-10.json) · [tooling status](sources/research/tooling-2026-10.json).
+
+The 2026-10-05 check distinguishes Heretic 1.4.0 stable from inspected development source, and publisher claims from independently measured results.
