@@ -31,6 +31,7 @@ function run(label, cmd, args = []) {
 console.log('Ralph regress — pre-commit gate\n');
 
 run('validate', 'node', ['scripts/ralph-validate.mjs']);
+run('research-provenance', process.platform === 'win32' ? 'python' : 'python3', ['scripts/validate-research-refresh.py']);
 run('site-tests', 'node', ['node_modules/vitest/vitest.mjs', 'run']);
 run('handbook-tests', 'node', ['--test', 'scripts/test-handbook.mjs']);
 run('handbook-prepare', 'node', ['scripts/prepare-handbook.mjs']);

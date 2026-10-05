@@ -33,9 +33,25 @@ describe("selective research controls", () => {
     expect(within(panel).getByText(/This is not LoRA/)).toBeInTheDocument();
   });
 
+  it("exposes October evidence, limitations, and pinned citations", async () => {
+    const user = userEvent.setup();
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText } });
+    render(<ResearchExplorer />);
+    await user.selectOptions(screen.getByLabelText("Catalog snapshot"), "2026-10-05");
+    expect(screen.getByText(/8 papers match/)).toBeInTheDocument();
+    await user.type(screen.getByLabelText(/Search titles/), "Kernelized");
+    expect(screen.getByText(/1 paper match/)).toBeInTheDocument();
+    expect(screen.getByText(/do not establish a universally superior/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Primary record" })).toHaveAttribute("href", "https://arxiv.org/abs/2610.01062v1");
+    await user.click(screen.getByRole("button", { name: "Copy citation for 2610.01062" }));
+    expect(writeText.mock.calls[0][0]).toContain("https://arxiv.org/abs/2610.01062v1");
+    expect(screen.getByRole("link", { name: "Huihui evidence guide" })).toHaveAttribute("href", expect.stringContaining("handbook/docs/tools/huihui-ai/"));
+  });
+
   it("preserves the August snapshot and compares versioned new references", async () => {
     const user = userEvent.setup(); render(<ResearchExplorer />);
-    expect(screen.getByText(/64 papers match/)).toBeInTheDocument();
+    expect(screen.getByText(/72 papers match/)).toBeInTheDocument();
     await user.selectOptions(screen.getByLabelText("Catalog snapshot"), "2026-08-23");
     expect(screen.getByText(/50 papers match/)).toBeInTheDocument();
     await user.selectOptions(screen.getByLabelText("Catalog snapshot"), "2026-09-22");

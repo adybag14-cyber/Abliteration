@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { ArrowUpRight, BookOpen, CalendarDays, Search } from "lucide-react";
-import { latestResearchDate, researchPapers, researchSnapshots, type ResearchPaper } from "@/data/research";
+import { latestResearchDate, latestResearchGuide, researchPapers, researchSnapshots, type ResearchPaper } from "@/data/research";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -52,9 +52,9 @@ export function ResearchExplorer() {
               <Input id="paper-search" value={query} onChange={(event) => setQuery(event.target.value)} className="pl-10" placeholder="Try refusal geometry, evaluation, or 2604.18901" />
             </div>
           </div>
-          <Button variant="secondary" asChild><a href={handbookUrl("docs/research-september-2026.md")}><BookOpen aria-hidden="true" /> Open annotated paper map</a></Button>
+          <div className="flex flex-wrap gap-2"><Button variant="secondary" asChild><a href={handbookUrl(latestResearchGuide)}><BookOpen aria-hidden="true" /> Open annotated paper map</a></Button><Button variant="outline" asChild><a href={handbookUrl("docs/tools/huihui-ai.md")}>Huihui evidence guide</a></Button></div>
         </div>
-        <div className="mt-4 flex flex-wrap items-center gap-3"><label htmlFor="research-snapshot" className="text-sm font-bold">Catalog snapshot</label><select id="research-snapshot" className="h-10 rounded-xl border border-input bg-background px-3 text-sm" value={snapshot} onChange={(event) => { setSnapshot(event.target.value); setArea("All"); setExpanded(false); }}>{researchSnapshots.map((date) => <option key={date}>{date}</option>)}</select><p className="text-xs text-muted-foreground">The original 50-paper snapshot is preserved. Fourteen additions include newer work and earlier gaps.</p></div>
+        <div className="mt-4 flex flex-wrap items-center gap-3"><label htmlFor="research-snapshot" className="text-sm font-bold">Catalog snapshot</label><select id="research-snapshot" className="h-10 rounded-xl border border-input bg-background px-3 text-sm" value={snapshot} onChange={(event) => { setSnapshot(event.target.value); setArea("All"); setExpanded(false); }}>{researchSnapshots.map((date) => <option key={date}>{date}</option>)}</select><p className="text-xs text-muted-foreground">The August and September snapshots are preserved. October adds eight studies with explicit scope and limitations.</p></div>
         <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label="Filter papers by research area">
           {areas.map((candidate) => (
             <Button
@@ -91,11 +91,13 @@ export function ResearchExplorer() {
               <h3 className="mt-4 font-display text-lg font-semibold leading-6 tracking-tight">{paper.title}</h3>
               <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted-foreground">{paper.authors.join(", ")}</p>
               {paper.summary && <p className="mt-3 text-sm leading-6 text-muted-foreground">{paper.summary}</p>}
+              {paper.limitations && <p className="mt-3 text-xs leading-5 text-muted-foreground"><strong>Limits:</strong> {paper.limitations}</p>}
+              {paper.code_status && <p className="mt-2 text-xs leading-5 text-muted-foreground">{paper.code_status}</p>}
               {paper.implementation && <p className="mt-3 text-xs font-semibold text-primary">{paper.implementation === "reference-only" ? "Reference only · not reproduced here" : "Evaluation guidance"}</p>}
               <div className="mt-4 flex flex-wrap gap-2"><Button size="sm" variant={compared.includes(paper.id) ? "default" : "outline"} aria-pressed={compared.includes(paper.id)} disabled={compared.length >= 3 && !compared.includes(paper.id)} onClick={() => setCompared((current) => current.includes(paper.id) ? current.filter((id) => id !== paper.id) : [...current, paper.id])} aria-label={`Compare ${paper.id}`}>Compare</Button><Button size="sm" variant="ghost" aria-label={`Copy citation for ${paper.id}`} onClick={async () => { try { await navigator.clipboard.writeText(`${paper.authors.join("; ")}. ${paper.title}. arXiv:${paper.id} (${paper.published}). ${paper.version_url ?? paper.url}`); setCitationStatus(`Citation for ${paper.id} copied.`); } catch { setCitationStatus("Clipboard unavailable. Open the primary record for its citation."); } }}>Copy citation</Button></div>
               <div className="mt-auto flex items-center justify-between gap-3 pt-5">
                 <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"><CalendarDays className="size-3.5" aria-hidden="true" /> {paper.published}</span>
-                <a className="inline-flex items-center gap-1 rounded-lg text-xs font-bold text-primary outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring" href={paper.url} target="_blank" rel="noreferrer">
+                <a className="inline-flex items-center gap-1 rounded-lg text-xs font-bold text-primary outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring" href={paper.version_url ?? paper.url} target="_blank" rel="noreferrer">
                   Primary record <ArrowUpRight className="size-3.5" aria-hidden="true" />
                 </a>
               </div>

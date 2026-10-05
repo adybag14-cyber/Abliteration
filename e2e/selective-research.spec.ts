@@ -37,5 +37,16 @@ test("selective planner, measured results, and snapshot history work", async ({ 
   await research.getByLabel(/Search titles/).fill("2609.16204");
   await research.getByRole("button", { name: "Compare 2609.16204" }).click();
   await expect(research.getByRole("heading", { name: "Compare research scope (1/3)" })).toBeVisible();
+  await research.getByLabel(/Search titles/).fill("");
+  await research.getByLabel("Catalog snapshot").selectOption("2026-10-05");
+  await expect(research.getByText(/8 papers match/)).toBeVisible();
+  await research.getByLabel(/Search titles/).fill("Kernelized");
+  await expect(research.getByRole("heading", { name: "Kernelized Activation Steering" })).toBeVisible();
+  await expect(research.getByRole("link", { name: "Primary record" })).toHaveAttribute("href", "https://arxiv.org/abs/2610.01062v1");
+  await research.screenshot({ path: testInfo.outputPath("october-research.png"), animations: "disabled" });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBeTruthy();
+  await research.getByRole("link", { name: "Huihui evidence guide" }).click();
+  await expect(page).toHaveURL(/handbook\/docs\/tools\/huihui-ai\//);
+  await expect(page.locator("h1")).toHaveText("Huihui-ai: checkpoints, methods and evidence");
+  await page.screenshot({ path: testInfo.outputPath("huihui-guide.png"), animations: "disabled" });
 });

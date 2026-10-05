@@ -1,6 +1,6 @@
 # Research landscape — refusal mechanisms & removal methods
 
-Taxonomy of **papers**, **open-source tools**, and **when each method applies**. Core map updated Jun 2026; discovery snapshot updated 23 Aug 2026.
+Taxonomy of **papers**, **open-source tools**, and **when each method applies**. Historical core map from June 2026; additive evidence checked through 5 October 2026. See the [October update](research-october-2026.md) and [huihui guide](tools/huihui-ai.md); older snapshots remain dated.
 
 > **Current discovery snapshot:** [2026 research update — 50 primary papers](research-2026-update.md) · [machine-readable catalog](../sources/research/catalog-2026.json). The core map below stays selective; the update covers adjacent mechanisms, interventions, defenses, attacks, and evaluation work.
 

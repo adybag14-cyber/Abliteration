@@ -20,6 +20,7 @@ const headed = process.argv.includes("--headed");
 const researchCatalogs = await Promise.all([
   "../sources/research/catalog-2026.json",
   "../sources/research/catalog-2026-09.json",
+  "../sources/research/catalog-2026-10.json",
 ].map(async (relative) => JSON.parse(await readFile(new URL(relative, import.meta.url), "utf8"))));
 const expectedResearchCount = researchCatalogs.reduce((total, catalog) => total + catalog.papers.length, 0);
 

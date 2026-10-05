@@ -69,3 +69,7 @@ and bind outputs with [experiment provenance](../docs/experiment-provenance.md).
 ## Selective tensor and layer routes (September 2026)
 
 [Selective method guide](../docs/selective-methods-2026.md) covers exact tensor plans, verified exports, norm-preserving projection, and selected-tensor SFT. [MiniCPM5-1B study](../docs/minicpm5-selective-study.md) records the tested support matrix and measured limitations.
+
+## Adaptive interventions (October 2026)
+
+[Adaptive interventions and ARA](adaptive-interventions-2026.md) compares fixed projections, kernelized steering, context-conditioned adapters, selective representation edits, and module-I/O optimization. [Huihui evidence](../docs/tools/huihui-ai.md) records per-checkpoint claims without assigning every publisher model one algorithm.

@@ -98,8 +98,8 @@ describe("Abliteration Field Guide", () => {
     const user = userEvent.setup();
     render(<App />);
     const research = document.getElementById("research")!;
-    expect(within(research).getByText(/64 papers match/)).toBeInTheDocument();
-    expect(within(research).getByRole("button", { name: "Show all 64 papers" })).toBeInTheDocument();
+    expect(within(research).getByText(/72 papers match/)).toBeInTheDocument();
+    expect(within(research).getByRole("button", { name: "Show all 72 papers" })).toBeInTheDocument();
 
     const search = within(research).getByRole("textbox", { name: /Search titles, authors, IDs, or topics/i });
     await user.type(search, "2604.18901");

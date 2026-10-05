@@ -55,7 +55,7 @@ def main():
         categories = re.search(r'<span class="primary-subject">.*?\(([^)]+)\)', html)
         papers.append({**seed, "title": title, "authors": meta["citation_author"], "published": meta["citation_date"][0].replace("/", "-"), "category": categories[1] if categories else "not parsed", "url": url, "version_url": url + f"v{version}", "version": version, "pdf_url": "https://arxiv.org/pdf/" + aid + f"v{version}", "source": "arXiv citation metadata", "retrieved_at": seeds["snapshot_date"], "source_page_sha256": hashlib.sha256(raw).hexdigest(), "evidence_level": "primary-source; not independently replicated here"})
         print(f"verified {aid}: {title}", flush=True)
-    result = {"schema_version": 1, "snapshot_date": seeds["snapshot_date"], "source": "arXiv citation metadata", "count": len(papers), "claim_policy": "Additive bibliography refresh; dates are publication dates, not the date this repository discovered a paper. No 98% claim has been identified or reproduced.", "papers": sorted(papers, key=lambda x: (x["published"], x["id"]), reverse=True)}
+    result = {"schema_version": 1, "snapshot_date": seeds["snapshot_date"], "source": "arXiv citation metadata", "count": len(papers), "claim_policy": seeds.get("claim_policy", "Additive bibliography refresh; publication dates differ from discovery dates. Results have not been independently replicated here."), "papers": sorted(papers, key=lambda x: (x["published"], x["id"]), reverse=True)}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("x", encoding="utf-8") as f:
         f.write(json.dumps(result, indent=2, ensure_ascii=False) + "\n")

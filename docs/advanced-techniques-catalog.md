@@ -186,3 +186,7 @@ Compute SHA256 of the golden firmware image for SKU ABC-123.
 ```
 
 Point Heretic `dataset = "path/to/file.txt"` in config.toml.
+
+## October 2026 additions
+
+[Adaptive interventions and ARA](../methods/adaptive-interventions-2026.md) separates fixed projection, nonlinear steering and module-level optimization. [Huihui evidence](tools/huihui-ai.md) adds variant-specific disclosures. Consult the [eight-paper map](research-october-2026.md) for scope and limitations before treating a reference as an implemented method.
