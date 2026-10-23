@@ -115,6 +115,8 @@ try {
                   securityLevel: "strict",
                   htmlLabels: false,
                   theme: "base",
+                  layout: "dagre",
+                  look: "classic",
                   flowchart: { curve: "basis" },
                   themeVariables:
                     theme === "light"
