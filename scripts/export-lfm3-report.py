@@ -2,8 +2,11 @@
 """Verify local evidence and export aggregate LFM3 results without raw answers."""
 from __future__ import annotations
 import argparse
+import hashlib
 import json
 from pathlib import Path
+import re
+import subprocess
 
 from lfm3_evaluation import PROFILES, load_protocol, text_hash
 from lfm3_report import verify_measurement
@@ -16,12 +19,34 @@ def read_json(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def measurement_commit(source_hashes, git):
+    package = ROOT / "PACKAGE-MANIFEST.json"
+    if package.exists():
+        manifest = read_json(package)
+        if manifest.get("source_worktree_dirty") is not False:
+            raise ValueError("a package from uncommitted source cannot supply an immutable source revision")
+        available = {v["path"]: v["original_source_sha256"] for v in manifest["files"]}
+        if any(available.get("scripts/" + name) != digest for name, digest in source_hashes.items()):
+            raise ValueError("measurement sources differ from the packaged source revision")
+        revision = manifest["source_commit"]
+    else:
+        revision = subprocess.check_output([git, "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+        for name, expected in source_hashes.items():
+            content = subprocess.check_output([git, "show", f"{revision}:scripts/{name}"], cwd=ROOT)
+            if hashlib.sha256(content).hexdigest() != expected:
+                raise ValueError("commit the measured source bytes before exporting a reproducible report")
+    if not re.fullmatch(r"[0-9a-f]{40}", revision):
+        raise ValueError("measurement source revision must be an immutable Git commit")
+    return revision
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--run", type=Path, required=True)
     p.add_argument("--protocol", type=Path, required=True)
     p.add_argument("--model", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--git-executable", default="git", help="Use git.exe for a Windows-created worktree accessed from WSL")
     args = p.parse_args()
     if args.output.exists():
         p.error("output must be a new file")
@@ -41,6 +66,7 @@ def main():
     source_hashes = {name: sha256(ROOT / "scripts" / name) for name in sorted(names)}
     if source_hashes != identity["source_sha256"] or source_hashes != summary["source_sha256"]:
         raise ValueError("measurement source code differs from the current source")
+    source_commit = measurement_commit(source_hashes, args.git_executable)
     protocol = load_protocol(args.protocol)
     prepared = read_json(args.protocol.with_name("protocol-lock.json"))
     if prepared != identity["protocol"] or prepared["protocol_sha256"] != sha256(args.protocol):
@@ -58,6 +84,7 @@ def main():
     responses = [json.loads(line) for line in response_path.read_text(encoding="utf-8").splitlines() if line.strip()]
     verified = verify_measurement(protocol, identity, summary, responses, selection, status)
     public = {**summary, "status": status, "run_started_at": identity["started_at"],
+              "measurement_source_commit": source_commit,
               "seed": identity["seed"], "protocol": prepared, "profiles": PROFILES,
               "model_files_sha256": files, "verification": verified,
               "summary_sha256": sha256(args.run / "summary.json"),
