@@ -17,3 +17,6 @@ jobs:
           fail-on-severity: high
           license-check: true
           deny-licenses: GPL-2.0-only, GPL-3.0-only, AGPL-1.0-only, AGPL-3.0-only
+          # This exact dual-licensed release is distributed under Apache-2.0.
+          # The selected license and its checked text are recorded in rust/license-choices.json.
+          allow-dependencies-licenses: pkg:cargo/self_cell@1.3.0

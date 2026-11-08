@@ -67,9 +67,20 @@ Copy-Item -LiteralPath (Join-Path $repoRoot 'data/benchmarks/lfm3-benign.json') 
 Copy-Item -LiteralPath (Join-Path $repoRoot 'sources/research/lfm3-benchmarks-2026-11.json') -Destination (Join-Path $stage 'provenance/benchmark-catalog.json')
 $notices = Join-Path $stage 'third-party-licenses'
 $null = New-Item -ItemType Directory -Path $notices
+$licenseChoices = Get-Content -Raw -LiteralPath (Join-Path $repoRoot 'rust/license-choices.json') | ConvertFrom-Json
+Copy-Item -LiteralPath (Join-Path $repoRoot 'rust/license-choices.json') -Destination (Join-Path $stage 'LICENSE-CHOICES.json')
 $dependencyRows = [Collections.Generic.List[object]]::new()
 foreach ($dependency in ($metadata.packages | Sort-Object name, version)) {
     $dependencyRoot = Split-Path -Parent $dependency.manifest_path
+    $selectedLicense = $null
+    $choices = @($licenseChoices.choices | Where-Object { $_.package -eq $dependency.name -and $_.version -eq $dependency.version })
+    if ($choices.Count -gt 1) { throw 'Ambiguous dependency license selection' }
+    if ($choices.Count -eq 1) {
+        $choice = $choices[0]
+        if ($dependency.license -ne $choice.offered) { throw 'Upstream license expression changed' }
+        if ((Get-FileHash -LiteralPath (Join-Path $dependencyRoot $choice.license_file) -Algorithm SHA256).Hash.ToLowerInvariant() -ne $choice.license_sha256) { throw 'Selected license text changed' }
+        $selectedLicense = $choice.selected
+    }
     $licenseFiles = @(Get-ChildItem -LiteralPath $dependencyRoot -File | Where-Object Name -Match '^(LICENSE|COPYING|COPYRIGHT|NOTICE)([._-].*)?$')
     if ($licenseFiles.Count -eq 0 -and $dependency.source -and $dependency.source.StartsWith('git+')) {
         $licenseFiles = @(Get-ChildItem -LiteralPath (Split-Path -Parent $dependencyRoot) -File | Where-Object Name -Match '^(LICENSE|COPYING|COPYRIGHT|NOTICE)([._-].*)?$')
@@ -83,7 +94,7 @@ foreach ($dependency in ($metadata.packages | Sort-Object name, version)) {
             Copy-Item -LiteralPath $licenseFile.FullName -Destination (Join-Path $destination $licenseFile.Name)
         }
     }
-    $dependencyRows.Add([ordered]@{name=$dependency.name;version=$dependency.version;license=$dependency.license;repository=$dependency.repository})
+    $dependencyRows.Add([ordered]@{name=$dependency.name;version=$dependency.version;license=$dependency.license;selected_license=$selectedLicense;repository=$dependency.repository})
 }
 [IO.File]::WriteAllText((Join-Path $stage 'DEPENDENCIES.json'), ($dependencyRows | ConvertTo-Json -Depth 5), [Text.UTF8Encoding]::new($false))
 $files = @(Get-ChildItem -LiteralPath $stage -Recurse -File | Sort-Object FullName | ForEach-Object {
