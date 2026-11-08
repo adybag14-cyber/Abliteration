@@ -1,0 +1,16 @@
+# Requires a binary compiled with the cuda feature and a supported CUDA runtime.
+# No silent CPU fallback. Budget GPU memory and preserve other applications.
+schema = 1
+name = "LFM3 CUDA engineering smoke"
+benchmark = "benign-paired"
+device = "cuda"
+max_new_tokens = 2048
+max_input_tokens = 4096
+repetition_penalty = 1.1
+test_limit_per_dataset = 1
+calibration_limit = 2
+compare_context = true
+quantization = "none"
+experimental = true
+automated_run = true
+timeout_seconds = 3600

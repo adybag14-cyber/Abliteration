@@ -1,0 +1,226 @@
+name: Rust research studio — build, GUI QA, release
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "Cargo.*"
+      - "rust-toolchain.toml"
+      - ".cargo/**"
+      - ".gitattributes"
+      - ".dockerignore"
+      - "rust/**"
+      - "data/models/lfm3-1.7b.json"
+      - "data/benchmarks/lfm3-benign.json"
+      - "data/experiments/lfm3-calibration.jsonl"
+      - "sources/research/lfm3-benchmarks-2026-11.json"
+      - ".github/workflows/rust-studio.yml"
+  push:
+    branches: [main]
+    tags: ["rust-v*"]
+    paths:
+      - "Cargo.*"
+      - "rust-toolchain.toml"
+      - ".cargo/**"
+      - ".gitattributes"
+      - ".dockerignore"
+      - "rust/**"
+      - "data/models/lfm3-1.7b.json"
+      - "data/benchmarks/lfm3-benign.json"
+      - "data/experiments/lfm3-calibration.jsonl"
+      - "sources/research/lfm3-benchmarks-2026-11.json"
+      - ".github/workflows/rust-studio.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rust-studio-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ABLITERATION_BUILD_SHA: ${{ github.sha }}
+  CARGO_BUILD_JOBS: 4
+  RAYON_NUM_THREADS: 6
+
+jobs:
+  native:
+    name: ${{ matrix.target }} native toolkit
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            target: linux-x64
+          - os: windows-2025
+            target: windows-x64
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 75
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Install Linux GUI build libraries
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends clang cmake nasm pkg-config libxkbcommon-dev libwayland-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev libxinerama-dev libegl1-mesa-dev libgl1-mesa-dev libudev-dev
+      - name: Ensure Windows assembler is available
+        if: runner.os == 'Windows'
+        run: |
+          if (-not (Get-Command nasm -ErrorAction SilentlyContinue)) {
+            choco install nasm --yes --no-progress
+            if ($LASTEXITCODE -ne 0) { throw 'NASM installation failed' }
+            Add-Content -LiteralPath $env:GITHUB_PATH -Value (Join-Path $env:ProgramFiles 'NASM')
+          }
+      - name: Install the pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.99.1 --profile minimal --component rustfmt --component clippy
+          if ($LASTEXITCODE -ne 0) { throw 'Rust toolchain setup failed' }
+          rustc +1.99.1 --version
+          cargo +1.99.1 --version
+      - uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: rust-studio-${{ runner.os }}-1.99.1-${{ hashFiles('Cargo.lock') }}
+          restore-keys: rust-studio-${{ runner.os }}-1.99.1-
+      - name: Check formatting
+        run: cargo +1.99.1 fmt --all -- --check
+      - name: Test Rust provenance, metrics and reference-suite exclusion
+        run: cargo +1.99.1 test --locked --release --workspace --features gui
+      - name: Check application code with Clippy
+        run: cargo +1.99.1 clippy --locked --release --workspace --all-targets --features gui -- -D warnings
+      - name: Build the native CLI and Iced GUI
+        run: cargo +1.99.1 build --locked --release --features gui
+      - name: Package binaries, configurations and provenance
+        run: ./rust/scripts/package.ps1 -Target '${{ matrix.target }}' -SourceCommit $env:ABLITERATION_BUILD_SHA
+      - name: Validate the fresh package
+        run: ./rust/scripts/verify-package.ps1 -PackageRoot artifacts/rust-package -ExpectedTarget '${{ matrix.target }}' -ExpectedSource $env:ABLITERATION_BUILD_SHA
+      - name: Stage the exact Linux GUI binaries for Docker QA
+        if: runner.os == 'Linux'
+        run: |
+          New-Item -ItemType Directory -Path artifacts/gui-runtime -Force | Out-Null
+          Copy-Item target/release/abliteration-cli,target/release/abliteration-studio artifacts/gui-runtime/
+      - name: Render the actual GUI at multiple sizes in an isolated display
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          docker build -f rust/Dockerfile.gui --target from-artifacts --build-arg BUILD_SHA="$ABLITERATION_BUILD_SHA" -t abliteration-gui-qa .
+          docker create --name abliteration-gui-qa --network none abliteration-gui-qa
+          docker start -a abliteration-gui-qa
+          test "$(docker inspect -f '{{.State.ExitCode}}' abliteration-gui-qa)" = 0
+      - name: Collect Docker GUI evidence
+        if: always() && runner.os == 'Linux'
+        shell: bash
+        run: |
+          mkdir -p artifacts/rust-gui
+          if docker inspect abliteration-gui-qa >/dev/null 2>&1; then
+            docker cp abliteration-gui-qa:/evidence/. artifacts/rust-gui/
+          fi
+      - uses: actions/upload-artifact@v7
+        if: always() && runner.os == 'Linux'
+        with:
+          name: rust-gui-docker-evidence
+          path: artifacts/rust-gui
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: rust-package-${{ matrix.target }}
+          path: |
+            artifacts/rust-package/*.zip
+            artifacts/rust-package/*.tar.gz
+            artifacts/rust-package/*.sha256
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        if: runner.os == 'Linux'
+        with:
+          name: rust-gui-linux-x64
+          path: target/release/abliteration-studio
+          if-no-files-found: error
+
+  cuda:
+    name: CUDA 13 SM89 toolkit — compile and contracts
+    needs: native
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v8
+        with:
+          name: rust-gui-linux-x64
+          path: artifacts/cuda-runtime
+      - name: Build the pinned CUDA toolkit without running a benchmark
+        run: |
+          docker build -f rust/Dockerfile.cuda --build-arg BUILD_SHA="$ABLITERATION_BUILD_SHA" -t abliteration-cuda .
+          docker create --name abliteration-cuda-extract abliteration-cuda
+          docker cp abliteration-cuda-extract:/opt/abliteration/abliteration-cli artifacts/cuda-runtime/abliteration-cli
+          docker cp abliteration-cuda-extract:/opt/abliteration/doctor.json artifacts/cuda-runtime/doctor.json
+          chmod +x artifacts/cuda-runtime/abliteration-cli artifacts/cuda-runtime/abliteration-studio
+      - name: Install the pinned packaging toolchain
+        run: rustup toolchain install 1.99.1 --profile minimal
+      - name: Package the compiled CUDA CLI with the tested Iced GUI
+        shell: pwsh
+        run: ./rust/scripts/package.ps1 -Target linux-x64-cuda13-sm89 -SourceCommit $env:ABLITERATION_BUILD_SHA -BinaryDirectory artifacts/cuda-runtime -DoctorJson artifacts/cuda-runtime/doctor.json
+      - name: Verify CUDA archive integrity without claiming GPU inference
+        shell: pwsh
+        run: ./rust/scripts/verify-package.ps1 -PackageRoot artifacts/rust-package -ExpectedTarget linux-x64-cuda13-sm89 -ExpectedSource $env:ABLITERATION_BUILD_SHA -SkipExecution
+      - uses: actions/upload-artifact@v7
+        with:
+          name: rust-package-linux-x64-cuda13-sm89
+          path: |
+            artifacts/rust-package/*.tar.gz
+            artifacts/rust-package/*.sha256
+          if-no-files-found: error
+
+  release:
+    name: Publish qualified native toolkits
+    if: startsWith(github.ref, 'refs/tags/rust-v')
+    needs: [native, cuda]
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: rust-package-*
+          merge-multiple: true
+          path: release
+      - name: Verify complete immutable release inputs
+        run: |
+          expected_version=$(awk -F'"' '/^version = / {print $2; exit}' Cargo.toml)
+          test "$GITHUB_REF_NAME" = "rust-v$expected_version"
+          test "$(find release -maxdepth 1 -type f \( -name '*.zip' -o -name '*.tar.gz' \) | wc -l)" = 3
+          cd release
+          sha256sum -c *.sha256
+      - uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: |
+            release/*.zip
+            release/*.tar.gz
+      - name: Publish the already qualified archives
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "Release already exists; refusing to overwrite an immutable candidate."
+            exit 1
+          fi
+          gh release create "$GITHUB_REF_NAME" release/*.zip release/*.tar.gz release/*.sha256 \
+            --verify-tag --target "$GITHUB_SHA" --prerelease \
+            --title "Abliteration Studio $GITHUB_REF_NAME" \
+            --notes-file rust/RELEASE-NOTES.md

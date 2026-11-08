@@ -1,0 +1,13 @@
+/Cargo.toml text eol=lf
+/Cargo.lock text eol=lf
+/rust-toolchain.toml text eol=lf
+/rust/**/*.rs text eol=lf
+/rust/**/*.toml text eol=lf
+/rust/**/*.sh text eol=lf
+/rust/**/*.ps1 text eol=lf
+/rust/**/*.md text eol=lf
+/rust/Dockerfile.* text eol=lf
+/data/models/lfm3-1.7b.json text eol=lf
+/data/benchmarks/lfm3-benign.json text eol=lf
+/data/experiments/lfm3-calibration.jsonl text eol=lf
+/sources/research/lfm3-benchmarks-2026-11.json text eol=lf

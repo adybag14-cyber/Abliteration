@@ -44,7 +44,7 @@ export const collections = [
     id: "experiments",
     title: "Experiments & evidence",
     description:
-      "Evaluation, reproducibility, and the measured MiniCPM5 and LFM3 examples.",
+      "Evaluation, reproducibility, the measured MiniCPM5 study, and native LFM3 research tools.",
     accent: "emerald",
   },
   {
@@ -64,6 +64,7 @@ export const collections = [
 ];
 const priority = [
   "docs/overview.md",
+  "docs/lfm3-reproducible-evaluation.md",
   "docs/theory.md",
   "docs/complete-curriculum.md",
   "docs/cxx26-researcher-guide.md",
@@ -71,7 +72,6 @@ const priority = [
   "instructions/beginner-local-model-guide.md",
   "docs/selective-methods-2026.md",
   "docs/minicpm5-selective-study.md",
-  "docs/lfm3-reproducible-evaluation.md",
   "docs/evaluation.md",
   "docs/experiment-provenance.md",
   "docs/research-september-2026.md",
@@ -85,7 +85,7 @@ const descriptions = {
   "docs/minicpm5-selective-study.md":
     "Inspect the executed MiniCPM5-1B comparison, its four-tensor edit budget, uncertainty, and reproducible evidence.",
   "docs/lfm3-reproducible-evaluation.md":
-    "Reproduce a pinned LFM3-1.7B benign-request study, verify complete evidence, and keep capability and safety metrics distinct.",
+    "Use the native Rust and Iced LFM3 studio, inspect experimental configurations, and verify model and evaluation evidence.",
   "docs/evaluation.md":
     "Design paired comparisons that keep refusal, capability, degeneration, and uncertainty separate.",
   "docs/experiment-provenance.md":

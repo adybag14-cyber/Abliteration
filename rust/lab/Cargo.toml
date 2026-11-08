@@ -1,0 +1,48 @@
+[package]
+name = "abliteration-lab"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Native Rust model diagnostics and reproducible benign evaluation studio"
+
+[lib]
+name = "abliteration_lab"
+path = "src/lib.rs"
+
+[[bin]]
+name = "abliteration-cli"
+path = "src/bin/cli.rs"
+
+[[bin]]
+name = "abliteration-studio"
+path = "src/bin/studio.rs"
+required-features = ["gui"]
+
+[features]
+default = ["inference"]
+inference = ["dep:mistralrs"]
+gui = ["dep:iced", "dep:iced-shadcn", "dep:image"]
+cuda = ["inference", "mistralrs/cuda"]
+
+[dependencies]
+anyhow = "1.0.100"
+chrono = { version = "0.4.43", default-features = false, features = ["clock", "serde"] }
+clap = { version = "4.5.54", features = ["derive"] }
+csv = "1.4.0"
+either = "1.15.0"
+hex = "0.4.3"
+iced = { version = "=0.14.0", default-features = false, features = ["advanced", "tiny-skia", "tokio", "image", "x11"] , optional = true }
+iced-shadcn = { version = "=0.5.1", optional = true }
+image = { version = "0.25.9", default-features = false, features = ["png"], optional = true }
+mistralrs = { git = "https://github.com/EricLBuehler/mistral.rs", rev = "addea2961deaafe59ab3d8894303a9ff2eca1204", default-features = false, optional = true }
+reqwest = { version = "0.13.1", default-features = false, features = ["rustls", "json", "stream"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+sha2 = "0.10.9"
+tokio = { version = "1.49.0", features = ["rt-multi-thread", "macros", "time", "process", "io-util", "fs"] }
+toml = "0.9.11"
+
+[dev-dependencies]
+tempfile = "3"

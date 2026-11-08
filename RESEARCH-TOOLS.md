@@ -1,11 +1,14 @@
-# Research toolkit 1.3.0
+# Research toolkits
 
-The [LFM3-1.7B walkthrough](docs/lfm3-reproducible-evaluation.md) adds verified
-local model loading, frozen benign cohorts, a prompt-context comparison, an
-aggregate evidence exporter, and pinned capability evaluation. Use its separate
-`requirements-lfm3.txt` environment. The LFM3 tools leave weights unchanged;
-they do not reuse the MiniCPM intervention configuration below. Run
-`python scripts/test-lfm3-evaluation.py` for the offline evidence contracts.
+The active LFM3 platform is the [native Rust studio](rust/README.md), with an
+Iced GUI, Cargo builds, a Rust inference/evaluation runtime, and CI-produced
+release archives. Follow the [reproducible LFM3 walkthrough](docs/lfm3-reproducible-evaluation.md).
+Python is retained only as [historical LFM3 reference material](docs/lfm3-python-reference.md).
+
+## Historical selective toolkit 1.2.0
+
+The material below describes the earlier MiniCPM study and its preserved
+reference archive. It is separate from the native Rust LFM3 runtime.
 
 This toolkit includes the pinned MiniCPM5-1B experiment, selective checkpoint
 writer, numerical operators, aggregate evidence, and research references. Model

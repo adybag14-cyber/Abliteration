@@ -1,0 +1,16 @@
+[workspace]
+members = ["rust/lab"]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0-alpha.1"
+edition = "2024"
+rust-version = "1.99"
+license = "MIT"
+repository = "https://github.com/adybag14-cyber/Abliteration"
+
+[profile.release]
+strip = "symbols"
+
+[profile.dev]
+debug = 1

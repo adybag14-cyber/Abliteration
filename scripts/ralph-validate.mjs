@@ -433,10 +433,8 @@ function validateAdvancedExampleSchemas() {
 }
 
 function validateAdvancedToolTests() {
-  for (const script of ['scripts/test-advanced-tools.py', 'scripts/test-lfm3-evaluation.py']) {
-    const result = spawnSync('python', [script], { cwd: root, encoding: 'utf8', windowsHide: true });
-    if (result.status !== 0) err(`${script} regression tests failed — ${result.stderr || result.stdout}`);
-  }
+  const result = spawnSync('python', ['scripts/test-advanced-tools.py'], { cwd: root, encoding: 'utf8' });
+  if (result.status !== 0) err(`advanced tool regression tests failed — ${result.stderr || result.stdout}`);
 }
 
 function validateResearch2026Catalog() {

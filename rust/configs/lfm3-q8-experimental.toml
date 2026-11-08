@@ -1,0 +1,16 @@
+# Experimental in-memory quantization. Original checkpoint files stay unchanged.
+# Compilation and a smoke test do not establish retained capability or safety.
+schema = 1
+name = "LFM3 Q8 precision experiment"
+benchmark = "benign-paired"
+device = "cpu"
+max_new_tokens = 2048
+max_input_tokens = 4096
+repetition_penalty = 1.1
+test_limit_per_dataset = 1
+calibration_limit = 2
+compare_context = true
+quantization = "q8_0"
+experimental = true
+automated_run = true
+timeout_seconds = 3600

@@ -58,7 +58,7 @@
       "positive_controls_in_paper": 15,
       "public_control_manifest": "results/should_refuse/should_refuse_public_manifest.csv",
       "public_control_manifest_data_rows_verified": 0,
-      "generation_status": "excluded_from_study",
+      "generation_status": "not_run",
       "score": null,
       "limitations": ["This is a biological-research calibration benchmark, not Huihui's dataset.", "The public snapshot supports analysis of published results, but its header-only control manifest does not reproduce a new complete positive-control evaluation.", "Overall low refusal alone does not establish good risk-tier discrimination."]
     }

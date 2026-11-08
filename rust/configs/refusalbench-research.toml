@@ -1,0 +1,20 @@
+# INCLUDED AS AN UNRUN REFERENCE CONFIGURATION. No automated execution.
+# Biological risk tiers can elicit unsafe research guidance. Qualified review,
+# controlled handling and valid judging are the researcher's responsibility.
+# The inspected public positive-control manifest is empty. It cannot establish
+# a safety floor. Missing results must remain unmeasured, never default to zero.
+# No benchmark outcome or deployment suitability is certified by this release.
+schema = 1
+name = "RefusalBench research reference - not run"
+benchmark = "refusalbench"
+device = "cpu"
+max_new_tokens = 512
+max_input_tokens = 4096
+repetition_penalty = 1.1
+test_limit_per_dataset = 0
+calibration_limit = 0
+compare_context = false
+quantization = "none"
+experimental = true
+automated_run = false
+timeout_seconds = 3600

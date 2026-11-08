@@ -1,154 +1,151 @@
-# LFM3-1.7B: reproducible benign refusal and capability evaluation
+# LFM3-1.7B with the native Rust research studio
 
-This walkthrough investigates unnecessary refusal on benign requests using the **instruction-tuned `LiquidAI/LFM3-1.7B`** checkpoint. It compares an unchanged baseline with one predeclared context-aware system prompt. It reuses the handbook's experimental discipline: immutable inputs, separate calibration and held-out data, an unchanged reference, complete output accounting, and uncertainty. It does not perform weight surgery or train the model to comply with harmful requests.
+This tutorial uses a **Rust runtime, Rust research library, Cargo builds, and a native Iced GUI with iced-shadcn components**. It investigates unnecessary refusal on benign requests using the instruction-tuned `LiquidAI/LFM3-1.7B` checkpoint. Python remains [historical reference material](lfm3-python-reference.md); the native workflow never invokes it.
 
-The objective is a lower **benign false-refusal** rate with useful answers. There is no defensible guarantee of a global minimum refusal rate. A model that says nothing, emits nonsense, or answers harmful requests has not satisfied that objective. The executable screen below counts lexical markers; a semantic refusal rate requires separate adjudication.
+The tools verify checkpoint bytes, inspect tensor metadata, prepare frozen inputs, compare an unchanged baseline with a context-aware prompt, and verify the resulting evidence. They do not perform checkpoint surgery or optimize harmful-request compliance. There is no defensible guarantee of a global minimum refusal rate. A useful answer, a lexical marker count, and calibrated safety are different outcomes.
 
-## What is pinned
+## Choose an artifact or build with Cargo
 
-| Component | Identity |
+The [GitHub release](https://github.com/adybag14-cyber/Abliteration/releases/tag/rust-v0.1.0-alpha.1) provides Windows x64, Linux x64, and an experimental Linux CUDA 13 SM89 edition. Extract the GUI and CLI together. Verify the archive's SHA-256 sidecar and GitHub attestation. `SOURCE.json` records the source commit and every packaged file digest; model weights are separate.
+
+To build the same source revision:
+
+```bash
+git clone --branch rust-v0.1.0-alpha.1 --depth 1 https://github.com/adybag14-cyber/Abliteration.git
+cd Abliteration
+rustup toolchain install 1.99.1 --profile minimal --component rustfmt --component clippy
+export ABLITERATION_BUILD_SHA="$(git rev-parse HEAD)"
+cargo +1.99.1 test --locked --workspace --features gui
+cargo +1.99.1 build --locked --release --features gui
+```
+
+Use the system-library installation steps in [the Rust workflow](../.github/workflows/rust-studio.yml) for a source build. The native inference engine is pinned to mistral.rs development commit [`addea2961deaafe59ab3d8894303a9ff2eca1204`](https://github.com/EricLBuehler/mistral.rs/tree/addea2961deaafe59ab3d8894303a9ff2eca1204), which includes LFM3. The inspected published crate and earlier release did not contain this model. The backend is therefore labelled experimental even when compilation and engineering smokes pass.
+
+The GUI uses Iced 0.14.0 and iced-shadcn 0.5.1. These are native Rust components, not a webview executing the website. The existing web handbook remains a reader and download guide.
+
+## Confirm the checkpoint identity
+
+| Component | Pinned identity |
 | --- | --- |
-| Instruction-tuned model | `LiquidAI/LFM3-1.7B` |
-| Model revision | `0dc4268b561499c648c7ba7c9466bf3d8d01517a` |
+| Model | `LiquidAI/LFM3-1.7B`, instruction-tuned |
+| Revision | `0dc4268b561499c648c7ba7c9466bf3d8d01517a` |
 | Parameters | 1,728,801,536 |
-| Weights | One BF16 safetensors shard; 3,457,635,448 bytes |
+| Tensors | 286 |
+| Weights | One BF16 safetensors shard, 3,457,635,448 bytes |
 | Weight SHA-256 | `135922caef64e81e52af88ede8b7c3ddaa9d6da220a9737fb3065275dbfb4330` |
-| Architecture | `Lfm3ForCausalLM`; 24 layers: 13 convolution, 5 sliding attention, 6 full attention |
-| Runtime | Python 3.12; PyTorch 2.13.0 with CUDA 13.0; Transformers 5.22.2 |
-| Model runtime files | Eleven files, including all three custom Python files, tokenizer, template, generation configuration and license |
-| Capability evaluator | `lm_eval` 0.4.13, upstream commit `ddd67220430a2470529f25fd5c05a576ca1057a0` |
+| Architecture | 24 layers: 13 convolution, 5 sliding attention, 6 full attention |
+| File manifest | Eleven pinned files, including tokenizer, chat template, generation configuration and license |
 
-The [model lock](../data/models/lfm3-1.7b.json) contains every file size and SHA-256. The [model card](https://huggingface.co/LiquidAI/LFM3-1.7B), [Liquid AI deployment documentation](https://docs.liquid.ai/deployment/gpu-inference/transformers), and pinned configuration establish the checkpoint identity. This is a hybrid architecture: the older dense MiniCPM tensor selections in this repository are not an LFM3 implementation.
+The [model lock](../data/models/lfm3-1.7b.json) supplies exact sizes and hashes. The [model card](https://huggingface.co/LiquidAI/LFM3-1.7B) and configuration establish its hybrid architecture. Dense MiniCPM layer selections from older chapters are not an LFM3 implementation.
 
-The inspected checkpoint requires custom model code. The downloader verifies that code before inference, and the runner uses only the verified local files with Hub access disabled. Its optional Hub kernels are disabled. Transformers 5.14.1, used by the earlier MiniCPM study, failed to import this checkpoint's `use_kernel_func_from_hub_with_fallback` integration. The separate [LFM3 requirements](../requirements-lfm3.txt) preserve the older study environment and pin the working LFM3 runtime.
+The model repository contains Python reference files. The native downloader can retain and hash those files for complete provenance, but mistral.rs uses its Rust LFM3 implementation and does not execute them. Model licensing remains separate from the toolkit's license; the pinned model license is retained with the download.
 
-## Prepare a native WSL workspace
+## Use the graphical workflow
 
-Use the source revision associated with the published report or research toolkit's `PACKAGE-MANIFEST.json`. Keep a record of it. These commands run in a **WSL Linux shell**, from the repository root; the environment, weights and generated responses live on the native Linux filesystem.
+Run `abliteration-studio.exe` on Windows or `./abliteration-studio` on Linux. Keep `abliteration-cli` beside it. The GUI uses inline paths and status messages; it does not launch browser login or file-picker popups.
 
-```bash
-export LFM3_ROOT="$HOME/lfm3-study-20261108"
-mkdir -p "$LFM3_ROOT"
-git rev-parse HEAD > "$LFM3_ROOT/source-commit.txt"
-python3.12 -m venv "$LFM3_ROOT/.venv"
-source "$LFM3_ROOT/.venv/bin/activate"
-python -m pip install --upgrade pip
-python -m pip install torch==2.13.0 --index-url https://download.pytorch.org/whl/cu130
-python -m pip install -r requirements-lfm3.txt -c requirements-lfm3-linux-cu130.lock.txt
-python -m pip check
-python -m pip freeze > "$LFM3_ROOT/environment.txt"
-python scripts/test-lfm3-evaluation.py
-```
+1. Enter the model directory and choose **Verify files**, or download the pinned checkpoint into a new directory.
+2. Select the **Benign smoke** configuration. Inspect the token and sampling budgets before running.
+3. Choose a protocol folder and use **Prepare benign cohorts**.
+4. Choose a new run folder and start the evaluation. The GUI remains responsive; cancellation targets its owned child process.
+5. Inspect the recorded results and complete command receipt. Invalid or censored output remains visible and cannot become a successful zero-refusal claim.
 
-Use an NVIDIA driver supporting the selected CUDA wheel. The measured device is an RTX 4090. The GPU runner checks for at least 8 GiB currently free, caps its PyTorch allocation at 40% of device memory, and uses six CPU threads. That allocation cap is not a total-system GPU limit; other applications and CUDA libraries have their own allocations. Run the two model-evaluation commands sequentially. The script will fail rather than stop unrelated processes to make room.
+The layout adapts down to 900×600, with scrolling for longer forms and reference material. Light and dark appearance are available. Docker QA renders the actual compiled application in an isolated Xvfb display, checks screenshot dimensions and hashes, and retains process-exit evidence. The desktop display is not shared with those checks.
 
-Download and prepare the frozen inputs:
+Inspect the [1280×860 workspace capture](../public/studio/workspace-1280x860.png) and [RefusalBench risks capture](../public/studio/reference-risks-1280x860.png). These show the development build in the isolated Docker display; release builds identify their Git commit in the footer.
+
+## Prepare and run entirely in Rust
+
+The examples below use a Linux or WSL shell from an extracted toolkit directory. PowerShell uses the same subcommands with the `.exe` suffix and Windows paths.
 
 ```bash
-python scripts/download-research-model.py \
-  --lock data/models/lfm3-1.7b.json \
-  --output "$LFM3_ROOT/model"
-python scripts/prepare-lfm3-evaluation.py \
-  --output "$LFM3_ROOT/protocol"
+export LFM3_WORKSPACE="$HOME/abliteration-lab"
+./abliteration-cli doctor
+./abliteration-cli download-model "$LFM3_WORKSPACE/models/lfm3-1.7b"
+./abliteration-cli verify-model "$LFM3_WORKSPACE/models/lfm3-1.7b"
+./abliteration-cli prepare-protocol "$LFM3_WORKSPACE/protocol"
 ```
 
-The downloader verifies all eleven files and writes `source-lock.json`. Preparation verifies source byte hashes and row counts, then writes `protocol.jsonl` and `protocol-lock.json`. The frozen protocol has **366 rows**: 16 calibration prompts and 350 held-out prompts. Its SHA-256 is `baad7fadee4b77cee30c4c5c4d38bc1a8057b1fd17bdab2e984378a6e69b432e`.
+The verifier checks all file digests, architecture identity, safetensors extents and the total parameter count. It rejects changed files and unsafe file references. Preparation verifies the public source hashes and exact cohort sizes before writing an immutable protocol directory.
 
-| Cohort | Rows | Treatment |
+| Cohort | Available rows | Use |
 | --- | ---: | --- |
-| Repository calibration v1 | 16 | Hand-authored benign prompts, disjoint from test prompts; both profiles evaluated before selection |
-| XSTest safe | 250 | Only records labelled `safe` from the 450-record source |
-| JailbreakBench benign | 100 | Only `Goal` from `data/benign-behaviors.csv`; `Target` is never an assistant prefill or training answer |
+| Repository calibration v1 | 16 | Hand-authored benign prompts, disjoint from held-out prompts |
+| XSTest safe | 250 | Only the `safe` rows in the pinned 450-row source |
+| JBB benign | 100 | Only the benign file's `Goal` column; no `Target` prefill or training answer |
 
-Source revisions, licenses, selectors and file hashes are in the [benign dataset lock](../data/benchmarks/lfm3-benign.json). The [XSTest authors](https://github.com/paul-rottger/xstest) provide safe prompts designed to expose exaggerated safety behaviour. The [JailbreakBench dataset](https://huggingface.co/datasets/JailbreakBench/JBB-Behaviors) contains distinct benign and harmful subsets; evaluating the benign subset does not produce a jailbreak score.
+The complete native protocol has **366 records** and SHA-256 `c36e3c99c8f1ad463c715589c994347b28b11c1e6fb82c32f83b0c8c6c37103f`. This is the Rust serialization hash, not the older Python serialization hash. Source revisions, selectors, licenses and file hashes are in the [dataset lock](../data/benchmarks/lfm3-benign.json). Line endings are fixed for reproducibility across Windows and Linux.
 
-## Run a pilot, then the full benign study
-
-```bash
-timeout 1800 python scripts/run-lfm3-evaluation.py \
-  --model "$LFM3_ROOT/model" \
-  --protocol "$LFM3_ROOT/protocol/protocol.jsonl" \
-  --output "$LFM3_ROOT/pilot" \
-  --test-limit 2 --batch-size 4 --timeout-seconds 1500
-```
-
-The pilot generates 40 responses: both profiles on all 16 calibration prompts and two test prompts per dataset. It verifies loading and the evidence path. Its tiny test subsets do not estimate full benchmark performance. Check its terminal `status.json` and `summary.json` before launching the full run.
+Start with a small engineering smoke:
 
 ```bash
-timeout 7500 python scripts/run-lfm3-evaluation.py \
-  --model "$LFM3_ROOT/model" \
-  --protocol "$LFM3_ROOT/protocol/protocol.jsonl" \
-  --output "$LFM3_ROOT/study" \
-  --batch-size 4 --timeout-seconds 7200
-python scripts/export-lfm3-report.py \
-  --run "$LFM3_ROOT/study" \
-  --protocol "$LFM3_ROOT/protocol/protocol.jsonl" \
-  --model "$LFM3_ROOT/model" \
-  --output "$LFM3_ROOT/benign-report.json"
+RAYON_NUM_THREADS=6 ./abliteration-cli run \
+  --model "$LFM3_WORKSPACE/models/lfm3-1.7b" \
+  --protocol "$LFM3_WORKSPACE/protocol/protocol.jsonl" \
+  --output "$LFM3_WORKSPACE/runs/smoke-001" \
+  --config configs/lfm3-smoke.toml
+./abliteration-cli verify-report \
+  --run "$LFM3_WORKSPACE/runs/smoke-001" \
+  --protocol "$LFM3_WORKSPACE/protocol/protocol.jsonl"
 ```
 
-Every output directory must be new. Do not combine partial files from interrupted runs or overwrite a prior measurement. The full run produces **732 responses**: 32 calibration plus 700 held-out generations. The external `timeout` bounds the process; an interrupted process is not a completed benchmark. Exit 2 with `needs-review` means the run finished but contains invalid or censored output. The exporter can retain such a result honestly, with affected rates set to `null`; it rejects incomplete runs. For a Windows-created Git worktree accessed from WSL, add `--git-executable git.exe` to the export command so source-revision verification uses the same Git implementation that created the worktree. Native Linux clones use the default `git`.
+This preset generates **eight responses**: two calibration prompts and one held-out prompt from each benign dataset, under both profiles. It checks the software path and is much too small for a benchmark ranking. For all 16 calibration and 350 held-out prompts under both profiles, use `configs/lfm3-full.toml` and a new output directory; that produces **732 responses**. Full CPU runs may take substantially longer. The timeout is explicit in every configuration.
 
-Both profiles use BF16, SDPA attention, seed 42, greedy decoding, repetition penalty 1.1, a maximum of 2,048 new tokens, a 4,096-token input cap, batch size four, left padding, and `enable_thinking=False`. Prompts exceeding the input limit fail instead of being silently truncated. Tokens after the first EOS are removed before deciding whether a batched response was censored. Keep batch size fixed when comparing reproductions: deterministic settings do not imply identical text across hardware, kernels, library versions or batch shapes.
+The baseline has no system message. The context profile asks the model to interpret harmless computing, figurative, academic and fictional requests in context while declining assistance that facilitates harm. Both profiles share the checkpoint and decoding settings. Selection occurs **before held-out generation**: exclude calibration profiles with unusable or censored output, choose the fewest calibration marker hits, and break ties in favour of the baseline. Held-out results cannot change that choice after the fact.
 
-The baseline has no system message. The context profile asks the assistant to interpret benign computing, figurative, academic and fictional requests in context, while still declining requests that facilitate harm. The exact text is in [the evaluation contract](../scripts/lfm3_evaluation.py) and exported report. There are no jailbreak suffixes, harmful answer targets, projection vectors or learned adapters in this study.
+The default native decoding is greedy, with thinking disabled and repetition penalty 1.1 recorded explicitly. The smoke token cap is 2,048; the full preset uses 4,096. CPU inference requests F32; CUDA requests BF16. Q8 changes the in-memory representation. These differences can alter generated text, so do not equate the native run numerically with a Python, quantized, sampled or differently batched run.
 
-The choice is locked **before held-out generation**: exclude calibration profiles containing invalid/censored output, then choose the fewest calibration marker hits, breaking ties in favour of the baseline. Both profiles are still reported on held-out data. A better-looking test result must not retroactively change that choice.
+## Read a result without manufacturing success
 
-## Read the evidence correctly
+Each run records its configuration, model and protocol identity, executable digest, runtime revision, responses and selection receipt. The report verifier checks coverage and ordering, prompt/response hashes, recalculated lexical screens, cohort aggregates, and calibration-only selection. It also rejects pilot/full-suite relabelling and scores assigned to unrun reference benchmarks.
 
-`identity.json` records the actual runtime, decoding, model/protocol locks and hashes of the four measurement source files. `selection-before-test.json` records the calibration decision. Raw benign responses remain in the local `responses.jsonl` file. The exporter checks exact response coverage and order, prompt and response digests, current source files and model files, then recomputes every screen and aggregate before publishing only metadata and aggregate evidence.
+`needs_review` and exit code 2 mean generation finished but includes invalid or censored output. Affected rates and intervals are `null`. A failed, cancelled or timed-out process is not a completed benchmark. Keep its partial evidence and use a new directory for another attempt.
 
-The metric is a **lexical refusal-marker screen**, inherited from the repository's existing research tools. Marker phrases can appear in a useful answer, and a semantic refusal can avoid those phrases. Therefore `semantic_refusal_rate` remains `null`. Empty/degenerate responses, errors and output-limit censoring invalidate the affected aggregate rate; they are never counted as successful zero-refusal answers. Wilson 95% intervals report uncertainty in the observed marker rate. Even zero markers among 250 examples has an upper bound of about 1.51%; it does not establish zero refusal everywhere.
+The reported rate is a **lexical refusal-marker screen**, not a semantic refusal judgment. A useful answer can contain one of the marker phrases, and a refusal can avoid them. `semantic_refusal_rate` therefore remains unmeasured. Human or separately validated judging needs a versioned rubric, blinded review, declared coverage and disagreement handling. Reviewing only marker hits cannot find false negatives.
 
-For semantic results, use a separately versioned rubric and blinded review that distinguishes direct useful answers, partial answers, explicit refusals, and unusable outputs. Review all responses or a declared sampling design, measure agreement, retain disagreements, and report the denominator. Reviewing only marker hits cannot detect false negatives. This tutorial does not label a marker count as an official semantic score.
+Wilson intervals describe binomial uncertainty in the observed screen. The prompts are curated, not a random sample of every future request. Even zero markers among 250 examples has a nonzero upper bound of about 1.51%; it does not establish zero refusal everywhere. Empty, malformed or truncated output must not improve the score.
 
-## Capability tasks are a separate measurement
+## Experimental researcher configurations
 
-The [capability lock](../data/benchmarks/lfm3-capabilities.json) pins the dataset revision for ARC-Challenge, HellaSwag, WinoGrande, TruthfulQA MC2, GSM8K, IFEval and all 57 MMLU subjects. The wrapper loads the task definitions from the pinned `lm_eval` version, propagates dataset revisions before loading data, and verifies each leaf task. IFEval's English sentence-tokenizer tables are also hash-pinned. The task definitions supply their own few-shot counts, output types, generation stops and scoring functions; these are retained in `task-provenance.json`.
-
-A quick, explicitly bounded check:
-
-```bash
-timeout 1800 python scripts/run-lfm3-capabilities.py \
-  --model "$LFM3_ROOT/model" \
-  --tasks arc_challenge,hellaswag,winogrande,truthfulqa_mc2 \
-  --limit 32 --batch-size 2 --profile baseline \
-  --output "$LFM3_ROOT/capability-smoke"
-```
-
-This is 32 examples **per leaf task** and is labelled a smoke test, not a leaderboard result. To evaluate the complete selected capability suite, use a separate output directory and `--limit 0`:
-
-```bash
-python scripts/run-lfm3-capabilities.py \
-  --model "$LFM3_ROOT/model" \
-  --tasks arc_challenge,hellaswag,winogrande,truthfulqa_mc2,gsm8k,ifeval,mmlu \
-  --limit 0 --batch-size 2 --profile baseline \
-  --output "$LFM3_ROOT/capability-full"
-```
-
-Full capability runs can take substantially longer. A nonzero MMLU limit applies to **each of 57 subjects**, not to the entire group. Use `--prepare-only` to validate/download the pinned task data without GPU inference. For a context-profile comparison, run the same chosen tasks and sample budget again with `--profile context`; do not infer preserved task quality merely from identical weights. Generation-task token limits and the 4,096-token context bound are part of this configured experiment, so compare only matching protocols. The upstream evaluator is [EleutherAI's lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness/tree/ddd67220430a2470529f25fd5c05a576ca1057a0).
-
-## Huihui and the requested safety benchmarks
-
-The [November source registry](../sources/research/lfm3-benchmarks-2026-11.json) records what was actually inspected. These are separate diagnostic references. They are not used to choose the system prompt or optimize harmful compliance, and this study records their scores as **not run**, not zero.
-
-| Reference | What was verified | Interpretation |
+| Configuration | What changes | Risks and evidence limits |
 | --- | --- | --- |
-| [Huihui HarmBench behaviours](https://huggingface.co/datasets/huihui-ai/harmbench_behaviors) | Revision `a8925e1fdd1dde099a1b84cb1b844e09445826ee`; 320 CSV rows: 159 standard, 81 contextual, 80 copyright | This identifies a real Huihui-published dataset. It does not establish one universal Huihui judge, prompt format or evaluation procedure. Context and copyright-specific evaluation cannot be replaced by a generic refusal substring count. |
-| [JBB-Behaviors](https://huggingface.co/datasets/JailbreakBench/JBB-Behaviors) | Revision `886acc352a31533ffbcf4ef22c744658688086fc`; distinct benign and harmful sets | Only the 100 benign goals are generated here. There is no harmful-subset or attack-success result. |
-| [walledai/StrongREJECT](https://huggingface.co/datasets/walledai/StrongREJECT) | Authorized access verified after the account holder obtained access; all 313 Parquet rows match the pinned author CSV's prompt/category/source tuples | Parquet SHA-256: `603aa76bc6d546fc66da1dd5f170e775daa14cbba92ff32d56261987f1eb80e4`. Logical row equivalence is verified; file byte equality is not expected across formats. The benchmark evaluates harmful usefulness as well as refusal. No model generation or score is claimed here. |
-| [RefusalBench, arXiv:2605.21545](https://arxiv.org/abs/2605.21545) | 141 public prompts in 47 benign/borderline/dual-use triples; paper describes 15 should-refuse controls | Excluded from this evaluated suite. This is a biological-research calibration benchmark, not Huihui. Low overall refusal alone can misrank models. |
+| [Q8](../rust/configs/lfm3-q8-experimental.toml) | In-memory numerical precision | Lower memory use can accompany changed coherence, knowledge and safety behaviour. Keep a matching original-precision baseline. Original files are not rewritten. |
+| [CUDA](../rust/configs/lfm3-cuda-experimental.toml) | Device and activation precision | Requires the CUDA build, compatible driver/runtime and sufficient free GPU memory. Competing applications can affect performance or cause failure. CPU-only binaries reject a CUDA request. |
+| [Full benign cohorts](../rust/configs/lfm3-full.toml) | Evaluation coverage and token budget | A long run can time out or censor answers. Completion, valid output and semantic quality are separate checks. |
+| [RefusalBench reference](../rust/configs/refusalbench-research.toml) | Research configuration and provenance only | Included, **not run and not validated**. It is not an executable automated cohort in this release. |
 
-The registry preserves the RefusalBench source audit, including the missing advertised tag and header-only public control manifest at [snapshot-2026-05-final](https://github.com/AppliedScientific/refusalbench/tree/fbdcff76160ae490b2a5ed87f9787de986365444). It is outside this study's evaluated suite. A skipped control remains **not measured**; neither a desired target nor an empty file establishes a measured zero.
+Successful compilation, contract tests and an engineering smoke do not establish full benchmark performance. The [Rust workflow](../.github/workflows/rust-studio.yml) builds and packages the toolkits and tests the actual GUI binaries. Hosted CUDA compilation is reported separately from GPU hardware execution. Inspect the release's attached evidence and manifests for the exact qualification performed.
 
-## Troubleshooting and scope
+Researchers are responsible for their study design and how they handle outputs. Risks include misleading lexical scores, insufficient samples, data leakage, lost capability, numerical changes, unsafe generated material, memory exhaustion and dependency/API changes. Preserve the original checkpoint, freeze all inputs, keep failures, and avoid deployment claims unsupported by measured evidence.
 
-- **Import failure in Transformers:** verify the separate LFM3 environment and exact package versions. Do not change the frozen MiniCPM environment to fix LFM3.
-- **Hash mismatch:** stop and inspect the revision and file bytes. Never replace a pinned digest just to make the check pass.
-- **Out of memory:** close only applications you control, or run later. Reducing batch size creates a different recorded experiment; use a new output directory and repeat the pilot.
-- **Timeout or interruption:** retain partial evidence, label the attempt incomplete, and restart into a new directory. Do not report its prefix as the complete suite.
-- **Censored or degenerate answers:** keep the failure counts. A higher token cap is a new protocol requiring fresh calibration and held-out evaluation, not a silent repair to the old result.
-- **Very low marker counts:** inspect answer usefulness and semantic labels before drawing conclusions. The benchmark does not certify deployment safety or retained capability.
+## Huihui, StrongREJECT and RefusalBench provenance
 
-The earlier [MiniCPM study](minicpm5-selective-study.md), [evaluation guide](evaluation.md), and [provenance guide](experiment-provenance.md) remain useful methodological context. Their measured results and model-specific interventions are separate from this unchanged-weight LFM3 experiment.
+The [November source registry](../sources/research/lfm3-benchmarks-2026-11.json) records what was inspected. Source verification is separate from running and judging a model.
+
+| Reference | Verified source facts | Status in this toolkit |
+| --- | --- | --- |
+| [Huihui HarmBench behaviours](https://huggingface.co/datasets/huihui-ai/harmbench_behaviors) | 320 rows at revision `a8925e1fdd1dde099a1b84cb1b844e09445826ee`: 159 standard, 81 contextual, 80 copyright | Source verified; no model score. A dataset identity does not define one universal Huihui judge or procedure. |
+| [JBB-Behaviors](https://huggingface.co/datasets/JailbreakBench/JBB-Behaviors) | Revision `886acc352a31533ffbcf4ef22c744658688086fc` has distinct benign and harmful subsets | Only the 100 benign goals are executable in the frozen native study. No harmful-subset score is claimed. |
+| [StrongREJECT](https://huggingface.co/datasets/walledai/StrongREJECT) | Authorized access verified; all 313 prompt/category/source tuples in the pinned Parquet match the author CSV after renaming its prompt column | Source verified; no model generation or score. Gated prompt content and credentials are not bundled. |
+| [RefusalBench](https://arxiv.org/abs/2605.21545) | 141 public prompts in 47 benign/borderline/dual-use triples; the paper describes 15 should-refuse controls | Included as an unrun reference configuration. No minimum-refusal, safety-floor or complete-protocol result is claimed. |
+
+RefusalBench poses particular biological-content risks: model outputs can contain unsafe research guidance and require qualified review and controlled handling. Its paper argues that low overall refusal alone can misrank calibration. The inspected public tag [snapshot-2026-05-final](https://github.com/AppliedScientific/refusalbench/tree/fbdcff76160ae490b2a5ed87f9787de986365444) has a header-only positive-control manifest. Its published analyses can be inspected, but those files do not supply a new complete control evaluation. A skipped or unavailable test remains **not measured**, not a default zero.
+
+The requested StrongREJECT mirror was accessed only after the account holder obtained access. Its Parquet SHA-256 is `603aa76bc6d546fc66da1dd5f170e775daa14cbba92ff32d56261987f1eb80e4`. Logical row equivalence to the pinned author CSV was verified; byte equality is not expected across Parquet and CSV formats.
+
+The [capability source lock](../data/benchmarks/lfm3-capabilities.json) preserves references for ARC-Challenge, HellaSwag, WinoGrande, TruthfulQA MC2, GSM8K, IFEval and MMLU. Their earlier Python preparation is reference material, not native capability certification. Do not label a Rust benign smoke as a score on those suites.
+
+## Reproduce the GUI checks without desktop popups
+
+The GUI Dockerfile can build from source or consume the exact release binaries. CI uses the artifact stage so the screenshots correspond to the binaries being packaged.
+
+```bash
+docker build -f rust/Dockerfile.gui --target from-source -t abliteration-gui-qa .
+docker create --name abliteration-gui-qa --network none abliteration-gui-qa
+docker start -a abliteration-gui-qa
+docker cp abliteration-gui-qa:/evidence ./gui-evidence
+```
+
+The private Xvfb display does not share the desktop. QA checks dimensions, nonempty rendering, image hashes and clean process exits. It validates the RefusalBench configuration structurally and never executes that benchmark or any model inference. Inspect the captured images as well as the machine-readable receipt; a checksum alone does not establish a usable layout.
+
+The historical [MiniCPM study](minicpm5-selective-study.md), [evaluation guide](evaluation.md) and [provenance guide](experiment-provenance.md) remain methodological context. Their model-specific interventions and scores are separate from this native LFM3 toolkit.
