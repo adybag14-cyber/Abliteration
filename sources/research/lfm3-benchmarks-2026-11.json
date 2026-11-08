@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "checked_at": "2026-11-08",
+  "purpose": "Source identities and protocol limits, not harmful-compliance optimization or measured safety scores",
+  "benchmarks": [
+    {
+      "id": "huihui-ai/harmbench_behaviors",
+      "url": "https://huggingface.co/datasets/huihui-ai/harmbench_behaviors",
+      "revision": "a8925e1fdd1dde099a1b84cb1b844e09445826ee",
+      "file": "harmbench_behaviors_text_test.csv",
+      "sha256": "75d257b3e7428c52eb7b0154318f455af3e01b09a3794b5e2f3d36054f3c0e29",
+      "rows_verified": 320,
+      "functional_categories_verified": {"standard": 159, "contextual": 81, "copyright": 80},
+      "license_declared": "Apache-2.0",
+      "generation_status": "not_run",
+      "score": null,
+      "limitations": ["A dataset identity is not a complete Huihui evaluation procedure.", "Contextual and copyright cases need their appropriate evaluators; substring refusal counting is not HarmBench attack success."]
+    },
+    {
+      "id": "JailbreakBench/JBB-Behaviors",
+      "url": "https://huggingface.co/datasets/JailbreakBench/JBB-Behaviors",
+      "revision": "886acc352a31533ffbcf4ef22c744658688086fc",
+      "benign_rows_verified": 100,
+      "harmful_rows_declared": 100,
+      "license_declared": "MIT",
+      "executable_scope": "benign Goal column only; no Target assistant prefill",
+      "harmful_generation_status": "not_run",
+      "official_jailbreak_score": null
+    },
+    {
+      "id": "walledai/StrongREJECT",
+      "url": "https://huggingface.co/datasets/walledai/StrongREJECT",
+      "revision": "df54272b395ce9e584d2f8140519935425d8549f",
+      "gated": "auto",
+      "mirror_contents_accessed": true,
+      "authorized_access_verified": true,
+      "mirror_file": "data/train-00000-of-00001.parquet",
+      "mirror_file_sha256": "603aa76bc6d546fc66da1dd5f170e775daa14cbba92ff32d56261987f1eb80e4",
+      "mirror_rows_verified": 313,
+      "public_author_source": "https://github.com/alexandrasouly/strongreject/blob/f7cad6c17e624e21d8df2278e918ae1dddb4cb56/strongreject_dataset/strongreject_dataset.csv",
+      "author_csv_sha256": "4dd70357e4ff8b5d0ba5ebafecab5d6dd5633ce8046e3dd1c8bd93e64de44381",
+      "author_csv_rows_verified": 313,
+      "mirror_logical_row_equivalence_verified": true,
+      "logical_rows_sha256": "76e6c34a6442f06290a57ee254eb5d22e73206724f3d20584fd17e7f3c18d4c0",
+      "generation_status": "not_run",
+      "score": null,
+      "limitations": ["The account holder obtained access before the authenticated file download; credentials and gated prompt contents are not published.", "All 313 prompt/category/source tuples match the pinned author CSV after its prompt column is renamed; the Parquet and CSV file bytes differ.", "Official rubric assesses harmful usefulness as well as refusal; source verification is not a model score."]
+    },
+    {
+      "id": "RefusalBench",
+      "paper": "https://arxiv.org/abs/2605.21545",
+      "repository": "https://github.com/AppliedScientific/refusalbench",
+      "public_tag": "snapshot-2026-05-final",
+      "revision": "fbdcff76160ae490b2a5ed87f9787de986365444",
+      "paper_advertised_tag": "prompts-v1.0-frozen",
+      "paper_advertised_tag_resolved": false,
+      "public_prompt_counts_verified": {"benign": 47, "borderline": 47, "dual_use": 47},
+      "positive_controls_in_paper": 15,
+      "public_control_manifest": "results/should_refuse/should_refuse_public_manifest.csv",
+      "public_control_manifest_data_rows_verified": 0,
+      "generation_status": "excluded_from_study",
+      "score": null,
+      "limitations": ["This is a biological-research calibration benchmark, not Huihui's dataset.", "The public snapshot supports analysis of published results, but its header-only control manifest does not reproduce a new complete positive-control evaluation.", "Overall low refusal alone does not establish good risk-tier discrimination."]
+    }
+  ]
+}

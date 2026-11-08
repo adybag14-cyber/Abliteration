@@ -17,6 +17,12 @@ on:
       - "scripts/*research*"
       - "scripts/*selective*"
       - "scripts/checkpoint_tools.py"
+      - "scripts/*lfm3*"
+      - "scripts/model_lock.py"
+      - "data/benchmarks/**"
+      - "requirements-lfm3*"
+      - "docs/lfm3-reproducible-evaluation.md"
+      - "sources/research/lfm3-benchmarks-2026-11.json"
       - "scripts/abliteration_math.py"
       - "data/experiments/**"
       - "data/models/**"
@@ -35,6 +41,12 @@ on:
       - "scripts/*research*"
       - "scripts/*selective*"
       - "scripts/checkpoint_tools.py"
+      - "scripts/*lfm3*"
+      - "scripts/model_lock.py"
+      - "data/benchmarks/**"
+      - "requirements-lfm3*"
+      - "docs/lfm3-reproducible-evaluation.md"
+      - "sources/research/lfm3-benchmarks-2026-11.json"
       - "scripts/abliteration_math.py"
       - "data/experiments/**"
       - "data/models/**"
@@ -392,15 +404,21 @@ jobs:
         run: python scripts/validate-research-refresh.py
       - name: Verify selective export, frozen parameters, and corruption detection
         run: python scripts/test-selective-tools.py
+      - name: Verify LFM3 provenance, held-out splits, and evidence integrity
+        run: python scripts/test-lfm3-evaluation.py
       - name: Package researcher tools with a source manifest
         run: node scripts/package-research-tools.mjs
       - name: Smoke the extracted toolkit
         run: |
           mkdir /tmp/research-toolkit-smoke
-          tar -xzf artifacts/research-package/abliteration-research-tools-1.2.0.tar.gz -C /tmp/research-toolkit-smoke
-          cd /tmp/research-toolkit-smoke/abliteration-research-tools-1.2.0
+          tar -xzf artifacts/research-package/abliteration-research-tools-1.3.0.tar.gz -C /tmp/research-toolkit-smoke
+          cd /tmp/research-toolkit-smoke/abliteration-research-tools-1.3.0
           python scripts/test-selective-tools.py
           python scripts/selective-checkpoint.py --help
+          python scripts/test-lfm3-evaluation.py
+          python scripts/run-lfm3-evaluation.py --help
+          python scripts/run-lfm3-capabilities.py --help
+          python scripts/export-lfm3-report.py --help
       - uses: actions/upload-artifact@v7
         with:
           name: abliterate-research-tools

@@ -18,6 +18,17 @@ Living handbook for **LLM abliteration** (weight-level refusal-direction surgery
 The Pages guide now includes checksum-first commands for Windows, Linux, and macOS plus a searchable [72-record primary-source observatory](https://adybag14-cyber.github.io/Abliteration/#research). Repository policy: [contributing](CONTRIBUTING.md) · [security](SECURITY.md) · [citation](CITATION.cff).
 
 
+## November 2026: reproducible LFM3 evaluation
+
+The [LFM3-1.7B walkthrough](docs/lfm3-reproducible-evaluation.md) adds a pinned
+instruction-tuned checkpoint, a WSL/RTX 4090 runtime, disjoint calibration and
+350 held-out benign prompts, complete-response verification, and versioned
+capability tasks. It compares two fixed prompt profiles with unchanged weights.
+The [benchmark registry](sources/research/lfm3-benchmarks-2026-11.json) identifies
+Huihui's 320-row dataset and the requested JBB, StrongREJECT and RefusalBench
+sources, including their access and reproducibility limits. Lexical screens,
+semantic refusals and harmful-compliance scores are kept distinct.
+
 ## October 2026: adaptive methods and huihui evidence
 
 The [October research map](docs/research-october-2026.md) adds eight late-September/early-October papers, an [adaptive-intervention and ARA guide](methods/adaptive-interventions-2026.md), and [huihui-ai checkpoint evidence](docs/tools/huihui-ai.md) with eight pinned model cards. It separates reported methods, defensive results, stable releases and development code. The older snapshots and measured MiniCPM5 results remain intact.

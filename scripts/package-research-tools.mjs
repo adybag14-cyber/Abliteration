@@ -4,17 +4,20 @@ import { createHash } from "node:crypto";
 import path from "node:path";
 
 const root = process.cwd();
-const name = "abliteration-research-tools-1.2.0";
+const name = "abliteration-research-tools-1.3.0";
 const parent = path.join(root, "artifacts/research-package");
 const stage = path.join(parent, name);
 if (existsSync(stage)) throw new Error("Research package staging directory already exists; use a clean build workspace");
 mkdirSync(stage, { recursive: true });
-const files = ["requirements-research.txt", "LICENSE", "RESEARCH-TOOLS.md",
-  ...["checkpoint_tools.py", "selective-checkpoint.py", "verify-research-run.py", "research_experiment.py", "run-research-experiment.py", "download-research-model.py", "export-research-report.py", "abliteration_math.py", "test-selective-tools.py"].map((f) => `scripts/${f}`),
+const files = ["requirements-research.txt", "requirements-lfm3.txt", "requirements-lfm3-linux-cu130.lock.txt", "LICENSE", "RESEARCH-TOOLS.md",
+  ...["checkpoint_tools.py", "model_lock.py", "selective-checkpoint.py", "verify-research-run.py", "research_experiment.py", "run-research-experiment.py", "download-research-model.py", "export-research-report.py", "abliteration_math.py", "test-selective-tools.py"].map((f) => `scripts/${f}`),
+  ...["lfm3_evaluation.py", "lfm3_report.py", "prepare-lfm3-evaluation.py", "run-lfm3-evaluation.py", "run-lfm3-capabilities.py", "export-lfm3-report.py", "test-lfm3-evaluation.py"].map((f) => `scripts/${f}`),
+  "data/models/lfm3-1.7b.json", "data/benchmarks/lfm3-benign.json", "data/benchmarks/lfm3-capabilities.json", "data/experiments/lfm3-calibration.jsonl",
+  "docs/lfm3-reproducible-evaluation.md", "sources/research/lfm3-benchmarks-2026-11.json",
   "data/models/minicpm5-1b.json", "data/models/minicpm5-1b-layout.json", "data/experiments/minicpm5-protocol.jsonl", "data/experiments/minicpm5-pilot-96.json", "data/experiments/minicpm5-study-256.json",
   "docs/selective-methods-2026.md", "docs/minicpm5-selective-study.md", "docs/research-september-2026.md",
   "sources/research/catalog-2026.json", "sources/research/catalog-2026-09.json"];
-const manifest = { version: "1.2.0", source_commit: process.env.GITHUB_SHA || spawnSync("git", ["rev-parse", "HEAD"], { encoding: "utf8", windowsHide: true }).stdout.trim(), files: [] };
+const manifest = { version: "1.3.0", source_commit: process.env.GITHUB_SHA || spawnSync("git", ["rev-parse", "HEAD"], { encoding: "utf8", windowsHide: true }).stdout.trim(), files: [] };
 manifest.source_worktree_dirty = spawnSync("git", ["status", "--porcelain"], { encoding: "utf8", windowsHide: true }).stdout.trim().length > 0;
 for (const file of files) {
   let bytes = readFileSync(path.join(root, file));

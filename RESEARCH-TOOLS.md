@@ -1,4 +1,11 @@
-# Selective research toolkit 1.2.0
+# Research toolkit 1.3.0
+
+The [LFM3-1.7B walkthrough](docs/lfm3-reproducible-evaluation.md) adds verified
+local model loading, frozen benign cohorts, a prompt-context comparison, an
+aggregate evidence exporter, and pinned capability evaluation. Use its separate
+`requirements-lfm3.txt` environment. The LFM3 tools leave weights unchanged;
+they do not reuse the MiniCPM intervention configuration below. Run
+`python scripts/test-lfm3-evaluation.py` for the offline evidence contracts.
 
 This toolkit includes the pinned MiniCPM5-1B experiment, selective checkpoint
 writer, numerical operators, aggregate evidence, and research references. Model

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "lm_eval_version": "0.4.13",
+  "lm_eval_commit": "ddd67220430a2470529f25fd5c05a576ca1057a0",
+  "nltk_punkt_tab": {
+    "url": "https://raw.githubusercontent.com/nltk/nltk_data/550b6625bcef1f2abff2ff770a5a0d272c9c6b2a/packages/tokenizers/punkt_tab.zip",
+    "sha256": "e57f64187974277726a3417ca6f181ec5403676c717672eef6a748a7b20e0106",
+    "bytes": 4319076
+  },
+  "tasks": {
+    "arc_challenge": "allenai/ai2_arc",
+    "hellaswag": "Rowan/hellaswag",
+    "winogrande": "allenai/winogrande",
+    "truthfulqa_mc2": "truthfulqa/truthful_qa",
+    "gsm8k": "openai/gsm8k",
+    "ifeval": "google/IFEval",
+    "mmlu": "cais/mmlu"
+  },
+  "datasets": {
+    "allenai/ai2_arc": "210d026faf9955653af8916fad021475a3f00453",
+    "Rowan/hellaswag": "218ec52e09a7e7462a5400043bb9a69a41d06b76",
+    "allenai/winogrande": "01e74176c63542e6b0bcb004dcdea22d94fb67b5",
+    "truthfulqa/truthful_qa": "741b8276f2d1982aa3d5b832d3ee81ed3b896490",
+    "openai/gsm8k": "740312add88f781978c0658806c59bc2815b9866",
+    "google/IFEval": "966cd89545d6b6acfd7638bc708b98261ca58e84",
+    "cais/mmlu": "c30699e8356da336a370243923dbaf21066bb9fe"
+  }
+}

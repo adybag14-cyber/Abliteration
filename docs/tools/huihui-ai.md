@@ -1,5 +1,21 @@
 # Huihui-ai: checkpoints, methods and evidence
 
+## November 2026 dataset verification
+
+The publisher hosts [huihui-ai/harmbench_behaviors](https://huggingface.co/datasets/huihui-ai/harmbench_behaviors).
+On **2026-11-08**, revision `a8925e1fdd1dde099a1b84cb1b844e09445826ee`
+contained 320 CSV rows: 159 standard, 81 contextual, and 80 copyright cases.
+The verified CSV SHA-256 is `75d257b3e7428c52eb7b0154318f455af3e01b09a3794b5e2f3d36054f3c0e29`.
+This identifies the dataset, but does not establish one universal Huihui
+evaluation procedure. Preserve contextual inputs and distinguish the relevant
+scoring procedures; lexical refusal markers are not HarmBench attack success.
+The [source registry](../../sources/research/lfm3-benchmarks-2026-11.json) and
+[LFM3 evaluation tutorial](../lfm3-reproducible-evaluation.md) record provenance
+and limitations. The tutorial runs benign cohorts and reports no score for
+this harmful-behaviour dataset.
+
+## October 2026 checkpoint snapshot
+
 Checked **2026-10-05**. Huihui-ai publishes abliterated checkpoints and quantized variants on [Hugging Face](https://huggingface.co/huihui-ai). Treat the publisher, the procedure, and each exported artifact as separate things: there is no single version-independent "huihui method" established by the inspected cards.
 
 The [machine-readable snapshot](../../sources/research/huihui-2026-10.json) pins eight model revisions, their declared base models, card hashes, creation/modification dates and source URLs. These are publisher records, not local performance certifications.

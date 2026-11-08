@@ -4,6 +4,7 @@
  *
  *   npm run ralph:turn-end
  *   npm run ralph:turn-end -- --message "fixed broken links"
+ *   npm run ralph:turn-end -- --log-only --message "isolated task complete"
  *
  * Agents MUST run this before ending any turn that touched the handbook.
  */
@@ -26,6 +27,7 @@ const args = process.argv.slice(2);
 const messageIdx = args.indexOf('--message');
 const message = messageIdx >= 0 ? args[messageIdx + 1] || '' : process.env.RALPH_TURN_MESSAGE || '';
 const forceEnd = args.includes('--force');
+const logOnly = args.includes('--log-only');
 
 function stamp() {
   return new Date().toISOString();
@@ -122,6 +124,10 @@ function main() {
   }
 
   const entry = logTurn();
+  if (logOnly) {
+    console.log('Ralph turn recorded without signaling or launching background continuations');
+    return;
+  }
   writeSignal(entry);
 
   if (isDaemonAlive()) {

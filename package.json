@@ -67,7 +67,12 @@
     "research:download": "python scripts/download-research-model.py",
     "research:run": "python scripts/run-research-experiment.py",
     "research:test": "python scripts/test-selective-tools.py",
-    "research:package": "node scripts/package-research-tools.mjs"
+    "research:package": "node scripts/package-research-tools.mjs",
+    "lfm3:test": "python scripts/test-lfm3-evaluation.py",
+    "lfm3:prepare": "python scripts/prepare-lfm3-evaluation.py",
+    "lfm3:run": "python scripts/run-lfm3-evaluation.py",
+    "lfm3:capabilities": "python scripts/run-lfm3-capabilities.py",
+    "lfm3:export": "python scripts/export-lfm3-report.py"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",
