@@ -1,0 +1,46 @@
+# syntax=docker/dockerfile:1
+FROM rust:1.99.1-slim-bookworm@sha256:f2c004e3d2d8b547e8cf7ffbc29205385f4e71d23e53e4e383065db5e9f822cd AS environment
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates git build-essential cmake pkg-config clang nasm \
+    libxkbcommon-dev libxkbcommon-x11-0 libwayland-dev libx11-dev \
+    libxcursor-dev libxrandr-dev libxi-dev libxinerama-dev \
+    libegl1-mesa-dev libgl1-mesa-dev libudev-dev libvulkan1 mesa-vulkan-drivers \
+    xvfb xauth xdotool imagemagick fonts-dejavu-core jq \
+    && rm -rf /var/lib/apt/lists/*
+RUN useradd --create-home --uid 1000 studio && mkdir -p /app /evidence /work && chown studio:studio /evidence /work
+COPY --chmod=755 rust/scripts/gui-qa.sh rust/scripts/render-one.sh /app/
+COPY rust/configs /app/configs
+ARG BUILD_SHA=development
+ENV ABLITERATION_BUILD_SHA=${BUILD_SHA} ICED_BACKEND=tiny-skia RAYON_NUM_THREADS=6
+LABEL org.opencontainers.image.source="https://github.com/adybag14-cyber/Abliteration" \
+      org.opencontainers.image.title="Abliteration Studio headless GUI verification"
+
+FROM environment AS build
+WORKDIR /src
+COPY Cargo.toml Cargo.lock rust-toolchain.toml ./
+COPY .cargo .cargo
+COPY rust rust
+COPY data/models/lfm3-1.7b.json data/models/
+COPY data/benchmarks/lfm3-benign.json data/benchmarks/
+COPY data/experiments/lfm3-calibration.jsonl data/experiments/
+COPY sources/research/lfm3-benchmarks-2026-11.json sources/research/
+RUN --mount=type=cache,target=/usr/local/cargo/registry,sharing=locked \
+    --mount=type=cache,target=/usr/local/cargo/git,sharing=locked \
+    --mount=type=cache,target=/src/target,sharing=locked \
+    cargo build --locked --release --features gui \
+    && install -D target/release/abliteration-cli /built/abliteration-cli \
+    && install -D target/release/abliteration-studio /built/abliteration-studio
+
+# CI supplies exact release binaries to this stage, then tests those bytes.
+FROM environment AS from-artifacts
+COPY --chmod=755 artifacts/gui-runtime/abliteration-cli artifacts/gui-runtime/abliteration-studio /app/
+USER studio
+WORKDIR /app
+ENTRYPOINT ["/app/gui-qa.sh"]
+
+# Local clean-source reproduction uses this default stage.
+FROM environment AS from-source
+COPY --from=build /built/abliteration-cli /built/abliteration-studio /app/
+USER studio
+WORKDIR /app
+ENTRYPOINT ["/app/gui-qa.sh"]

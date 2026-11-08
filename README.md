@@ -6,7 +6,9 @@
 
 Living handbook for **LLM abliteration** (weight-level refusal-direction surgery) plus **agentic security** stacks for factory firmware QA, pentest labs, and [CyberGym](https://cybergym.io) evaluation.
 
-**First hour (no GPU):** download one unique [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) archive — Windows `abliterate-cxx-windows-x64-msvc.zip`, Linux `abliterate-cxx-linux-x64-gcc16.tar.gz`, macOS `abliterate-cxx-macos-arm64-llvm.tar.gz` — then Hour 0: `abliterate-cxx guide` → `doctor` → `limits` → `self-check` → `demo`. Hour 0.5: `estimate dim` → `apply orba-directional` → `eval` toys → `recipes`. Walkthrough: [docs/cxx26-researcher-guide.md](docs/cxx26-researcher-guide.md). Paper word → chapter: [docs/paper-term-map.md](docs/paper-term-map.md).
+**Native LFM3 workflow:** start with [Abliteration Studio and its Rust toolkit](rust/README.md), then follow the [reproducible Rust tutorial](docs/lfm3-reproducible-evaluation.md). The Iced GUI, model runtime and new evaluation tools use Rust. Older Python and C++ material remains available as separate historical/reference work.
+
+**CPU mathematics lab (C++ reference):** download one unique [cxx-nightly](https://github.com/adybag14-cyber/Abliteration/releases/tag/cxx-nightly) archive — Windows `abliterate-cxx-windows-x64-msvc.zip`, Linux `abliterate-cxx-linux-x64-gcc16.tar.gz`, macOS `abliterate-cxx-macos-arm64-llvm.tar.gz` — then `abliterate-cxx guide` → `doctor` → `limits` → `self-check` → `demo`. Walkthrough: [docs/cxx26-researcher-guide.md](docs/cxx26-researcher-guide.md). Paper word → chapter: [docs/paper-term-map.md](docs/paper-term-map.md).
 
 **Then:** [docs/complete-curriculum.md](docs/complete-curriculum.md) · [docs/setup-encyclopedia.md](docs/setup-encyclopedia.md) · [docs/bleeding-edge.md](docs/bleeding-edge.md) · [instructions/method-cookbook.md](instructions/method-cookbook.md)
 
@@ -17,6 +19,21 @@ Living handbook for **LLM abliteration** (weight-level refusal-direction surgery
 
 The Pages guide now includes checksum-first commands for Windows, Linux, and macOS plus a searchable [72-record primary-source observatory](https://adybag14-cyber.github.io/Abliteration/#research). Repository policy: [contributing](CONTRIBUTING.md) · [security](SECURITY.md) · [citation](CITATION.cff).
 
+
+## November 2026: native Rust research studio
+
+The [LFM3-1.7B walkthrough](docs/lfm3-reproducible-evaluation.md) now uses a
+native **Iced + iced-shadcn GUI**, **Rust/Cargo tools**, and a pinned native
+mistral.rs inference backend. The [toolkit guide](rust/README.md) covers model
+verification, tensor inspection, frozen benign cohorts, experimental Q8/CUDA
+configurations, and integrity-checked reports. GitHub CI builds the portable
+packages and tests the real GUI in an isolated Docker display. Python is
+[historical reference](docs/lfm3-python-reference.md), not the new runtime.
+The [benchmark registry](sources/research/lfm3-benchmarks-2026-11.json) identifies
+Huihui's 320-row dataset and the requested JBB, StrongREJECT and RefusalBench
+sources, including their access and reproducibility limits. RefusalBench is
+included as an unrun research configuration with explicit risks. Lexical
+screens, semantic refusals and harmful-compliance scores are kept distinct.
 
 ## October 2026: adaptive methods and huihui evidence
 

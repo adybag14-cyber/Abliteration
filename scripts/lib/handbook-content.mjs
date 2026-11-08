@@ -44,7 +44,7 @@ export const collections = [
     id: "experiments",
     title: "Experiments & evidence",
     description:
-      "Evaluation, reproducibility, and the measured MiniCPM5 example.",
+      "Evaluation, reproducibility, the measured MiniCPM5 study, and native LFM3 research tools.",
     accent: "emerald",
   },
   {
@@ -64,6 +64,7 @@ export const collections = [
 ];
 const priority = [
   "docs/overview.md",
+  "docs/lfm3-reproducible-evaluation.md",
   "docs/theory.md",
   "docs/complete-curriculum.md",
   "docs/cxx26-researcher-guide.md",
@@ -83,6 +84,8 @@ const descriptions = {
     "Understand the difference between shards, tensors, layers, and adapters. Plan a small edit and verify what stayed identical.",
   "docs/minicpm5-selective-study.md":
     "Inspect the executed MiniCPM5-1B comparison, its four-tensor edit budget, uncertainty, and reproducible evidence.",
+  "docs/lfm3-reproducible-evaluation.md":
+    "Use the native Rust and Iced LFM3 studio, inspect experimental configurations, and verify model and evaluation evidence.",
   "docs/evaluation.md":
     "Design paired comparisons that keep refusal, capability, degeneration, and uncertainty separate.",
   "docs/experiment-provenance.md":

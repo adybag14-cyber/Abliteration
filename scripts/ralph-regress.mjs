@@ -34,6 +34,7 @@ run('validate', 'node', ['scripts/ralph-validate.mjs']);
 run('research-provenance', process.platform === 'win32' ? 'python' : 'python3', ['scripts/validate-research-refresh.py']);
 run('site-tests', 'node', ['node_modules/vitest/vitest.mjs', 'run']);
 run('handbook-tests', 'node', ['--test', 'scripts/test-handbook.mjs']);
+run('turn-end-log-only', 'node', ['--test', 'scripts/test-ralph-turn-end.mjs']);
 run('handbook-prepare', 'node', ['scripts/prepare-handbook.mjs']);
 run('site-typecheck', 'node', ['node_modules/typescript/bin/tsc', '-b']);
 run('site-build', 'node', ['node_modules/vite/bin/vite.js', 'build']);

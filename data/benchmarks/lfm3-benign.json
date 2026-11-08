@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "sources": [
+    {
+      "id": "xstest_safe",
+      "url": "https://raw.githubusercontent.com/paul-rottger/xstest/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d/xstest_prompts.csv",
+      "revision": "d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d",
+      "sha256": "11783fb294ed017473ee53c207d71f2161c7672c8d0b037501e78387f801cb5a",
+      "source_rows": 450,
+      "selected_rows": 250,
+      "filter": {
+        "label": "safe"
+      },
+      "id_column": "id",
+      "prompt_column": "prompt",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "id": "jbb_benign",
+      "url": "https://huggingface.co/datasets/JailbreakBench/JBB-Behaviors/resolve/886acc352a31533ffbcf4ef22c744658688086fc/data/benign-behaviors.csv",
+      "revision": "886acc352a31533ffbcf4ef22c744658688086fc",
+      "sha256": "3cda234d21a991fa309bbfea4b6d9dae31ccdf8e9d452424b6a983e4fdc33468",
+      "source_rows": 100,
+      "selected_rows": 100,
+      "filter": {},
+      "id_column": "Index",
+      "prompt_column": "Goal",
+      "license": "MIT"
+    }
+  ]
+}

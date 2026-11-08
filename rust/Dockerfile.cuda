@@ -1,0 +1,40 @@
+# syntax=docker/dockerfile:1
+FROM rust:1.99.1-slim-bookworm@sha256:f2c004e3d2d8b547e8cf7ffbc29205385f4e71d23e53e4e383065db5e9f822cd AS rust-toolchain
+FROM nvidia/cuda:13.0.2-devel-ubuntu22.04@sha256:1c517d4fb96528c8999e14e6e6b16d7e2ff9ae8d194fd788d60fdc88e693e982 AS cuda-build
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    ca-certificates git build-essential cmake pkg-config clang nasm curl libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=rust-toolchain /usr/local/cargo /usr/local/cargo
+COPY --from=rust-toolchain /usr/local/rustup /usr/local/rustup
+ENV PATH=/usr/local/cargo/bin:$PATH CARGO_HOME=/usr/local/cargo RUSTUP_HOME=/usr/local/rustup \
+    CUDA_COMPUTE_CAP=89 CARGO_BUILD_JOBS=3 RAYON_NUM_THREADS=3 CMAKE_BUILD_PARALLEL_LEVEL=3
+ARG BUILD_SHA=development
+ENV ABLITERATION_BUILD_SHA=${BUILD_SHA}
+WORKDIR /src
+COPY Cargo.toml Cargo.lock rust-toolchain.toml ./
+COPY .cargo .cargo
+COPY rust rust
+COPY data/models/lfm3-1.7b.json data/models/
+COPY data/benchmarks/lfm3-benign.json data/benchmarks/
+COPY data/experiments/lfm3-calibration.jsonl data/experiments/
+COPY sources/research/lfm3-benchmarks-2026-11.json sources/research/
+RUN rustup component add rustfmt clippy --toolchain 1.99.1
+RUN --mount=type=cache,target=/usr/local/cargo/registry,sharing=locked \
+    --mount=type=cache,target=/usr/local/cargo/git,sharing=locked \
+    --mount=type=cache,target=/src/target,id=abliteration-cuda13-sm89-target,sharing=locked \
+    nvcc --version \
+    && cargo build --locked --release --features cuda --bin abliteration-cli \
+    && install -D target/release/abliteration-cli /opt/abliteration/abliteration-cli
+# Driver stubs are used only for the no-GPU build receipt; runtime uses the real
+# driver injected by --gpus all. No stub library is bundled in release archives.
+RUN if [ ! -e /usr/local/cuda/lib64/stubs/libcuda.so.1 ]; then \
+      ln -s libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1; \
+    fi \
+    && LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs:$LD_LIBRARY_PATH \
+       /opt/abliteration/abliteration-cli doctor > /opt/abliteration/doctor.json
+COPY rust/configs /opt/abliteration/configs
+ENV RAYON_NUM_THREADS=6
+LABEL org.opencontainers.image.source="https://github.com/adybag14-cyber/Abliteration" \
+      org.opencontainers.image.title="Experimental Rust CUDA 13 SM89 research toolkit"
+WORKDIR /opt/abliteration
+ENTRYPOINT ["/opt/abliteration/abliteration-cli"]

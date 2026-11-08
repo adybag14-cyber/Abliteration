@@ -1,0 +1,14 @@
+schema = 1
+name = "LFM3 complete benign cohorts"
+benchmark = "benign-paired"
+device = "cpu"
+max_new_tokens = 4096
+max_input_tokens = 4096
+repetition_penalty = 1.1
+test_limit_per_dataset = 0
+calibration_limit = 0
+compare_context = true
+quantization = "none"
+experimental = false
+automated_run = true
+timeout_seconds = 14400

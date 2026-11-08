@@ -1,4 +1,14 @@
-# Selective research toolkit 1.2.0
+# Research toolkits
+
+The active LFM3 platform is the [native Rust studio](rust/README.md), with an
+Iced GUI, Cargo builds, a Rust inference/evaluation runtime, and CI-produced
+release archives. Follow the [reproducible LFM3 walkthrough](docs/lfm3-reproducible-evaluation.md).
+Python is retained only as [historical LFM3 reference material](docs/lfm3-python-reference.md).
+
+## Historical selective toolkit 1.2.0
+
+The material below describes the earlier MiniCPM study and its preserved
+reference archive. It is separate from the native Rust LFM3 runtime.
 
 This toolkit includes the pinned MiniCPM5-1B experiment, selective checkpoint
 writer, numerical operators, aggregate evidence, and research references. Model

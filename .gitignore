@@ -4,6 +4,9 @@ dist/
 coverage/
 artifacts/playwright/
 artifacts/research-package/
+artifacts/rust-package/
+artifacts/gui-runtime/
+artifacts/rust-gui/
 artifacts/handbook-build/
 artifacts/handbook-audit/
 artifacts/puppeteer-live*/
@@ -16,6 +19,7 @@ __pycache__/
 .venv/
 venv/
 .env
+target/
 
 # ML artifacts
 *.safetensors
