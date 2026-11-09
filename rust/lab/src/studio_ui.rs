@@ -1,6 +1,7 @@
 use abliteration_lab::{
     BUILD_SHA, VERSION,
     config::{REFUSALBENCH_RISKS, RunConfig},
+    lifecycle::{Action, Outcome, Readiness, Session, report_outcome},
 };
 use clap::{Parser, ValueEnum};
 use iced::alignment::{Horizontal, Vertical};
@@ -90,16 +91,6 @@ impl std::fmt::Display for Preset {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum Action {
-    Verify,
-    Download,
-    Inspect,
-    Prepare,
-    Run,
-    VerifyReport,
-}
-
 #[derive(Debug, Clone)]
 struct JobOutput {
     action: Action,
@@ -107,6 +98,35 @@ struct JobOutput {
     stdout: String,
     stderr: String,
     report: Option<Value>,
+    run_path: String,
+}
+
+#[derive(Debug, Clone)]
+enum ChildFailure {
+    Cancelled,
+    Failed(String),
+}
+impl From<String> for ChildFailure {
+    fn from(value: String) -> Self {
+        Self::Failed(value)
+    }
+}
+impl From<&str> for ChildFailure {
+    fn from(value: &str) -> Self {
+        Self::Failed(value.into())
+    }
+}
+
+struct LoadedReport {
+    value: Value,
+    run_path: String,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum WindowState {
+    Open,
+    WaitingForChild,
+    ExitRequested,
 }
 
 #[derive(Debug, Clone)]
@@ -122,7 +142,7 @@ enum Message {
     TestLimit(String),
     CalibrationLimit(String),
     Start(Action),
-    Finished(Result<JobOutput, String>),
+    Finished(u64, Result<JobOutput, ChildFailure>),
     Cancel,
     SaveConfig,
     CopyConfig,
@@ -130,6 +150,7 @@ enum Message {
 }
 
 struct Studio {
+    window_state: WindowState,
     page: Page,
     preset: Preset,
     theme: kit::Theme,
@@ -141,14 +162,13 @@ struct Studio {
     input_cap: String,
     test_limit: String,
     calibration_limit: String,
-    busy: bool,
-    model_verified: bool,
-    protocol_prepared: bool,
+    operation: Session,
+    model_state: Readiness,
+    protocol_state: Readiness,
     status: String,
     detail: String,
-    error: bool,
     log: String,
-    last_report: Option<Value>,
+    last_report: Option<LoadedReport>,
     cancellation: Arc<AtomicBool>,
     quit_after_seconds: Option<u64>,
 }
@@ -157,6 +177,7 @@ impl Studio {
     fn new(args: Args) -> Self {
         let workspace = args.workspace.unwrap_or_else(default_workspace);
         Self {
+            window_state: WindowState::Open,
             page: args.page,
             preset: Preset::Smoke,
             theme: if args.dark {
@@ -183,13 +204,12 @@ impl Studio {
             input_cap: "4096".into(),
             test_limit: "1".into(),
             calibration_limit: "2".into(),
-            busy: false,
-            model_verified: false,
-            protocol_prepared: false,
+            operation: Session::default(),
+            model_state: Readiness::Unchecked,
+            protocol_state: Readiness::Unchecked,
             status: "Ready to configure".into(),
-            detail: "Verify the checkpoint, prepare the benign cohorts, then run a new experiment."
+            detail: "Verify the checkpoint, prepare or verify benign cohorts, then run a new experiment."
                 .into(),
-            error: false,
             log: "No commands have run in this session.".into(),
             last_report: None,
             cancellation: Arc::new(AtomicBool::new(false)),
@@ -231,14 +251,31 @@ impl Studio {
     }
 
     fn fail(&mut self, message: String) {
-        self.error = true;
+        self.operation.notice(Outcome::Failed);
         self.status = "Action needs attention".into();
         self.detail = message.clone();
         self.log = message;
     }
 
+    fn draft_changed(&mut self) {
+        self.last_report = None;
+        self.operation.reset_notice();
+        self.status = "Ready to configure".into();
+        self.detail = "This draft has not been evaluated. Verify any changed inputs before starting a new run.".into();
+    }
+
     fn start(&mut self, action: Action) -> Task<Message> {
-        if self.busy {
+        if self.operation.is_busy() {
+            return Task::none();
+        }
+        if action == Action::Run
+            && (self.model_state != Readiness::Verified
+                || self.protocol_state != Readiness::Verified)
+        {
+            self.fail(
+                "Verify the checkpoint and prepare or verify the benign protocol before running."
+                    .into(),
+            );
             return Task::none();
         }
         let paths = (
@@ -268,13 +305,21 @@ impl Studio {
         } else {
             String::new()
         };
-        self.busy = true;
-        self.error = false;
+        let Some(job) = self.operation.begin(action) else {
+            return Task::none();
+        };
+        match action {
+            Action::Verify | Action::Download => self.model_state = Readiness::Checking,
+            Action::Prepare | Action::VerifyProtocol => self.protocol_state = Readiness::Checking,
+            Action::Run | Action::VerifyReport => self.last_report = None,
+            Action::Inspect => {}
+        }
         self.status = match action {
             Action::Verify => "Verifying checkpoint bytes",
             Action::Download => "Downloading the pinned checkpoint",
             Action::Inspect => "Inspecting tensor metadata",
             Action::Prepare => "Preparing the frozen benign cohorts",
+            Action::VerifyProtocol => "Verifying the existing benign protocol",
             Action::Run => "Running the native experiment",
             Action::VerifyReport => "Verifying saved native evidence",
         }
@@ -286,12 +331,17 @@ impl Studio {
         let cancellation = Arc::clone(&self.cancellation);
         Task::perform(
             run_child(action, paths, config_text, cancellation),
-            Message::Finished,
+            move |result| Message::Finished(job.id, result),
         )
     }
 
     fn update(&mut self, message: Message) -> Task<Message> {
-        if self.busy
+        if self.window_state != WindowState::Open
+            && !matches!(&message, Message::Finished(..) | Message::Exit)
+        {
+            return Task::none();
+        }
+        if self.operation.is_busy()
             && matches!(
                 &message,
                 Message::Preset(_)
@@ -303,6 +353,7 @@ impl Studio {
                     | Message::TestLimit(_)
                     | Message::CalibrationLimit(_)
                     | Message::SaveConfig
+                    | Message::CopyConfig
             )
         {
             return Task::none();
@@ -319,19 +370,36 @@ impl Studio {
             }
             Message::ModelPath(value) => {
                 self.model_path = value;
-                self.model_verified = false;
+                self.model_state = Readiness::Unchecked;
+                self.draft_changed();
             }
             Message::ProtocolPath(value) => {
                 self.protocol_path = value;
-                self.protocol_prepared = false;
+                self.protocol_state = Readiness::Unchecked;
+                self.draft_changed();
             }
-            Message::OutputPath(value) => self.output_path = value,
-            Message::TokenCap(value) => self.token_cap = value,
-            Message::InputCap(value) => self.input_cap = value,
-            Message::TestLimit(value) => self.test_limit = value,
-            Message::CalibrationLimit(value) => self.calibration_limit = value,
+            Message::OutputPath(value) => {
+                self.output_path = value;
+                self.draft_changed();
+            }
+            Message::TokenCap(value) => {
+                self.token_cap = value;
+                self.draft_changed();
+            }
+            Message::InputCap(value) => {
+                self.input_cap = value;
+                self.draft_changed();
+            }
+            Message::TestLimit(value) => {
+                self.test_limit = value;
+                self.draft_changed();
+            }
+            Message::CalibrationLimit(value) => {
+                self.calibration_limit = value;
+                self.draft_changed();
+            }
             Message::Preset(preset) => {
-                if !self.busy {
+                if !self.operation.is_busy() {
                     self.preset = preset;
                     if let Ok(config) = toml::from_str::<RunConfig>(preset.source()) {
                         self.token_cap = config.max_new_tokens.to_string();
@@ -339,89 +407,21 @@ impl Studio {
                         self.test_limit = config.test_limit_per_dataset.to_string();
                         self.calibration_limit = config.calibration_limit.to_string();
                     }
+                    self.draft_changed();
                 }
             }
             Message::Start(action) => return self.start(action),
             Message::Cancel => {
+                if !self.operation.cancel() {
+                    return Task::none();
+                }
                 self.cancellation.store(true, Ordering::Relaxed);
                 self.status = "Cancelling the owned run".into();
                 self.detail =
                     "Partial records are retained and cannot be reported as a completed benchmark."
                         .into();
             }
-            Message::Finished(result) => {
-                self.busy = false;
-                match result {
-                    Err(error) => self.fail(error),
-                    Ok(output) => {
-                        self.log =
-                            tail_text(&format!("{}\n{}", output.stdout, output.stderr), 16_000);
-                        let valid_run = output.report.as_ref().is_some_and(|r| {
-                            matches!(r["status"].as_str(), Some("completed" | "needs_review"))
-                        });
-                        let needs_review =
-                            matches!(output.action, Action::Run | Action::VerifyReport)
-                                && output.code == Some(2)
-                                && valid_run;
-                        self.error = (output.code != Some(0) && !needs_review)
-                            || (matches!(output.action, Action::Run | Action::VerifyReport)
-                                && !valid_run);
-                        if self.error {
-                            self.status = "Command did not complete".into();
-                            self.detail = if output.stderr.trim().is_empty() {
-                                "No valid native completion report was produced. See Session activity.".into()
-                            } else {
-                                tail_text(&output.stderr, 900)
-                            };
-                        } else {
-                            self.status = match output.action {
-                                Action::Verify | Action::Download => "Checkpoint verified",
-                                Action::Inspect => "Tensor inventory read",
-                                Action::Prepare => "Benign protocol prepared",
-                                Action::Run if output.code == Some(2) => {
-                                    "Run finished · review censored output"
-                                }
-                                Action::Run => "Run finished",
-                                Action::VerifyReport => "Report integrity verified",
-                            }
-                            .into();
-                            self.detail =
-                                "The full command receipt is available under Session activity."
-                                    .into();
-                            if matches!(output.action, Action::Verify | Action::Download) {
-                                match serde_json::from_str::<
-                                    abliteration_lab::model::ModelVerification,
-                                >(&output.stdout)
-                                {
-                                    Ok(proof)
-                                        if proof.parameters == 1_728_801_536
-                                            && proof.file_sha256.len() == 11
-                                            && !proof.python_executed =>
-                                    {
-                                        self.model_verified = true;
-                                        self.detail = format!(
-                                            "{} files and {} tensors verified against the pinned model.",
-                                            proof.file_sha256.len(),
-                                            proof.tensors.len()
-                                        );
-                                    }
-                                    _ => self.fail(
-                                        "The verifier did not return complete native evidence."
-                                            .into(),
-                                    ),
-                                }
-                            }
-                            if output.action == Action::Prepare {
-                                self.protocol_prepared = true;
-                            }
-                            if let Some(report) = output.report {
-                                self.last_report = Some(report);
-                                self.page = Page::Results;
-                            }
-                        }
-                    }
-                }
-            }
+            Message::Finished(id, result) => self.finish(id, result),
             Message::SaveConfig => {
                 let result = (|| -> Result<String, String> {
                     let body = self.config_text()?;
@@ -442,7 +442,7 @@ impl Studio {
                     Ok(message) => {
                         self.status = "Configuration exported".into();
                         self.detail = message;
-                        self.error = false;
+                        self.operation.notice(Outcome::Succeeded);
                     }
                     Err(e) => self.fail(e),
                 }
@@ -457,11 +457,141 @@ impl Studio {
                 };
             }
             Message::Exit => {
-                self.cancellation.store(true, Ordering::Relaxed);
-                return iced::exit();
+                return self.request_exit();
             }
         }
+        if self.window_state == WindowState::WaitingForChild && !self.operation.is_busy() {
+            return self.request_exit();
+        }
         Task::none()
+    }
+
+    fn request_exit(&mut self) -> Task<Message> {
+        if self.operation.is_busy() {
+            self.window_state = WindowState::WaitingForChild;
+            self.operation.cancel();
+            self.cancellation.store(true, Ordering::Relaxed);
+            self.status = "Closing after the owned action stops".into();
+            self.detail =
+                "Waiting for the child process to exit and retain its partial evidence.".into();
+            Task::none()
+        } else {
+            self.window_state = WindowState::ExitRequested;
+            iced::exit()
+        }
+    }
+
+    fn finish(&mut self, id: u64, result: Result<JobOutput, ChildFailure>) {
+        let Some(job) = self.operation.active().filter(|job| job.id == id) else {
+            return;
+        };
+        let mut report = None;
+        let outcome = match result {
+            Err(ChildFailure::Cancelled) => {
+                self.status = "Action cancelled".into();
+                self.detail = "The owned process has stopped. Partial evidence is retained; cancellation is not a completed benchmark.".into();
+                self.log = self.detail.clone();
+                Outcome::Cancelled
+            }
+            Err(ChildFailure::Failed(error)) => {
+                self.status = "Command did not complete".into();
+                self.detail = tail_text(&error, 900);
+                self.log = error;
+                Outcome::Failed
+            }
+            Ok(output) => {
+                self.log = tail_text(&format!("{}\n{}", output.stdout, output.stderr), 16_000);
+                let mut outcome = if output.action != job.action {
+                    Outcome::Failed
+                } else if matches!(job.action, Action::Run | Action::VerifyReport) {
+                    report_outcome(
+                        output.code,
+                        output.report.as_ref().and_then(|r| r["status"].as_str()),
+                    )
+                } else if output.code == Some(0) {
+                    Outcome::Succeeded
+                } else {
+                    Outcome::Failed
+                };
+                self.detail =
+                    "The full command receipt is available under Session activity.".into();
+                if outcome == Outcome::Succeeded
+                    && matches!(job.action, Action::Verify | Action::Download)
+                {
+                    match serde_json::from_str::<abliteration_lab::model::ModelVerification>(
+                        &output.stdout,
+                    ) {
+                        Ok(proof)
+                            if proof.parameters == 1_728_801_536
+                                && proof.file_sha256.len() == 11
+                                && !proof.python_executed =>
+                        {
+                            self.detail = format!(
+                                "{} files and {} tensors verified against the pinned model.",
+                                proof.file_sha256.len(),
+                                proof.tensors.len()
+                            );
+                        }
+                        _ => outcome = Outcome::Failed,
+                    }
+                }
+                if outcome == Outcome::Succeeded
+                    && matches!(job.action, Action::Prepare | Action::VerifyProtocol)
+                {
+                    let valid = serde_json::from_str::<abliteration_lab::protocol::ProtocolPin>(
+                        &output.stdout,
+                    )
+                    .is_ok_and(|pin| {
+                        pin.total_rows == 366
+                            && !pin.jbb_target_column_used
+                            && pin.protocol_sha256
+                                == abliteration_lab::protocol::EXPECTED_PROTOCOL_SHA256
+                    });
+                    if !valid {
+                        outcome = Outcome::Failed;
+                    }
+                }
+                self.status = match outcome {
+                    Outcome::Failed => "Command did not complete",
+                    Outcome::NeedsReview => "Evidence recorded · review output",
+                    _ => match job.action {
+                        Action::Verify | Action::Download => "Checkpoint verified",
+                        Action::Prepare => "Benign protocol prepared",
+                        Action::VerifyProtocol => "Benign protocol verified",
+                        Action::Inspect => "Tensor inventory read",
+                        Action::Run => "Run finished",
+                        Action::VerifyReport => "Report integrity verified",
+                    },
+                }
+                .into();
+                if outcome == Outcome::Failed {
+                    self.detail = if output.stderr.trim().is_empty() {
+                        "The command exit and native evidence did not establish a valid result. See Session activity.".into()
+                    } else {
+                        tail_text(&output.stderr, 900)
+                    };
+                } else if outcome == Outcome::NeedsReview {
+                    self.detail = "The report includes invalid or censored output. Affected rates remain unmeasured; inspect the recorded evidence.".into();
+                }
+                if matches!(outcome, Outcome::Succeeded | Outcome::NeedsReview) {
+                    report = output.report.map(|value| LoadedReport {
+                        value,
+                        run_path: output.run_path,
+                    });
+                }
+                outcome
+            }
+        };
+        self.operation.finish(id, outcome);
+        match job.action {
+            Action::Verify | Action::Download => self.model_state.finish(outcome),
+            Action::Prepare | Action::VerifyProtocol => self.protocol_state.finish(outcome),
+            _ => {}
+        }
+        if let Some(report) = report {
+            self.last_report = Some(report);
+            self.page = Page::Results;
+        }
     }
 
     fn native_theme(&self) -> iced::Theme {
@@ -477,12 +607,33 @@ impl Studio {
         iced::Theme::custom("Abliteration Studio".to_owned(), palette)
     }
 
+    fn evidence_label(&self) -> &'static str {
+        if let Some(job) = self.operation.active()
+            && matches!(job.action, Action::Run | Action::VerifyReport)
+        {
+            return if !self.operation.can_cancel() {
+                "Stopping"
+            } else if job.action == Action::Run {
+                "Running"
+            } else {
+                "Checking"
+            };
+        }
+        match &self.last_report {
+            Some(report) if report.value["status"] == "needs_review" => "Review",
+            Some(_) => "Recorded",
+            None => "No result",
+        }
+    }
+
     fn subscription(&self) -> Subscription<Message> {
+        let close = iced::window::close_requests().map(|_| Message::Exit);
         match self.quit_after_seconds {
-            Some(seconds) => {
-                iced::time::every(Duration::from_secs(seconds.clamp(2, 60))).map(|_| Message::Exit)
-            }
-            None => Subscription::none(),
+            Some(seconds) => Subscription::batch([
+                close,
+                iced::time::every(Duration::from_secs(seconds.clamp(2, 60))).map(|_| Message::Exit),
+            ]),
+            None => close,
         }
     }
 
@@ -528,7 +679,9 @@ impl Studio {
                 value,
                 placeholder,
                 Some(change),
-                InputProps::new().custom_height(38.0).disabled(self.busy),
+                InputProps::new()
+                    .custom_height(38.0)
+                    .disabled(self.operation.is_busy()),
                 &self.theme
             )
         ]
@@ -662,11 +815,7 @@ impl Studio {
                 row![
                     text("Pinned checkpoint").size(18),
                     Space::new().width(Length::Fill),
-                    self.badge(if self.model_verified {
-                        "Verified"
-                    } else {
-                        "Not verified"
-                    })
+                    self.badge(self.model_state.label())
                 ]
                 .align_y(Vertical::Center),
                 text("LiquidAI/LFM3-1.7B").size(16),
@@ -684,19 +833,19 @@ impl Studio {
                         "Verify files",
                         Message::Start(Action::Verify),
                         ButtonVariant::Default,
-                        self.busy
+                        self.operation.is_busy()
                     ),
                     self.button(
                         "Download model",
                         Message::Start(Action::Download),
                         ButtonVariant::Outline,
-                        self.busy
+                        self.operation.is_busy()
                     ),
                     self.button(
                         "Inspect",
                         Message::Start(Action::Inspect),
                         ButtonVariant::Ghost,
-                        self.busy
+                        self.operation.is_busy()
                     )
                 ]
                 .spacing(8),
@@ -717,16 +866,17 @@ impl Studio {
             setup,
             self.card(column![
                 text("Data and output").size(18),
-                self.field("Prepared protocol folder", &self.protocol_path, "A new folder for frozen benign cohorts", Message::ProtocolPath),
+                self.field("Prepared protocol folder", &self.protocol_path, "A new or previously prepared cohort folder", Message::ProtocolPath),
                 row![
-                    self.button(if self.protocol_prepared { "Protocol prepared" } else { "Prepare benign cohorts" }, Message::Start(Action::Prepare), ButtonVariant::Outline, self.busy || self.protocol_prepared),
-                    text("250 XSTest safe + 100 JBB benign").size(12).color(self.theme.palette.muted_foreground)
+                    self.button("Prepare benign cohorts", Message::Start(Action::Prepare), ButtonVariant::Outline, self.operation.is_busy() || self.protocol_state == Readiness::Verified),
+                    self.button("Verify existing", Message::Start(Action::VerifyProtocol), ButtonVariant::Outline, self.operation.is_busy()),
                 ].spacing(12).align_y(Vertical::Center),
+                text(format!("250 XSTest safe + 100 JBB benign · {}", self.protocol_state.label())).size(12).color(self.theme.palette.muted_foreground),
                 self.field("New run folder", &self.output_path, "Existing results are never overwritten", Message::OutputPath),
                 row![
-                    self.button("Run evaluation", Message::Start(Action::Run), ButtonVariant::Default, self.busy || !self.model_verified || self.preset == Preset::RefusalBench),
-                    self.button("Export config", Message::SaveConfig, ButtonVariant::Outline, self.busy),
-                    self.button("Cancel owned run", Message::Cancel, ButtonVariant::Ghost, !self.busy)
+                    self.button("Run evaluation", Message::Start(Action::Run), ButtonVariant::Default, self.operation.is_busy() || self.model_state != Readiness::Verified || self.protocol_state != Readiness::Verified || self.preset == Preset::RefusalBench),
+                    self.button("Export config", Message::SaveConfig, ButtonVariant::Outline, self.operation.is_busy()),
+                    self.button("Cancel owned run", Message::Cancel, ButtonVariant::Ghost, !self.operation.can_cancel())
                 ].spacing(8),
                 text("A smoke run checks the software path. It does not establish benchmark performance.").size(12).color(self.theme.palette.muted_foreground)
             ].spacing(14)),
@@ -843,9 +993,9 @@ impl Studio {
                 text("The pinned inference engine is a development revision. Full benchmark results and deployment suitability are not certified by successful compilation or a smoke test.").size(13).color(self.theme.palette.muted_foreground),
             ].spacing(12)),
             self.card(column![
-                row![text("Reproducible configuration").size(18), Space::new().width(Length::Fill), self.button("Copy TOML", Message::CopyConfig, ButtonVariant::Outline, false)].align_y(Vertical::Center),
+                row![text("Reproducible configuration").size(18), Space::new().width(Length::Fill), self.button("Copy TOML", Message::CopyConfig, ButtonVariant::Outline, self.operation.is_busy())].align_y(Vertical::Center),
                 text(body).font(Font::MONOSPACE).size(12),
-                self.button("Export configuration file", Message::SaveConfig, ButtonVariant::Default, self.busy),
+                self.button("Export configuration file", Message::SaveConfig, ButtonVariant::Default, self.operation.is_busy()),
             ].spacing(14)),
             self.risks(),
         ].spacing(16).into()
@@ -857,13 +1007,15 @@ impl Studio {
                 text("Open a saved native run").size(18),
                 self.field("Prepared protocol folder", &self.protocol_path, "Folder containing protocol.jsonl", Message::ProtocolPath),
                 self.field("Run folder", &self.output_path, "Folder containing report.json and responses.jsonl", Message::OutputPath),
-                self.button("Verify and load report", Message::Start(Action::VerifyReport), ButtonVariant::Outline, self.busy),
+                self.button("Verify and load report", Message::Start(Action::VerifyReport), ButtonVariant::Outline, self.operation.is_busy()),
                 text("Verifies coverage, hashes and marker calculations. This does not rerun the model or perform semantic judging.").size(12).color(self.theme.palette.muted_foreground),
             ].spacing(12))
         ].spacing(16);
-        if let Some(report) = &self.last_report {
+        if let Some(loaded) = &self.last_report {
+            let report = &loaded.value;
             let mut table = column![
                 text("Observed marker screens").size(18),
+                text(format!("Run: {}", loaded.run_path)).size(12),
                 text("These are not semantic refusal or official harmful-compliance scores.")
                     .size(12)
                     .color(self.theme.palette.muted_foreground),
@@ -1002,7 +1154,7 @@ impl Studio {
             Page::Results => self.results(),
             Page::Guide => self.guide(),
         };
-        let status_color = if self.error {
+        let status_color = if self.operation.is_failure() {
             self.theme.palette.destructive
         } else {
             self.theme.palette.foreground
@@ -1023,15 +1175,7 @@ impl Studio {
         let cards = row![
             self.stat("Pinned model", "1.73 B", "LiquidAI / LFM3"),
             self.stat("Runtime", "Rust", "Python is reference only"),
-            self.stat(
-                "Evaluation",
-                if self.last_report.is_some() {
-                    "Recorded"
-                } else {
-                    "Not run"
-                },
-                "No default-zero scores"
-            ),
+            self.stat("Evidence", self.evidence_label(), "No default-zero scores"),
         ]
         .spacing(12);
         container(
@@ -1119,7 +1263,10 @@ async fn run_child(
     paths: (String, String, String),
     config_text: String,
     cancel: Arc<AtomicBool>,
-) -> Result<JobOutput, String> {
+) -> Result<JobOutput, ChildFailure> {
+    if cancel.load(Ordering::Relaxed) {
+        return Err(ChildFailure::Cancelled);
+    }
     let (model, protocol, output) = paths;
     let executable = std::env::current_exe().map_err(|e| e.to_string())?;
     let cli = executable
@@ -1139,6 +1286,13 @@ async fn run_child(
         Action::Download => arguments.extend(["download-model".into(), model]),
         Action::Inspect => arguments.extend(["inspect-tensors".into(), model]),
         Action::Prepare => arguments.extend(["prepare-protocol".into(), protocol]),
+        Action::VerifyProtocol => arguments.extend([
+            "verify-protocol".into(),
+            Path::new(&protocol)
+                .join("protocol.jsonl")
+                .to_string_lossy()
+                .into_owned(),
+        ]),
         Action::VerifyReport => arguments.extend([
             "verify-report".into(),
             "--run".into(),
@@ -1217,25 +1371,44 @@ async fn run_child(
         use std::os::windows::process::CommandExt;
         command.as_std_mut().creation_flags(0x0800_0000);
     }
+    if cancel.load(Ordering::Relaxed) {
+        return Err(ChildFailure::Cancelled);
+    }
     let child = command.spawn().map_err(|e| e.to_string())?;
-    let wait = child.wait_with_output();
-    tokio::pin!(wait);
-    let result = tokio::select! {
-        result = &mut wait => result.map_err(|e| e.to_string())?,
-        _ = async { while !cancel.load(Ordering::Relaxed) { tokio::time::sleep(Duration::from_millis(100)).await; } } => {
-            return Err("Owned process cancelled. Partial evidence is retained; it is not a completed benchmark.".into());
+    let pid = child.id();
+    let result = match capture_child(child, cancel).await {
+        Err(ChildFailure::Cancelled) => {
+            if action == Action::Run
+                && let Some(pid) = pid
+            {
+                abliteration_lab::lifecycle::record_owned_cancellation(Path::new(&output), pid)
+                    .map_err(|e| format!("Owned process stopped, but its cancellation receipt could not be recorded: {e}"))?;
+            }
+            return Err(ChildFailure::Cancelled);
         }
+        other => other?,
     };
     let report_path = Path::new(&output).join("report.json");
     let report = if matches!(action, Action::Run | Action::VerifyReport)
-        && tokio::fs::metadata(&report_path)
-            .await
-            .is_ok_and(|m| m.len() <= 2 * 1024 * 1024)
+        && matches!(result.status.code(), Some(0 | 2))
     {
-        tokio::fs::read_to_string(report_path)
-            .await
+        let bytes = tokio::task::spawn_blocking(move || {
+            abliteration_lab::protocol::read_bounded(&report_path, 2 * 1024 * 1024)
+        })
+        .await
+        .map_err(|e| e.to_string())?
+        .map_err(|e| format!("Cannot load native report: {e}"))?;
+        if action == Action::VerifyReport {
+            let receipt: Value = serde_json::from_slice(&result.stdout)
+                .map_err(|e| format!("The verifier returned an invalid receipt: {e}"))?;
+            if !abliteration_lab::evidence::matches_report_receipt(&bytes, &receipt) {
+                return Err(
+                    "The report changed after verification. Verify and load it again.".into(),
+                );
+            }
+        }
+        serde_json::from_slice::<Value>(&bytes)
             .ok()
-            .and_then(|s| serde_json::from_str::<Value>(&s).ok())
             .filter(|v| v["runtime"] == "Rust/mistral.rs" && v["python_executed"] == false)
     } else {
         None
@@ -1246,6 +1419,45 @@ async fn run_child(
         stdout: String::from_utf8_lossy(&result.stdout).into_owned(),
         stderr: String::from_utf8_lossy(&result.stderr).into_owned(),
         report,
+        run_path: output,
+    })
+}
+
+async fn read_child_stream(
+    mut stream: impl tokio::io::AsyncRead + Unpin,
+) -> Result<Vec<u8>, ChildFailure> {
+    use tokio::io::AsyncReadExt;
+    let mut bytes = Vec::new();
+    stream
+        .read_to_end(&mut bytes)
+        .await
+        .map_err(|e| e.to_string())?;
+    Ok(bytes)
+}
+
+async fn capture_child(
+    mut child: tokio::process::Child,
+    cancel: Arc<AtomicBool>,
+) -> Result<std::process::Output, ChildFailure> {
+    let stdout = child.stdout.take().ok_or("Child stdout unavailable")?;
+    let stderr = child.stderr.take().ok_or("Child stderr unavailable")?;
+    let wait = async {
+        tokio::select! {
+            biased;
+            result = child.wait() => result.map_err(|e| ChildFailure::Failed(e.to_string())),
+            _ = async { while !cancel.load(Ordering::Relaxed) { tokio::time::sleep(Duration::from_millis(50)).await; } } => {
+                // Kill through the owned handle and reap before admitting another job.
+                child.kill().await.map_err(|e| e.to_string())?;
+                Err(ChildFailure::Cancelled)
+            }
+        }
+    };
+    let (status, stdout, stderr) =
+        tokio::try_join!(wait, read_child_stream(stdout), read_child_stream(stderr))?;
+    Ok(std::process::Output {
+        status,
+        stdout,
+        stderr,
     })
 }
 
@@ -1261,9 +1473,220 @@ pub fn run() -> iced::Result {
     .window(iced::window::Settings {
         size: iced::Size::new(size.0, size.1),
         min_size: Some(iced::Size::new(900.0, 600.0)),
+        exit_on_close_request: false,
         ..Default::default()
     })
     .theme(Studio::native_theme)
     .subscription(Studio::subscription)
     .run()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn studio() -> Studio {
+        Studio::new(Args {
+            width: 900,
+            height: 600,
+            page: Page::Workspace,
+            dark: false,
+            workspace: Some(PathBuf::from("state-test")),
+            quit_after_seconds: None,
+        })
+    }
+
+    fn output(action: Action, code: i32, report: Option<Value>) -> JobOutput {
+        JobOutput {
+            action,
+            code: Some(code),
+            stdout: String::new(),
+            stderr: String::new(),
+            report,
+            run_path: "state-test/run".into(),
+        }
+    }
+
+    #[test]
+    fn failed_reverification_cannot_retain_verified_readiness() {
+        let mut app = studio();
+        app.model_state = Readiness::Verified;
+        let _task = app.start(Action::Verify);
+        assert_eq!(app.model_state, Readiness::Checking);
+        let id = app.operation.active().unwrap().id;
+        app.finish(id, Ok(output(Action::Verify, 1, None)));
+        assert_eq!(app.model_state, Readiness::Failed);
+        assert!(app.operation.is_failure());
+    }
+
+    #[test]
+    fn readiness_requires_a_complete_machine_receipt() {
+        let mut app = studio();
+        for action in [Action::Verify, Action::Prepare, Action::VerifyProtocol] {
+            let _task = app.start(action);
+            let id = app.operation.active().unwrap().id;
+            app.finish(id, Ok(output(action, 0, None)));
+            assert!(app.operation.is_failure());
+        }
+        assert_eq!(app.model_state, Readiness::Failed);
+        assert_eq!(app.protocol_state, Readiness::Failed);
+    }
+
+    #[test]
+    fn editing_report_inputs_clears_the_previous_result() {
+        for message in [
+            Message::OutputPath("new-run".into()),
+            Message::ProtocolPath("new-protocol".into()),
+            Message::ModelPath("new-model".into()),
+            Message::TokenCap("1024".into()),
+            Message::InputCap("2048".into()),
+            Message::TestLimit("3".into()),
+            Message::CalibrationLimit("4".into()),
+            Message::Preset(Preset::Full),
+        ] {
+            let mut app = studio();
+            app.last_report = Some(LoadedReport {
+                value: serde_json::json!({"status":"completed"}),
+                run_path: "old-run".into(),
+            });
+            let _task = app.update(message);
+            assert!(app.last_report.is_none());
+            assert_eq!(app.status, "Ready to configure");
+        }
+    }
+
+    #[test]
+    fn run_admission_requires_both_inputs_and_keeps_reference_suites_blocked() {
+        let mut app = studio();
+        app.model_state = Readiness::Verified;
+        let _task = app.start(Action::Run);
+        assert!(!app.operation.is_busy());
+        app.protocol_state = Readiness::Verified;
+        let _task = app.start(Action::Run);
+        assert!(app.operation.is_busy());
+        assert_eq!(app.evidence_label(), "Running");
+        let id = app.operation.active().unwrap().id;
+        app.finish(id, Err(ChildFailure::Cancelled));
+        let _task = app.update(Message::Preset(Preset::RefusalBench));
+        let _task = app.start(Action::Run);
+        assert!(!app.operation.is_busy());
+        assert!(app.detail.contains("RefusalBench"));
+    }
+
+    #[test]
+    fn cancellation_and_late_callbacks_do_not_turn_into_generic_failures() {
+        let mut app = studio();
+        let _task = app.update(Message::Cancel);
+        assert_eq!(app.status, "Ready to configure");
+        let _task = app.start(Action::Verify);
+        let old = app.operation.active().unwrap();
+        let _task = app.update(Message::Cancel);
+        assert!(app.operation.is_busy());
+        app.finish(old.id, Err(ChildFailure::Cancelled));
+        assert_eq!(app.status, "Action cancelled");
+        assert!(!app.operation.is_failure());
+        assert_eq!(app.model_state, Readiness::Unchecked);
+        let _task = app.start(Action::Inspect);
+        let current = app.operation.active().unwrap();
+        app.finish(old.id, Ok(output(Action::Verify, 0, None)));
+        assert_eq!(app.operation.active(), Some(current));
+    }
+
+    #[test]
+    fn closing_waits_for_the_current_child_and_rejects_new_work() {
+        let mut app = studio();
+        let _task = app.start(Action::Verify);
+        let job = app.operation.active().unwrap();
+        let _task = app.update(Message::Exit);
+        assert_eq!(app.window_state, WindowState::WaitingForChild);
+        assert!(app.cancellation.load(Ordering::Relaxed));
+        let _task = app.update(Message::Start(Action::Inspect));
+        assert_eq!(app.operation.active(), Some(job));
+        let _task = app.update(Message::Finished(job.id + 1, Err(ChildFailure::Cancelled)));
+        assert_eq!(app.window_state, WindowState::WaitingForChild);
+        let _task = app.update(Message::Finished(job.id, Err(ChildFailure::Cancelled)));
+        assert_eq!(app.window_state, WindowState::ExitRequested);
+        assert!(!app.operation.is_busy());
+    }
+
+    #[test]
+    fn review_is_distinct_and_inconsistent_exit_receipts_are_rejected() {
+        let mut app = studio();
+        let _task = app.start(Action::VerifyReport);
+        let id = app.operation.active().unwrap().id;
+        app.finish(
+            id,
+            Ok(output(
+                Action::VerifyReport,
+                2,
+                Some(serde_json::json!({"status":"needs_review"})),
+            )),
+        );
+        assert!(app.last_report.is_some());
+        assert!(!app.operation.is_failure());
+        assert!(app.status.contains("review"));
+        assert_eq!(app.evidence_label(), "Review");
+        let _task = app.start(Action::VerifyReport);
+        let id = app.operation.active().unwrap().id;
+        assert!(app.last_report.is_none());
+        app.finish(
+            id,
+            Ok(output(
+                Action::VerifyReport,
+                2,
+                Some(serde_json::json!({"status":"completed"})),
+            )),
+        );
+        assert!(app.last_report.is_none());
+        assert!(app.operation.is_failure());
+        assert_eq!(app.evidence_label(), "No result");
+    }
+
+    #[test]
+    #[ignore = "only launched by the owned-child cancellation test"]
+    fn owned_child_fixture() {
+        println!("OWNED_CHILD_READY");
+        std::thread::sleep(Duration::from_secs(30));
+    }
+
+    #[tokio::test]
+    async fn cancellation_reaps_the_owned_child_without_a_shell() {
+        let mut command = tokio::process::Command::new(std::env::current_exe().unwrap());
+        command
+            .args(["--ignored", "owned_child_fixture", "--nocapture"])
+            .kill_on_drop(true)
+            .stdin(std::process::Stdio::null())
+            .stdout(std::process::Stdio::piped())
+            .stderr(std::process::Stdio::piped());
+        #[cfg(windows)]
+        {
+            use std::os::windows::process::CommandExt;
+            command.as_std_mut().creation_flags(0x0800_0000);
+        }
+        let mut child = command.spawn().unwrap();
+        let pid = child.id().unwrap();
+        use tokio::io::AsyncBufReadExt;
+        let mut reader = tokio::io::BufReader::new(child.stdout.take().unwrap());
+        tokio::time::timeout(Duration::from_secs(5), async {
+            loop {
+                let mut line = String::new();
+                assert!(reader.read_line(&mut line).await.unwrap() > 0);
+                if line.contains("OWNED_CHILD_READY") {
+                    break;
+                }
+            }
+        })
+        .await
+        .unwrap();
+        child.stdout = Some(reader.into_inner());
+        let cancelled = Arc::new(AtomicBool::new(true));
+        let result = tokio::time::timeout(Duration::from_secs(5), capture_child(child, cancelled))
+            .await
+            .unwrap();
+        assert!(matches!(result, Err(ChildFailure::Cancelled)));
+        #[cfg(target_os = "linux")]
+        assert!(!Path::new(&format!("/proc/{pid}")).exists());
+        #[cfg(not(target_os = "linux"))]
+        let _ = pid;
+    }
 }

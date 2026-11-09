@@ -18,6 +18,10 @@ Run `abliteration-studio.exe` on Windows or `./abliteration-studio` on Linux. Ke
 
 The interface supports light and dark appearance and adapts down to 900×600. The four editable budgets are visible before a run. More parameters are available in the exported TOML configuration. Cancellation targets only the child process launched for that action and retains partial evidence.
 
+Use **Verify existing** to reuse a prepared protocol. Both the model and protocol must be verified before the GUI admits a run. Editing the draft clears the displayed result; saved files remain intact. Cancellation stays pending until the owned child has stopped, and review-required results are labelled separately from success or failure.
+
+The [state-machine audit](https://adybag14-cyber.github.io/Abliteration/handbook/docs/studio-state-machines/) maps native, handbook, and delivery state and documents the contracts for developers and agents. `verify-protocol /path/to/protocol.jsonl` provides a read-only preflight. Progress snapshots are atomic; failed runs record a stable failure kind, and owned cancellations record a terminal state.
+
 ## Run from a terminal
 
 From the extracted package directory, in a Linux or WSL shell:

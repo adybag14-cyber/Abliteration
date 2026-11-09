@@ -21,6 +21,7 @@ for qa_case in \
     1600x1000:experiments:light \
     1280x860:benchmarks:light \
     1280x860:benchmarks-bottom:light \
+    900x600:verification-failure:light \
     1280x860:workspace:dark
 do
     IFS=: read -r qa_dimensions qa_page qa_scheme <<< "$qa_case"
@@ -38,6 +39,6 @@ done
 sha256sum /app/abliteration-cli /app/abliteration-studio > "$qa_output/binary-sha256.txt"
 dpkg-query -W > "$qa_output/container-packages.txt"
 jq -n --arg source "${ABLITERATION_BUILD_SHA:-development}" \
-    '{schema:1,source_commit:$source,renderer:"tiny-skia",screenshots:6,gui_processes_exited_cleanly:true,model_inference_executed:false,refusalbench_executed:false,desktop_display_shared:false}' \
+    '{schema:1,source_commit:$source,renderer:"tiny-skia",screenshots:7,gui_processes_exited_cleanly:true,model_inference_executed:false,refusalbench_executed:false,desktop_display_shared:false}' \
     > "$qa_output/summary.json"
 cat "$qa_output/summary.json"

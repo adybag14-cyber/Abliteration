@@ -45,7 +45,29 @@ env:
   RAYON_NUM_THREADS: 6
 
 jobs:
+  contracts:
+    name: Native state contracts
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Install the pinned contract toolchain
+        run: rustup toolchain install 1.99.1 --profile minimal
+      - uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: rust-state-contracts-1.99.1-${{ hashFiles('Cargo.lock') }}
+          restore-keys: rust-state-contracts-1.99.1-
+      - name: Validate lifecycle and evidence contracts without the inference backend
+        run: cargo +1.99.1 test --locked --release --no-default-features --lib
+
   native:
+    needs: contracts
     name: ${{ matrix.target }} native toolkit
     strategy:
       fail-fast: false

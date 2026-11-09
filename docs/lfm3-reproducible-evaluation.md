@@ -6,7 +6,9 @@ The tools verify checkpoint bytes, inspect tensor metadata, prepare frozen input
 
 ## Choose an artifact or build with Cargo
 
-The [GitHub release](https://github.com/adybag14-cyber/Abliteration/releases/tag/rust-v0.1.0-alpha.1) provides Windows x64, Linux x64, and an experimental Linux CUDA 13 SM89 edition. Extract the GUI and CLI together. Verify the archive's SHA-256 sidecar and GitHub attestation. `SOURCE.json` records the source commit and every packaged file digest; model weights are separate.
+The [GitHub release](https://github.com/adybag14-cyber/Abliteration/releases/tag/rust-v0.1.0-alpha.2) provides Windows x64, Linux x64, and an experimental Linux CUDA 13 SM89 edition. Extract the GUI and CLI together. Verify the archive's SHA-256 sidecar and GitHub attestation. `SOURCE.json` records the source commit and every packaged file digest; model weights are separate.
+
+The [state-machine audit](studio-state-machines.md) explains how readiness, cancellation, review-required output, and terminal run receipts work. Use **Verify existing** to reuse a prepared protocol; the equivalent read-only command is `abliteration-cli verify-protocol /path/to/protocol/protocol.jsonl`. The GUI requires both inputs to be verified before running and clears displayed results when the draft changes.
 
 To build the same source revision:
 

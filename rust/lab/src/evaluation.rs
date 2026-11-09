@@ -1,6 +1,9 @@
 use crate::{
-    BUILD_SHA, ENGINE_REVISION, VERSION, config::RunConfig, engine::Engine, metrics, model,
-    protocol,
+    BUILD_SHA, ENGINE_REVISION, VERSION,
+    config::RunConfig,
+    engine::Engine,
+    lifecycle::{FailureKind, RunProgress, RunStatus},
+    metrics, model, protocol,
 };
 use anyhow::{Result, ensure};
 use chrono::Utc;
@@ -10,17 +13,6 @@ use std::fs::{self, File};
 use std::io::Write;
 use std::path::Path;
 use std::time::{Duration, Instant};
-
-fn progress(output: &Path, status: &str, completed: usize, total: usize) -> Result<()> {
-    let event =
-        json!({"status":status, "completed":completed, "total":total, "pid":std::process::id()});
-    fs::write(
-        output.join("progress.json"),
-        serde_json::to_vec_pretty(&event)?,
-    )?;
-    println!("{}", serde_json::to_string(&event)?);
-    Ok(())
-}
 
 pub async fn run(
     model_dir: &Path,
@@ -58,6 +50,7 @@ pub async fn run(
         })
         .collect();
     let total = profiles.len() * (calibration.len() + test.len());
+    let mut progress = RunProgress::new(total)?;
     let executable = std::env::current_exe()?;
     let process_stat = fs::read_to_string("/proc/self/stat").ok();
     let process_fields = process_stat
@@ -84,7 +77,8 @@ pub async fn run(
                         "dtype":if config.device == "cpu" {"f32"} else {"bf16"}}
         }),
     )?;
-    progress(output, "loading", 0, total)?;
+    progress.publish(output)?;
+    println!("{}", serde_json::to_string(&progress)?);
     let operation = async {
         let engine = Engine::load(model_dir, config).await?;
         let mut records = Vec::new();
@@ -125,7 +119,9 @@ pub async fn run(
                     raw.write_all(b"\n")?;
                     raw.flush()?;
                     records.push(record);
-                    progress(output, "running", records.len(), total)?;
+                    progress.advance(records.len())?;
+                    progress.publish(output)?;
+                    println!("{}", serde_json::to_string(&progress)?);
                 }
             }
         }
@@ -152,11 +148,7 @@ pub async fn run(
             .flat_map(|d| d.values())
             .map(|s| s.invalid_or_censored)
             .sum();
-        let status = if invalid == 0 {
-            "completed"
-        } else {
-            "needs_review"
-        };
+        let status = RunStatus::report_status(invalid);
         let report = json!({
             "schema":1, "status":status, "runtime":"Rust/mistral.rs", "python_executed":false,
             "app_version":VERSION, "build_sha":BUILD_SHA, "engine_revision":ENGINE_REVISION,
@@ -177,23 +169,24 @@ pub async fn run(
                 "A low marker count does not prove usefulness, safety or retained capability."]
         });
         protocol::write_json_new(&output.join("report.json"), &report)?;
-        progress(output, status, total, total)?;
+        progress.finish_and_publish(status, output)?;
+        println!("{}", serde_json::to_string(&progress)?);
         Ok::<_, anyhow::Error>(report)
     };
     match tokio::time::timeout(Duration::from_secs(config.timeout_seconds), operation).await {
         Ok(Ok(report)) => Ok(report),
         error => {
-            let message = match error {
-                Ok(Err(error)) => error.to_string(),
-                Err(_) => "Experiment deadline exceeded".to_owned(),
+            let (message, kind) = match error {
+                Ok(Err(error)) => (error.to_string(), FailureKind::ExecutionFailed),
+                Err(_) => (
+                    "Experiment deadline exceeded".to_owned(),
+                    FailureKind::DeadlineExceeded,
+                ),
                 _ => unreachable!(),
             };
-            fs::write(
-                output.join("failure.json"),
-                serde_json::to_vec_pretty(
-                    &json!({"status":"failed","error":message,"partial_results_are_not_a_completed_benchmark":true}),
-                )?,
-            )?;
+            // A failed command must not leave an apparently active run for agents.
+            progress.record_failure(output, kind, &message)?;
+            println!("{}", serde_json::to_string(&progress)?);
             anyhow::bail!(message)
         }
     }

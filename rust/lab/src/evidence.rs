@@ -5,7 +5,6 @@ use crate::{
 use anyhow::{Context, Result, ensure};
 use serde_json::{Value, json};
 use std::collections::BTreeMap;
-use std::fs;
 use std::path::Path;
 
 pub fn verify(run: &Path, protocol_path: &Path) -> Result<Value> {
@@ -19,7 +18,9 @@ pub fn verify(run: &Path, protocol_path: &Path) -> Result<Value> {
         raw_path.metadata()?.len() <= 64 * 1024 * 1024,
         "Responses exceed bounds"
     );
-    let report: Value = serde_json::from_slice(&fs::read(&report_path)?)?;
+    let report_bytes = protocol::read_bounded(&report_path, 2 * 1024 * 1024)?;
+    let raw_bytes = protocol::read_bounded(&raw_path, 64 * 1024 * 1024)?;
+    let report: Value = serde_json::from_slice(&report_bytes)?;
     ensure!(
         report["schema"] == 1
             && report["runtime"] == "Rust/mistral.rs"
@@ -34,7 +35,7 @@ pub fn verify(run: &Path, protocol_path: &Path) -> Result<Value> {
         "Incomplete runs cannot be certified"
     );
     ensure!(
-        model::sha256_file(&raw_path)? == report["responses_sha256"],
+        model::sha256_bytes(&raw_bytes) == report["responses_sha256"],
         "Response bytes changed"
     );
     let (prompts, pin) = protocol::read(protocol_path)?;
@@ -116,7 +117,7 @@ pub fn verify(run: &Path, protocol_path: &Path) -> Result<Value> {
                 .flat_map(move |profile| subset.iter().map(move |prompt| (*profile, *prompt)))
         })
         .collect();
-    let records: Vec<ResponseRecord> = fs::read_to_string(raw_path)?
+    let records: Vec<ResponseRecord> = std::str::from_utf8(&raw_bytes)?
         .lines()
         .filter(|l| !l.trim().is_empty())
         .map(serde_json::from_str)
@@ -153,8 +154,10 @@ pub fn verify(run: &Path, protocol_path: &Path) -> Result<Value> {
         report["selected_profile"] == selected,
         "Selection does not follow the calibration-only rule"
     );
-    let selection: Value =
-        serde_json::from_slice(&fs::read(run.join("selection-before-test.json"))?)?;
+    let selection: Value = serde_json::from_slice(&protocol::read_bounded(
+        &run.join("selection-before-test.json"),
+        64 * 1024,
+    )?)?;
     ensure!(
         selection["selected_profile"] == selected,
         "Selection receipt changed"
@@ -202,9 +205,47 @@ pub fn verify(run: &Path, protocol_path: &Path) -> Result<Value> {
     }
     Ok(json!({
         "schema":1, "valid":true, "response_records":records.len(), "selected_profile":selected,
-        "report_sha256":model::sha256_file(&report_path)?, "responses_sha256":report["responses_sha256"],
+        "report_sha256":model::sha256_bytes(&report_bytes), "responses_sha256":report["responses_sha256"],
         "coverage_order_and_screens_verified":true, "calibration_only_selection_verified":true,
         "model_files_reread":false, "semantic_judging_performed":false,
         "status":report["status"], "invalid_or_censored":invalid
     }))
+}
+
+/// Bind displayed bytes to a completed verifier receipt, not a later file version.
+pub fn matches_report_receipt(bytes: &[u8], receipt: &Value) -> bool {
+    receipt["schema"] == 1
+        && receipt["valid"] == true
+        && receipt["report_sha256"] == model::sha256_bytes(bytes)
+}
+
+#[cfg(test)]
+mod snapshot_tests {
+    use super::*;
+    #[test]
+    fn displayed_report_must_match_the_verified_snapshot() {
+        let bytes = br#"{"status":"needs_review"}"#;
+        let receipt = json!({"schema":1,"valid":true,"report_sha256":model::sha256_bytes(bytes)});
+        assert!(matches_report_receipt(bytes, &receipt));
+        assert!(!matches_report_receipt(
+            br#"{"status":"completed"}"#,
+            &receipt
+        ));
+        assert!(!matches_report_receipt(
+            bytes,
+            &json!({"schema":1,"valid":false,"report_sha256":model::sha256_bytes(bytes)})
+        ));
+        assert!(!matches_report_receipt(bytes, &json!({"valid":true})));
+    }
+    #[test]
+    fn bounded_snapshot_does_not_follow_later_mutations() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("input.json");
+        std::fs::write(&path, b"original").unwrap();
+        let bytes = protocol::read_bounded(&path, 8).unwrap();
+        std::fs::write(&path, b"different and larger").unwrap();
+        assert_eq!(bytes, b"original");
+        assert!(protocol::read_bounded(&path, 8).is_err());
+        assert!(protocol::read_bounded(dir.path(), 8).is_err());
+    }
 }

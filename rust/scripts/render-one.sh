@@ -6,7 +6,9 @@ qa_height=$3
 qa_page=$4
 qa_scheme=$5
 qa_scroll_bottom=false
+qa_verify_failure=false
 if [[ "$qa_page" == benchmarks-bottom ]]; then qa_page=benchmarks; qa_scroll_bottom=true; fi
+if [[ "$qa_page" == verification-failure ]]; then qa_page=workspace; qa_verify_failure=true; fi
 [[ "$qa_width" =~ ^[0-9]+$ && "$qa_height" =~ ^[0-9]+$ ]]
 qa_xdg=$(mktemp -d /tmp/abliteration-xdg.XXXXXX)
 case "$qa_xdg" in /tmp/abliteration-xdg.*) ;; *) exit 2 ;; esac
@@ -28,6 +30,13 @@ for qa_attempt in $(seq 1 50); do
 done
 [[ -n "$qa_window" ]]
 sleep 1
+if [[ "$qa_verify_failure" == true ]]; then
+    # The isolated image has no model. Exercise the real button/CLI failure path.
+    [[ "$qa_width" == 900 && "$qa_height" == 600 ]]
+    xdotool mousemove --window "$qa_window" 335 454
+    xdotool click 1
+    sleep 1
+fi
 if [[ "$qa_scroll_bottom" == true ]]; then
     xdotool mousemove --window "$qa_window" "$((qa_width - 50))" "$((qa_height / 2))"
     xdotool click --repeat 20 --delay 15 5
