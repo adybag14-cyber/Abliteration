@@ -6,6 +6,7 @@ pub mod engine;
 #[cfg(feature = "inference")]
 pub mod evaluation;
 pub mod evidence;
+pub mod lifecycle;
 pub mod metrics;
 pub mod model;
 pub mod protocol;

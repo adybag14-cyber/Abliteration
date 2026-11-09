@@ -10,5 +10,17 @@
     "source": "docs/tools/abliteration-tooling.md",
     "light": "handbook-media/9dc9edd31d78e7655931-light.svg",
     "dark": "handbook-media/9dc9edd31d78e7655931-dark.svg"
+  },
+  "5f5d4fe1645faacd69d7": {
+    "renderer": "mermaid-12.2.0-handbook-v1",
+    "source": "docs/studio-state-machines.md",
+    "light": "handbook-media/5f5d4fe1645faacd69d7-light.svg",
+    "dark": "handbook-media/5f5d4fe1645faacd69d7-dark.svg"
+  },
+  "6bf77c89950381424cc2": {
+    "renderer": "mermaid-12.2.0-handbook-v1",
+    "source": "docs/studio-state-machines.md",
+    "light": "handbook-media/6bf77c89950381424cc2-light.svg",
+    "dark": "handbook-media/6bf77c89950381424cc2-dark.svg"
   }
 }

@@ -1,4 +1,6 @@
-Native Rust research studio preview with Iced and iced-shadcn components, a companion Rust CLI, pinned LFM3-1.7B model verification, benign protocol preparation, inference, complete-response accounting and report-integrity checks.
+Native Rust research studio alpha 2 makes operation, readiness, cancellation, and durable run state explicit. Failed re-checks no longer retain stale verification badges, stale job callbacks cannot overwrite current work, draft edits clear old displayed results, and review-required evidence is distinct from success and failure.
+
+The GUI can verify and reuse an existing protocol. The new read-only `verify-protocol` command supports the same preflight for agents. Cancellation waits for the owned child to stop. Atomic progress snapshots, terminal failure/cancellation states, and structured failure kinds make automation less dependent on human-readable log text. Existing report fields and CLI success/review exit codes remain compatible. The state-machine audit documents the native app and its handbook/delivery boundaries.
 
 Packages are built in GitHub Actions. The Windows and Linux packages include the GUI and CLI; the experimental CUDA 13 SM89 package pairs the CUDA CLI with the tested Linux GUI. SHA-256 files, per-file source manifests, dependency notices and GitHub build attestations accompany the archives. Model weights are separate.
 

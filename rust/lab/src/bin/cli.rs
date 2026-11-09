@@ -28,6 +28,9 @@ enum Commands {
     PrepareProtocol {
         output: PathBuf,
     },
+    VerifyProtocol {
+        protocol: PathBuf,
+    },
     VerifyReport {
         #[arg(long)]
         run: PathBuf,
@@ -89,6 +92,10 @@ async fn main() -> Result<std::process::ExitCode> {
         }
         Commands::PrepareProtocol { output } => {
             serde_json::to_value(abliteration_lab::protocol::prepare(&output).await?)?
+        }
+        Commands::VerifyProtocol { protocol } => {
+            let (_, pin) = abliteration_lab::protocol::read(&protocol)?;
+            serde_json::to_value(pin)?
         }
         Commands::VerifyReport { run, protocol } => {
             abliteration_lab::evidence::verify(&run, &protocol)?

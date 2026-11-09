@@ -1,14 +1,14 @@
-use crate::model::{sha256_bytes, sha256_file};
+use crate::model::sha256_bytes;
 use anyhow::{Context, Result, ensure};
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 use std::fs::{self, File};
-use std::io::Write;
+use std::io::{Read, Write};
 use std::path::Path;
 
 const SOURCES: &str = include_str!("../../../data/benchmarks/lfm3-benign.json");
 const CALIBRATION: &str = include_str!("../../../data/experiments/lfm3-calibration.jsonl");
-const EXPECTED_PROTOCOL_SHA256: &str =
+pub const EXPECTED_PROTOCOL_SHA256: &str =
     "c36e3c99c8f1ad463c715589c994347b28b11c1e6fb82c32f83b0c8c6c37103f";
 pub const CATALOG: &str = include_str!("../../../sources/research/lfm3-benchmarks-2026-11.json");
 
@@ -105,6 +105,28 @@ pub fn write_json_new(path: &Path, value: &impl Serialize) -> Result<()> {
     serde_json::to_writer_pretty(&mut file, value)?;
     file.write_all(b"\n")?;
     Ok(())
+}
+
+/// Read one bounded snapshot, so validation and use refer to the same bytes.
+pub fn read_bounded(path: &Path, limit: u64) -> Result<Vec<u8>> {
+    let file = File::open(path)?;
+    let metadata = file.metadata()?;
+    ensure!(
+        metadata.is_file() && metadata.len() <= limit,
+        "Input must be a regular file within its size limit"
+    );
+    let mut bytes = Vec::new();
+    file.take(
+        limit
+            .checked_add(1)
+            .ok_or_else(|| anyhow::anyhow!("Invalid size limit"))?,
+    )
+    .read_to_end(&mut bytes)?;
+    ensure!(
+        bytes.len() as u64 <= limit,
+        "Input grew beyond its size limit"
+    );
+    Ok(bytes)
 }
 
 pub fn fresh_directory(path: &Path) -> Result<()> {
@@ -222,16 +244,13 @@ pub async fn prepare(output: &Path) -> Result<ProtocolPin> {
 }
 
 pub fn read(path: &Path) -> Result<(Vec<Prompt>, ProtocolPin)> {
-    ensure!(
-        path.metadata()?.len() <= 8 * 1024 * 1024,
-        "Protocol exceeds 8 MiB"
-    );
+    let bytes = read_bounded(path, 8 * 1024 * 1024)?;
     let pin_path = path.with_file_name("protocol-lock.json");
     ensure!(
         pin_path.metadata()?.len() <= 64 * 1024,
         "Protocol manifest exceeds bounds"
     );
-    let pin: ProtocolPin = serde_json::from_reader(File::open(pin_path)?)?;
+    let pin: ProtocolPin = serde_json::from_slice(&read_bounded(&pin_path, 64 * 1024)?)?;
     ensure!(
         pin.protocol_sha256 == EXPECTED_PROTOCOL_SHA256,
         "Protocol does not match the frozen benign cohort"
@@ -241,7 +260,7 @@ pub fn read(path: &Path) -> Result<(Vec<Prompt>, ProtocolPin)> {
         "Unsupported prepared protocol"
     );
     ensure!(
-        sha256_file(path)? == pin.protocol_sha256,
+        sha256_bytes(&bytes) == pin.protocol_sha256,
         "Protocol bytes have changed"
     );
     ensure!(
@@ -252,7 +271,7 @@ pub fn read(path: &Path) -> Result<(Vec<Prompt>, ProtocolPin)> {
         pin.calibration_sha256 == sha256_bytes(CALIBRATION.as_bytes()),
         "Calibration differs from this binary"
     );
-    let rows: Vec<Prompt> = fs::read_to_string(path)?
+    let rows: Vec<Prompt> = std::str::from_utf8(&bytes)?
         .lines()
         .filter(|s| !s.trim().is_empty())
         .map(serde_json::from_str)
