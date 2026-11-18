@@ -54,7 +54,7 @@ export function ResearchExplorer() {
           </div>
           <div className="flex flex-wrap gap-2"><Button variant="secondary" asChild><a href={handbookUrl(latestResearchGuide)}><BookOpen aria-hidden="true" /> Open annotated paper map</a></Button><Button variant="outline" asChild><a href={handbookUrl("docs/tools/huihui-ai.md")}>Huihui evidence guide</a></Button></div>
         </div>
-        <div className="mt-4 flex flex-wrap items-center gap-3"><label htmlFor="research-snapshot" className="text-sm font-bold">Catalog snapshot</label><select id="research-snapshot" className="h-10 rounded-xl border border-input bg-background px-3 text-sm" value={snapshot} onChange={(event) => { setSnapshot(event.target.value); setArea("All"); setExpanded(false); }}>{researchSnapshots.map((date) => <option key={date}>{date}</option>)}</select><p className="text-xs text-muted-foreground">The August and September snapshots are preserved. October adds eight studies with explicit scope and limitations.</p></div>
+        <div className="mt-4 flex flex-wrap items-center gap-3"><label htmlFor="research-snapshot" className="text-sm font-bold">Catalog snapshot</label><select id="research-snapshot" className="h-10 rounded-xl border border-input bg-background px-3 text-sm" value={snapshot} onChange={(event) => { setSnapshot(event.target.value); setArea("All"); setExpanded(false); }}>{researchSnapshots.map((date) => <option key={date}>{date}</option>)}</select><p className="text-xs text-muted-foreground">Filter by review date. Publication dates appear on each paper.</p></div>
         <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label="Filter papers by research area">
           {areas.map((candidate) => (
             <Button

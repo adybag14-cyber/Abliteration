@@ -2,7 +2,7 @@
 
 Pinned PDFs, text extracts, and GitHub README snapshots for handbook citations.
 
-**Latest index:** [catalog-2026-10.json](catalog-2026-10.json) adds eight primary records; read the [October map](../../docs/research-october-2026.md). The [August 50-paper catalog](catalog-2026.json) and [September 14-paper catalog](catalog-2026-09.json) remain available unchanged. The catalog links to canonical arXiv records without adding another large batch of binaries to git.
+**Latest index** [November catalogue](catalog-2026-11.json), [annotated research map](../../docs/research-november-2026.md), and [Heretic release provenance](tooling-2026-11.json). The combined catalogue contains 80 versioned primary records. The August, September and October editions appear below.
 
 **Refresh:** `npm run fetch:research-papers`
 

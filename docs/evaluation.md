@@ -6,6 +6,8 @@ Always evaluate **before and after** abliteration. Keep the original checkpoint.
 
 **Marker scorer (offline generations):** `npm run eval:refusal -- --responses-jsonl <dump.jsonl>` — [../scripts/eval-refusal-rate.py](../scripts/eval-refusal-rate.py). Curriculum: [complete-curriculum.md](complete-curriculum.md) Stage 3.
 
+The [November evaluation practices](../methods/activation-control-november-2026.md#score-decisions-wording-and-justified-abstention) cover full-response outcomes, justified abstention, output degeneration, and judge agreement.
+
 ## Paired statistical comparison
 
 Store frozen baseline and candidate results with the same stable IDs. Each row
