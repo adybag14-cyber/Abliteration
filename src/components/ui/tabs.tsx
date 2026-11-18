@@ -8,13 +8,25 @@ const Tabs = TabsPrimitive.Root
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...props }, ref) => (
+>(({ className, onFocus, ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
     className={cn(
       "inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground",
       className
     )}
+    onFocus={(event) => {
+      onFocus?.(event)
+      const list = event.currentTarget
+      if (event.defaultPrevented || event.target !== list || !list.matches(":focus-visible")) return
+
+      // Radix #4224 can leave keyboard focus on the list after a pointer selection.
+      queueMicrotask(() => {
+        if (list.ownerDocument.activeElement === list) {
+          list.querySelector<HTMLElement>('[role="tab"][aria-selected="true"]:not([disabled])')?.focus()
+        }
+      })
+    }}
     {...props}
   />
 ))
