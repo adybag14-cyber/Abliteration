@@ -48,6 +48,12 @@ test("selective planner, measured results, and snapshot history work", async ({ 
   await expect(research.getByRole("heading", { name: "Kernelized Activation Steering" })).toBeVisible();
   await expect(research.getByRole("link", { name: "Primary record" })).toHaveAttribute("href", "https://arxiv.org/abs/2610.01062v1");
   await research.screenshot({ path: testInfo.outputPath("october-research.png"), animations: "disabled" });
+  await research.getByLabel(/Search titles/).fill("");
+  await research.getByLabel("Catalog snapshot").selectOption("2026-11-18");
+  await expect(research.getByText(/8 papers match/)).toBeVisible();
+  await research.getByLabel(/Search titles/).fill("2611.20148");
+  await expect(research.getByRole("heading", { name: /^Centered Ablation/ })).toBeVisible();
+  await expect(research.getByRole("link", { name: "Open annotated paper map" })).toHaveAttribute("href", /handbook\/docs\/research-november-2026\/$/);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBeTruthy();
   await research.getByRole("link", { name: "Huihui evidence guide" }).click();
   await expect(page).toHaveURL(/handbook\/docs\/tools\/huihui-ai\//);

@@ -20,6 +20,7 @@ def main():
     editions = [
         ("2026-09", "2026-09-22", 14, "research-september-2026.md"),
         ("2026-10", "2026-10-05", 8, "research-october-2026.md"),
+        ("2026-11", "2026-11-18", 8, "research-november-2026.md"),
     ]
     for edition, snapshot, expected_count, document_name in editions:
         new = json.loads((ROOT / f"sources/research/catalog-{edition}.json").read_text(encoding="utf-8"))
@@ -41,8 +42,23 @@ def main():
             assert paper["retrieved_at"] == snapshot
             assert paper["id"] in document
             assert paper["implementation"] in {"reference-only", "evaluation-guidance"}
-            if edition == "2026-10":
+            if edition in {"2026-10", "2026-11"}:
                 assert paper["limitations"] and paper["code_status"]
+            if edition == "2026-11":
+                assert paper["published"].startswith("2026-11-")
+
+    november_tooling = json.loads((ROOT / "sources/research/tooling-2026-11.json").read_text(encoding="utf-8"))
+    assert november_tooling["verified_at"] == "2026-11-18"
+    releases = november_tooling["sources"]
+    assert len(releases) == 2
+    assert {release["tag"] for release in releases} == {"v2.0.0", "v2.1.0"}
+    for release in releases:
+        assert re.fullmatch(r"[0-9a-f]{40}", release["revision"])
+        assert release["repository"] == "https://github.com/p-e-w/heretic"
+        assert release["url"] == release["repository"] + "/releases/tag/" + release["tag"]
+        assert "2026-11-01" <= release["published_at"][:10] <= november_tooling["verified_at"]
+    current_release = next(release for release in releases if release["tag"] == "v2.1.0")
+    assert current_release["registry_version"] == current_release["tag"][1:]
 
     huihui = json.loads((ROOT / "sources/research/huihui-2026-10.json").read_text(encoding="utf-8"))
     assert huihui["verified_at"] == "2026-10-05"
@@ -96,7 +112,11 @@ def main():
             if name != "baseline":
                 assert result["edit"]["unselected_tensors_identical"]
                 assert result["edit"]["changed_tensors"] <= result["edit"]["selected_tensors"]
-    print(json.dumps({"ok": True, "preserved_papers": 50, "added_papers": 22, "october_papers": 8, "huihui_cards": 8, "total_papers": len(ids), "layout_tensors": layout["total_tensors"]}))
+    print(json.dumps({
+        "ok": True, "preserved_papers": old["count"], "added_papers": len(ids) - old["count"],
+        "october_papers": 8, "november_papers": 8, "huihui_cards": 8,
+        "total_papers": len(ids), "layout_tensors": layout["total_tensors"],
+    }))
 
 
 if __name__ == "__main__":

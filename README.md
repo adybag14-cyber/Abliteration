@@ -17,7 +17,7 @@ Living handbook for **LLM abliteration** (weight-level refusal-direction surgery
 
 > **New to the subject?** Open the [interactive Abliteration Field Guide](https://adybag14-cyber.github.io/Abliteration/#lab) — PathFinder defaults to the C++26 toy lab with the same unique nightly filenames. Then the six-step checklist, method spider diagram, searchable atlas (DIM / ORBA / COSMIC), and evaluation-gate simulator.
 
-The Pages guide now includes checksum-first commands for Windows, Linux, and macOS plus a searchable [72-record primary-source observatory](https://adybag14-cyber.github.io/Abliteration/#research). Repository policy: [contributing](CONTRIBUTING.md) · [security](SECURITY.md) · [citation](CITATION.cff).
+The Pages guide now includes checksum-first commands for Windows, Linux, and macOS plus a searchable [80-record primary-source observatory](https://adybag14-cyber.github.io/Abliteration/#research). Repository policy: [contributing](CONTRIBUTING.md) · [security](SECURITY.md) · [citation](CITATION.cff).
 
 
 ## November 2026: native Rust research studio
@@ -34,6 +34,10 @@ Huihui's 320-row dataset and the requested JBB, StrongREJECT and RefusalBench
 sources, including their access and reproducibility limits. RefusalBench is
 included as an unrun research configuration with explicit risks. Lexical
 screens, semantic refusals and harmful-compliance scores are kept distinct.
+
+## November 2026 research and methods
+
+The [November research map](docs/research-november-2026.md) adds eight primary preprints. The [methods chapter](methods/activation-control-november-2026.md) explains TopoSteer layer selection, Centered Ablation, sparse internal control, and paired tests for refusal wording and justified abstention. The [Heretic release evidence](sources/research/tooling-2026-11.json) records the stable 2.x modifier and scorer changes.
 
 ## October 2026: adaptive methods and huihui evidence
 

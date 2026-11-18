@@ -6,6 +6,10 @@ Curriculum placement: [complete-curriculum.md](complete-curriculum.md) Stage 9. 
 
 ---
 
+## November 2026 methods
+
+The [November chapter](../methods/activation-control-november-2026.md) explains TopoSteer, Centered Ablation, sparse internal control, and how to score decision, register, and abstention. The [primary-source map](research-november-2026.md) records the scope of each preprint and the Heretic 2.x releases.
+
 ## Frontier map
 
 | ID | Idea | Year | Handbook | Production? |

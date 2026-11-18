@@ -74,6 +74,8 @@ const priority = [
   "docs/minicpm5-selective-study.md",
   "docs/evaluation.md",
   "docs/experiment-provenance.md",
+  "docs/research-november-2026.md",
+  "methods/activation-control-november-2026.md",
   "docs/research-september-2026.md",
   "references.md",
 ];
@@ -90,6 +92,10 @@ const descriptions = {
     "Design paired comparisons that keep refusal, capability, degeneration, and uncertainty separate.",
   "docs/experiment-provenance.md":
     "Connect each result to the exact model, data, configuration, and artifact hashes that produced it.",
+  "docs/research-november-2026.md":
+    "Browse the eight November preprints and the verified Heretic 2.x release history.",
+  "methods/activation-control-november-2026.md":
+    "Choose candidate layers, diagnose centered projections, and measure response behavior with held-out controls.",
   "references.md":
     "Follow the primary papers and tools behind the handbook, with the existing bibliography preserved.",
   "README.md":

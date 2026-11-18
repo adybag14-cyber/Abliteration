@@ -1,0 +1,23 @@
+{
+  "verified_at": "2026-11-18",
+  "sources": [
+    {
+      "repository": "https://github.com/p-e-w/heretic",
+      "revision": "0db5c31e10ecc426440b6fb0ce4bf85352faf1a7",
+      "tag": "v2.0.0",
+      "published_at": "2026-11-01T13:03:19Z",
+      "url": "https://github.com/p-e-w/heretic/releases/tag/v2.0.0",
+      "notes": "First stable 2.x release with modifier plugins and ARA. The release describes an incompatible configuration schema and directs former research-feature users to Lophius."
+    },
+    {
+      "repository": "https://github.com/p-e-w/heretic",
+      "revision": "4f89482c0d63f2552a582215939910f9f45a3e5f",
+      "tag": "v2.1.0",
+      "published_at": "2026-11-08T07:14:03Z",
+      "url": "https://github.com/p-e-w/heretic/releases/tag/v2.1.0",
+      "registry": "https://pypi.org/project/heretic-llm/2.1.0/",
+      "registry_version": "2.1.0",
+      "notes": "Latest stable GitHub release and PyPI version at retrieval. Release notes include the response-length scorer, plugin-setting export fix and reset-error handling during export."
+    }
+  ]
+}

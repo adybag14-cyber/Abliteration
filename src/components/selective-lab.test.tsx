@@ -33,7 +33,7 @@ describe("selective research controls", () => {
     expect(within(panel).getByText(/This is not LoRA/)).toBeInTheDocument();
   });
 
-  it("exposes October evidence, limitations, and pinned citations", async () => {
+  it("exposes November and October evidence, limitations, and pinned citations", async () => {
     const user = userEvent.setup();
     const writeText = vi.fn().mockResolvedValue(undefined);
     Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText } });
@@ -47,11 +47,19 @@ describe("selective research controls", () => {
     await user.click(screen.getByRole("button", { name: "Copy citation for 2610.01062" }));
     expect(writeText.mock.calls[0][0]).toContain("https://arxiv.org/abs/2610.01062v1");
     expect(screen.getByRole("link", { name: "Huihui evidence guide" })).toHaveAttribute("href", expect.stringContaining("handbook/docs/tools/huihui-ai/"));
+    const search = screen.getByLabelText(/Search titles/);
+    await user.clear(search);
+    await user.selectOptions(screen.getByLabelText("Catalog snapshot"), "2026-11-18");
+    expect(screen.getByText(/8 papers match/)).toBeInTheDocument();
+    await user.type(search, "2611.20148");
+    expect(screen.getByRole("heading", { name: /^Centered Ablation/ })).toBeVisible();
+    expect(screen.getByRole("link", { name: "Primary record" })).toHaveAttribute("href", "https://arxiv.org/abs/2611.20148v1");
+    expect(screen.getByRole("link", { name: "Open annotated paper map" })).toHaveAttribute("href", expect.stringContaining("handbook/docs/research-november-2026/"));
   });
 
   it("preserves the August snapshot and compares versioned new references", async () => {
     const user = userEvent.setup(); render(<ResearchExplorer />);
-    expect(screen.getByText(/72 papers match/)).toBeInTheDocument();
+    expect(screen.getByText(/80 papers match/)).toBeInTheDocument();
     await user.selectOptions(screen.getByLabelText("Catalog snapshot"), "2026-08-23");
     expect(screen.getByText(/50 papers match/)).toBeInTheDocument();
     await user.selectOptions(screen.getByLabelText("Catalog snapshot"), "2026-09-22");

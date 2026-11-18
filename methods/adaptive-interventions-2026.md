@@ -2,6 +2,8 @@
 
 Checked **2026-10-05**. This chapter separates methods that are often grouped under "advanced abliteration." It adds research context, not new implementations to the C++ toy CLI or the selective-checkpoint tools.
 
+See the [November methods chapter](activation-control-november-2026.md) for current layer selection, centered projection and held-out evaluation. The [November release evidence](../docs/research-november-2026.md#heretic-release-evidence) records ARA's stable 2.x release.
+
 ## Choose the intervention object first
 
 | Family | What changes | Evidence and practical distinction |

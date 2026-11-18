@@ -19,6 +19,10 @@ They are **immutable reference copies** — refresh from upstream, do not hand-e
 
 ---
 
+## Current release and reference pins
+
+The files here reproduce Heretic 1.4.0. For stable 2.x release dates, ARA and the configuration migration, see the [November release evidence](../research-november-2026.md#heretic-release-evidence).
+
 ## Upstream source of truth
 
 | Artifact | URL |
