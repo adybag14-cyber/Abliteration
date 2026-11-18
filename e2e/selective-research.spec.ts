@@ -19,7 +19,11 @@ test("selective planner, measured results, and snapshot history work", async ({ 
   const slider = lab.getByRole("slider");
   await slider.focus(); await slider.press("ArrowRight");
   await expect(lab.getByLabel("Selective edit commands")).toContainText("--alpha 0.85");
-  await lab.getByRole("tab", { name: "Understand the methods" }).click();
+  const methodsTab = lab.getByRole("tab", { name: "Understand the methods" });
+  await methodsTab.click();
+  await page.keyboard.press("Shift+Tab");
+  await page.keyboard.press("Tab");
+  await expect(methodsTab).toBeFocused();
   await expect(lab.getByRole("heading", { name: "LoMC", exact: true })).toBeVisible();
   const study = page.locator("[data-slot='research-results']");
   await study.scrollIntoViewIfNeeded();
